@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "TypeWhisperPluginSDK",
-    platforms: [.macOS(.v15)],
+    platforms: [.macOS(.v14)],
     products: [
         .library(name: "TypeWhisperPluginSDK", type: .dynamic, targets: ["TypeWhisperPluginSDK"]),
     ],

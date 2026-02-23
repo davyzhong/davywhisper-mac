@@ -1,12 +1,15 @@
 import AppKit
 import SwiftUI
+
+#if canImport(Translation)
 import Translation
 
 /// Dedicated off-screen window hosting the `.translationTask` modifier.
 ///
 /// The overlay panel uses `orderOut(nil)` which can pause SwiftUI updates,
-/// preventing `.translationTask` from firing. This 1×1 window is always
+/// preventing `.translationTask` from firing. This 1x1 window is always
 /// ordered-in (off-screen) so the modifier reliably triggers.
+@available(macOS 15, *)
 @MainActor
 final class TranslationHostWindow: NSWindow {
 
@@ -34,6 +37,7 @@ final class TranslationHostWindow: NSWindow {
 /// Minimal SwiftUI view that observes TranslationService and hosts `.translationTask`.
 /// Using `@ObservedObject` ensures the view re-renders when `configuration` changes,
 /// which is required for `.translationTask` to fire.
+@available(macOS 15, *)
 private struct TranslationHostView: View {
     @ObservedObject var translationService: TranslationService
 
@@ -46,3 +50,4 @@ private struct TranslationHostView: View {
             .id(translationService.viewId)
     }
 }
+#endif

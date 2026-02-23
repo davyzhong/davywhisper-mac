@@ -3,12 +3,12 @@ import Foundation
 final class APIHandlers: @unchecked Sendable {
     private let modelManager: ModelManagerService
     private let audioFileService: AudioFileService
-    private let translationService: TranslationService
+    private let translationService: AnyObject? // TranslationService (macOS 15+)
     private let historyService: HistoryService
     private let profileService: ProfileService
     private let dictationViewModel: DictationViewModel
 
-    init(modelManager: ModelManagerService, audioFileService: AudioFileService, translationService: TranslationService, historyService: HistoryService, profileService: ProfileService, dictationViewModel: DictationViewModel) {
+    init(modelManager: ModelManagerService, audioFileService: AudioFileService, translationService: AnyObject?, historyService: HistoryService, profileService: ProfileService, dictationViewModel: DictationViewModel) {
         self.modelManager = modelManager
         self.audioFileService = audioFileService
         self.translationService = translationService
@@ -106,8 +106,16 @@ final class APIHandlers: @unchecked Sendable {
 
             var finalText = result.text
             if let targetCode = targetLanguage {
-                let target = Locale.Language(identifier: targetCode)
-                finalText = try await translationService.translate(text: finalText, to: target)
+                #if canImport(Translation)
+                if #available(macOS 15, *), let ts = translationService as? TranslationService {
+                    let target = Locale.Language(identifier: targetCode)
+                    finalText = try await ts.translate(text: finalText, to: target)
+                } else {
+                    return .error(status: 501, message: "Translation requires macOS 15 or later")
+                }
+                #else
+                return .error(status: 501, message: "Translation requires macOS 15 or later")
+                #endif
             }
 
             struct TranscribeResponse: Encodable {

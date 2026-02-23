@@ -242,13 +242,17 @@ private struct ProfileEditorSheet: View {
                     }
 
                     // Translation target language override
-                    Picker(String(localized: "Target language"), selection: $viewModel.editorTranslationTargetLanguage) {
-                        Text(String(localized: "Global Setting")).tag(nil as String?)
-                        Divider()
-                        ForEach(TranslationService.availableTargetLanguages, id: \.code) { lang in
-                            Text(lang.name).tag(lang.code as String?)
+                    #if canImport(Translation)
+                    if #available(macOS 15, *) {
+                        Picker(String(localized: "Target language"), selection: $viewModel.editorTranslationTargetLanguage) {
+                            Text(String(localized: "Global Setting")).tag(nil as String?)
+                            Divider()
+                            ForEach(TranslationService.availableTargetLanguages, id: \.code) { lang in
+                                Text(lang.name).tag(lang.code as String?)
+                            }
                         }
                     }
+                    #endif
 
                     // Engine override
                     Picker(String(localized: "Engine"), selection: $viewModel.editorEngineOverride) {

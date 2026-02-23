@@ -120,7 +120,7 @@ final class DictationViewModel: ObservableObject {
     private let settingsViewModel: SettingsViewModel
     private let historyService: HistoryService
     private let profileService: ProfileService
-    private let translationService: TranslationService
+    private let translationService: AnyObject? // TranslationService (macOS 15+)
     private let audioDuckingService: AudioDuckingService
     private let mediaPlaybackService: MediaPlaybackService
     private let dictionaryService: DictionaryService
@@ -151,7 +151,7 @@ final class DictationViewModel: ObservableObject {
         settingsViewModel: SettingsViewModel,
         historyService: HistoryService,
         profileService: ProfileService,
-        translationService: TranslationService,
+        translationService: AnyObject?,
         audioDuckingService: AudioDuckingService,
         mediaPlaybackService: MediaPlaybackService,
         dictionaryService: DictionaryService,
@@ -513,11 +513,18 @@ final class DictationViewModel: ObservableObject {
                         )
                     }
                 } else if let targetCode = translationTarget {
-                    let ts = self.translationService
-                    llmHandler = { text in
-                        let target = Locale.Language(identifier: targetCode)
-                        return try await ts.translate(text: text, to: target)
+                    #if canImport(Translation)
+                    if #available(macOS 15, *), let ts = self.translationService as? TranslationService {
+                        llmHandler = { text in
+                            let target = Locale.Language(identifier: targetCode)
+                            return try await ts.translate(text: text, to: target)
+                        }
+                    } else {
+                        llmHandler = nil
                     }
+                    #else
+                    llmHandler = nil
+                    #endif
                 } else {
                     llmHandler = nil
                 }

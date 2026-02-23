@@ -14,7 +14,7 @@ final class ServiceContainer: ObservableObject {
     let historyService: HistoryService
     let textDiffService: TextDiffService
     let profileService: ProfileService
-    let translationService: TranslationService
+    let translationService: AnyObject? // TranslationService (macOS 15+)
     let audioDuckingService: AudioDuckingService
     let mediaPlaybackService: MediaPlaybackService
     let dictionaryService: DictionaryService
@@ -51,7 +51,15 @@ final class ServiceContainer: ObservableObject {
         historyService = HistoryService()
         textDiffService = TextDiffService()
         profileService = ProfileService()
-        translationService = TranslationService()
+        #if canImport(Translation)
+        if #available(macOS 15, *) {
+            translationService = TranslationService()
+        } else {
+            translationService = nil
+        }
+        #else
+        translationService = nil
+        #endif
         audioDuckingService = AudioDuckingService()
         mediaPlaybackService = MediaPlaybackService()
         dictionaryService = DictionaryService()
@@ -87,6 +95,7 @@ final class ServiceContainer: ObservableObject {
             promptActionService: promptActionService,
             promptProcessingService: promptProcessingService
         )
+
 
         // HTTP API
         let router = APIRouter()

@@ -1,7 +1,10 @@
 import Foundation
 import os
+
+#if canImport(Translation)
 import Translation
 
+@available(macOS 15, *)
 @MainActor
 final class TranslationService: ObservableObject {
     @Published var configuration: TranslationSession.Configuration?
@@ -12,7 +15,7 @@ final class TranslationService: ObservableObject {
     private static let logger = Logger(subsystem: AppConstants.loggerSubsystem, category: "Translation")
 
     func translate(text: String, to target: Locale.Language) async throws -> String {
-        // Cancel any pending translation — resume with original text
+        // Cancel any pending translation - resume with original text
         if let pending = continuation {
             Self.logger.warning("Cancelling pending translation")
             pending.resume(returning: sourceText)
@@ -33,7 +36,7 @@ final class TranslationService: ObservableObject {
             configuration = .init(source: nil, target: target)
             Self.logger.info("Translation requested to \(target.minimalIdentifier)")
 
-            // Timeout watchdog — 15 seconds
+            // Timeout watchdog - 15 seconds
             Task { [weak self] in
                 try await Task.sleep(for: .seconds(15))
                 guard let self else { return }
@@ -71,3 +74,4 @@ final class TranslationService: ObservableObject {
         }.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }()
 }
+#endif

@@ -10,10 +10,53 @@ struct SettingsView: View {
     @ObservedObject private var fileTranscription = FileTranscriptionViewModel.shared
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            SettingsMainTabs()
+        Group {
+            if #available(macOS 15, *) {
+                TabView(selection: $selectedTab) {
+                    SettingsMainTabs()
+                }
+                .tabViewStyle(.sidebarAdaptable)
+            } else {
+                TabView(selection: $selectedTab) {
+                    HomeSettingsView()
+                        .tabItem { Label(String(localized: "Home"), systemImage: "house") }
+                        .tag(SettingsTab.home)
+                    GeneralSettingsView()
+                        .tabItem { Label(String(localized: "General"), systemImage: "gear") }
+                        .tag(SettingsTab.general)
+                    ModelManagerView()
+                        .tabItem { Label(String(localized: "Models"), systemImage: "cpu") }
+                        .tag(SettingsTab.models)
+                    DictationSettingsView()
+                        .tabItem { Label(String(localized: "Dictation"), systemImage: "mic.fill") }
+                        .tag(SettingsTab.dictation)
+                    FileTranscriptionView()
+                        .tabItem { Label(String(localized: "File Transcription"), systemImage: "doc.text") }
+                        .tag(SettingsTab.fileTranscription)
+                    HistoryView()
+                        .tabItem { Label(String(localized: "History"), systemImage: "clock.arrow.circlepath") }
+                        .tag(SettingsTab.history)
+                    DictionarySettingsView()
+                        .tabItem { Label(String(localized: "Dictionary"), systemImage: "book.closed") }
+                        .tag(SettingsTab.dictionary)
+                    SnippetsSettingsView()
+                        .tabItem { Label(String(localized: "Snippets"), systemImage: "text.badge.plus") }
+                        .tag(SettingsTab.snippets)
+                    ProfilesSettingsView()
+                        .tabItem { Label(String(localized: "Profiles"), systemImage: "person.crop.rectangle.stack") }
+                        .tag(SettingsTab.profiles)
+                    PromptActionsSettingsView()
+                        .tabItem { Label(String(localized: "Prompts"), systemImage: "sparkles") }
+                        .tag(SettingsTab.prompts)
+                    PluginSettingsView()
+                        .tabItem { Label(String(localized: "Integrations"), systemImage: "puzzlepiece.extension") }
+                        .tag(SettingsTab.integrations)
+                    AdvancedSettingsView()
+                        .tabItem { Label(String(localized: "Advanced"), systemImage: "gearshape.2") }
+                        .tag(SettingsTab.advanced)
+                }
+            }
         }
-        .tabViewStyle(.sidebarAdaptable)
         .frame(minWidth: 700, idealWidth: 750, minHeight: 550, idealHeight: 600)
         .onAppear { navigateToFileTranscriptionIfNeeded() }
         .onChange(of: fileTranscription.showFilePickerFromMenu) { _, _ in
@@ -28,6 +71,7 @@ struct SettingsView: View {
     }
 }
 
+@available(macOS 15, *)
 private struct SettingsMainTabs: TabContent {
     var body: some TabContent<SettingsTab> {
         Tab(String(localized: "Home"), systemImage: "house", value: SettingsTab.home) {
@@ -52,6 +96,7 @@ private struct SettingsMainTabs: TabContent {
     }
 }
 
+@available(macOS 15, *)
 private struct SettingsExtraTabs: TabContent {
     var body: some TabContent<SettingsTab> {
         Tab(String(localized: "Dictionary"), systemImage: "book.closed", value: SettingsTab.dictionary) {

@@ -32,21 +32,25 @@ struct GeneralSettingsView: View {
                     .foregroundStyle(.secondary)
             }
 
-            Section(String(localized: "Translation")) {
-                Toggle(String(localized: "Enable translation"), isOn: $settings.translationEnabled)
+            #if canImport(Translation)
+            if #available(macOS 15, *) {
+                Section(String(localized: "Translation")) {
+                    Toggle(String(localized: "Enable translation"), isOn: $settings.translationEnabled)
 
-                if settings.translationEnabled {
-                    Picker(String(localized: "Target language"), selection: $settings.translationTargetLanguage) {
-                        ForEach(TranslationService.availableTargetLanguages, id: \.code) { lang in
-                            Text(lang.name).tag(lang.code)
+                    if settings.translationEnabled {
+                        Picker(String(localized: "Target language"), selection: $settings.translationTargetLanguage) {
+                            ForEach(TranslationService.availableTargetLanguages, id: \.code) { lang in
+                                Text(lang.name).tag(lang.code)
+                            }
                         }
                     }
-                }
 
-                Text(String(localized: "Uses Apple Translate (on-device)"))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    Text(String(localized: "Uses Apple Translate (on-device)"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
+            #endif
 
             Section(String(localized: "Default Model")) {
                 if modelManager.readyModels.isEmpty && modelManager.configuredPluginEngines.isEmpty {

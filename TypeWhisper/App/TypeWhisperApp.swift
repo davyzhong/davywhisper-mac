@@ -33,7 +33,7 @@ struct TypeWhisperApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var notchIndicatorPanel: NotchIndicatorPanel?
-    private var translationHostWindow: TranslationHostWindow?
+    private var translationHostWindow: NSWindow?
     #if !APPSTORE
     private lazy var updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
 
@@ -51,9 +51,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         notchPanel.startObserving()
         notchIndicatorPanel = notchPanel
 
-        translationHostWindow = TranslationHostWindow(
-            translationService: ServiceContainer.shared.translationService
-        )
+        #if canImport(Translation)
+        if #available(macOS 15, *), let ts = ServiceContainer.shared.translationService as? TranslationService {
+            translationHostWindow = TranslationHostWindow(translationService: ts)
+        }
+        #endif
 
         // Prompt palette hotkey - opens standalone prompt palette panel
         ServiceContainer.shared.hotkeyService.onPromptPaletteToggle = {
