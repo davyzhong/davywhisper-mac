@@ -15,7 +15,7 @@ struct SettingsView: View {
             SettingsMainTabs(pluginUpdatesBadge: registryService.availableUpdatesCount)
         }
         .tabViewStyle(.sidebarAdaptable)
-        .frame(minWidth: 700, idealWidth: 750, minHeight: 550, idealHeight: 600)
+        .frame(minWidth: 950, idealWidth: 1050, minHeight: 550, idealHeight: 600)
         .onAppear { navigateToFileTranscriptionIfNeeded() }
         .onChange(of: fileTranscription.showFilePickerFromMenu) { _, _ in
             navigateToFileTranscriptionIfNeeded()

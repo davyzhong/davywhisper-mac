@@ -31,7 +31,7 @@ struct TypeWhisperApp: App {
             HistoryView()
         }
         .windowResizability(.contentMinSize)
-        .defaultSize(width: 700, height: 500)
+        .defaultSize(width: 900, height: 500)
     }
 
     private var settingsScene: some Scene {
@@ -40,7 +40,7 @@ struct TypeWhisperApp: App {
                 .background(SettingsWindowBridge())
         }
         .windowResizability(.contentMinSize)
-        .defaultSize(width: 750, height: 600)
+        .defaultSize(width: 1050, height: 600)
         .defaultLaunchBehavior(showMenuBarIcon ? .suppressed : .presented)
         .restorationBehavior(.disabled)
     }

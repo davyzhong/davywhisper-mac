@@ -356,7 +356,7 @@ private struct SpeechAnalyzerSettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("On-device speech recognition powered by Apple's Speech framework. System-managed models, streaming support.")
+            Text("On-device speech recognition via Apple's Speech framework with streaming support. Select a language model below - only one can be active at a time.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
 
