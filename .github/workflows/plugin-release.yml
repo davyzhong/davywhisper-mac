@@ -51,8 +51,7 @@ jobs:
           xcodebuild -project TypeWhisper.xcodeproj \
             -target "$TARGET" \
             -configuration Release \
-            -derivedDataPath build \
-            -destination 'generic/platform=macOS' \
+            SYMROOT="$(pwd)/build" \
             MARKETING_VERSION="$PLUGIN_VERSION"
 
       - name: Import Signing Certificate
@@ -80,7 +79,7 @@ jobs:
         env:
           MACOS_SIGNING_IDENTITY: ${{ secrets.MACOS_SIGNING_IDENTITY }}
         run: |
-          BUNDLE_PATH="build/Build/Products/Release/${TARGET}.bundle"
+          BUNDLE_PATH="build/Release/${TARGET}.bundle"
           find "$BUNDLE_PATH" -name '._*' -delete
           xattr -cr "$BUNDLE_PATH"
           codesign --force --deep --options runtime --timestamp \
@@ -90,7 +89,7 @@ jobs:
 
       - name: Create ZIP
         run: |
-          cd build/Build/Products/Release
+          cd build/Release
           ditto -c -k --keepParent "${TARGET}.bundle" "${TARGET}.zip"
           ZIP_SIZE=$(stat -f%z "${TARGET}.zip")
           echo "ZIP_SIZE=$ZIP_SIZE" >> $GITHUB_ENV
@@ -109,7 +108,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="${GITHUB_REF_NAME}"
-          ASSET="build/Build/Products/Release/${TARGET}.zip"
+          ASSET="build/Release/${TARGET}.zip"
 
           gh release create "$TAG" "$ASSET" \
             --title "${TARGET} v${PLUGIN_VERSION}" \
