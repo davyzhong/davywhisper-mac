@@ -150,16 +150,7 @@ jobs:
 
           gh release create "$TAG" "$ASSET" \
             --title "${TARGET} v${PLUGIN_VERSION}" \
-            --notes "$(cat <<EOF
-          ## ${TARGET} v${PLUGIN_VERSION}
-
-          Plugin bundle for TypeWhisper.
-          Download size: $(numfmt --to=iec-i --suffix=B "$ZIP_SIZE" 2>/dev/null || echo "$ZIP_SIZE bytes")
-
-          ### Installation
-          Install via TypeWhisper Settings > Plugins > Available tab.
-          EOF
-          )"
+            --notes ""
 
       - name: Update plugins.json
         env:
