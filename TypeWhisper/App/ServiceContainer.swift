@@ -125,6 +125,8 @@ final class ServiceContainer: ObservableObject {
         EventBus.shared = EventBus()
         PluginManager.shared = pluginManager
         PluginRegistryService.shared = pluginRegistryService
+
+        settingsViewModel.observePluginManager()
     }
 
     func initialize() async {

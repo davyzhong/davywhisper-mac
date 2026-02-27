@@ -43,6 +43,15 @@ final class SettingsViewModel: ObservableObject {
         self.translationTargetLanguage = UserDefaults.standard.string(forKey: UserDefaultsKeys.translationTargetLanguage) ?? "en"
     }
 
+    func observePluginManager() {
+        PluginManager.shared.objectWillChange
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
+    }
+
     var availableLanguages: [(code: String, name: String)] {
         var codes = Set<String>()
         for engine in PluginManager.shared.transcriptionEngines {
