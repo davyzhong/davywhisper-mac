@@ -358,7 +358,6 @@
 				AA00000000000000000145 /* GroqPlugin.bundle in Embed Plugins */,
 				AA00000000000000000146 /* OpenAIPlugin.bundle in Embed Plugins */,
 				AA00000000000000000147 /* GeminiPlugin.bundle in Embed Plugins */,
-				AA00000000000000000151 /* LinearPlugin.bundle in Embed Plugins */,
 			);
 			name = "Embed Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -789,7 +788,6 @@
 				GG00000000000000000003 /* PBXTargetDependency */,
 				GG00000000000000000004 /* PBXTargetDependency */,
 				GG00000000000000000005 /* PBXTargetDependency */,
-				GG00000000000000000006 /* PBXTargetDependency */,
 			);
 			name = TypeWhisper;
 			packageProductDependencies = (
