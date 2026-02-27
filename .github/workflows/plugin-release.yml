@@ -52,6 +52,9 @@ jobs:
             -target "$TARGET" \
             -configuration Release \
             SYMROOT="$(pwd)/build" \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
             MARKETING_VERSION="$PLUGIN_VERSION"
 
       - name: Import Signing Certificate
