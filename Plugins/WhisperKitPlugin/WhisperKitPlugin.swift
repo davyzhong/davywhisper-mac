@@ -431,6 +431,9 @@ private struct WhisperKitSettingsView: View {
             modelState = plugin.modelState
             downloadProgress = plugin.downloadProgress
             activeModelId = plugin._selectedModelId
+            // If the plugin is mid-load (e.g., restoring on app launch), start polling
+            if case .downloading = plugin.modelState { isPolling = true }
+            else if case .loading = plugin.modelState { isPolling = true }
         }
         .onReceive(pollTimer) { _ in
             guard isPolling else { return }
