@@ -6,7 +6,10 @@ struct SetupWizardView: View {
     @ObservedObject private var pluginManager = PluginManager.shared
     @ObservedObject private var registryService = PluginRegistryService.shared
     @ObservedObject private var audioDevice = ServiceContainer.shared.audioDeviceService
+    @ObservedObject private var modelManager = ServiceContainer.shared.modelManagerService
+    @ObservedObject private var processingService = ServiceContainer.shared.promptProcessingService
     @State private var currentStep = 0
+    @State private var selectedProvider: String?
 
     private let totalSteps = 3
 
@@ -178,34 +181,16 @@ struct SetupWizardView: View {
 
     private var engineStep: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(String(localized: "Choose a transcription engine. Each engine needs to download a model before it can be used. Open settings to configure."))
+            Text(String(localized: "Install a transcription engine to get started. Each engine needs to download a model before it can be used."))
                 .font(.callout)
                 .foregroundStyle(.secondary)
 
             let engines = pluginManager.transcriptionEngines
-            if engines.isEmpty {
-                VStack(spacing: 12) {
-                    if registryService.fetchState == .loading || registryService.fetchState == .idle {
-                        HStack(spacing: 8) {
-                            ProgressView()
-                                .controlSize(.small)
-                            Text(String(localized: "Installing plugins..."))
-                                .foregroundStyle(.secondary)
-                        }
-                    } else {
-                        Text(String(localized: "No transcription engines available."))
-                            .foregroundStyle(.secondary)
+            if !engines.isEmpty {
+                Text(String(localized: "Installed"))
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.secondary)
 
-                        Button(String(localized: "Open Integrations")) {
-                            // Navigate away from wizard to integrations
-                            HomeViewModel.shared.completeSetupWizard()
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 20)
-            } else {
                 ForEach(engines, id: \.providerId) { engine in
                     SetupEngineRow(engine: engine)
                 }
@@ -215,12 +200,118 @@ struct SetupWizardView: View {
                         .font(.caption)
                         .foregroundStyle(.orange)
                 }
+
+                // Default engine picker
+                if engines.count > 1 {
+                    Picker(String(localized: "Default Engine"), selection: $selectedProvider) {
+                        ForEach(engines, id: \.providerId) { engine in
+                            HStack {
+                                Text(engine.providerDisplayName)
+                                if !engine.isConfigured {
+                                    Text("(\(String(localized: "not ready")))")
+                                        .foregroundStyle(.secondary)
+                                }
+                            }.tag(engine.providerId as String?)
+                        }
+                    }
+                    .onChange(of: selectedProvider) { _, newValue in
+                        if let newValue {
+                            modelManager.selectProvider(newValue)
+                        }
+                    }
+                }
+
+                // Default LLM picker
+                let llmProviders = processingService.availableProviders
+                if llmProviders.count > 1 {
+                    Picker(String(localized: "Default LLM"), selection: $processingService.selectedProviderId) {
+                        ForEach(llmProviders, id: \.id) { provider in
+                            Text(provider.displayName).tag(provider.id)
+                        }
+                    }
+                }
+            }
+
+            // Available engines from marketplace
+            switch registryService.fetchState {
+            case .idle, .loading:
+                HStack(spacing: 8) {
+                    ProgressView()
+                        .controlSize(.small)
+                    Text(String(localized: "Loading plugins..."))
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+            case .error(let message):
+                VStack(spacing: 8) {
+                    Text(message)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                    Button(String(localized: "Retry")) {
+                        Task { await registryService.fetchRegistry() }
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+            case .loaded:
+                let available = availableTranscriptionPlugins
+                if available.isEmpty {
+                    if engines.isEmpty {
+                        Text(String(localized: "No engines available. Check your internet connection."))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                    } else {
+                        Text(String(localized: "All engines installed."))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                } else {
+                    Text(String(localized: "Available"))
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.secondary)
+
+                    ForEach(available) { plugin in
+                        AvailablePluginRow(
+                            plugin: plugin,
+                            installState: registryService.installStates[plugin.id],
+                            onInstall: {
+                                Task {
+                                    await registryService.downloadAndInstall(plugin)
+                                    PluginManager.shared.setPluginEnabled(plugin.id, enabled: true)
+                                }
+                            }
+                        )
+                    }
+                }
             }
         }
         .task {
             if registryService.fetchState == .idle {
                 await registryService.fetchRegistry()
             }
+        }
+        .onAppear {
+            selectedProvider = modelManager.selectedProviderId
+        }
+        .onChange(of: pluginManager.transcriptionEngines.map(\.providerId)) { _, engines in
+            // Auto-select first engine when only one is installed and none was selected
+            if selectedProvider == nil || !engines.contains(where: { $0 == selectedProvider }),
+               let first = engines.first {
+                selectedProvider = first
+                modelManager.selectProvider(first)
+            }
+        }
+    }
+
+    private var availableTranscriptionPlugins: [RegistryPlugin] {
+        let installedIds = Set(pluginManager.loadedPlugins.map(\.manifest.id))
+        return registryService.registry.filter {
+            $0.category == "transcription" && !installedIds.contains($0.id) && $0.isCompatibleWithCurrentOS
         }
     }
 
@@ -322,6 +413,7 @@ struct SetupWizardView: View {
 
 private struct SetupEngineRow: View {
     let engine: any TranscriptionEnginePlugin
+    @ObservedObject private var pluginManager = PluginManager.shared
     @State private var showSettings = false
 
     var body: some View {
@@ -398,3 +490,5 @@ private struct SetupEngineRow: View {
         }
     }
 }
+
+

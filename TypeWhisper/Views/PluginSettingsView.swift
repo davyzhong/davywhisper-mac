@@ -365,7 +365,7 @@ private struct InstalledPluginRow: View {
 
 // MARK: - Available Plugin Row
 
-private struct AvailablePluginRow: View {
+struct AvailablePluginRow: View {
     let plugin: RegistryPlugin
     let installState: PluginRegistryService.InstallState?
     let onInstall: () -> Void
