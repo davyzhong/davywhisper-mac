@@ -467,6 +467,7 @@ struct HotkeyRecorderView: View {
     @State private var isRecording = false
     @State private var pendingModifiers: NSEvent.ModifierFlags = []
     @State private var eventMonitor: Any?
+    @State private var modifierReleaseTimer: DispatchWorkItem?
     private static var activeRecorder: UUID?
     @State private var id = UUID()
 
@@ -552,7 +553,13 @@ struct HotkeyRecorderView: View {
 
                 if current.isEmpty, !pendingModifiers.isEmpty {
                     if HotkeyService.modifierKeyCodes.contains(event.keyCode) {
-                        finishRecording(UnifiedHotkey(keyCode: event.keyCode, modifierFlags: 0, isFn: false))
+                        let keyCode = event.keyCode
+                        let work = DispatchWorkItem { [self] in
+                            finishRecording(UnifiedHotkey(keyCode: keyCode, modifierFlags: 0, isFn: false))
+                        }
+                        modifierReleaseTimer = work
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: work)
+                        pendingModifiers = []
                         return nil
                     }
                 }
@@ -561,6 +568,9 @@ struct HotkeyRecorderView: View {
             }
 
             if event.type == .keyDown {
+                modifierReleaseTimer?.cancel()
+                modifierReleaseTimer = nil
+
                 if event.keyCode == 0x35, pendingModifiers.isEmpty {
                     cancelRecording()
                     return nil
@@ -578,6 +588,8 @@ struct HotkeyRecorderView: View {
     }
 
     private func finishRecording(_ hotkey: UnifiedHotkey) {
+        modifierReleaseTimer?.cancel()
+        modifierReleaseTimer = nil
         if Self.activeRecorder == id {
             Self.activeRecorder = nil
         }
@@ -592,6 +604,8 @@ struct HotkeyRecorderView: View {
     }
 
     private func cancelRecording() {
+        modifierReleaseTimer?.cancel()
+        modifierReleaseTimer = nil
         if Self.activeRecorder == id {
             Self.activeRecorder = nil
         }
