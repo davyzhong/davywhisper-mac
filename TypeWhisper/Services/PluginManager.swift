@@ -164,7 +164,17 @@ final class PluginManager: ObservableObject {
         let instance = pluginClass.init()
 
         let enabledKey = "plugin.\(manifest.id).enabled"
-        let isEnabled = UserDefaults.standard.object(forKey: enabledKey) as? Bool ?? false
+        let isEnabled: Bool
+        if let stored = UserDefaults.standard.object(forKey: enabledKey) as? Bool {
+            isEnabled = stored
+        } else {
+            // Auto-enable bundled plugins on first encounter
+            let isBundled = Bundle.main.builtInPlugInsURL.map { url.path.hasPrefix($0.path) } ?? false
+            isEnabled = isBundled
+            if isBundled {
+                UserDefaults.standard.set(true, forKey: enabledKey)
+            }
+        }
 
         let loaded = LoadedPlugin(
             manifest: manifest, instance: instance, bundle: bundle, sourceURL: url, isEnabled: isEnabled
