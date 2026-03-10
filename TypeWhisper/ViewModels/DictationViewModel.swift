@@ -70,6 +70,10 @@ final class DictationViewModel: ObservableObject {
         didSet { UserDefaults.standard.set(notchIndicatorRightContent.rawValue, forKey: UserDefaultsKeys.notchIndicatorRightContent) }
     }
 
+    @Published var notchIndicatorDisplay: NotchIndicatorDisplay {
+        didSet { UserDefaults.standard.set(notchIndicatorDisplay.rawValue, forKey: UserDefaultsKeys.notchIndicatorDisplay) }
+    }
+
     private let audioRecordingService: AudioRecordingService
     private let textInsertionService: TextInsertionService
     private let hotkeyService: HotkeyService
@@ -165,6 +169,8 @@ final class DictationViewModel: ObservableObject {
             .flatMap { NotchIndicatorContent(rawValue: $0) } ?? .timer
         self.notchIndicatorRightContent = UserDefaults.standard.string(forKey: UserDefaultsKeys.notchIndicatorRightContent)
             .flatMap { NotchIndicatorContent(rawValue: $0) } ?? .waveform
+        self.notchIndicatorDisplay = UserDefaults.standard.string(forKey: UserDefaultsKeys.notchIndicatorDisplay)
+            .flatMap { NotchIndicatorDisplay(rawValue: $0) } ?? .activeScreen
 
         setupBindings()
 

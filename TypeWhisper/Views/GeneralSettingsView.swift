@@ -14,6 +14,7 @@ struct GeneralSettingsView: View {
     @AppStorage(UserDefaultsKeys.showMenuBarIcon) private var showMenuBarIcon = true
     @ObservedObject private var pluginManager = PluginManager.shared
     @ObservedObject private var settings = SettingsViewModel.shared
+    @ObservedObject private var dictation = DictationViewModel.shared
 
     var body: some View {
         Form {
@@ -91,6 +92,32 @@ struct GeneralSettingsView: View {
                     .foregroundStyle(.secondary)
             }
 
+            Section(String(localized: "Notch Indicator")) {
+                Picker(String(localized: "Visibility"), selection: $dictation.notchIndicatorVisibility) {
+                    Text(String(localized: "Always visible")).tag(NotchIndicatorVisibility.always)
+                    Text(String(localized: "Only during activity")).tag(NotchIndicatorVisibility.duringActivity)
+                    Text(String(localized: "Never")).tag(NotchIndicatorVisibility.never)
+                }
+
+                Picker(String(localized: "Display"), selection: $dictation.notchIndicatorDisplay) {
+                    Text(String(localized: "Active Screen")).tag(NotchIndicatorDisplay.activeScreen)
+                    Text(String(localized: "Primary Screen")).tag(NotchIndicatorDisplay.primaryScreen)
+                    Text(String(localized: "Built-in Display")).tag(NotchIndicatorDisplay.builtInScreen)
+                }
+
+                Picker(String(localized: "Left Side"), selection: $dictation.notchIndicatorLeftContent) {
+                    notchContentPickerOptions
+                }
+
+                Picker(String(localized: "Right Side"), selection: $dictation.notchIndicatorRightContent) {
+                    notchContentPickerOptions
+                }
+
+                Text(String(localized: "The notch indicator extends the MacBook notch area to show recording status."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
             #if !APPSTORE
             Section(String(localized: "Updates")) {
                 HStack {
@@ -136,6 +163,15 @@ struct GeneralSettingsView: View {
                 NSApplication.shared.terminate(nil)
             }
         }
+    }
+
+    @ViewBuilder
+    private var notchContentPickerOptions: some View {
+        Text(String(localized: "Recording Indicator")).tag(NotchIndicatorContent.indicator)
+        Text(String(localized: "Timer")).tag(NotchIndicatorContent.timer)
+        Text(String(localized: "Waveform")).tag(NotchIndicatorContent.waveform)
+        Text(String(localized: "Profile")).tag(NotchIndicatorContent.profile)
+        Text(String(localized: "None")).tag(NotchIndicatorContent.none)
     }
 
     private func toggleLaunchAtLogin(_ enable: Bool) {

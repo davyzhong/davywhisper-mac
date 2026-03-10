@@ -18,3 +18,9 @@ enum NotchIndicatorContent: String, CaseIterable {
     case profile
     case none
 }
+
+enum NotchIndicatorDisplay: String, CaseIterable {
+    case activeScreen
+    case primaryScreen
+    case builtInScreen
+}

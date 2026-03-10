@@ -36,6 +36,7 @@ class NotchIndicatorPanel: NSPanel {
 
     private let notchGeometry = NotchGeometry()
     private var cancellables = Set<AnyCancellable>()
+    private var cachedScreen: NSScreen?
 
     init() {
         super.init(
@@ -79,6 +80,14 @@ class NotchIndicatorPanel: NSPanel {
                 self?.updateVisibility(state: vm.state, vm: vm)
             }
             .store(in: &cancellables)
+
+        vm.$notchIndicatorDisplay
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.cachedScreen = nil
+                self?.updateVisibility(state: vm.state, vm: vm)
+            }
+            .store(in: &cancellables)
     }
 
     private func updateVisibility(state: DictationViewModel.State, vm: DictationViewModel) {
@@ -99,14 +108,14 @@ class NotchIndicatorPanel: NSPanel {
 
     // MARK: - Notch geometry
 
-    /// Returns the screen with a hardware notch (built-in display), or nil.
-    private static func notchScreen() -> NSScreen? {
-        NSScreen.screens.first { $0.safeAreaInsets.top > 0 }
-    }
-
     func show() {
-        let mouseLocation = NSEvent.mouseLocation
-        let screen = NSScreen.screens.first { $0.frame.contains(mouseLocation) } ?? NSScreen.main ?? NSScreen.screens[0]
+        let screen: NSScreen
+        if let cached = cachedScreen, isVisible {
+            screen = cached
+        } else {
+            screen = resolveScreen()
+            cachedScreen = screen
+        }
         notchGeometry.update(for: screen)
 
         let screenFrame = screen.frame
@@ -117,7 +126,21 @@ class NotchIndicatorPanel: NSPanel {
         orderFrontRegardless()
     }
 
+    private func resolveScreen() -> NSScreen {
+        let display = DictationViewModel.shared.notchIndicatorDisplay
+        switch display {
+        case .activeScreen:
+            let mouseLocation = NSEvent.mouseLocation
+            return NSScreen.screens.first { $0.frame.contains(mouseLocation) } ?? NSScreen.main ?? NSScreen.screens[0]
+        case .primaryScreen:
+            return NSScreen.main ?? NSScreen.screens[0]
+        case .builtInScreen:
+            return NSScreen.screens.first { $0.safeAreaInsets.top > 0 } ?? NSScreen.main ?? NSScreen.screens[0]
+        }
+    }
+
     func dismiss() {
+        cachedScreen = nil
         orderOut(nil)
     }
 }

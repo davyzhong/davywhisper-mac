@@ -48,6 +48,7 @@ enum UserDefaultsKeys {
     static let notchIndicatorVisibility = "notchIndicatorVisibility"
     static let notchIndicatorLeftContent = "notchIndicatorLeftContent"
     static let notchIndicatorRightContent = "notchIndicatorRightContent"
+    static let notchIndicatorDisplay = "notchIndicatorDisplay"
 
     // MARK: - Appearance
     static let showMenuBarIcon = "showMenuBarIcon"
