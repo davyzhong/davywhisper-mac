@@ -92,7 +92,13 @@ struct GeneralSettingsView: View {
                     .foregroundStyle(.secondary)
             }
 
-            Section(String(localized: "Notch Indicator")) {
+            Section(String(localized: "Indicator")) {
+                Picker(String(localized: "Style"), selection: $dictation.indicatorStyle) {
+                    Text(String(localized: "Notch")).tag(IndicatorStyle.notch)
+                    Text(String(localized: "Overlay")).tag(IndicatorStyle.overlay)
+                }
+                .pickerStyle(.segmented)
+
                 Picker(String(localized: "Visibility"), selection: $dictation.notchIndicatorVisibility) {
                     Text(String(localized: "Always visible")).tag(NotchIndicatorVisibility.always)
                     Text(String(localized: "Only during activity")).tag(NotchIndicatorVisibility.duringActivity)
@@ -113,9 +119,15 @@ struct GeneralSettingsView: View {
                     notchContentPickerOptions
                 }
 
-                Text(String(localized: "The notch indicator extends the MacBook notch area to show recording status."))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                if dictation.indicatorStyle == .notch {
+                    Text(String(localized: "The notch indicator extends the MacBook notch area to show recording status."))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text(String(localized: "The overlay indicator appears as a floating pill near the bottom of the screen."))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
 
             #if !APPSTORE

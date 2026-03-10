@@ -89,7 +89,7 @@ final class SettingsWindowOpener {
 // MARK: - App Delegate
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    private var notchIndicatorPanel: NotchIndicatorPanel?
+    private var indicatorCoordinator: IndicatorCoordinator?
     private var translationHostWindow: NSWindow?
     private var menuBarIconObserver: NSKeyValueObservation?
     #if !APPSTORE
@@ -117,9 +117,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApp.setActivationPolicy(.regular)
         }
 
-        let notchPanel = NotchIndicatorPanel()
-        notchPanel.startObserving()
-        notchIndicatorPanel = notchPanel
+        let coordinator = IndicatorCoordinator()
+        coordinator.startObserving()
+        indicatorCoordinator = coordinator
 
         #if canImport(Translation)
         if #available(macOS 15, *), let ts = ServiceContainer.shared.translationService as? TranslationService {

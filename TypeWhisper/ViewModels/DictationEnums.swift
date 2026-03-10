@@ -1,8 +1,8 @@
 import Foundation
 
-enum OverlayPosition: String, CaseIterable {
-    case top
-    case bottom
+enum IndicatorStyle: String, CaseIterable {
+    case notch
+    case overlay
 }
 
 enum NotchIndicatorVisibility: String, CaseIterable {
