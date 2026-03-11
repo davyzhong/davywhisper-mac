@@ -375,4 +375,56 @@ enum InsertionResult {
         keyUp?.post(tap: .cgSessionEventTap)
     }
 
+    private func simulateCopy() {
+        // Key code 0x08 = C
+        let keyDown = CGEvent(keyboardEventSource: nil, virtualKey: 0x08, keyDown: true)
+        keyDown?.flags = .maskCommand
+        keyDown?.post(tap: .cgSessionEventTap)
+
+        let keyUp = CGEvent(keyboardEventSource: nil, virtualKey: 0x08, keyDown: false)
+        keyUp?.flags = .maskCommand
+        keyUp?.post(tap: .cgSessionEventTap)
+    }
+
+    /// Attempts to get selected text by simulating Cmd+C. Saves and restores the clipboard.
+    func getTextSelectionViaCopy() async -> String? {
+        let pasteboard = NSPasteboard.general
+
+        // Save current clipboard contents (all types)
+        let savedItems: [(NSPasteboard.PasteboardType, Data)] = pasteboard.pasteboardItems?.flatMap { item in
+            item.types.compactMap { type in
+                guard let data = item.data(forType: type) else { return nil }
+                return (type, data)
+            }
+        } ?? []
+
+        // Clear and simulate Cmd+C
+        pasteboard.clearContents()
+        simulateCopy()
+
+        // Wait for the copy to land on the clipboard
+        try? await Task.sleep(for: .milliseconds(100))
+
+        // Read copied text
+        let copiedText = pasteboard.string(forType: .string)
+
+        // Restore original clipboard
+        pasteboard.clearContents()
+        if !savedItems.isEmpty {
+            let item = NSPasteboardItem()
+            for (type, data) in savedItems {
+                item.setData(data, forType: type)
+            }
+            pasteboard.writeObjects([item])
+        }
+
+        guard let text = copiedText, !text.isEmpty else { return nil }
+        return text
+    }
+
+    /// Public wrapper for simulatePaste(), for use by PromptPaletteHandler.
+    func pasteFromClipboard() {
+        simulatePaste()
+    }
+
 }

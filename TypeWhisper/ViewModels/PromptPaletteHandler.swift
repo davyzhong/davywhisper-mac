@@ -16,6 +16,7 @@ final class PromptPaletteHandler {
         let focusedElement: AXUIElement?
         let activeApp: (name: String?, bundleId: String?, url: String?)
         let browserInfoTask: Task<(url: String?, title: String?), Never>?
+        let selectionViaCopy: Bool
     }
     private var paletteContext: PaletteContext?
 
@@ -77,29 +78,60 @@ final class PromptPaletteHandler {
             }
         }
 
-        // Try to get selected text (with element reference), fall back to clipboard
-        let text: String
-        var selection: TextInsertionService.TextSelection?
-        var focusedElement: AXUIElement?
+        // 3-tier fallback: AX selection -> Cmd+C simulation -> clipboard
         if let sel = textInsertionService.getTextSelection() {
-            text = sel.text
-            selection = sel
-            logger.info("[PromptPalette] Got selected text: \(text.prefix(80))")
-        } else if let clipboard = NSPasteboard.general.string(forType: .string), !clipboard.isEmpty {
-            text = clipboard
-            focusedElement = textInsertionService.getFocusedTextElement()
-            logger.info("[PromptPalette] No selection, using clipboard: \(text.prefix(80))")
+            logger.info("[PromptPalette] Got selected text via AX: \(sel.text.prefix(80))")
+            showPalette(
+                text: sel.text, selection: sel, focusedElement: nil,
+                selectionViaCopy: false, activeApp: activeApp,
+                browserInfoTask: browserInfoTask, actions: actions,
+                soundFeedbackEnabled: soundFeedbackEnabled
+            )
         } else {
-            logger.info("[PromptPalette] No text available, aborting")
-            return
+            // AX failed - try Cmd+C simulation (async) before falling back to clipboard
+            let tis = textInsertionService
+            Task {
+                if let copied = await tis.getTextSelectionViaCopy() {
+                    logger.info("[PromptPalette] Got selected text via Cmd+C: \(copied.prefix(80))")
+                    showPalette(
+                        text: copied, selection: nil, focusedElement: nil,
+                        selectionViaCopy: true, activeApp: activeApp,
+                        browserInfoTask: browserInfoTask, actions: actions,
+                        soundFeedbackEnabled: soundFeedbackEnabled
+                    )
+                } else if let clipboard = NSPasteboard.general.string(forType: .string), !clipboard.isEmpty {
+                    let focusedElement = tis.getFocusedTextElement()
+                    logger.info("[PromptPalette] No selection, using clipboard: \(clipboard.prefix(80))")
+                    showPalette(
+                        text: clipboard, selection: nil, focusedElement: focusedElement,
+                        selectionViaCopy: false, activeApp: activeApp,
+                        browserInfoTask: browserInfoTask, actions: actions,
+                        soundFeedbackEnabled: soundFeedbackEnabled
+                    )
+                } else {
+                    logger.info("[PromptPalette] No text available, aborting")
+                }
+            }
         }
+    }
 
+    private func showPalette(
+        text: String,
+        selection: TextInsertionService.TextSelection?,
+        focusedElement: AXUIElement?,
+        selectionViaCopy: Bool,
+        activeApp: (name: String?, bundleId: String?, url: String?),
+        browserInfoTask: Task<(url: String?, title: String?), Never>?,
+        actions: [PromptAction],
+        soundFeedbackEnabled: Bool
+    ) {
         paletteContext = PaletteContext(
             text: text,
             selection: selection,
             focusedElement: focusedElement,
             activeApp: activeApp,
-            browserInfoTask: browserInfoTask
+            browserInfoTask: browserInfoTask,
+            selectionViaCopy: selectionViaCopy
         )
 
         promptPaletteController.show(actions: actions, sourceText: text) { [weak self] action in
@@ -146,47 +178,81 @@ final class PromptPaletteHandler {
                     return
                 }
 
+                // Always put result on clipboard so the user can paste it
+                let pasteboard = NSPasteboard.general
+                pasteboard.clearContents()
+                pasteboard.setString(result, forType: .string)
+
+                let inserted: Bool
                 if let selection = ctx.selection {
-                    logger.info("[PromptPalette] Replacing selection with result (\(result.count) chars): \(result.prefix(80))")
-                    let replaced = textInsertionService.replaceSelectedText(in: selection, with: result)
-                    logger.info("[PromptPalette] replaceSelectedText succeeded: \(replaced)")
-                    if !replaced {
-                        logger.info("[PromptPalette] Falling back to clipboard")
-                        let pasteboard = NSPasteboard.general
-                        pasteboard.clearContents()
-                        pasteboard.setString(result, forType: .string)
-                    }
-                    soundService.play(.transcriptionSuccess, enabled: soundFeedbackEnabled)
-                    onShowNotchFeedback?(
-                        replaced ? String(localized: "Text replaced") : String(localized: "Copied to clipboard"),
-                        replaced ? "checkmark.circle.fill" : "doc.on.clipboard.fill",
-                        2.5,
-                        false
-                    )
+                    inserted = await insertViaAXWithPasteFallback(selection: selection, result: result, originalText: ctx.text, bundleId: ctx.activeApp.bundleId)
+                } else if ctx.selectionViaCopy {
+                    inserted = await activateAndPaste(bundleId: ctx.activeApp.bundleId)
                 } else if let element = ctx.focusedElement {
-                    let inserted = textInsertionService.insertTextAt(element: element, text: result)
-                    if inserted {
-                        soundService.play(.transcriptionSuccess, enabled: soundFeedbackEnabled)
-                        onShowNotchFeedback?(String(localized: "Text inserted"), "checkmark.circle.fill", 2.5, false)
-                    } else {
-                        let pasteboard = NSPasteboard.general
-                        pasteboard.clearContents()
-                        pasteboard.setString(result, forType: .string)
-                        soundService.play(.transcriptionSuccess, enabled: soundFeedbackEnabled)
-                        onShowNotchFeedback?(String(localized: "Copied to clipboard"), "doc.on.clipboard.fill", 2.5, false)
-                    }
+                    inserted = textInsertionService.insertTextAt(element: element, text: result)
                 } else {
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.setString(result, forType: .string)
-                    soundService.play(.transcriptionSuccess, enabled: soundFeedbackEnabled)
-                    onShowNotchFeedback?(String(localized: "Copied to clipboard"), "doc.on.clipboard.fill", 2.5, false)
+                    inserted = false
                 }
+
+                soundService.play(.transcriptionSuccess, enabled: soundFeedbackEnabled)
+                onShowNotchFeedback?(
+                    inserted ? String(localized: "Text replaced") : String(localized: "Copied to clipboard"),
+                    inserted ? "checkmark.circle.fill" : "doc.on.clipboard.fill",
+                    2.5,
+                    false
+                )
             } catch {
                 guard !Task.isCancelled else { return }
                 soundService.play(.error, enabled: soundFeedbackEnabled)
                 onShowNotchFeedback?(error.localizedDescription, "xmark.circle.fill", 2.5, true)
             }
         }
+    }
+
+    /// Try AX replace, verify it worked, fall back to activate+paste if silently ignored (Electron apps).
+    private func insertViaAXWithPasteFallback(
+        selection: TextInsertionService.TextSelection,
+        result: String,
+        originalText: String,
+        bundleId: String?
+    ) async -> Bool {
+        let replaced = textInsertionService.replaceSelectedText(in: selection, with: result)
+        logger.info("[PromptPalette] replaceSelectedText reported: \(replaced)")
+
+        // Verify AX replace actually worked (Electron apps report success but silently ignore it)
+        if replaced {
+            var currentText: AnyObject?
+            AXUIElementCopyAttributeValue(selection.element, kAXSelectedTextAttribute as CFString, &currentText)
+            if let text = currentText as? String, text == originalText {
+                logger.warning("[PromptPalette] AX replace silently ignored, falling back to paste")
+            } else {
+                return true
+            }
+        }
+
+        return await activateAndPaste(bundleId: bundleId)
+    }
+
+    /// Activate the source app and paste from clipboard. Result must already be on the clipboard.
+    private func activateAndPaste(bundleId: String?) async -> Bool {
+        guard let bundleId,
+              let app = NSRunningApplication.runningApplications(withBundleIdentifier: bundleId).first else {
+            logger.warning("[PromptPalette] No running app for bundleId: \(bundleId ?? "nil")")
+            return false
+        }
+
+        let activated = app.activate(from: NSRunningApplication.current)
+        logger.info("[PromptPalette] activate(from:) for \(bundleId): \(activated)")
+        try? await Task.sleep(for: .milliseconds(200))
+
+        let frontmost = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+        guard frontmost == bundleId else {
+            logger.warning("[PromptPalette] Could not activate \(bundleId), frontmost: \(frontmost ?? "nil")")
+            return false
+        }
+
+        textInsertionService.pasteFromClipboard()
+        logger.info("[PromptPalette] Pasted into \(bundleId)")
+        return true
     }
 }
