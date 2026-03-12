@@ -169,12 +169,26 @@ final class OpenAICompatiblePlugin: NSObject, TranscriptionEnginePlugin, LLMProv
 
     fileprivate func setApiKey(_ key: String) {
         _apiKey = key
-        try? host?.storeSecret(key: "api-key", value: key)
+        if let host {
+            do {
+                try host.storeSecret(key: "api-key", value: key)
+            } catch {
+                print("[OpenAICompatiblePlugin] Failed to store API key: \(error)")
+            }
+            host.notifyCapabilitiesChanged()
+        }
     }
 
     fileprivate func removeApiKey() {
         _apiKey = nil
-        try? host?.storeSecret(key: "api-key", value: "")
+        if let host {
+            do {
+                try host.storeSecret(key: "api-key", value: "")
+            } catch {
+                print("[OpenAICompatiblePlugin] Failed to delete API key: \(error)")
+            }
+            host.notifyCapabilitiesChanged()
+        }
     }
 
     fileprivate func setFetchedModels(_ models: [FetchedModel]) {

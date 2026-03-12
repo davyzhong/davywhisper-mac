@@ -25,7 +25,11 @@ final class HostServicesImpl: HostServices, @unchecked Sendable {
 
     func storeSecret(key: String, value: String) throws {
         let scopedService = "\(pluginId).\(key)"
-        try KeychainService.save(key: value, service: scopedService)
+        if value.isEmpty {
+            try KeychainService.delete(service: scopedService)
+        } else {
+            try KeychainService.save(key: value, service: scopedService)
+        }
     }
 
     func loadSecret(key: String) -> String? {

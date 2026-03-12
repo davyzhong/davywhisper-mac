@@ -144,12 +144,26 @@ final class GroqPlugin: NSObject, TranscriptionEnginePlugin, LLMProviderPlugin, 
     // Internal methods for settings
     func setApiKey(_ key: String) {
         _apiKey = key
-        try? host?.storeSecret(key: "api-key", value: key)
+        if let host {
+            do {
+                try host.storeSecret(key: "api-key", value: key)
+            } catch {
+                print("[GroqPlugin] Failed to store API key: \(error)")
+            }
+            host.notifyCapabilitiesChanged()
+        }
     }
 
     func removeApiKey() {
         _apiKey = nil
-        try? host?.storeSecret(key: "api-key", value: "")
+        if let host {
+            do {
+                try host.storeSecret(key: "api-key", value: "")
+            } catch {
+                print("[GroqPlugin] Failed to delete API key: \(error)")
+            }
+            host.notifyCapabilitiesChanged()
+        }
     }
 
     func validateApiKey(_ key: String) async -> Bool {
@@ -266,6 +280,8 @@ private struct GroqSettingsView: View {
         let trimmedKey = apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedKey.isEmpty else { return }
 
+        plugin.setApiKey(trimmedKey)
+
         isValidating = true
         validationResult = nil
         Task {
@@ -273,9 +289,6 @@ private struct GroqSettingsView: View {
             await MainActor.run {
                 isValidating = false
                 validationResult = isValid
-                if isValid {
-                    plugin.setApiKey(trimmedKey)
-                }
             }
         }
     }

@@ -666,12 +666,26 @@ final class DeepgramPlugin: NSObject, TranscriptionEnginePlugin, @unchecked Send
 
     fileprivate func setApiKey(_ key: String) {
         _apiKey = key
-        try? host?.storeSecret(key: "api-key", value: key)
+        if let host {
+            do {
+                try host.storeSecret(key: "api-key", value: key)
+            } catch {
+                print("[DeepgramPlugin] Failed to store API key: \(error)")
+            }
+            host.notifyCapabilitiesChanged()
+        }
     }
 
     fileprivate func removeApiKey() {
         _apiKey = nil
-        try? host?.storeSecret(key: "api-key", value: "")
+        if let host {
+            do {
+                try host.storeSecret(key: "api-key", value: "")
+            } catch {
+                print("[DeepgramPlugin] Failed to delete API key: \(error)")
+            }
+            host.notifyCapabilitiesChanged()
+        }
     }
 
     fileprivate func setCustomBaseURL(_ url: String) {
@@ -838,6 +852,8 @@ private struct DeepgramSettingsView: View {
         let trimmedKey = apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedKey.isEmpty else { return }
 
+        plugin.setApiKey(trimmedKey)
+
         isValidating = true
         validationResult = nil
         Task {
@@ -845,9 +861,6 @@ private struct DeepgramSettingsView: View {
             await MainActor.run {
                 isValidating = false
                 validationResult = isValid
-                if isValid {
-                    plugin.setApiKey(trimmedKey)
-                }
             }
         }
     }
