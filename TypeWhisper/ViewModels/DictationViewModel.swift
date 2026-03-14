@@ -237,6 +237,12 @@ final class DictationViewModel: ObservableObject {
         stopDictation()
     }
 
+    deinit {
+        MainActor.assumeIsolated {
+            recordingTimer?.invalidate()
+        }
+    }
+
     private func setupBindings() {
         hotkeyService.onDictationStart = { [weak self] in
             self?.startRecording()
@@ -266,10 +272,9 @@ final class DictationViewModel: ObservableObject {
 
         audioRecordingService.$audioLevel
             .dropFirst()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] level in
-                DispatchQueue.main.async {
-                    self?.audioLevel = level
-                }
+                self?.audioLevel = level
             }
             .store(in: &cancellables)
 
