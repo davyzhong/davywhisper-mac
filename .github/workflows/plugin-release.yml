@@ -73,16 +73,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Resolve Swift packages
+        run: |
+          # Always resolve with Xcode 26.2 because mlx-audio-swift requires Swift 6.2
+          sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+          xcodebuild -resolvePackageDependencies \
+            -project TypeWhisper.xcodeproj \
+            -scheme TypeWhisper
+
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
-
-      - name: Resolve Swift packages
-        run: |
-          xcodebuild -resolvePackageDependencies \
-            -project TypeWhisper.xcodeproj \
-            -scheme TypeWhisper
 
       - name: Patch manifest version
         run: |
