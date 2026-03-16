@@ -37,6 +37,7 @@ enum UserDefaultsKeys {
 
     // MARK: - Home / Setup
     static let setupWizardCompleted = "setupWizardCompleted"
+    static let setupWizardCurrentStep = "setupWizardCurrentStep"
 
     // MARK: - Dictionary
     static let activatedTermPacks = "activatedTermPacks"
