@@ -9,6 +9,7 @@ struct AdvancedSettingsView: View {
     @State private var cliSymlinkTarget = ""
     #endif
     @State private var raycastInstalled = false
+    @State private var showClearMemoryConfirmation = false
 
     @AppStorage(UserDefaultsKeys.historyRetentionDays) private var historyRetentionDays: Int = 0
     @AppStorage(UserDefaultsKeys.saveAudioWithHistory) private var saveAudioWithHistory: Bool = false
@@ -87,9 +88,19 @@ struct AdvancedSettingsView: View {
                     }
 
                     Button(role: .destructive) {
-                        Task { await memoryService.clearAllMemories() }
+                        showClearMemoryConfirmation = true
                     } label: {
                         Label(String(localized: "Clear All Memories"), systemImage: "trash")
+                    }
+                    .confirmationDialog(
+                        String(localized: "Clear All Memories?"),
+                        isPresented: $showClearMemoryConfirmation
+                    ) {
+                        Button(String(localized: "Clear All"), role: .destructive) {
+                            Task { await memoryService.clearAllMemories() }
+                        }
+                    } message: {
+                        Text(String(localized: "This will permanently delete all stored memories from all plugins. This cannot be undone."))
                     }
                 }
             }

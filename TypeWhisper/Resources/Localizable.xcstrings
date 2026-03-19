@@ -976,6 +976,26 @@
         }
       }
     },
+    "Clear All Memories?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Erinnerungen löschen?"
+          }
+        }
+      }
+    },
+    "This will permanently delete all stored memories from all plugins. This cannot be undone." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle gespeicherten Erinnerungen werden unwiderruflich aus allen Plugins gelöscht."
+          }
+        }
+      }
+    },
     "Clear Filters" : {
       "localizations" : {
         "de" : {
