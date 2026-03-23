@@ -67,6 +67,9 @@ enum UserDefaultsKeys {
     // MARK: - Formatting
     static let appFormattingEnabled = "appFormattingEnabled"
 
+    // MARK: - Accessibility
+    static let spokenFeedbackEnabled = "spokenFeedbackEnabled"
+
     // MARK: - Plugin Registry
     static let pluginRegistryLastFetch = "pluginRegistryLastFetch"
 
