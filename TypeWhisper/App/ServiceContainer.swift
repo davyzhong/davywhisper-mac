@@ -26,6 +26,7 @@ final class ServiceContainer: ObservableObject {
     let pluginRegistryService: PluginRegistryService
     let widgetDataService: WidgetDataService
     let memoryService: MemoryService
+    let audioRecorderService: AudioRecorderService
     let watchFolderService: WatchFolderService
 
     // HTTP API
@@ -42,6 +43,7 @@ final class ServiceContainer: ObservableObject {
     let snippetsViewModel: SnippetsViewModel
     let homeViewModel: HomeViewModel
     let promptActionsViewModel: PromptActionsViewModel
+    let audioRecorderViewModel: AudioRecorderViewModel
     let watchFolderViewModel: WatchFolderViewModel
 
     private init() {
@@ -74,6 +76,7 @@ final class ServiceContainer: ObservableObject {
         pluginRegistryService = PluginRegistryService()
         widgetDataService = WidgetDataService(historyService: historyService)
         memoryService = MemoryService(promptProcessingService: promptProcessingService)
+        audioRecorderService = AudioRecorderService()
         promptProcessingService.memoryService = memoryService
         watchFolderService = WatchFolderService(audioFileService: audioFileService, modelManagerService: modelManagerService)
 
@@ -125,6 +128,7 @@ final class ServiceContainer: ObservableObject {
             promptActionService: promptActionService,
             promptProcessingService: promptProcessingService
         )
+        audioRecorderViewModel = AudioRecorderViewModel(recorderService: audioRecorderService, modelManager: modelManagerService, dictionaryService: dictionaryService)
         watchFolderViewModel = WatchFolderViewModel(watchFolderService: watchFolderService)
 
         // Set shared references
@@ -138,6 +142,7 @@ final class ServiceContainer: ObservableObject {
         SnippetsViewModel._shared = snippetsViewModel
         HomeViewModel._shared = homeViewModel
         PromptActionsViewModel._shared = promptActionsViewModel
+        AudioRecorderViewModel._shared = audioRecorderViewModel
         WatchFolderViewModel._shared = watchFolderViewModel
 
         // Plugin system
