@@ -2,6 +2,11 @@ import SwiftUI
 
 struct DictionarySettingsView: View {
     @ObservedObject private var viewModel = DictionaryViewModel.shared
+    @ObservedObject private var termPackRegistryService: TermPackRegistryService
+
+    init() {
+        _termPackRegistryService = ObservedObject(wrappedValue: TermPackRegistryService.shared)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -172,10 +177,8 @@ struct DictionarySettingsView: View {
 
     @ViewBuilder
     private var communityPacksSection: some View {
-        let registry = TermPackRegistryService.shared!
-
         Section {
-            switch registry.fetchState {
+            switch termPackRegistryService.fetchState {
             case .idle, .loading:
                 HStack {
                     Spacer()
@@ -199,7 +202,7 @@ struct DictionarySettingsView: View {
                             .foregroundStyle(.tertiary)
                             .lineLimit(2)
                         Button(String(localized: "Retry")) {
-                            Task { await registry.fetchRegistry(force: true) }
+                            Task { await termPackRegistryService.fetchRegistry(force: true) }
                         }
                         .buttonStyle(.bordered)
                         .controlSize(.small)
@@ -209,7 +212,7 @@ struct DictionarySettingsView: View {
                 .padding(.vertical, 12)
 
             case .loaded:
-                if registry.communityPacks.isEmpty {
+                if termPackRegistryService.communityPacks.isEmpty {
                     HStack {
                         Spacer()
                         Text(String(localized: "No community packs available yet."))
@@ -219,7 +222,7 @@ struct DictionarySettingsView: View {
                     }
                     .padding(.vertical, 12)
                 } else {
-                    ForEach(registry.communityPacks) { pack in
+                    ForEach(termPackRegistryService.communityPacks) { pack in
                         TermPackCardView(pack: pack, viewModel: viewModel)
                     }
                 }
@@ -233,7 +236,7 @@ struct DictionarySettingsView: View {
                 .padding(.bottom, 4)
         }
         .task {
-            await registry.fetchRegistry()
+            await termPackRegistryService.fetchRegistry()
         }
     }
 }
