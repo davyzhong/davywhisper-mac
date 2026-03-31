@@ -3,13 +3,13 @@ import SwiftUI
 import HuggingFace
 import MLX
 import MLXAudioSTT
-import TypeWhisperPluginSDK
+import DavyWhisperPluginSDK
 
 // MARK: - Plugin Entry Point
 
 @objc(Qwen3Plugin)
 final class Qwen3Plugin: NSObject, TranscriptionEnginePlugin, PluginSettingsActivityReporting, @unchecked Sendable {
-    static let pluginId = "com.typewhisper.qwen3"
+    static let pluginId = "com.davywhisper.qwen3"
     static let pluginName = "Qwen3 ASR"
 
     fileprivate var host: HostServices?

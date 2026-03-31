@@ -15,6 +15,7 @@
 		6C1F7A8B9D2E4F5061728394 /* SoundServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2E4F50617283946C1F7A8B /* SoundServiceTests.swift */; };
 		BB8C1D4E5F60718293A4B5C6 /* DictationShortSpeechTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C1D4E5F60718293A4B5C6 /* DictationShortSpeechTests.swift */; };
 		76858B5B28A121356A5D9599 /* TextDiffServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05313C25F9E79BCFC02899F2 /* TextDiffServiceTests.swift */; };
+		7DADCC6E1AEA99CA48F83F50 /* CLISupportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD34FDF9D999D85DA1C35375 /* CLISupportTests.swift */; };
 		7EC0EFA7DA6597CAEA640448 /* APIRouterAndHandlersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D200DCDD6580F443C5CE0A /* APIRouterAndHandlersTests.swift */; };
 		86F4253D3CDE30E859D0F219 /* ProfileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41BD305007A3A158038C75C /* ProfileServiceTests.swift */; };
 		928A1F1B7A0D4C62A2B90761 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000034 /* DavyWhisperPluginSDK */; };
@@ -119,11 +120,6 @@
 		AA00000000000000000150 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000010 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000152 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000147 /* AppConstants.swift */; };
 		AA00000000000000000153 /* HistoryExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000148 /* HistoryExporter.swift */; };
-		AA00000000000000000154 /* Qwen3Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000150 /* Qwen3Plugin.swift */; };
-		AA00000000000000000155 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000151 /* manifest.json */; };
-		AA00000000000000000156 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000011 /* DavyWhisperPluginSDK */; };
-		AA00000000000000000157 /* MLXAudioSTT in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000012 /* MLXAudioSTT */; };
-		AA00000000000000000158 /* MLXAudioCore in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000013 /* MLXAudioCore */; };
 		AA00000000000000000160 /* PluginRegistryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000152 /* PluginRegistryService.swift */; };
 		AA00000000000000000161 /* WhisperKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000154 /* WhisperKitPlugin.swift */; };
 		AA00000000000000000162 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000155 /* manifest.json */; };
@@ -141,7 +137,6 @@
 		AA00000000000000000174 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000164 /* Localizable.xcstrings */; };
 		AA00000000000000000175 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000165 /* Localizable.xcstrings */; };
 		AA00000000000000000176 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000166 /* Localizable.xcstrings */; };
-		AA00000000000000000177 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000167 /* Localizable.xcstrings */; };
 		AA00000000000000000178 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000168 /* Localizable.xcstrings */; };
 		AA00000000000000000179 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000169 /* Localizable.xcstrings */; };
 		AA00000000000000000180 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000170 /* Localizable.xcstrings */; };
@@ -247,11 +242,6 @@
 		BF1DFDDFBF91D87134DA57E7 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D584661B6B55F6329CB5FC4 /* manifest.json */; };
 		F1177F582D186041B081F9C5 /* GoogleCloudSTTPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D368E23E2A0AB2390B34EA /* GoogleCloudSTTPlugin.swift */; };
 		F774802B61AFC0DCA9E8E668 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 67BE633BCFA1507F72199015 /* DavyWhisperPluginSDK */; };
-
-		F00112233445566778899AABB /* EventBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87243118E35C8AC81DF079D2 /* EventBusTests.swift */; };
-		F00112233445566778899AACC /* HTTPServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD00AD28CA07C60A58A9F0F1 /* HTTPServerTests.swift */; };
-		F00112233445566778899AADD /* TextInsertionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100CD2A3EB889F5522C3B270 /* TextInsertionServiceTests.swift */; };
-		F00112233445566778899AAEE /* AudioFileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B1AD991E77FCA3C35921A /* AudioFileServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -420,9 +410,6 @@
 		BB00000000000000000146 /* LinearPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinearPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000147 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		BB00000000000000000148 /* HistoryExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryExporter.swift; sourceTree = "<group>"; };
-		BB00000000000000000149 /* Qwen3Plugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Qwen3Plugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000150 /* Qwen3Plugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Qwen3Plugin.swift; sourceTree = "<group>"; };
-		BB00000000000000000151 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000152 /* PluginRegistryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistryService.swift; sourceTree = "<group>"; };
 		BB00000000000000000153 /* WhisperKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhisperKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000154 /* WhisperKitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperKitPlugin.swift; sourceTree = "<group>"; };
@@ -438,7 +425,6 @@
 		BB00000000000000000164 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000165 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000166 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		BB00000000000000000167 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000168 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000169 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000170 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -524,6 +510,7 @@
 		E6F8E5940EF4832A7B8D735D /* DavyWhisperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DavyWhisperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E808D246301E36546EEB811F /* TestSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
 		F41BD305007A3A158038C75C /* ProfileServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileServiceTests.swift; sourceTree = "<group>"; };
+		FD34FDF9D999D85DA1C35375 /* CLISupportTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CLISupportTests.swift; sourceTree = "<group>"; };
 		BB00000000000000000248 /* HotkeyRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyRecorderView.swift; sourceTree = "<group>"; };
 		BB00000000000000000249 /* HotkeySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySettingsView.swift; sourceTree = "<group>"; };
 		BB00000000000000000250 /* AboutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsView.swift; sourceTree = "<group>"; };
@@ -549,11 +536,6 @@
 		01D368E23E2A0AB2390B34EA /* GoogleCloudSTTPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudSTTPlugin.swift; sourceTree = "<group>"; };
 		1D584661B6B55F6329CB5FC4 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		5CA4DB761B06383B5B8CF082 /* GoogleCloudSTTPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleCloudSTTPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-
-		87243118E35C8AC81DF079D2 /* EventBusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBusTests.swift; sourceTree = "<group>"; };
-		BD00AD28CA07C60A58A9F0F1 /* HTTPServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServerTests.swift; sourceTree = "<group>"; };
-		100CD2A3EB889F5522C3B270 /* TextInsertionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInsertionServiceTests.swift; sourceTree = "<group>"; };
-		F34B1AD991E77FCA3C35921A /* AudioFileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -619,16 +601,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA00000000000000000150 /* DavyWhisperPluginSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF00000000000000000059 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AA00000000000000000156 /* DavyWhisperPluginSDK in Frameworks */,
-				AA00000000000000000157 /* MLXAudioSTT in Frameworks */,
-				AA00000000000000000158 /* MLXAudioCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -844,7 +816,6 @@
 				CC00000000000000000017 /* OpenAIPlugin */,
 				CC00000000000000000018 /* GeminiPlugin */,
 				CC00000000000000000019 /* LinearPlugin */,
-				CC00000000000000000020 /* Qwen3Plugin */,
 				CC00000000000000000021 /* WhisperKitPlugin */,
 				CC00000000000000000022 /* ParakeetPlugin */,
 				CC00000000000000000023 /* SpeechAnalyzerPlugin */,
@@ -1137,17 +1108,6 @@
 			path = Plugins/LinearPlugin;
 			sourceTree = "<group>";
 		};
-		CC00000000000000000020 /* Qwen3Plugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000150 /* Qwen3Plugin.swift */,
-				BB00000000000000000151 /* manifest.json */,
-				BB00000000000000000167 /* Localizable.xcstrings */,
-			);
-			name = Qwen3Plugin;
-			path = Plugins/Qwen3Plugin;
-			sourceTree = "<group>";
-		};
 		CC00000000000000000021 /* WhisperKitPlugin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1397,7 +1357,6 @@
 				BB00000000000000000135 /* OpenAIPlugin.bundle */,
 				BB00000000000000000143 /* GeminiPlugin.bundle */,
 				BB00000000000000000146 /* LinearPlugin.bundle */,
-				BB00000000000000000149 /* Qwen3Plugin.bundle */,
 				BB00000000000000000153 /* WhisperKitPlugin.bundle */,
 				BB00000000000000000156 /* ParakeetPlugin.bundle */,
 				BB00000000000000000159 /* SpeechAnalyzerPlugin.bundle */,
@@ -1429,6 +1388,7 @@
 			children = (
 				E6D200DCDD6580F443C5CE0A /* APIRouterAndHandlersTests.swift */,
 				CE5852D6767C5FA955B84C52 /* AppFormatterServiceTests.swift */,
+				FD34FDF9D999D85DA1C35375 /* CLISupportTests.swift */,
 				AA8C1D4E5F60718293A4B5C6 /* DictationShortSpeechTests.swift */,
 				D63A42880A0BA4C84F36E873 /* DictionaryServiceTests.swift */,
 				A8D4F2B6E1C3097B5F8A4E62 /* DictionaryExporterTests.swift */,
@@ -1440,11 +1400,6 @@
 				BE6B6611B899F649B097A726 /* SnippetServiceTests.swift */,
 				B26D2C342D877030A62CE027 /* Support */,
 				05313C25F9E79BCFC02899F2 /* TextDiffServiceTests.swift */,
-				87243118E35C8AC81DF079D2 /* EventBusTests.swift */,
-				BD00AD28CA07C60A58A9F0F1 /* HTTPServerTests.swift */,
-				100CD2A3EB889F5522C3B270 /* TextInsertionServiceTests.swift */,
-				F34B1AD991E77FCA3C35921A /* AudioFileServiceTests.swift */,
-
 			);
 			name = DavyWhisperTests;
 			path = DavyWhisperTests;
@@ -1535,28 +1490,6 @@
 			);
 			productName = WebhookPlugin;
 			productReference = BB00000000000000000133 /* WebhookPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		DD00000000000000000009 /* Qwen3Plugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FF00000000000000000061 /* Build configuration list for PBXNativeTarget "Qwen3Plugin" */;
-			buildPhases = (
-				FF00000000000000000058 /* Sources */,
-				FF00000000000000000059 /* Frameworks */,
-				FF00000000000000000060 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Qwen3Plugin;
-			packageProductDependencies = (
-				PP00000000000000000011 /* DavyWhisperPluginSDK */,
-				PP00000000000000000012 /* MLXAudioSTT */,
-				PP00000000000000000013 /* MLXAudioCore */,
-			);
-			productName = Qwen3Plugin;
-			productReference = BB00000000000000000149 /* Qwen3Plugin.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		DD00000000000000000010 /* WhisperKitPlugin */ = {
@@ -1686,7 +1619,6 @@
 				DD00000000000000000005 /* OpenAIPlugin */,
 				DD00000000000000000006 /* GeminiPlugin */,
 				DD00000000000000000007 /* LinearPlugin */,
-				DD00000000000000000009 /* Qwen3Plugin */,
 				DD00000000000000000010 /* WhisperKitPlugin */,
 				DD00000000000000000011 /* ParakeetPlugin */,
 				DD00000000000000000012 /* SpeechAnalyzerPlugin */,
@@ -1776,15 +1708,6 @@
 			files = (
 				AA00000000000000000149 /* manifest.json in Resources */,
 				AA00000000000000000176 /* Localizable.xcstrings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF00000000000000000060 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AA00000000000000000155 /* manifest.json in Resources */,
-				AA00000000000000000177 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2003,6 +1926,7 @@
 			files = (
 				7EC0EFA7DA6597CAEA640448 /* APIRouterAndHandlersTests.swift in Sources */,
 				24FFE19AC026C48AE32BCD7C /* AppFormatterServiceTests.swift in Sources */,
+				7DADCC6E1AEA99CA48F83F50 /* CLISupportTests.swift in Sources */,
 				BB8C1D4E5F60718293A4B5C6 /* DictationShortSpeechTests.swift in Sources */,
 				B4CC04DF94001FF7220789BC /* DictionaryServiceTests.swift in Sources */,
 				C7A3E9F1D5B2084A6E9C3D71 /* DictionaryExporterTests.swift in Sources */,
@@ -2014,11 +1938,8 @@
 				A47BC06842DCB0BB47A2D938 /* SnippetServiceTests.swift in Sources */,
 				204C804898EAE1127B62EC98 /* TestSupport.swift in Sources */,
 				76858B5B28A121356A5D9599 /* TextDiffServiceTests.swift in Sources */,
-				F00112233445566778899AABB /* EventBusTests.swift in Sources */,
-				F00112233445566778899AACC /* HTTPServerTests.swift in Sources */,
-				F00112233445566778899AADD /* TextInsertionServiceTests.swift in Sources */,
-				F00112233445566778899AAEE /* AudioFileServiceTests.swift in Sources */,
-
+				E2DA879FDEFA04FBD013E837 /* OutputFormatter.swift in Sources */,
+				BA68B1E282D5D714132FEA24 /* PortDiscovery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2179,14 +2100,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA00000000000000000148 /* LinearPlugin.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF00000000000000000058 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AA00000000000000000154 /* Qwen3Plugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3351,98 +3264,6 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.typewhisper.linear;
 				PRODUCT_NAME = LinearPlugin;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = AppStoreRelease;
-		};
-		XX00000000000000000037 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Qwen3 ASR (MLX)";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSPrincipalClass = Qwen3Plugin;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.typewhisper.qwen3;
-				PRODUCT_NAME = Qwen3Plugin;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		XX00000000000000000038 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Qwen3 ASR (MLX)";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSPrincipalClass = Qwen3Plugin;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.typewhisper.qwen3;
-				PRODUCT_NAME = Qwen3Plugin;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		XX00000000000000000039 /* AppStoreDebug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Qwen3 ASR (MLX)";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSPrincipalClass = Qwen3Plugin;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.typewhisper.qwen3;
-				PRODUCT_NAME = Qwen3Plugin;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = AppStoreDebug;
-		};
-		XX00000000000000000040 /* AppStoreRelease */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Qwen3 ASR (MLX)";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSPrincipalClass = Qwen3Plugin;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.typewhisper.qwen3;
-				PRODUCT_NAME = Qwen3Plugin;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
@@ -5537,17 +5358,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF00000000000000000061 /* Build configuration list for PBXNativeTarget "Qwen3Plugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000037 /* Debug */,
-				XX00000000000000000038 /* Release */,
-				XX00000000000000000039 /* AppStoreDebug */,
-				XX00000000000000000040 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		FF00000000000000000065 /* Build configuration list for PBXNativeTarget "WhisperKitPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -5861,16 +5671,6 @@
 		PP00000000000000000011 /* DavyWhisperPluginSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DavyWhisperPluginSDK;
-		};
-		PP00000000000000000012 /* MLXAudioSTT */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = RR00000000000000000006 /* XCRemoteSwiftPackageReference "mlx-audio-swift" */;
-			productName = MLXAudioSTT;
-		};
-		PP00000000000000000013 /* MLXAudioCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = RR00000000000000000006 /* XCRemoteSwiftPackageReference "mlx-audio-swift" */;
-			productName = MLXAudioCore;
 		};
 		PP00000000000000000014 /* DavyWhisperPluginSDK */ = {
 			isa = XCSwiftPackageProductDependency;

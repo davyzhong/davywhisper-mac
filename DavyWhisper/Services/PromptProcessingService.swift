@@ -25,7 +25,15 @@ class PromptProcessingService: ObservableObject {
         return false
     }
 
-    /// Returns (id, displayName) pairs for all available providers
+    /// Provider names for Chinese LLM providers that are available in this build.
+    /// Only these providers are shown in the UI (others are unavailable in China).
+    private static let chineseLlmProviderNames: Set<String> = [
+        "GLM (Zhipu AI)",
+        "Kimi",
+        "MiniMax",
+    ]
+
+    /// Returns (id, displayName) pairs for available Chinese LLM providers
     var availableProviders: [(id: String, displayName: String)] {
         var result: [(id: String, displayName: String)] = []
 
@@ -34,6 +42,8 @@ class PromptProcessingService: ObservableObject {
         }
 
         for plugin in PluginManager.shared.llmProviders {
+            // Only show Chinese LLM providers (others are not available in China)
+            guard Self.chineseLlmProviderNames.contains(plugin.providerName) else { continue }
             result.append((id: plugin.providerName, displayName: plugin.providerName))
         }
 
