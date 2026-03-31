@@ -2,18 +2,18 @@
 set -euo pipefail
 
 # =============================================================================
-# TypeWhisper Screenshot Automation
+# DavyWhisper Screenshot Automation
 # Takes screenshots of all Settings tabs + Notch Indicator
 # =============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-SCHEME="TypeWhisper"
-PROJECT="TypeWhisper.xcodeproj"
-APP_NAME="TypeWhisper"
+SCHEME="DavyWhisper"
+PROJECT="DavyWhisper.xcodeproj"
+APP_NAME="DavyWhisper"
 BUILD_DIR="$PROJECT_DIR/build-screenshots"
 SCREENSHOT_DIR="$PROJECT_DIR/.github/screenshots"
-PROCESS_NAME="TypeWhisper"
+PROCESS_NAME="DavyWhisper"
 
 # Tabs to screenshot (in sidebar order)
 # Format: "tab_label:filename" - tab_label must match the sidebar text exactly
@@ -46,7 +46,7 @@ let windowList = CGWindowListCopyWindowInfo([.optionAll], kCGNullWindowID) as NS
 for case let w as NSDictionary in windowList {
     let owner = w["kCGWindowOwnerName"] as? String ?? ""
     let name = w["kCGWindowName"] as? String ?? ""
-    if owner == "TypeWhisper" && name == "Settings" {
+    if owner == "DavyWhisper" && name == "Settings" {
         print(w["kCGWindowNumber"] as? Int ?? 0)
         break
     }
@@ -65,7 +65,7 @@ for case let w as NSDictionary in windowList {
     let bounds = w["kCGWindowBounds"] as? NSDictionary ?? [:]
     let width = bounds["Width"] as? Int ?? 0
     let height = bounds["Height"] as? Int ?? 0
-    if owner == "TypeWhisper" && width == 500 && height == 500 {
+    if owner == "DavyWhisper" && width == 500 && height == 500 {
         print(w["kCGWindowNumber"] as? Int ?? 0)
         break
     }
@@ -80,7 +80,7 @@ import Foundation
 let windowList = CGWindowListCopyWindowInfo([.optionAll], kCGNullWindowID) as NSArray? ?? []
 for case let w as NSDictionary in windowList {
     let owner = w["kCGWindowOwnerName"] as? String ?? ""
-    if owner == "TypeWhisper" {
+    if owner == "DavyWhisper" {
         let id = w["kCGWindowNumber"] as? Int ?? 0
         let layer = w["kCGWindowLayer"] as? Int ?? 0
         let name = w["kCGWindowName"] as? String ?? "(none)"
@@ -121,7 +121,7 @@ EOF
 open_settings_via_menu() {
     osascript <<'EOF'
 tell application "System Events"
-    tell process "TypeWhisper"
+    tell process "DavyWhisper"
         click menu bar item 1 of menu bar 2
         delay 0.3
         click menu item "Settings..." of menu 1 of menu bar item 1 of menu bar 2
@@ -232,7 +232,7 @@ if [ "$EXPLORE" = true ]; then
     log "Exploring accessibility hierarchy"
     osascript <<'EXPLORE_EOF' 2>&1 || true
 tell application "System Events"
-    tell process "TypeWhisper"
+    tell process "DavyWhisper"
         tell window "Settings"
             set allElements to entire contents
             repeat with elem in allElements

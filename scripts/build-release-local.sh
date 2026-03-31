@@ -3,9 +3,9 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-SCHEME="TypeWhisper"
-PROJECT="TypeWhisper.xcodeproj"
-APP_NAME="TypeWhisper"
+SCHEME="DavyWhisper"
+PROJECT="DavyWhisper.xcodeproj"
+APP_NAME="DavyWhisper"
 BUILD_DIR="$PROJECT_DIR/build-release"
 
 SIGN=false
@@ -16,7 +16,7 @@ for arg in "$@"; do
   esac
 done
 
-echo "=== TypeWhisper Local Release Build ==="
+echo "=== DavyWhisper Local Release Build ==="
 echo "Sign: $SIGN"
 echo ""
 
@@ -67,7 +67,7 @@ if [ "$SIGN" = true ]; then
   find "$APP_PATH" -name '._*' -delete
   xattr -cr "$APP_PATH"
   codesign --force --deep --options runtime --timestamp \
-    --entitlements "$PROJECT_DIR/TypeWhisper/Resources/TypeWhisper.entitlements" \
+    --entitlements "$PROJECT_DIR/DavyWhisper/Resources/DavyWhisper.entitlements" \
     --sign "$IDENTITY" \
     "$APP_PATH"
   codesign --verify --deep --strict --verbose=2 "$APP_PATH"
@@ -84,7 +84,7 @@ if ! command -v dmgbuild &> /dev/null; then
 fi
 
 VERSION=$(defaults read "$APP_PATH/Contents/Info.plist" CFBundleShortVersionString 2>/dev/null || echo "dev")
-DMG_NAME="TypeWhisper-v${VERSION}.dmg"
+DMG_NAME="DavyWhisper-v${VERSION}.dmg"
 DMG_PATH="$BUILD_DIR/$DMG_NAME"
 
 dmgbuild -s "$PROJECT_DIR/.github/dmgbuild-settings.py" \

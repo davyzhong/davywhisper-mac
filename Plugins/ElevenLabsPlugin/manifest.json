@@ -1,10 +1,10 @@
 {
-    "id": "com.typewhisper.elevenlabs",
+    "id": "com.davywhisper.elevenlabs",
     "name": "ElevenLabs",
     "version": "1.0.0",
     "minHostVersion": "0.12.0",
     "minOSVersion": "14.0",
-    "author": "TypeWhisper",
+    "author": "DavyWhisper",
     "description": "Cloud transcription via ElevenLabs Scribe API with real-time WebSocket streaming.",
     "descriptions": {
         "de": "Cloud-Transkription ueber die ElevenLabs-Scribe-API mit Echtzeit-WebSocket-Streaming."

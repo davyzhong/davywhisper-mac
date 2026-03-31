@@ -1,40 +1,30 @@
-# Contributor Covenant Code of Conduct
+# 贡献者公约行为准则
 
-## Our Pledge
+## 我们的承诺
 
-We as members, contributors, and leaders pledge to make participation in our
-community a harassment-free experience for everyone, regardless of age, body
-size, visible or invisible disability, ethnicity, sex characteristics, gender
-identity and expression, level of experience, education, socio-economic status,
-nationality, personal appearance, race, religion, or sexual identity
-and orientation.
+我们作为成员、贡献者和领导者，承诺将参与我们的社区变成每个人的无骚扰体验，无论年龄、体型、可见或不可见的残疾、种族、性特征、性别认同和表达、经验水平、教育背景、社会经济地位、国籍、外貌、种族、宗教、性认同和性取向。
 
-## Our Standards
+## 我们的标准
 
-Examples of behavior that contributes to a positive environment:
+有助于积极环境的行為示例：
 
-- Using welcoming and inclusive language
-- Being respectful of differing viewpoints and experiences
-- Gracefully accepting constructive criticism
-- Focusing on what is best for the community
+- 使用热情和包容性的语言
+- 尊重不同观点和经历
+- 优雅地接受建设性批评
+- 专注于对社区最有利的事物
 
-Examples of unacceptable behavior:
+不可接受的行为示例：
 
-- The use of sexualized language or imagery
-- Trolling, insulting or derogatory comments, and personal attacks
-- Public or private harassment
-- Publishing others' private information without explicit permission
-- Other conduct which could reasonably be considered inappropriate
+- 使用性化语言或图像
+- 挑衅、侮辱或贬损评论，以及人身攻击
+- 公开或私下骚扰
+- 未经明确许可发布他人私人信息
+- 其他可合理认为不当的行为
 
-## Enforcement
+## 执行
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the project maintainers. All complaints will be reviewed and
-investigated and will result in a response deemed necessary and appropriate
-to the circumstances.
+滥用、骚扰或其他不可接受行为的实例可向项目维护者报告。所有投诉都将被审查和调查，并将产生被认为必要和适当的回应。
 
-## Attribution
+## 来源
 
-This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org),
-version 2.1, available at
-https://www.contributor-covenant.org/version/2/1/code_of_conduct.html.
+本行为准则改编自 [Contributor Covenant](https://www.contributor-covenant.org)，版本 2.1，参见 https://www.contributor-covenant.org/version/2/1/code_of_conduct.html。

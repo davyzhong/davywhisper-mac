@@ -1,42 +1,42 @@
-# Release Checklist
+# 发布检查清单
 
-## Before the RC
+## RC 之前
 
-- `xcodebuild test -project TypeWhisper.xcodeproj -scheme TypeWhisper -destination 'platform=macOS,arch=arm64' -parallel-testing-enabled NO CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO`
-- `swift test --package-path TypeWhisperPluginSDK`
-- `xcodebuild -project TypeWhisper.xcodeproj -scheme TypeWhisper -configuration Release -derivedDataPath build -destination 'generic/platform=macOS' CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO`
+- `xcodebuild test -project DavyWhisper.xcodeproj -scheme DavyWhisper -destination 'platform=macOS,arch=arm64' -parallel-testing-enabled NO CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO`
+- `swift test --package-path DavyWhisperPluginSDK`
+- `xcodebuild -project DavyWhisper.xcodeproj -scheme DavyWhisper -configuration Release -derivedDataPath build -destination 'generic/platform=macOS' CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO`
 - `bash scripts/check_first_party_warnings.sh build.log`
-- Review README, Security Policy, and Support Matrix
+- 审查 README、安全策略和支持矩阵
 
-## RC Smoke-Checks
+## RC 冒烟检查
 
-- Publish `1.1.0-rc*` on the `release-candidate` channel and daily builds on the `daily` channel
-- Stable builds must use only the default channel
-- Fresh install
-- Permission recovery
-- First dictation
-- File transcription
-- Prompt action
-- Prompt wizard step (cross-tab navigation)
-- Prompt drag-and-drop reordering
-- History edit/export
-- Post-processing transparency in history and indicators
-- Profile matching
-- Plugin enable/disable
-- Community term pack download and apply
-- App audio recording with separate tracks
-- Google Cloud Speech-to-Text plugin
-- Sound feedback settings (enable/disable/change sounds)
-- Non-blocking model download
-- Dictionary JSON export and import
-- Parakeet V2/V3 model version selection
-- Verify CLI and HTTP API locally
-- Upgrade from `1.0.0`
+- 在 `release-candidate` 通道发布 `1.1.0-rc*`，在 `daily` 通道发布每日构建
+- 稳定构建必须仅使用默认通道
+- 全新安装
+- 权限恢复
+- 第一次语音输入
+- 文件转写
+- Prompt Action
+- Prompt 向导步骤（跨标签导航）
+- Prompt 拖放重排序
+- 历史编辑/导出
+- 历史和指示器中的后处理透明度
+- 配置文件匹配
+- 插件启用/禁用
+- 社区术语包下载和应用
+- App 音频录制（带独立音轨）
+- Google Cloud Speech-to-Text 插件
+- 声音反馈设置（启用/禁用/更改声音）
+- 非阻塞模型下载
+- 词典 JSON 导出和导入
+- Parakeet V2/V3 模型版本选择
+- 本地验证 CLI 和 HTTP API
+- 从 `1.0.0` 升级
 
-## Before `1.1.0`
+## `1.1.0` 之前
 
-- Observe `1.1.0-rc1` on real machines for multiple days
-- No open P0/P1 bugs in the core workflow
-- Update release notes
-- RC and daily tags must not update Homebrew
-- Verify DMG, appcast, and Homebrew update only at the final `1.1.0`
+- 观察 `1.1.0-rc1` 在真实机器上运行多日
+- 核心流程中无公开的 P0/P1 bug
+- 更新发布说明
+- RC 和每日标签不得更新 Homebrew
+- 验证 DMG、appcast 和 Homebrew 更新仅在最终 `1.1.0` 时发生

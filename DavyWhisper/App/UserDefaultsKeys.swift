@@ -1,0 +1,104 @@
+import Foundation
+
+/// Central registry for all UserDefaults keys used throughout the app.
+/// Prevents typo-induced bugs and makes keys discoverable via autocomplete.
+enum UserDefaultsKeys {
+    // MARK: - Dictation
+    static let audioDuckingEnabled = "audioDuckingEnabled"
+    static let audioDuckingLevel = "audioDuckingLevel"
+    static let soundFeedbackEnabled = "soundFeedbackEnabled"
+    static let soundRecordingStarted = "soundRecordingStarted"
+    static let soundTranscriptionSuccess = "soundTranscriptionSuccess"
+    static let soundError = "soundError"
+    static let indicatorStyle = "indicatorStyle"
+    static let preserveClipboard = "preserveClipboard"
+
+    // MARK: - Hotkey (JSON-encoded UnifiedHotkey per slot)
+    static let hybridHotkey = "hybridHotkey"
+    static let pttHotkey = "pttHotkey"
+    static let toggleHotkey = "toggleHotkey"
+    static let promptPaletteHotkey = "promptPaletteHotkey"
+
+    // MARK: - Model / Engine
+    static let selectedEngine = "selectedEngine"
+    static let selectedModelId = "selectedModelId"
+    static let loadedModelIds = "loadedModelIds"
+    static let modelAutoUnloadSeconds = "modelAutoUnloadSeconds"
+
+    // MARK: - Settings
+    static let selectedLanguage = "selectedLanguage"
+    static let selectedTask = "selectedTask"
+    static let translationEnabled = "translationEnabled"
+    static let translationTargetLanguage = "translationTargetLanguage"
+    static let preferredAppLanguage = "preferredAppLanguage"
+
+    // MARK: - API Server
+    static let apiServerEnabled = "apiServerEnabled"
+    static let apiServerPort = "apiServerPort"
+    static let updateChannel = "updateChannel"
+
+    // MARK: - Audio Device
+    static let selectedInputDeviceUID = "selectedInputDeviceUID"
+
+    // MARK: - Home / Setup
+    static let setupWizardCompleted = "setupWizardCompleted"
+    static let setupWizardCurrentStep = "setupWizardCurrentStep"
+
+    // MARK: - Dictionary
+    static let activatedTermPacks = "activatedTermPacks" // Legacy - kept for migration cleanup
+    static let activatedTermPackStates = "activatedTermPackStates"
+    static let termPackRegistryLastUpdateCheck = "termPackRegistryLastUpdateCheck"
+
+    // MARK: - History
+    static let historyRetentionDays = "historyRetentionDays"
+    static let saveAudioWithHistory = "saveAudioWithHistory"
+
+    // MARK: - Notch Indicator
+    static let overlayPosition = "overlayPosition"
+    static let notchIndicatorVisibility = "notchIndicatorVisibility"
+    static let notchIndicatorLeftContent = "notchIndicatorLeftContent"
+    static let notchIndicatorRightContent = "notchIndicatorRightContent"
+    static let notchIndicatorDisplay = "notchIndicatorDisplay"
+
+    // MARK: - Appearance
+    static let showMenuBarIcon = "showMenuBarIcon"
+    static let menuBarIconHiddenAlertShown = "menuBarIconHiddenAlertShown"
+
+    // MARK: - Memory
+    static let memoryEnabled = "memoryEnabled"
+    static let memoryExtractionProvider = "memoryExtractionProvider"
+    static let memoryExtractionModel = "memoryExtractionModel"
+    static let memoryMinTextLength = "memoryMinTextLength"
+    static let memoryExtractionPrompt = "memoryExtractionPrompt"
+
+    // MARK: - Formatting
+    static let appFormattingEnabled = "appFormattingEnabled"
+
+    // MARK: - Accessibility
+    static let spokenFeedbackEnabled = "spokenFeedbackEnabled"
+
+    // MARK: - Plugin Registry
+    static let pluginRegistryLastFetch = "pluginRegistryLastFetch"
+
+    // MARK: - Recorder
+    static let recorderMicEnabled = "recorderMicEnabled"
+    static let recorderSystemAudioEnabled = "recorderSystemAudioEnabled"
+    static let recorderOutputFormat = "recorderOutputFormat"
+    static let recorderTranscriptionEnabled = "recorderTranscriptionEnabled"
+    static let recorderMicDuckingMode = "recorderMicDuckingMode"
+    static let recorderTrackMode = "recorderTrackMode"
+    static let showRecorderTab = "showRecorderTab"
+
+    // MARK: - Watch Folder
+    static let watchFolderBookmark = "watchFolderBookmark"
+    static let watchFolderOutputBookmark = "watchFolderOutputBookmark"
+    static let watchFolderOutputFormat = "watchFolderOutputFormat"
+    static let watchFolderDeleteSource = "watchFolderDeleteSource"
+    static let watchFolderAutoStart = "watchFolderAutoStart"
+    static let watchFolderLanguage = "watchFolderLanguage"
+    static let watchFolderEngine = "watchFolderEngine"
+    static let watchFolderModel = "watchFolderModel"
+
+    // MARK: - HuggingFace Mirror
+    static let useHuggingFaceMirror = "useHuggingFaceMirror"
+}

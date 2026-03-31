@@ -1,25 +1,25 @@
-// Example TypeWhisper Plugin - Webhook Notifications
+// Example DavyWhisper Plugin - Webhook Notifications
 //
 // This is a reference implementation showing how to build an external
-// TypeWhisper plugin as a .bundle. The builtin webhook integration in
-// TypeWhisper uses the same SDK patterns shown here.
+// DavyWhisper plugin as a .bundle. The builtin webhook integration in
+// DavyWhisper uses the same SDK patterns shown here.
 //
 // To build your own plugin:
 // 1. Create a new macOS Bundle target
-// 2. Add TypeWhisperPluginSDK as a dependency
-// 3. Implement the TypeWhisperPlugin protocol
+// 2. Add DavyWhisperPluginSDK as a dependency
+// 3. Implement the DavyWhisperPlugin protocol
 // 4. Create a manifest.json in Contents/Resources/
-// 5. Place the built .bundle in ~/Library/Application Support/TypeWhisper/Plugins/
+// 5. Place the built .bundle in ~/Library/Application Support/DavyWhisper/Plugins/
 
 import Foundation
 import SwiftUI
-import TypeWhisperPluginSDK
+import DavyWhisperPluginSDK
 
 // MARK: - Plugin Entry Point
 
 @objc(WebhookPlugin)
-final class WebhookPlugin: NSObject, TypeWhisperPlugin, @unchecked Sendable {
-    static let pluginId = "com.typewhisper.webhook"
+final class WebhookPlugin: NSObject, DavyWhisperPlugin, @unchecked Sendable {
+    static let pluginId = "com.davywhisper.webhook"
     static let pluginName = "Webhook Notifications"
 
     private var host: HostServices?
@@ -114,7 +114,7 @@ final class ExampleWebhookService: ObservableObject, @unchecked Sendable {
     init(dataDirectory: URL, host: HostServices) {
         self.host = host
         // pluginDataDirectory is automatically created by the host
-        // at ~/Library/Application Support/TypeWhisper/PluginData/<pluginId>/
+        // at ~/Library/Application Support/DavyWhisper/PluginData/<pluginId>/
         self.configURL = dataDirectory.appendingPathComponent("webhooks.json")
         loadConfig()
     }

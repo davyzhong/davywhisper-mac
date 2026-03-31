@@ -1,44 +1,44 @@
-# TypeWhisper Support Matrix
+# DavyWhisper 支持矩阵
 
-This matrix describes the officially supported `1.0` path for direct-download releases.
+本矩阵描述了直接下载版本官方支持的 `1.0` 路径。
 
-## Platform
+## 平台
 
-| Area | Support |
-| --- | --- |
-| Base support | macOS 14+ |
-| Recommended hardware | Apple Silicon |
-| Intel | Smoke-test before releases as long as Universal Binary support is advertised |
+| 领域 | 支持情况 |
+|------|---------|
+| 基础支持 | macOS 14+ |
+| 推荐硬件 | Apple Silicon |
+| Intel | 在宣传通用二进制支持时发布前进行冒烟测试 |
 
-## Feature Matrix by macOS Version
+## 按 macOS 版本的功能矩阵
 
-| Feature | macOS 14 | macOS 15 | macOS 26+ | Notes |
-| --- | --- | --- | --- | --- |
-| System-wide dictation | Yes | Yes | Yes | Core workflow for `1.0` |
-| File transcription | Yes | Yes | Yes | Core workflow for `1.0` |
-| Prompt processing | Yes | Yes | Yes | Core workflow for `1.0` |
-| Profiles, History, Dictionary, Snippets | Yes | Yes | Yes | Core workflow for `1.0` |
-| Widgets | Yes | Yes | Yes | Not part of the core path |
-| HTTP API | Yes | Yes | Yes | Loopback-only, disabled by default |
-| CLI | Yes | Yes | Yes | Requires the local API server to be running |
-| Apple Translate integration | No | Yes | Yes | Advanced surface |
-| Improved settings UI | No | Yes | Yes | Optional usability improvement |
-| Apple Intelligence provider | No | No | Yes | Optional, not part of the core path |
-| SpeechAnalyzer engine | No | No | Yes | Optional, not part of the core path |
+| 功能 | macOS 14 | macOS 15 | macOS 26+ | 备注 |
+|------|:---------:|:---------:|:---------:|------|
+| 系统级语音输入 | 是 | 是 | 是 | `1.0` 核心流程 |
+| 文件转写 | 是 | 是 | 是 | `1.0` 核心流程 |
+| Prompt 处理 | 是 | 是 | 是 | `1.0` 核心流程 |
+| 配置文件、历史、词典、代码片段 | 是 | 是 | 是 | `1.0` 核心流程 |
+| Widget | 是 | 是 | 是 | 非核心路径 |
+| HTTP API | 是 | 是 | 是 | 仅回环地址，默认禁用 |
+| CLI | 是 | 是 | 是 | 需要本地 API 服务器运行 |
+| Apple Translate 集成 | 否 | 是 | 是 | 高级功能 |
+| 改进的设置 UI | 否 | 是 | 是 | 可选可用性改进 |
+| Apple Intelligence 提供商 | 否 | 否 | 是 | 可选，非核心路径 |
+| SpeechAnalyzer 引擎 | 否 | 否 | 是 | 可选，非核心路径 |
 
-## Engine Notes
+## 引擎说明
 
-| Engine Type | Support in 1.0 | Notes |
-| --- | --- | --- |
-| Local engines | Yes | Recommended default path |
-| Cloud engines | Yes | Require valid API keys |
-| Bundled plugins | Yes | Part of the tested product path |
-| External third-party plugins | Best effort | Not a launch blocker for `1.0` |
+| 引擎类型 | 1.0 支持 | 备注 |
+|---------|:--------:|------|
+| 本地引擎 | 是 | 推荐默认路径 |
+| 云端引擎 | 是 | 需要有效 API 密钥 |
+| 内置插件 | 是 | 测试产品路径的一部分 |
+| 外部第三方插件 | 尽力而为 | 不作为 `1.0` 发布阻断条件 |
 
-## Automation Notes
+## 自动化说明
 
-| Surface | Status in 1.0 |
-| --- | --- |
-| HTTP API `/v1/*` | Stable for `1.x` |
-| `typewhisper` CLI | Stable for `1.0.x` |
-| Plugin SDK | Stable for `1.x` |
+| 层面 | 1.0 状态 |
+|------|---------|
+| HTTP API `/v1/*` | `1.x` 稳定 |
+| `davywhisper` CLI | `1.0.x` 稳定 |
+| 插件 SDK | `1.x` 稳定 |

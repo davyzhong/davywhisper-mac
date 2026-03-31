@@ -1,0 +1,17 @@
+{
+  "id": "com.davywhisper.glm",
+  "name": "GLM",
+  "version": "1.0.0",
+  "minHostVersion": "0.11.0",
+  "minOSVersion": "14.0",
+  "author": "DavyWhisper",
+  "description": "LLM provider via Zhipu AI (GLM) API. Requires API key.",
+  "descriptions": {
+    "zh-Hans": "通过智谱 AI (GLM) API 提供 LLM 服务，需要 API 密钥。",
+    "en": "LLM provider via Zhipu AI (GLM) API. Requires API key."
+  },
+  "category": "llm",
+  "iconSystemName": "brain",
+  "requiresAPIKey": true,
+  "principalClass": "GLMPlugin"
+}

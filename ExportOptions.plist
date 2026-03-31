@@ -12,8 +12,8 @@
 	<string>Apple Distribution</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>com.typewhisper.typewhisper-mac</key>
-		<string>match AppStore com.typewhisper.typewhisper-mac macos</string>
+		<key>com.davywhisper.davywhisper-mac</key>
+		<string>match AppStore com.davywhisper.davywhisper-mac macos</string>
 	</dict>
 	<key>uploadSymbols</key>
 	<true/>

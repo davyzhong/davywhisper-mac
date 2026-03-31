@@ -1,14 +1,14 @@
-# Commercial Licensing
+# 商业许可
 
-TypeWhisper is available under a dual-licensing model:
+DavyWhisper 采用双许可证模式：
 
-- Open-source usage is licensed under the GNU General Public License v3.0 or later (GPL-3.0-or-later).
-- Commercial/proprietary usage requires a separate commercial license from the copyright holder.
+- 开源使用采用 GNU 通用公共许可证 v3.0 或更高版本（GPL-3.0-or-later）。
+- 商业/专有使用需要版权所有者的单独商业许可证。
 
-If you want to use TypeWhisper in a proprietary product, closed-source distribution, or any use case that is not compliant with GPLv3 obligations, you must obtain a commercial license.
+如果您希望在专有产品、闭源分发或任何不符合 GPLv3 义务的使用场景中使用 DavyWhisper，您必须获得商业许可证。
 
-License inquiries:
+许可咨询：
 
-- Email: licensing@typewhisper.com
+- 邮箱：licensing@davywhisper.com
 
-If you are contributing to, forking, or redistributing the project as open source in compliance with GPLv3, no separate commercial license is required.
+如果您在遵守 GPLv3 的前提下为开源目的贡献、分支或重新分发项目，则无需单独的商業許可證。

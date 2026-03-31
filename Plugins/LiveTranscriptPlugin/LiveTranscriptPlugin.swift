@@ -1,6 +1,6 @@
 import AppKit
 import SwiftUI
-import TypeWhisperPluginSDK
+import DavyWhisperPluginSDK
 
 // MARK: - PluginHotkey
 
@@ -12,8 +12,8 @@ struct PluginHotkey: Codable, Equatable {
 // MARK: - Plugin Entry Point
 
 @objc(LiveTranscriptPlugin)
-final class LiveTranscriptPlugin: NSObject, TypeWhisperPlugin, @unchecked Sendable {
-    static let pluginId = "com.typewhisper.livetranscript"
+final class LiveTranscriptPlugin: NSObject, DavyWhisperPlugin, @unchecked Sendable {
+    static let pluginId = "com.davywhisper.livetranscript"
     static let pluginName = "Live Transcript"
 
     fileprivate var host: HostServices?
@@ -72,7 +72,7 @@ final class LiveTranscriptPlugin: NSObject, TypeWhisperPlugin, @unchecked Sendab
     // MARK: - Event Handling
 
     @MainActor
-    private func handleEvent(_ event: TypeWhisperEvent) {
+    private func handleEvent(_ event: DavyWhisperEvent) {
         switch event {
         case .recordingStarted:
             autoCloseTask?.cancel()

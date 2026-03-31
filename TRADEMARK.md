@@ -1,24 +1,24 @@
-# Trademark Policy
+# 商标政策
 
-"TypeWhisper", the TypeWhisper name, and associated logos/app icons are trademarks of the TypeWhisper project owner.
+"DavyWhisper"、DavyWhisper 名称及相关标识/应用图标均为 DavyWhisper 项目所有者的商标。
 
-This repository's source code is licensed under GPLv3, but trademark rights are not granted under the open-source license.
+本仓库源代码在 GPLv3 下获得许可，但开源许可证不授予商标权。
 
-## Allowed
+## 允许
 
-- Truthful references such as "based on TypeWhisper" or "fork of TypeWhisper".
-- Nominative use to describe compatibility or origin.
+- 如实引用，如"基于 DavyWhisper"或"DavyWhisper 的分支"。
+- 说明兼容性的合理使用。
 
-## Not Allowed Without Prior Written Permission
+## 未经事先书面许可禁止
 
-- Using "TypeWhisper" as the name of a fork, distribution, product, or company.
-- Using the TypeWhisper logo or app icon in a way that suggests endorsement or official status.
-- Any branding that is confusingly similar to TypeWhisper.
+- 使用"DavyWhisper"作为分支、分发、产品或公司的名称。
+- 以暗示认可或官方身份的方式使用 DavyWhisper 标识或应用图标。
+- 任何与 DavyWhisper 混淆性相似的品牌行为。
 
-## Forks and Redistributions
+## 分支和再分发
 
-You may fork and modify the code under GPLv3 terms, but you must rename your fork and remove TypeWhisper trademarks (name, logo, app icon) unless you have explicit written permission.
+您可以在 GPLv3 条款下分支和修改代码，但必须重命名您的分支并移除 DavyWhisper 商标（名称、标识、应用图标），除非您有明确的书面许可。
 
-Trademark inquiries:
+商标咨询：
 
-- Email: licensing@typewhisper.com
+- 邮箱：licensing@davywhisper.com

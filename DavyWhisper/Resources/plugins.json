@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "plugins": [
+    {
+      "id": "com.davywhisper.whisperkit",
+      "name": "WhisperKit",
+      "version": "1.0.14",
+      "minHostVersion": "0.11",
+      "author": "DavyWhisper",
+      "description": "Local speech-to-text powered by WhisperKit. 7 model sizes, 99 languages, streaming support.",
+      "category": "transcription",
+      "size": 2956753,
+      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-whisperkit-v1.0.14/WhisperKitPlugin.zip",
+      "iconSystemName": "waveform",
+      "requiresAPIKey": false,
+      "descriptions": {
+        "zh-Hans": "本地语音转文字，基于 WhisperKit。支持 7 种模型大小、99 种语言和流式识别。"
+      }
+    },
+    {
+      "id": "com.davywhisper.deepgram",
+      "name": "Deepgram",
+      "version": "1.0.4",
+      "minHostVersion": "0.12.0",
+      "minOSVersion": "14.0",
+      "author": "DavyWhisper",
+      "description": "Cloud transcription via Deepgram API with real-time WebSocket streaming. Requires API key.",
+      "category": "transcription",
+      "size": 212211,
+      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-deepgram-v1.0.4/DeepgramPlugin.zip",
+      "iconSystemName": "waveform.badge.mic",
+      "requiresAPIKey": true,
+      "descriptions": {
+        "zh-Hans": "通过 Deepgram API 进行云端转录，支持实时 WebSocket 流式识别。需要 API 密钥。"
+      }
+    },
+    {
+      "id": "com.davywhisper.qwen3",
+      "name": "Qwen3 ASR",
+      "version": "1.0.15",
+      "minHostVersion": "0.11",
+      "author": "DavyWhisper",
+      "description": "Local speech-to-text powered by MLX on Apple Silicon. 30 languages, no API key required.",
+      "category": "transcription",
+      "size": 28752905,
+      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-qwen3-v1.0.15/Qwen3Plugin.zip",
+      "iconSystemName": "cpu",
+      "requiresAPIKey": false,
+      "descriptions": {
+        "zh-Hans": "本地语音转文字，基于 Apple Silicon 上的 MLX。支持 30 种语言，无需 API 密钥。"
+      }
+    },
+    {
+      "id": "com.davywhisper.livetranscript",
+      "name": "Live Transcript",
+      "version": "1.0.2",
+      "minHostVersion": "0.12.0",
+      "minOSVersion": "14.0",
+      "author": "DavyWhisper",
+      "description": "Show a floating live transcript window during recording.",
+      "category": "utility",
+      "size": 198271,
+      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-livetranscript-v1.0.2/LiveTranscriptPlugin.zip",
+      "iconSystemName": "text.bubble",
+      "requiresAPIKey": false,
+      "descriptions": {
+        "zh-Hans": "录音时显示悬浮实时转录窗口。"
+      }
+    },
+    {
+      "id": "com.davywhisper.webhook",
+      "name": "Webhook Notifications",
+      "version": "1.0.9",
+      "minHostVersion": "0.9.0",
+      "author": "DavyWhisper",
+      "description": "Send transcribed or processed text to any webhook URL via HTTP POST.",
+      "category": "post-processor",
+      "size": 206232,
+      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-webhook-v1.0.9/WebhookPlugin.zip",
+      "iconSystemName": "arrow.up.forward.app",
+      "requiresAPIKey": false,
+      "descriptions": {
+        "zh-Hans": "通过 HTTP POST 将转录或处理后的文本发送到任意 Webhook URL。"
+      }
+    },
+    {
+      "id": "com.davywhisper.elevenlabs",
+      "name": "ElevenLabs",
+      "version": "1.0.1",
+      "minHostVersion": "0.12.0",
+      "minOSVersion": "14.0",
+      "author": "DavyWhisper",
+      "description": "Cloud transcription via ElevenLabs Scribe API with real-time WebSocket streaming.",
+      "category": "transcription",
+      "size": 175246,
+      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-elevenlabs-v1.0.1/ElevenLabsPlugin.zip",
+      "iconSystemName": "waveform.badge.mic",
+      "requiresAPIKey": true,
+      "descriptions": {
+        "zh-Hans": "通过 ElevenLabs Scribe API 进行云端转录，支持实时 WebSocket 流式识别。"
+      }
+    },
+    {
+      "id": "com.davywhisper.glm",
+      "name": "GLM",
+      "version": "1.0.0",
+      "minHostVersion": "0.11.0",
+      "minOSVersion": "14.0",
+      "author": "DavyWhisper",
+      "description": "LLM provider via Zhipu AI (GLM) API. Requires API key.",
+      "category": "llm",
+      "size": 102400,
+      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-glm-v1.0.0/GLMPlugin.zip",
+      "iconSystemName": "brain",
+      "requiresAPIKey": true,
+      "descriptions": {
+        "zh-Hans": "通过智谱 AI (GLM) API 提供 LLM 服务，需要 API 密钥。"
+      }
+    },
+    {
+      "id": "com.davywhisper.kimi",
+      "name": "Kimi",
+      "version": "1.0.0",
+      "minHostVersion": "0.11.0",
+      "minOSVersion": "14.0",
+      "author": "DavyWhisper",
+      "description": "LLM provider via Moonshot Kimi API. Requires API key.",
+      "category": "llm",
+      "size": 102400,
+      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-kimi-v1.0.0/KimiPlugin.zip",
+      "iconSystemName": "brain",
+      "requiresAPIKey": true,
+      "descriptions": {
+        "zh-Hans": "通过 Moonshot Kimi API 提供 LLM 服务，需要 API 密钥。"
+      }
+    },
+    {
+      "id": "com.davywhisper.minimax",
+      "name": "MiniMax",
+      "version": "1.0.0",
+      "minHostVersion": "0.11.0",
+      "minOSVersion": "14.0",
+      "author": "DavyWhisper",
+      "description": "LLM provider via MiniMax API. Requires API key.",
+      "category": "llm",
+      "size": 102400,
+      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-minimax-v1.0.0/MiniMaxPlugin.zip",
+      "iconSystemName": "brain",
+      "requiresAPIKey": true,
+      "descriptions": {
+        "zh-Hans": "通过 MiniMax API 提供 LLM 服务，需要 API 密钥。"
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 import os
-import TypeWhisperPluginSDK
+import DavyWhisperPluginSDK
 
 private let elevenLabsSupportedLanguages = [
     "af", "am", "ar", "as", "az", "ba", "be", "bg", "bn", "bo",
@@ -69,14 +69,14 @@ private enum ElevenLabsReceivePayload: Sendable {
 
 @objc(ElevenLabsPlugin)
 final class ElevenLabsPlugin: NSObject, TranscriptionEnginePlugin, @unchecked Sendable {
-    static let pluginId = "com.typewhisper.elevenlabs"
+    static let pluginId = "com.davywhisper.elevenlabs"
     static let pluginName = "ElevenLabs"
 
     fileprivate var host: HostServices?
     fileprivate var _apiKey: String?
     fileprivate var _selectedModelId: String?
 
-    private let logger = Logger(subsystem: "com.typewhisper.elevenlabs", category: "Plugin")
+    private let logger = Logger(subsystem: "com.davywhisper.elevenlabs", category: "Plugin")
 
     required override init() {
         super.init()

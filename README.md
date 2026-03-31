@@ -1,156 +1,151 @@
-# TypeWhisper for Mac
+# DavyWhisper for Mac
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![macOS](https://img.shields.io/badge/macOS-14.0%2B-black.svg)](https://www.apple.com/macos/)
 [![Swift](https://img.shields.io/badge/Swift-6-orange.svg)](https://swift.org)
 
-Speech-to-text and AI text processing for macOS. Transcribe audio using on-device AI models or cloud APIs (Groq, OpenAI), then process the result with custom LLM prompts. Your voice data stays on your Mac with local models - or use cloud APIs for faster processing.
+语音转文字与 AI 文本处理工具 for macOS。使用本地 AI 模型或云端 API（Groq、OpenAI）进行音频转写，然后使用自定义 LLM Prompt 处理结果。你的语音数据全程保留在 Mac 本地（使用本地模型）或通过云端 API 处理以获得更快速度。
 
-TypeWhisper `1.0` is scoped as a reliable direct-download release. The supported core is system-wide dictation, file transcription, prompt processing, profiles, history, dictionary, snippets, and bundled integrations. HTTP API, CLI, widgets, and the plugin SDK remain available as advanced surfaces.
+DavyWhisper `1.0` 定位于可靠的直接下载版本。核心功能包括：系统级语音输入、文件转写、Prompt 处理、配置文件、历史记录、词典、代码片段，以及内置集成。HTTP API、CLI、Widget 和插件 SDK 作为高级功能开放。
 
-See [docs/1.0-readiness.md](docs/1.0-readiness.md), [docs/support-matrix.md](docs/support-matrix.md), and [docs/release-checklist.md](docs/release-checklist.md) for the current release definition and ship gates.
+相关文档：[docs/1.0-readiness.md](docs/1.0-readiness.md)、[docs/support-matrix.md](docs/support-matrix.md)、[docs/release-checklist.md](docs/release-checklist.md)。
 
 <p align="center">
   <video src="https://github.com/user-attachments/assets/22fe922d-4a4c-47d1-805e-684a148ebd03" autoplay loop muted playsinline width="270"></video>
 </p>
 
-## Screenshots
+## 截图
 
 <p align="center">
-  <a href=".github/screenshots/home.png"><img src=".github/screenshots/home.png" width="270" alt="Home Dashboard"></a>
-  <a href=".github/screenshots/recording.png"><img src=".github/screenshots/recording.png" width="270" alt="Recording & Hotkeys"></a>
-  <a href=".github/screenshots/prompts.png"><img src=".github/screenshots/prompts.png" width="270" alt="Custom Prompts"></a>
+  <a href=".github/screenshots/home.png"><img src=".github/screenshots/home.png" width="270" alt="首页仪表盘"></a>
+  <a href=".github/screenshots/recording.png"><img src=".github/screenshots/recording.png" width="270" alt="录音与热键"></a>
+  <a href=".github/screenshots/prompts.png"><img src=".github/screenshots/prompts.png" width="270" alt="自定义 Prompt"></a>
 </p>
 
 <p align="center">
-  <a href=".github/screenshots/history.png"><img src=".github/screenshots/history.png" width="270" alt="Transcription History"></a>
-  <a href=".github/screenshots/dictionary.png"><img src=".github/screenshots/dictionary.png" width="270" alt="Dictionary"></a>
-  <a href=".github/screenshots/profiles.png"><img src=".github/screenshots/profiles.png" width="270" alt="Profiles"></a>
+  <a href=".github/screenshots/history.png"><img src=".github/screenshots/history.png" width="270" alt="转写历史"></a>
+  <a href=".github/screenshots/dictionary.png"><img src=".github/screenshots/dictionary.png" width="270" alt="词典"></a>
+  <a href=".github/screenshots/profiles.png"><img src=".github/screenshots/profiles.png" width="270" alt="配置文件"></a>
 </p>
 
 <p align="center">
-  <a href=".github/screenshots/general.png"><img src=".github/screenshots/general.png" width="270" alt="General Settings"></a>
-  <a href=".github/screenshots/plugins.png"><img src=".github/screenshots/plugins.png" width="270" alt="Integrations"></a>
-  <a href=".github/screenshots/file-transcription.png"><img src=".github/screenshots/file-transcription.png" width="270" alt="File Transcription"></a>
+  <a href=".github/screenshots/general.png"><img src=".github/screenshots/general.png" width="270" alt="通用设置"></a>
+  <a href=".github/screenshots/plugins.png"><img src=".github/screenshots/plugins.png" width="270" alt="集成"></a>
+  <a href=".github/screenshots/file-transcription.png"><img src=".github/screenshots/file-transcription.png" width="270" alt="文件转写"></a>
 </p>
 
 <p align="center">
-  <a href=".github/screenshots/snippets.png"><img src=".github/screenshots/snippets.png" width="270" alt="Snippets"></a>
-  <a href=".github/screenshots/advanced.png"><img src=".github/screenshots/advanced.png" width="270" alt="Advanced Settings"></a>
+  <a href=".github/screenshots/snippets.png"><img src=".github/screenshots/snippets.png" width="270" alt="代码片段"></a>
+  <a href=".github/screenshots/advanced.png"><img src=".github/screenshots/advanced.png" width="270" alt="高级设置"></a>
 </p>
 
-## Features
+## 功能
 
-### Transcription
+### 转写
 
-- **Eight engines** - WhisperKit (99+ languages, streaming, translation), Parakeet TDT v3 (25 European languages, extremely fast), Apple SpeechAnalyzer (macOS 26+, no model download needed), Qwen3 ASR (MLX-based), Voxtral (local Voxtral Mini 4B, MLX-based), Groq Whisper, OpenAI Whisper, and OpenAI Compatible (any OpenAI-compatible API)
-- **On-device or cloud** - All processing happens locally on your Mac, or use Groq/OpenAI Whisper APIs for faster processing
-- **Streaming preview** - See partial transcription in real-time while speaking (WhisperKit)
-- **File transcription** - Batch-process multiple audio/video files with drag & drop
-- **Subtitle export** - Export transcriptions as SRT or WebVTT with timestamps
+- **8 种引擎** — WhisperKit（99+ 语言，流式，翻译）、Parakeet TDT v3（25 种欧洲语言，极速）、Apple SpeechAnalyzer（macOS 26+，无需下载模型）、Qwen3 ASR（MLX 本地）、Voxtral（本地 Voxtral Mini 4B，MLX）、Groq Whisper、OpenAI Whisper、OpenAI 兼容（任意 OpenAI 兼容 API）
+- **本地或云端** — 所有处理在 Mac 本地完成，或使用 Groq/OpenAI Whisper API 获得更快速度
+- **流式预览** — 说话时实时显示部分转写结果（WhisperKit）
+- **文件转写** — 支持拖放批量处理多个音视频文件
+- **字幕导出** — 导出带时间戳的 SRT 或 WebVTT 字幕文件
 
-### Dictation
+### 语音输入
 
-- **System-wide** - Push-to-talk, toggle, or hybrid mode via global hotkey, auto-pastes into any app
-- **Modifier-key hotkeys** - Use a single modifier key (Command, Shift, Option, Control) as your hotkey
-- **Sound feedback** - Audio cues for recording start, transcription success, and errors
-- **Microphone selection** - Choose a specific input device with live preview
+- **系统级** — 通过全局热键实现按键说话、切换模式或混合模式，自动粘贴到任意应用
+- **修饰键热键** — 支持将单个修饰键（Command、Shift、Option、Control）设为热键
+- **声音反馈** — 录音开始、转写成功、错误的音频提示
+- **麦克风选择** — 选择特定输入设备并实时预览
 
-### AI Processing
+### AI 处理
 
-- **Custom prompts** - Process transcriptions (or any text) with LLM prompts. 8 presets included (Translate, Formal, Summarize, Fix Grammar, Email, List, Shorter, Explain). Standalone Prompt Palette via global hotkey - a floating panel for AI text processing independent of dictation
-- **LLM providers** - Apple Intelligence (macOS 26+), Groq, OpenAI, Gemini, and OpenAI Compatible with per-prompt provider and model override
-- **Translation** - Translate transcriptions on-device using Apple Translate
+- **自定义 Prompt** — 使用 LLM Prompt 处理转写结果（或任意文本）。内置 8 个预设（翻译、正式、摘要、语法修复、邮件、列表、精简、解释）。通过全局热键调出独立的 Prompt 调色板 — 一个浮动面板，用于独立于语音输入的 AI 文本处理
+- **LLM 提供商** — Apple Intelligence（macOS 26+）、Groq、OpenAI、GLM、Kimi、MiniMax，以及 OpenAI 兼容服务，支持按 Prompt 选择提供商和模型覆盖
+- **翻译** — 使用 Apple Translate 在设备端翻译转写结果
 
-### Personalization
+### 个性化
 
-- **Profiles** - Per-app and per-website overrides for language, task, engine, prompt, hotkey, and auto-submit. Match by app (bundle ID) and/or domain with subdomain support
-- **Dictionary** - Terms improve cloud recognition accuracy. Corrections fix common transcription mistakes automatically. Auto-learns from manual corrections. Includes importable term packs
-- **Snippets** - Text shortcuts with trigger/replacement. Supports placeholders like `{{DATE}}`, `{{TIME}}`, and `{{CLIPBOARD}}`
-- **History** - Searchable transcription history with inline editing, correction detection, app context tracking, timeline grouping, filters, bulk delete, multi-select export, auto-retention, and a standalone window accessible from the tray menu
+- **配置文件** — 按应用和网站覆盖语言、任务、引擎、Prompt、热键和自动提交设置。按应用包名和/或域名匹配，支持子域名
+- **词典** — 术语提升云端识别准确率，纠错自动修复常见转写错误，自动学习手动纠正。包含可导入的术语包
+- **代码片段** — 带触发词和替换内容的文本快捷方式。支持 `{{DATE}}`、`{{TIME}}`、`{{CLIPBOARD}}` 等占位符
+- **历史记录** — 可搜索的转写历史，支持内联编辑、纠正检测、应用上下文跟踪、时间线分组、筛选、批量删除、多选导出、自动保留策略，以及独立窗口（从托盘菜单访问）
 
-### Integration & Extensibility
+### 集成与扩展
 
-- **Plugin system** - Extend TypeWhisper with custom LLM providers, transcription engines, post-processors, and action plugins. Groq, OpenAI, OpenAI Compatible, Gemini, Linear, Voxtral, and Webhook ship as bundled plugins. Linear plugin enables voice-to-issue creation. See [Plugins/README.md](Plugins/README.md)
-- **HTTP API** - Local REST API for integration with external tools and scripts
-- **CLI tool** - Shell-friendly transcription via the command line
+- **插件系统** — 通过自定义 LLM 提供商、转写引擎、后处理器和 Action 插件扩展 DavyWhisper。内置 GLM、Kimi、MiniMax、Deepgram、ElevenLabs、Webhook 等插件。参见 [Plugins/README.md](Plugins/README.md)
+- **HTTP API** — 本地 REST API，用于与外部工具和脚本集成
+- **CLI 工具** — 命令行友好的转写工具
 
-### General
+### 通用
 
-- **Home dashboard** - Usage statistics, activity chart, and onboarding tutorial
-- **Auto-update** - Built-in updates via Sparkle with stable, release-candidate, and daily channels
-- **Universal binary** - Runs natively on Apple Silicon and Intel Macs
-- **Widgets** - Desktop widgets for usage stats, last transcription, activity chart, and transcription history
-- **Multilingual UI** - English and German
-- **Launch at Login** - Start automatically with macOS
+- **首页仪表盘** — 使用统计、活动图表和入门教程
+- **通用二进制** — 在 Apple Silicon 和 Intel Mac 上原生运行
+- **多语言 UI** — 中文、英文
+- **启动时运行** — 随 macOS 启动自动运行
 
-## Install
+## 安装
 
 ### Homebrew
 
 ```bash
-brew install --cask typewhisper/tap/typewhisper
+brew install --cask davywhisper/tap/davywhisper
 ```
 
-### Direct Download
+### 直接下载
 
-Download the latest DMG from [GitHub Releases](https://github.com/TypeWhisper/typewhisper-mac/releases/latest).
+从 [GitHub Releases](https://github.com/DavyWhisper/davywhisper-mac/releases/latest) 下载最新 DMG。
 
-Stable direct-download releases use the default Sparkle channel. Release candidates such as `1.0.0-rc1` and daily builds are published as GitHub prereleases, update the shared Sparkle appcast on their own channels, and are excluded from Homebrew.
-Installed builds can switch channels in `Settings -> About` via the `Update Channel` picker.
+## 快速上手
 
-## Quick Start
+1. 从 Homebrew 或 DMG 安装 DavyWhisper。
+2. 打开设置，授予麦克风和辅助功能权限。
+3. 选择一个引擎，必要时下载本地模型。
+4. 按下全局热键开始第一次语音输入。
 
-1. Install TypeWhisper from Homebrew or the latest DMG.
-2. Open Settings and grant Microphone plus Accessibility access.
-3. Pick an engine and, if needed, download a local model.
-4. Trigger the global hotkey and complete your first dictation.
+## 系统要求
 
-## System Requirements
+- macOS 14.0（Sonoma）或更高版本
+- 推荐 Apple Silicon（M1 或更高）
+- 最少 8GB RAM，16GB+ 推荐（大模型需要更多内存）
+- 部分功能（Apple Translate、改进的设置 UI）需要 macOS 15+。Apple Intelligence 和 SpeechAnalyzer 需要 macOS 26+。
 
-- macOS 14.0 (Sonoma) or later
-- Apple Silicon (M1 or later) recommended
-- 8 GB RAM minimum, 16 GB+ recommended for larger models
-- Some features (Apple Translate, improved Settings UI) require macOS 15+. Apple Intelligence and SpeechAnalyzer require macOS 26+.
+## 模型推荐
 
-## Model Recommendations
-
-| RAM | Recommended Models |
-|-----|-------------------|
-| < 8 GB | Whisper Tiny, Whisper Base |
-| 8-16 GB | Whisper Small, Whisper Large v3 Turbo, Parakeet TDT v3, Voxtral Mini 4B |
+| 内存 | 推荐模型 |
+|------|---------|
+| < 8 GB | Whisper Tiny、Whisper Base |
+| 8-16 GB | Whisper Small、Whisper Large v3 Turbo、Parakeet TDT v3、Voxtral Mini 4B |
 | > 16 GB | Whisper Large v3 |
 
-## Build
+## 构建
 
-1. Clone the repository:
+1. 克隆仓库：
    ```bash
-   git clone https://github.com/TypeWhisper/typewhisper-mac.git
-   cd typewhisper-mac
+   git clone https://github.com/DavyWhisper/davywhisper-mac.git
+   cd davywhisper-mac
    ```
 
-2. Open in Xcode 16+:
+2. 用 Xcode 16+ 打开：
    ```bash
-   open TypeWhisper.xcodeproj
+   open DavyWhisper.xcodeproj
    ```
 
-3. Select the TypeWhisper scheme and build (Cmd+B). Swift Package dependencies (WhisperKit, FluidAudio, Sparkle, TypeWhisperPluginSDK) resolve automatically.
+3. 选择 DavyWhisper scheme 并构建（Cmd+B）。Swift Package 依赖（WhisperKit、MLXAudio、Sparkle、DavyWhisperPluginSDK）会自动解析。
 
-4. Run the app. It appears as a menu bar icon - open Settings to download a model.
+4. 运行应用。它会显示在菜单栏图标中 — 打开设置下载模型。
 
-5. Run the automated checks before shipping changes:
+5. 提交更改前运行自动化检查：
    ```bash
-   xcodebuild test -project TypeWhisper.xcodeproj -scheme TypeWhisper -destination 'platform=macOS,arch=arm64' -parallel-testing-enabled NO CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
-   swift test --package-path TypeWhisperPluginSDK
+   xcodebuild test -project DavyWhisper.xcodeproj -scheme DavyWhisper -destination 'platform=macOS,arch=arm64' -parallel-testing-enabled NO CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+   swift test --package-path DavyWhisperPluginSDK
    ```
 
 ## HTTP API
 
-The HTTP API is an advanced local automation surface. It binds to `127.0.0.1` only, is disabled by default, and is intended for local tools and scripts.
+HTTP API 是一个本地自动化接口。它仅绑定到 `127.0.0.1`，默认禁用，仅供本地工具和脚本使用。
 
-Enable the API server in Settings > Advanced (default port: `8978`).
+在「设置」→「高级」中启用 API 服务器（默认端口：`8978`）。
 
-### Check Status
+### 检查状态
 
 ```bash
 curl http://localhost:8978/v1/status
@@ -166,7 +161,7 @@ curl http://localhost:8978/v1/status
 }
 ```
 
-### Transcribe Audio
+### 转写音频
 
 ```bash
 curl -X POST http://localhost:8978/v1/transcribe \
@@ -185,12 +180,12 @@ curl -X POST http://localhost:8978/v1/transcribe \
 }
 ```
 
-Optional parameters:
-- `language` - ISO 639-1 code (e.g., `en`, `de`). Omit for auto-detection.
-- `task` - `transcribe` (default) or `translate` (translates to English, WhisperKit only).
-- `target_language` - ISO 639-1 code for translation target language (e.g., `es`, `fr`). Uses Apple Translate.
+可选参数：
+- `language` — ISO 639-1 代码（如 `en`、`zh`）。省略则自动检测。
+- `task` — `transcribe`（默认）或 `translate`（翻译为英语，仅 WhisperKit）。
+- `target_language` — 翻译目标语言 ISO 代码（如 `es`、`fr`）。使用 Apple Translate。
 
-### List Models
+### 模型列表
 
 ```bash
 curl http://localhost:8978/v1/models
@@ -208,150 +203,147 @@ curl http://localhost:8978/v1/models
 }
 ```
 
-### History
+### 历史记录
 
 ```bash
-# Search history
+# 搜索历史
 curl "http://localhost:8978/v1/history?q=meeting&limit=10&offset=0"
 
-# Delete entry
+# 删除记录
 curl -X DELETE "http://localhost:8978/v1/history?id=<uuid>"
 ```
 
-### Profiles
+### 配置文件
 
 ```bash
-# List all profiles
+# 列出所有配置文件
 curl http://localhost:8978/v1/profiles
 
-# Toggle a profile on/off
+# 切换配置文件开关
 curl -X PUT "http://localhost:8978/v1/profiles/toggle?id=<uuid>"
 ```
 
-### Dictation Control
+### 语音输入控制
 
 ```bash
-# Start dictation
+# 开始语音输入
 curl -X POST http://localhost:8978/v1/dictation/start
 
-# Stop dictation
+# 停止语音输入
 curl -X POST http://localhost:8978/v1/dictation/stop
 
-# Check dictation status
+# 查看语音输入状态
 curl http://localhost:8978/v1/dictation/status
 ```
 
-## CLI Tool
+## CLI 工具
 
-TypeWhisper includes a command-line tool for shell-friendly transcription. It is part of the advanced automation surface and connects to the running local API server.
+DavyWhisper 包含一个命令行工具，用于 shell 友好的转写。它连接运行中的本地 API 服务器。
 
-### Installation
+### 安装
 
-Install via Settings > Advanced > CLI Tool > Install. This places the `typewhisper` binary in `/usr/local/bin`.
+通过「设置」→「高级」→「CLI 工具」→「安装」安装。这会将 `davywhisper` 二进制文件放入 `/usr/local/bin`。
 
-### Commands
-
-```bash
-typewhisper status              # Show server status
-typewhisper models              # List available models
-typewhisper transcribe file.wav # Transcribe an audio file
-```
-
-### Options
-
-| Option | Description |
-|--------|-------------|
-| `--port <N>` | Server port (default: auto-detect) |
-| `--json` | Output as JSON |
-| `--language <code>` | Source language (e.g. `en`, `de`) |
-| `--task <task>` | `transcribe` (default) or `translate` |
-| `--translate-to <code>` | Target language for translation |
-
-### Examples
+### 命令
 
 ```bash
-# Transcribe with language and JSON output
-typewhisper transcribe recording.wav --language de --json
-
-# Pipe audio from stdin
-cat audio.wav | typewhisper transcribe -
-
-# Use in a script
-typewhisper transcribe meeting.m4a --json | jq -r '.text'
+davywhisper status              # 显示服务器状态
+davywhisper models              # 列出可用模型
+davywhisper transcribe file.wav # 转写音频文件
 ```
 
-The CLI requires the API server to be running (Settings > Advanced) and follows the documented `1.0.x` command and flag surface.
+### 选项
 
-## Profiles
+| 选项 | 描述 |
+|------|------|
+| `--port <N>` | 服务器端口（默认：自动检测）|
+| `--json` | JSON 输出 |
+| `--language <code>` | 源语言（如 en、zh）|
+| `--task <task>` | `transcribe`（默认）或 `translate` |
+| `--translate-to <code>` | 翻译目标语言 |
 
-Profiles let you configure transcription settings per application or website. For example:
+### 示例
 
-- **Mail** - German language, Whisper Large v3
-- **Slack** - English language, Parakeet TDT v3
-- **Terminal** - English language, auto-submit enabled
-- **github.com** - English language (matches in any browser)
-- **docs.google.com** - German language, translate to English
+```bash
+# 带语言和 JSON 输出转写
+davywhisper transcribe recording.wav --language zh --json
 
-Create profiles in Settings > Profiles. Assign apps and/or URL patterns, set language/task/engine overrides, assign a custom prompt for automatic post-processing, configure a per-profile hotkey, enable auto-submit (automatically sends text in chat apps), and adjust priority. URL patterns support subdomain matching - e.g. `google.com` also matches `docs.google.com`. The domain autocomplete suggests domains from your transcription history.
+# 从 stdin 管道输入音频
+cat audio.wav | davywhisper transcribe -
 
-When you start dictating, TypeWhisper matches the active app and browser URL against your profiles with the following priority:
-1. **App + URL match** - highest specificity (e.g. Chrome + github.com)
-2. **URL-only match** - cross-browser profiles (e.g. github.com in any browser)
-3. **App-only match** - generic app profiles (e.g. all of Chrome)
+# 在脚本中使用
+davywhisper transcribe meeting.m4a --json | jq -r '.text'
+```
 
-The active profile name is shown as a badge in the notch indicator.
+CLI 需要 API 服务器运行中（「设置」→「高级」）。
 
-Multiple engines can be loaded simultaneously for instant switching between profiles. Note that loading multiple local models increases memory usage. Cloud engines (Groq, OpenAI) have negligible memory overhead.
+## 配置文件
 
-## Plugins
+配置文件让你可以为不同应用配置转写设置。例如：
 
-TypeWhisper supports plugins for adding custom LLM providers, transcription engines, post-processors, and action plugins. Plugins are macOS `.bundle` files placed in `~/Library/Application Support/TypeWhisper/Plugins/`.
+- **邮件** — 中文语言，Whisper Large v3
+- **Slack** — 英文语言，Parakeet TDT v3
+- **终端** — 英文语言，启用自动提交
+- **github.com** — 英文语言（匹配任意浏览器）
+- **docs.google.com** — 中文语言，翻译为英文
 
-All 11 engines and integrations (WhisperKit, Parakeet, SpeechAnalyzer, Qwen3, Voxtral, Groq, OpenAI, OpenAI Compatible, Gemini, Linear, Webhook) are implemented as bundled plugins and serve as reference implementations.
+在「设置」→「配置文件」中创建配置文件。分配应用和/或 URL 模式，设置语言/任务/引擎覆盖，分配自定义 Prompt 以自动后处理，配置按配置文件的热键，启用自动提交（自动发送聊天应用中的文本），调整优先级。URL 模式支持子域名匹配——例如 `google.com` 也匹配 `docs.google.com`。
 
-See [Plugins/README.md](Plugins/README.md) for the full plugin development guide, including the event bus, host services API, and manifest format.
+开始语音输入时，DavyWhisper 按以下优先级匹配活动应用和浏览器 URL 与配置文件：
+1. **应用 + URL 匹配** — 最高优先级（如 Chrome + github.com）
+2. **仅 URL 匹配** — 跨浏览器配置文件（如任意浏览器中的 github.com）
+3. **仅应用匹配** — 通用应用配置文件（如整个 Chrome）
 
-## Architecture
+活动配置文件名称显示在凹口指示器的徽章中。
+
+多个引擎可以同时加载，以便在配置文件间即时切换。请注意，加载多个本地模型会增加内存使用。云端引擎（Deepgram、ElevenLabs）内存占用可忽略不计。
+
+## 插件
+
+DavyWhisper 支持插件，用于添加自定义 LLM 提供商、转写引擎、后处理器和 Action 插件。插件是 macOS `.bundle` 文件，放置在 `~/Library/Application Support/DavyWhisper/Plugins/`。
+
+内置的插件包括：WhisperKit、Qwen3、Voxtral、Deepgram、ElevenLabs、GLM、Kimi、MiniMax、Webhook 等。
+
+参见 [Plugins/README.md](Plugins/README.md) 获取完整的插件开发指南，包括事件总线、主机服务 API 和清单格式。
+
+## 架构
 
 ```
-TypeWhisper/
-├── typewhisper-cli/           # Command-line tool (status, models, transcribe)
-├── Plugins/                # Bundled plugins (WhisperKit, Parakeet, SpeechAnalyzer, Qwen3,
-│                           #   Voxtral, Groq, OpenAI, OpenAI Compatible, Gemini, Linear, Webhook)
-├── TypeWhisperPluginSDK/   # Plugin SDK (Swift package)
-├── TypeWhisperWidgetExtension/ # WidgetKit widgets (stats, activity, history)
-├── TypeWhisperWidgetShared/    # Shared widget data models
-├── App/                    # App entry point, dependency injection
-├── Models/                 # Data models (TranscriptionResult, Profile, PromptAction, etc.)
+DavyWhisper/
+├── davywhisper-cli/           # 命令行工具（status、models、transcribe）
+├── Plugins/                   # 内置插件（WhisperKit、Qwen3、Deepgram、ElevenLabs、GLM、Kimi、MiniMax、Webhook）
+├── DavyWhisperPluginSDK/      # 插件 SDK（Swift Package）
+├── App/                       # 应用入口、依赖注入
+├── Models/                    # 数据模型（TranscriptionResult、Profile、PromptAction 等）
 ├── Services/
-│   ├── Cloud/              # KeychainService, WavEncoder (shared cloud utilities)
-│   ├── LLM/               # Apple Intelligence provider (cloud LLM providers are plugins)
-│   ├── HTTPServer/         # Local REST API (HTTPServer, APIRouter, APIHandlers)
-│   ├── ModelManagerService # Transcription dispatch (delegates to plugins)
+│   ├── Cloud/                 # KeychainService、WavEncoder（云端工具）
+│   ├── LLM/                   # Apple Intelligence 提供商
+│   ├── HTTPServer/            # 本地 REST API（HTTPServer、APIRouter、APIHandlers）
+│   ├── ModelManagerService    # 转写调度（委托给插件）
 │   ├── AudioRecordingService
-│   ├── AudioFileService    # Audio/video - 16kHz PCM conversion
+│   ├── AudioFileService       # 音视频 → 16kHz PCM 转换
 │   ├── HotkeyService
 │   ├── TextInsertionService
-│   ├── ProfileService      # Per-app profile matching and persistence
-│   ├── HistoryService      # Transcription history persistence (SwiftData)
-│   ├── DictionaryService   # Custom term corrections
-│   ├── SnippetService      # Text snippets with placeholders
-│   ├── PromptActionService # Custom prompt management (SwiftData)
-│   ├── PromptProcessingService # LLM orchestration for prompt execution
-│   ├── PluginManager       # Plugin discovery, loading, and lifecycle
-│   ├── PluginRegistryService # Plugin marketplace (download, install, update)
-│   ├── PostProcessingPipeline # Priority-based text processing chain
-│   ├── EventBus            # Typed publish/subscribe event system
-│   ├── TranslationService  # On-device translation via Apple Translate
-│   ├── SubtitleExporter    # SRT/VTT export
-│   └── SoundService        # Audio feedback for recording events
-├── ViewModels/             # MVVM view models with Combine
-├── Views/                  # SwiftUI views
-└── Resources/              # Info.plist, entitlements, localization, sounds
+│   ├── ProfileService         # 按应用配置文件匹配和持久化
+│   ├── HistoryService          # 转写历史持久化（SwiftData）
+│   ├── DictionaryService       # 自定义术语纠正
+│   ├── SnippetService          # 带占位符的文本片段
+│   ├── PromptActionService     # 自定义 Prompt 管理（SwiftData）
+│   ├── PromptProcessingService # Prompt 执行的 LLM 编排
+│   ├── PluginManager           # 插件发现、加载和生命周期
+│   ├── PluginRegistryService   # 插件市场（下载、安装、更新）
+│   ├── PostProcessingPipeline  # 基于优先级的文本处理链
+│   ├── EventBus               # 类型化发布/订阅事件系统
+│   ├── TranslationService     # 通过 Apple Translate 实现设备端翻译
+│   ├── SubtitleExporter       # SRT/VTT 导出
+│   └── SoundService           # 录音事件音频反馈
+├── ViewModels/                # MVVM ViewModel（Combine）
+├── Views/                     # SwiftUI 视图
+└── Resources/                # Info.plist、entitlements、本地化、声音文件
 ```
 
-**Patterns:** MVVM with `ServiceContainer` singleton for dependency injection. ViewModels use a static `_shared` pattern. Localization via `String(localized:)` with `Localizable.xcstrings`.
+**模式：** MVVM 配合 `ServiceContainer` 单例进行依赖注入。ViewModel 使用静态 `_shared` 模式。本地化通过 `String(localized:)` 和 `Localizable.xcstrings` 实现。
 
-## License
+## 许可证
 
-GPLv3 - see [LICENSE](LICENSE) for details. Commercial licensing available - see [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md).
+GPLv3 — 详见 [LICENSE](LICENSE)。商业许可可用 — 参见 [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md)。

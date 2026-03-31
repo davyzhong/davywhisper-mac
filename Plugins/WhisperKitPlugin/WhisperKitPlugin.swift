@@ -1,13 +1,13 @@
 import Foundation
 import SwiftUI
 import WhisperKit
-import TypeWhisperPluginSDK
+import DavyWhisperPluginSDK
 
 // MARK: - Plugin Entry Point
 
 @objc(WhisperKitPlugin)
 final class WhisperKitPlugin: NSObject, TranscriptionEnginePlugin, PluginSettingsActivityReporting, @unchecked Sendable {
-    static let pluginId = "com.typewhisper.whisperkit"
+    static let pluginId = "com.davywhisper.whisperkit"
     static let pluginName = "WhisperKit"
 
     fileprivate var host: HostServices?
@@ -269,13 +269,13 @@ final class WhisperKitPlugin: NSObject, TranscriptionEnginePlugin, PluginSetting
         return FileManager.default.fileExists(atPath: modelPath.path)
     }
 
-    /// Migrate models from old location (TypeWhisper/models/) to plugin data directory
+    /// Migrate models from old location (DavyWhisper/models/) to plugin data directory
     private func migrateOldModels(for modelDef: WhisperModelDef) {
         let fm = FileManager.default
         let appSupport = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
 
         // Check both production and dev paths
-        for dirName in ["TypeWhisper", "TypeWhisper-Dev"] {
+        for dirName in ["DavyWhisper", "DavyWhisper-Dev"] {
             let oldPath = appSupport
                 .appendingPathComponent(dirName)
                 .appendingPathComponent("models")

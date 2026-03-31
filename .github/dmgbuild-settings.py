@@ -1,6 +1,6 @@
 import os
 
-app = defines.get("app", "TypeWhisper")
+app = defines.get("app", "DavyWhisper")
 app_path = defines.get("app_path")
 
 files = [app_path] if app_path else []
