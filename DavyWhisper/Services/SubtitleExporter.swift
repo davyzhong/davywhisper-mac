@@ -56,7 +56,7 @@ enum SubtitleExporter {
         let hours = Int(time) / 3600
         let minutes = (Int(time) % 3600) / 60
         let seconds = Int(time) % 60
-        let millis = Int((time.truncatingRemainder(dividingBy: 1)) * 1000)
+        let millis = lround((time.truncatingRemainder(dividingBy: 1)) * 1000)
         return String(format: "%02d:%02d:%02d,%03d", hours, minutes, seconds, millis)
     }
 
@@ -64,7 +64,7 @@ enum SubtitleExporter {
         let hours = Int(time) / 3600
         let minutes = (Int(time) % 3600) / 60
         let seconds = Int(time) % 60
-        let millis = Int((time.truncatingRemainder(dividingBy: 1)) * 1000)
+        let millis = lround((time.truncatingRemainder(dividingBy: 1)) * 1000)
         return String(format: "%02d:%02d:%02d.%03d", hours, minutes, seconds, millis)
     }
 }
