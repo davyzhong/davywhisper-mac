@@ -106,16 +106,12 @@
 		AA00000000000000000132 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000132 /* manifest.json */; };
 		AA00000000000000000133 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000006 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000134 /* DavyWhisperPluginSDK in Embed Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000005 /* DavyWhisperPluginSDK */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AA00000000000000000135 /* GroqPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000136 /* GroqPlugin.swift */; };
 		AA00000000000000000136 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000137 /* manifest.json */; };
 		AA00000000000000000137 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000007 /* DavyWhisperPluginSDK */; };
-		AA00000000000000000138 /* OpenAIPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000139 /* OpenAIPlugin.swift */; };
 		AA00000000000000000139 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000140 /* manifest.json */; };
 		AA00000000000000000140 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000008 /* DavyWhisperPluginSDK */; };
-		AA00000000000000000141 /* GeminiPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000141 /* GeminiPlugin.swift */; };
 		AA00000000000000000142 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000142 /* manifest.json */; };
 		AA00000000000000000143 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000009 /* DavyWhisperPluginSDK */; };
-		AA00000000000000000148 /* LinearPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000144 /* LinearPlugin.swift */; };
 		AA00000000000000000149 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000145 /* manifest.json */; };
 		AA00000000000000000150 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000010 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000152 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000147 /* AppConstants.swift */; };
@@ -125,11 +121,9 @@
 		AA00000000000000000162 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000155 /* manifest.json */; };
 		AA00000000000000000163 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000014 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000164 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000015 /* WhisperKit */; };
-		AA00000000000000000165 /* ParakeetPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000157 /* ParakeetPlugin.swift */; };
 		AA00000000000000000166 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000158 /* manifest.json */; };
 		AA00000000000000000167 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000016 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000168 /* FluidAudio in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000017 /* FluidAudio */; };
-		AA00000000000000000169 /* SpeechAnalyzerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000160 /* SpeechAnalyzerPlugin.swift */; };
 		AA00000000000000000170 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000161 /* manifest.json */; };
 		AA00000000000000000171 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000018 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000172 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000162 /* Localizable.xcstrings */; };
@@ -144,13 +138,11 @@
 		AA00000000000000000182 /* StreamingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000172 /* StreamingHandler.swift */; };
 		AA00000000000000000183 /* PromptPaletteHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000173 /* PromptPaletteHandler.swift */; };
 		AA00000000000000000184 /* DictationSettingsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000174 /* DictationSettingsHandler.swift */; };
-		AA00000000000000000185 /* OpenAICompatiblePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000176 /* OpenAICompatiblePlugin.swift */; };
 		AA00000000000000000186 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000177 /* manifest.json */; };
 		AA00000000000000000187 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000178 /* Localizable.xcstrings */; };
 		AA00000000000000000188 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000019 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000191 /* DavyWhisperWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000181 /* DavyWhisperWidgets.swift */; };
 		AA00000000000000000196 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000186 /* Assets.xcassets */; };
-		AA00000000000000000199 /* VoxtralPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000191 /* VoxtralPlugin.swift */; };
 		AA00000000000000000200 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000192 /* manifest.json */; };
 		AA00000000000000000201 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000193 /* Localizable.xcstrings */; };
 		AA00000000000000000202 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000020 /* DavyWhisperPluginSDK */; };
@@ -164,16 +156,13 @@
 		AA00000000000000000210 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000201 /* manifest.json */; };
 		AA00000000000000000211 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000202 /* Localizable.xcstrings */; };
 		AA00000000000000000212 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000023 /* DavyWhisperPluginSDK */; };
-		AA00000000000000000213 /* AssemblyAIPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000204 /* AssemblyAIPlugin.swift */; };
 		AA00000000000000000214 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000205 /* manifest.json */; };
 		AA00000000000000000215 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000206 /* Localizable.xcstrings */; };
 		AA00000000000000000216 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000024 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000217 /* IndicatorPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000207 /* IndicatorPreviewView.swift */; };
-		AA00000000000000000218 /* ObsidianPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000208 /* ObsidianPlugin.swift */; };
 		AA00000000000000000219 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000209 /* manifest.json */; };
 		AA00000000000000000220 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000210 /* Localizable.xcstrings */; };
 		AA00000000000000000221 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000025 /* DavyWhisperPluginSDK */; };
-		AA00000000000000000222 /* ScriptPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000212 /* ScriptPlugin.swift */; };
 		AA00000000000000000223 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000213 /* manifest.json */; };
 		AA00000000000000000224 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000214 /* Localizable.xcstrings */; };
 		AA00000000000000000225 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000026 /* DavyWhisperPluginSDK */; };
@@ -182,23 +171,18 @@
 		AA00000000000000000228 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000218 /* Localizable.xcstrings */; };
 		AA00000000000000000229 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000027 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000230 /* AudioPlaybackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000220 /* AudioPlaybackService.swift */; };
-		AA00000000000000000231 /* GranitePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000221 /* GranitePlugin.swift */; };
 		AA00000000000000000232 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000222 /* manifest.json */; };
 		AA00000000000000000233 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000223 /* Localizable.xcstrings */; };
 		AA00000000000000000234 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000028 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000235 /* MLXAudioSTT in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000029 /* MLXAudioSTT */; };
 		AA00000000000000000236 /* MLXAudioCore in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000030 /* MLXAudioCore */; };
-		AA00000000000000000237 /* CloudflareASRPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000225 /* CloudflareASRPlugin.swift */; };
 		AA00000000000000000238 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000226 /* manifest.json */; };
 		AA00000000000000000239 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000031 /* DavyWhisperPluginSDK */; };
 		AA00000000000000000240 /* MemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000228 /* MemoryService.swift */; };
-		AA00000000000000000241 /* FileMemoryPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000229 /* FileMemoryPlugin.swift */; };
 		AA00000000000000000242 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000230 /* manifest.json */; };
 		AA00000000000000000243 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000032 /* DavyWhisperPluginSDK */; };
-		AA00000000000000000244 /* OpenAIVectorMemoryPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000232 /* OpenAIVectorMemoryPlugin.swift */; };
 		AA00000000000000000245 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000233 /* manifest.json */; };
 		AA00000000000000000246 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000033 /* DavyWhisperPluginSDK */; };
-		AA00000000000000000263 /* FireworksPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000251 /* FireworksPlugin.swift */; };
 		AA00000000000000000264 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000252 /* manifest.json */; };
 		AA00000000000000000265 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000253 /* Localizable.xcstrings */; };
 		AA00000000000000000266 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000035 /* DavyWhisperPluginSDK */; };
@@ -224,7 +208,6 @@
 		AA00000000000000000268 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000256 /* manifest.json */; };
 		AA00000000000000000269 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000258 /* Localizable.xcstrings */; };
 		AA00000000000000000270 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000036 /* DavyWhisperPluginSDK */; };
-		AA00000000000000000271 /* ClaudePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000259 /* ClaudePlugin.swift */; };
 		AA00000000000000000272 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000260 /* manifest.json */; };
 		AA00000000000000000273 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000261 /* Localizable.xcstrings */; };
 		AA00000000000000000274 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000037 /* DavyWhisperPluginSDK */; };
@@ -240,7 +223,6 @@
 		AA00000000000000000277 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000265 /* Localizable.xcstrings */; };
 		AA00000000000000000278 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000038 /* DavyWhisperPluginSDK */; };
 		BF1DFDDFBF91D87134DA57E7 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D584661B6B55F6329CB5FC4 /* manifest.json */; };
-		F1177F582D186041B081F9C5 /* GoogleCloudSTTPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D368E23E2A0AB2390B34EA /* GoogleCloudSTTPlugin.swift */; };
 		F774802B61AFC0DCA9E8E668 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 67BE633BCFA1507F72199015 /* DavyWhisperPluginSDK */; };
 /* End PBXBuildFile section */
 
@@ -396,29 +378,17 @@
 		BB00000000000000000131 /* WebhookPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebhookPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000132 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000133 /* WebhookPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebhookPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000134 /* GroqPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GroqPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000135 /* OpenAIPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenAIPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000136 /* GroqPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroqPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000137 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BB00000000000000000139 /* OpenAIPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000140 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BB00000000000000000141 /* GeminiPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000142 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BB00000000000000000143 /* GeminiPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeminiPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000144 /* LinearPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000145 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BB00000000000000000146 /* LinearPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinearPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000147 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		BB00000000000000000148 /* HistoryExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryExporter.swift; sourceTree = "<group>"; };
 		BB00000000000000000152 /* PluginRegistryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistryService.swift; sourceTree = "<group>"; };
 		BB00000000000000000153 /* WhisperKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhisperKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000154 /* WhisperKitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperKitPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000155 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BB00000000000000000156 /* ParakeetPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParakeetPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000157 /* ParakeetPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParakeetPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000158 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BB00000000000000000159 /* SpeechAnalyzerPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeechAnalyzerPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000160 /* SpeechAnalyzerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechAnalyzerPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000161 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000162 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000163 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -432,15 +402,11 @@
 		BB00000000000000000172 /* StreamingHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingHandler.swift; sourceTree = "<group>"; };
 		BB00000000000000000173 /* PromptPaletteHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptPaletteHandler.swift; sourceTree = "<group>"; };
 		BB00000000000000000174 /* DictationSettingsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationSettingsHandler.swift; sourceTree = "<group>"; };
-		BB00000000000000000175 /* OpenAICompatiblePlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenAICompatiblePlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000176 /* OpenAICompatiblePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAICompatiblePlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000177 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000178 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000181 /* DavyWhisperWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DavyWhisperWidgets.swift; sourceTree = "<group>"; };
 		BB00000000000000000186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB00000000000000000189 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BB00000000000000000190 /* VoxtralPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoxtralPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000191 /* VoxtralPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoxtralPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000192 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000193 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000194 /* CodeSigning.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CodeSigning.xcconfig; sourceTree = "<group>"; };
@@ -452,42 +418,26 @@
 		BB00000000000000000200 /* DeepgramPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepgramPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000201 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000202 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		BB00000000000000000203 /* AssemblyAIPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AssemblyAIPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000204 /* AssemblyAIPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyAIPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000205 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000206 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000207 /* IndicatorPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorPreviewView.swift; sourceTree = "<group>"; };
-		BB00000000000000000208 /* ObsidianPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObsidianPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000209 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000210 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		BB00000000000000000211 /* ObsidianPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObsidianPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000212 /* ScriptPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000213 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000214 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		BB00000000000000000215 /* ScriptPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScriptPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000216 /* LiveTranscriptPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTranscriptPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000217 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000218 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB00000000000000000219 /* LiveTranscriptPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTranscriptPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000220 /* AudioPlaybackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaybackService.swift; sourceTree = "<group>"; };
-		BB00000000000000000221 /* GranitePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GranitePlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000222 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000223 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		BB00000000000000000224 /* GranitePlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GranitePlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000225 /* CloudflareASRPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudflareASRPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000226 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BB00000000000000000227 /* CloudflareASRPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudflareASRPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000228 /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
-		BB00000000000000000229 /* FileMemoryPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMemoryPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000230 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BB00000000000000000231 /* FileMemoryPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FileMemoryPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000232 /* OpenAIVectorMemoryPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIVectorMemoryPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000233 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BB00000000000000000234 /* OpenAIVectorMemoryPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenAIVectorMemoryPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000000000000000251 /* FireworksPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworksPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000252 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000253 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		BB00000000000000000254 /* FireworksPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FireworksPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000235 /* AppFormatterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFormatterService.swift; sourceTree = "<group>"; };
 		BB00000000000000000238 /* AudioRecorderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderService.swift; sourceTree = "<group>"; };
 		BB00000000000000000239 /* AudioRecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderViewModel.swift; sourceTree = "<group>"; };
@@ -518,10 +468,8 @@
 		BB00000000000000000256 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000257 /* CerebrasPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CerebrasPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000258 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		BB00000000000000000259 /* ClaudePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudePlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000260 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000261 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		BB00000000000000000262 /* ClaudePlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClaudePlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00000000000000000267 /* GladiaPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GladiaPlugin.swift; sourceTree = "<group>"; };
 		BB00000000000000000268 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		BB00000000000000000269 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -533,9 +481,7 @@
 		BB00000000000000000271 /* DictionaryExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExporter.swift; sourceTree = "<group>"; };
 		BB00000000000000000272 /* TermPackRegistryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermPackRegistryService.swift; sourceTree = "<group>"; };
 		A8D4F2B6E1C3097B5F8A4E62 /* DictionaryExporterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DictionaryExporterTests.swift; sourceTree = "<group>"; };
-		01D368E23E2A0AB2390B34EA /* GoogleCloudSTTPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudSTTPlugin.swift; sourceTree = "<group>"; };
 		1D584661B6B55F6329CB5FC4 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		5CA4DB761B06383B5B8CF082 /* GoogleCloudSTTPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleCloudSTTPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -812,27 +758,10 @@
 				CC00000000000000000002 /* DavyWhisper */,
 				CC00000000000000000013 /* typewhisper-cli */,
 				CC00000000000000000015 /* WebhookPlugin */,
-				CC00000000000000000016 /* GroqPlugin */,
-				CC00000000000000000017 /* OpenAIPlugin */,
-				CC00000000000000000018 /* GeminiPlugin */,
-				CC00000000000000000019 /* LinearPlugin */,
 				CC00000000000000000021 /* WhisperKitPlugin */,
-				CC00000000000000000022 /* ParakeetPlugin */,
-				CC00000000000000000023 /* SpeechAnalyzerPlugin */,
-				CC00000000000000000024 /* OpenAICompatiblePlugin */,
-				CC00000000000000000027 /* VoxtralPlugin */,
 				CC00000000000000000028 /* DeepgramPlugin */,
-				CC00000000000000000029 /* AssemblyAIPlugin */,
-				CC00000000000000000030 /* ObsidianPlugin */,
-				CC00000000000000000031 /* ScriptPlugin */,
 				CC00000000000000000032 /* LiveTranscriptPlugin */,
-				CC00000000000000000033 /* GranitePlugin */,
-				CC00000000000000000034 /* CloudflareASRPlugin */,
-				CC00000000000000000035 /* FileMemoryPlugin */,
-				CC00000000000000000036 /* OpenAIVectorMemoryPlugin */,
-				CC00000000000000000037 /* FireworksPlugin */,
 				CC00000000000000000038 /* CerebrasPlugin */,
-				CC00000000000000000039 /* ClaudePlugin */,
 				CC00000000000000000041 /* GladiaPlugin */,
 				CC00000000000000000040 /* ElevenLabsPlugin */,
 				CC00000000000000000025 /* DavyWhisperWidgetExtension */,
@@ -840,7 +769,6 @@
 				CC00000000000000000090 /* Products */,
 				573FF8BBD9BCC48AA1BBD1CD /* Frameworks */,
 				D310CE5CC61C8F01487BBDF4 /* DavyWhisperTests */,
-				0C3F892FBBE11FA7B5924B24 /* GoogleCloudSTTPlugin */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1064,50 +992,6 @@
 			path = Plugins/WebhookPlugin;
 			sourceTree = "<group>";
 		};
-		CC00000000000000000016 /* GroqPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000136 /* GroqPlugin.swift */,
-				BB00000000000000000137 /* manifest.json */,
-				BB00000000000000000163 /* Localizable.xcstrings */,
-			);
-			name = GroqPlugin;
-			path = Plugins/GroqPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000017 /* OpenAIPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000139 /* OpenAIPlugin.swift */,
-				BB00000000000000000140 /* manifest.json */,
-				BB00000000000000000164 /* Localizable.xcstrings */,
-			);
-			name = OpenAIPlugin;
-			path = Plugins/OpenAIPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000018 /* GeminiPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000141 /* GeminiPlugin.swift */,
-				BB00000000000000000142 /* manifest.json */,
-				BB00000000000000000165 /* Localizable.xcstrings */,
-			);
-			name = GeminiPlugin;
-			path = Plugins/GeminiPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000019 /* LinearPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000144 /* LinearPlugin.swift */,
-				BB00000000000000000145 /* manifest.json */,
-				BB00000000000000000166 /* Localizable.xcstrings */,
-			);
-			name = LinearPlugin;
-			path = Plugins/LinearPlugin;
-			sourceTree = "<group>";
-		};
 		CC00000000000000000021 /* WhisperKitPlugin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1117,39 +1001,6 @@
 			);
 			name = WhisperKitPlugin;
 			path = Plugins/WhisperKitPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000022 /* ParakeetPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000157 /* ParakeetPlugin.swift */,
-				BB00000000000000000158 /* manifest.json */,
-				BB00000000000000000169 /* Localizable.xcstrings */,
-			);
-			name = ParakeetPlugin;
-			path = Plugins/ParakeetPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000023 /* SpeechAnalyzerPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000160 /* SpeechAnalyzerPlugin.swift */,
-				BB00000000000000000161 /* manifest.json */,
-				BB00000000000000000170 /* Localizable.xcstrings */,
-			);
-			name = SpeechAnalyzerPlugin;
-			path = Plugins/SpeechAnalyzerPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000024 /* OpenAICompatiblePlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000176 /* OpenAICompatiblePlugin.swift */,
-				BB00000000000000000177 /* manifest.json */,
-				BB00000000000000000178 /* Localizable.xcstrings */,
-			);
-			name = OpenAICompatiblePlugin;
-			path = Plugins/OpenAICompatiblePlugin;
 			sourceTree = "<group>";
 		};
 		CC00000000000000000025 /* DavyWhisperWidgetExtension */ = {
@@ -1175,17 +1026,6 @@
 			path = DavyWhisperWidgetShared;
 			sourceTree = "<group>";
 		};
-		CC00000000000000000027 /* VoxtralPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000191 /* VoxtralPlugin.swift */,
-				BB00000000000000000192 /* manifest.json */,
-				BB00000000000000000193 /* Localizable.xcstrings */,
-			);
-			name = VoxtralPlugin;
-			path = Plugins/VoxtralPlugin;
-			sourceTree = "<group>";
-		};
 		CC00000000000000000028 /* DeepgramPlugin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1195,39 +1035,6 @@
 			);
 			name = DeepgramPlugin;
 			path = Plugins/DeepgramPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000029 /* AssemblyAIPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000204 /* AssemblyAIPlugin.swift */,
-				BB00000000000000000205 /* manifest.json */,
-				BB00000000000000000206 /* Localizable.xcstrings */,
-			);
-			name = AssemblyAIPlugin;
-			path = Plugins/AssemblyAIPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000030 /* ObsidianPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000208 /* ObsidianPlugin.swift */,
-				BB00000000000000000209 /* manifest.json */,
-				BB00000000000000000210 /* Localizable.xcstrings */,
-			);
-			name = ObsidianPlugin;
-			path = Plugins/ObsidianPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000031 /* ScriptPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000212 /* ScriptPlugin.swift */,
-				BB00000000000000000213 /* manifest.json */,
-				BB00000000000000000214 /* Localizable.xcstrings */,
-			);
-			name = ScriptPlugin;
-			path = Plugins/ScriptPlugin;
 			sourceTree = "<group>";
 		};
 		CC00000000000000000032 /* LiveTranscriptPlugin */ = {
@@ -1241,58 +1048,6 @@
 			path = Plugins/LiveTranscriptPlugin;
 			sourceTree = "<group>";
 		};
-		CC00000000000000000033 /* GranitePlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000221 /* GranitePlugin.swift */,
-				BB00000000000000000222 /* manifest.json */,
-				BB00000000000000000223 /* Localizable.xcstrings */,
-			);
-			name = GranitePlugin;
-			path = Plugins/GranitePlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000034 /* CloudflareASRPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000225 /* CloudflareASRPlugin.swift */,
-				BB00000000000000000226 /* manifest.json */,
-			);
-			name = CloudflareASRPlugin;
-			path = Plugins/CloudflareASRPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000035 /* FileMemoryPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000229 /* FileMemoryPlugin.swift */,
-				BB00000000000000000230 /* manifest.json */,
-			);
-			name = FileMemoryPlugin;
-			path = Plugins/FileMemoryPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000036 /* OpenAIVectorMemoryPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000232 /* OpenAIVectorMemoryPlugin.swift */,
-				BB00000000000000000233 /* manifest.json */,
-			);
-			name = OpenAIVectorMemoryPlugin;
-			path = Plugins/OpenAIVectorMemoryPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000037 /* FireworksPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000251 /* FireworksPlugin.swift */,
-				BB00000000000000000252 /* manifest.json */,
-				BB00000000000000000253 /* Localizable.xcstrings */,
-			);
-			name = FireworksPlugin;
-			path = Plugins/FireworksPlugin;
-			sourceTree = "<group>";
-		};
 		CC00000000000000000038 /* CerebrasPlugin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1302,17 +1057,6 @@
 			);
 			name = CerebrasPlugin;
 			path = Plugins/CerebrasPlugin;
-			sourceTree = "<group>";
-		};
-		CC00000000000000000039 /* ClaudePlugin */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000000000000000259 /* ClaudePlugin.swift */,
-				BB00000000000000000260 /* manifest.json */,
-				BB00000000000000000261 /* Localizable.xcstrings */,
-			);
-			name = ClaudePlugin;
-			path = Plugins/ClaudePlugin;
 			sourceTree = "<group>";
 		};
 		CC00000000000000000041 /* GladiaPlugin */ = {
@@ -1337,47 +1081,19 @@
 			path = Plugins/ElevenLabsPlugin;
 			sourceTree = "<group>";
 		};
-		0C3F892FBBE11FA7B5924B24 /* GoogleCloudSTTPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				01D368E23E2A0AB2390B34EA /* GoogleCloudSTTPlugin.swift */,
-				1D584661B6B55F6329CB5FC4 /* manifest.json */,
-			);
-			name = GoogleCloudSTTPlugin;
-			path = Plugins/GoogleCloudSTTPlugin;
-			sourceTree = "<group>";
-		};
 		CC00000000000000000090 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				DD00000000000000000098 /* typewhisper-cli */,
 				DD00000000000000000099 /* DavyWhisper.app */,
 				BB00000000000000000133 /* WebhookPlugin.bundle */,
-				BB00000000000000000134 /* GroqPlugin.bundle */,
-				BB00000000000000000135 /* OpenAIPlugin.bundle */,
-				BB00000000000000000143 /* GeminiPlugin.bundle */,
-				BB00000000000000000146 /* LinearPlugin.bundle */,
 				BB00000000000000000153 /* WhisperKitPlugin.bundle */,
-				BB00000000000000000156 /* ParakeetPlugin.bundle */,
-				BB00000000000000000159 /* SpeechAnalyzerPlugin.bundle */,
-				BB00000000000000000175 /* OpenAICompatiblePlugin.bundle */,
-				BB00000000000000000190 /* VoxtralPlugin.bundle */,
 				BB00000000000000000199 /* DeepgramPlugin.bundle */,
-				BB00000000000000000203 /* AssemblyAIPlugin.bundle */,
-				BB00000000000000000211 /* ObsidianPlugin.bundle */,
-				BB00000000000000000215 /* ScriptPlugin.bundle */,
 				BB00000000000000000219 /* LiveTranscriptPlugin.bundle */,
-				BB00000000000000000224 /* GranitePlugin.bundle */,
-				BB00000000000000000227 /* CloudflareASRPlugin.bundle */,
-				BB00000000000000000231 /* FileMemoryPlugin.bundle */,
-				BB00000000000000000234 /* OpenAIVectorMemoryPlugin.bundle */,
-				BB00000000000000000254 /* FireworksPlugin.bundle */,
 				BB00000000000000000257 /* CerebrasPlugin.bundle */,
-				BB00000000000000000262 /* ClaudePlugin.bundle */,
 				BB00000000000000000270 /* GladiaPlugin.bundle */,
 				BB00000000000000000266 /* ElevenLabsPlugin.bundle */,
 				BB00000000000000000188 /* DavyWhisperWidgetExtension.appex */,
-				5CA4DB761B06383B5B8CF082 /* GoogleCloudSTTPlugin.bundle */,
 				E6F8E5940EF4832A7B8D735D /* DavyWhisperTests.xctest */,
 			);
 			name = Products;
@@ -1615,32 +1331,14 @@
 				DD00000000000000000001 /* DavyWhisper */,
 				DD00000000000000000002 /* typewhisper-cli */,
 				DD00000000000000000003 /* WebhookPlugin */,
-				DD00000000000000000004 /* GroqPlugin */,
-				DD00000000000000000005 /* OpenAIPlugin */,
-				DD00000000000000000006 /* GeminiPlugin */,
-				DD00000000000000000007 /* LinearPlugin */,
 				DD00000000000000000010 /* WhisperKitPlugin */,
-				DD00000000000000000011 /* ParakeetPlugin */,
-				DD00000000000000000012 /* SpeechAnalyzerPlugin */,
-				DD00000000000000000013 /* OpenAICompatiblePlugin */,
-				DD00000000000000000015 /* VoxtralPlugin */,
 				DD00000000000000000016 /* DeepgramPlugin */,
-				DD00000000000000000017 /* AssemblyAIPlugin */,
-				DD00000000000000000018 /* ObsidianPlugin */,
-				DD00000000000000000019 /* ScriptPlugin */,
 				DD00000000000000000020 /* LiveTranscriptPlugin */,
-				DD00000000000000000021 /* GranitePlugin */,
-				DD00000000000000000022 /* CloudflareASRPlugin */,
-				DD00000000000000000023 /* FileMemoryPlugin */,
-				DD00000000000000000024 /* OpenAIVectorMemoryPlugin */,
-				DD00000000000000000025 /* FireworksPlugin */,
 				DD00000000000000000026 /* CerebrasPlugin */,
-				DD00000000000000000027 /* ClaudePlugin */,
 				DD00000000000000000029 /* GladiaPlugin */,
 				DD00000000000000000028 /* ElevenLabsPlugin */,
 				DD00000000000000000014 /* DavyWhisperWidgetExtension */,
 				40F22D3F350BA09ADEFBD2CB /* DavyWhisperTests */,
-				F3E17BDD5CED7E75F4153E95 /* GoogleCloudSTTPlugin */,
 			);
 		};
 /* End PBXProject section */
@@ -2075,7 +1773,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000135 /* GroqPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2083,7 +1780,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000138 /* OpenAIPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2091,7 +1787,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000141 /* GeminiPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2099,7 +1794,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000148 /* LinearPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2115,7 +1809,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000165 /* ParakeetPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2123,7 +1816,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000169 /* SpeechAnalyzerPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2131,7 +1823,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000185 /* OpenAICompatiblePlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2152,7 +1843,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000199 /* VoxtralPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2168,7 +1858,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000213 /* AssemblyAIPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2176,7 +1865,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000218 /* ObsidianPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2184,7 +1872,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000222 /* ScriptPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2200,7 +1887,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000231 /* GranitePlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2208,7 +1894,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000237 /* CloudflareASRPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2216,7 +1901,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000241 /* FileMemoryPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2224,7 +1908,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000244 /* OpenAIVectorMemoryPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2232,7 +1915,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000263 /* FireworksPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2248,7 +1930,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA00000000000000000271 /* ClaudePlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2272,7 +1953,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1177F582D186041B081F9C5 /* GoogleCloudSTTPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5314,50 +4994,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF00000000000000000043 /* Build configuration list for PBXNativeTarget "GroqPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000017 /* Debug */,
-				XX00000000000000000018 /* Release */,
-				XX00000000000000000019 /* AppStoreDebug */,
-				XX00000000000000000020 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000044 /* Build configuration list for PBXNativeTarget "OpenAIPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000021 /* Debug */,
-				XX00000000000000000022 /* Release */,
-				XX00000000000000000023 /* AppStoreDebug */,
-				XX00000000000000000024 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000048 /* Build configuration list for PBXNativeTarget "GeminiPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000025 /* Debug */,
-				XX00000000000000000026 /* Release */,
-				XX00000000000000000027 /* AppStoreDebug */,
-				XX00000000000000000028 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000053 /* Build configuration list for PBXNativeTarget "LinearPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000029 /* Debug */,
-				XX00000000000000000030 /* Release */,
-				XX00000000000000000031 /* AppStoreDebug */,
-				XX00000000000000000032 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		FF00000000000000000065 /* Build configuration list for PBXNativeTarget "WhisperKitPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -5365,39 +5001,6 @@
 				XX00000000000000000042 /* Release */,
 				XX00000000000000000043 /* AppStoreDebug */,
 				XX00000000000000000044 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000069 /* Build configuration list for PBXNativeTarget "ParakeetPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000045 /* Debug */,
-				XX00000000000000000046 /* Release */,
-				XX00000000000000000047 /* AppStoreDebug */,
-				XX00000000000000000048 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000073 /* Build configuration list for PBXNativeTarget "SpeechAnalyzerPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000049 /* Debug */,
-				XX00000000000000000050 /* Release */,
-				XX00000000000000000051 /* AppStoreDebug */,
-				XX00000000000000000052 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000077 /* Build configuration list for PBXNativeTarget "OpenAICompatiblePlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000053 /* Debug */,
-				XX00000000000000000054 /* Release */,
-				XX00000000000000000055 /* AppStoreDebug */,
-				XX00000000000000000056 /* AppStoreRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -5413,17 +5016,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF00000000000000000083 /* Build configuration list for PBXNativeTarget "VoxtralPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000061 /* Debug */,
-				XX00000000000000000062 /* Release */,
-				XX00000000000000000063 /* AppStoreDebug */,
-				XX00000000000000000064 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		FF00000000000000000090 /* Build configuration list for PBXNativeTarget "DeepgramPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -5431,39 +5023,6 @@
 				XX00000000000000000066 /* Release */,
 				XX00000000000000000067 /* AppStoreDebug */,
 				XX00000000000000000068 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000094 /* Build configuration list for PBXNativeTarget "AssemblyAIPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000069 /* Debug */,
-				XX00000000000000000070 /* Release */,
-				XX00000000000000000071 /* AppStoreDebug */,
-				XX00000000000000000072 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000098 /* Build configuration list for PBXNativeTarget "ObsidianPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000073 /* Debug */,
-				XX00000000000000000074 /* Release */,
-				XX00000000000000000075 /* AppStoreDebug */,
-				XX00000000000000000076 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000102 /* Build configuration list for PBXNativeTarget "ScriptPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000077 /* Debug */,
-				XX00000000000000000078 /* Release */,
-				XX00000000000000000079 /* AppStoreDebug */,
-				XX00000000000000000080 /* AppStoreRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -5479,61 +5038,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF00000000000000000110 /* Build configuration list for PBXNativeTarget "GranitePlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000085 /* Debug */,
-				XX00000000000000000086 /* Release */,
-				XX00000000000000000087 /* AppStoreDebug */,
-				XX00000000000000000088 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000114 /* Build configuration list for PBXNativeTarget "CloudflareASRPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000089 /* Debug */,
-				XX00000000000000000090 /* Release */,
-				XX00000000000000000091 /* AppStoreDebug */,
-				XX00000000000000000092 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000118 /* Build configuration list for PBXNativeTarget "FileMemoryPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000093 /* Debug */,
-				XX00000000000000000094 /* Release */,
-				XX00000000000000000095 /* AppStoreDebug */,
-				XX00000000000000000096 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000122 /* Build configuration list for PBXNativeTarget "OpenAIVectorMemoryPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000097 /* Debug */,
-				XX00000000000000000098 /* Release */,
-				XX00000000000000000099 /* AppStoreDebug */,
-				XX00000000000000000100 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000126 /* Build configuration list for PBXNativeTarget "FireworksPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000101 /* Debug */,
-				XX00000000000000000102 /* Release */,
-				XX00000000000000000103 /* AppStoreDebug */,
-				XX00000000000000000104 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		FF00000000000000000130 /* Build configuration list for PBXNativeTarget "CerebrasPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -5541,17 +5045,6 @@
 				XX00000000000000000106 /* Release */,
 				XX00000000000000000107 /* AppStoreDebug */,
 				XX00000000000000000108 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FF00000000000000000134 /* Build configuration list for PBXNativeTarget "ClaudePlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				XX00000000000000000109 /* Debug */,
-				XX00000000000000000110 /* Release */,
-				XX00000000000000000111 /* AppStoreDebug */,
-				XX00000000000000000112 /* AppStoreRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -5574,17 +5067,6 @@
 				XX00000000000000000114 /* Release */,
 				XX00000000000000000115 /* AppStoreDebug */,
 				XX00000000000000000116 /* AppStoreRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7C80F8B2CDA6AFA512E7E2E3 /* Build configuration list for PBXNativeTarget "GoogleCloudSTTPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				31C90797268650EB47DEEB4B /* Debug */,
-				A689AD2E30672A72FC55C678 /* Release */,
-				1E03B5BE7E5A687C35D262E8 /* AppStoreDebug */,
-				D918FB2E59EB9F588E8F4598 /* AppStoreRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
