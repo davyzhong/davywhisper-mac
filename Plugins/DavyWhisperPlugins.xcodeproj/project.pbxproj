@@ -19,6 +19,10 @@
 		D488D5BC113F51B6C353CCA6 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 3A17D13EC3ED1429464B94E4 /* DavyWhisperPluginSDK */; };
 		EEB1780691FE6766E83A382A /* KimiPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE412DD7DC86AB4898450F9 /* KimiPlugin.swift */; };
 		FC9A26D9FC101D1F986D46CC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D126FDE5D82C385EBB95DB5A /* Localizable.xcstrings */; };
+		DD000000000000000000A1 /* QwenLLMPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000B1 /* QwenLLMPlugin.swift */; };
+		DD000000000000000000A2 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000B2 /* manifest.json */; };
+		DD000000000000000000A3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DD000000000000000000B3 /* Localizable.xcstrings */; };
+		DD000000000000000000A4 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DD000000000000000000C1 /* DavyWhisperPluginSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +39,10 @@
 		A9F8AA567708CE9A2423D2AC /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		C8BC12CFA316A84BB625CA18 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		D126FDE5D82C385EBB95DB5A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		DD000000000000000000D1 /* QwenLLMPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QwenLLMPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD000000000000000000B1 /* QwenLLMPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QwenLLMPlugin.swift; sourceTree = "<group>"; };
+		DD000000000000000000B2 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		DD000000000000000000B3 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +70,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD000000000000000000FF1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD000000000000000000A4 /* DavyWhisperPluginSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -71,6 +87,7 @@
 				CE3D7146AE9A60BC8DF5EC6A /* GLMPlugin */,
 				E5A5D8E425D837F75148C5C1 /* KimiPlugin */,
 				EB65B485625E4552A82920FC /* MiniMaxPlugin */,
+				DD000000000000000000E1 /* QwenLLMPlugin */,
 				5236ED80EF890C6EBD7E92AD /* Packages */,
 				BF80961617255CB38BD6D5E1 /* Products */,
 			);
@@ -90,6 +107,7 @@
 				4000088132AC66C2D852C1E4 /* GLMPlugin.bundle */,
 				2DBE96F8EC214609A34A0423 /* KimiPlugin.bundle */,
 				1486EF56E3B069C5DC1B6826 /* MiniMaxPlugin.bundle */,
+				DD000000000000000000D1 /* QwenLLMPlugin.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,6 +140,16 @@
 				103BD9E3D56F1A6430E57E81 /* MiniMaxPlugin.swift */,
 			);
 			path = MiniMaxPlugin;
+			sourceTree = "<group>";
+		};
+		DD000000000000000000E1 /* QwenLLMPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				DD000000000000000000B1 /* QwenLLMPlugin.swift */,
+				DD000000000000000000B3 /* Localizable.xcstrings */,
+				DD000000000000000000B2 /* manifest.json */,
+			);
+			path = QwenLLMPlugin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +215,26 @@
 			productReference = 1486EF56E3B069C5DC1B6826 /* MiniMaxPlugin.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
+		DD00000000000000000031 /* QwenLLMPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD000000000000000000F1 /* Build configuration list for PBXNativeTarget "QwenLLMPlugin" */;
+			buildPhases = (
+				DD000000000000000000FF2 /* Sources */,
+				DD000000000000000000FF3 /* Resources */,
+				DD000000000000000000FF1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QwenLLMPlugin;
+			packageProductDependencies = (
+				DD000000000000000000C1 /* DavyWhisperPluginSDK */,
+			);
+			productName = QwenLLMPlugin;
+			productReference = DD000000000000000000D1 /* QwenLLMPlugin.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -219,6 +267,7 @@
 				5E3394211E856966AF5E82F8 /* GLMPlugin */,
 				A85AFA54A893B9BC57F60A86 /* KimiPlugin */,
 				EF35E0FE53DE625AD1E6A612 /* MiniMaxPlugin */,
+				DD00000000000000000031 /* QwenLLMPlugin */,
 			);
 		};
 /* End PBXProject section */
@@ -251,6 +300,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD000000000000000000FF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD000000000000000000A3 /* Localizable.xcstrings in Resources */,
+				DD000000000000000000A2 /* manifest.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -275,6 +333,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				418FFB3D3B8FB68A3C7EB231 /* GLMPlugin.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD000000000000000000FF2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD000000000000000000A1 /* QwenLLMPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +580,42 @@
 			};
 			name = Release;
 		};
+		DD000000000000000000D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Qwen;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.qwen;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		DD000000000000000000D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Qwen;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.qwen;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -553,6 +655,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		DD000000000000000000F1 /* Build configuration list for PBXNativeTarget "QwenLLMPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD000000000000000000D2 /* Debug */,
+				DD000000000000000000D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
@@ -572,6 +683,10 @@
 			productName = DavyWhisperPluginSDK;
 		};
 		3A17D13EC3ED1429464B94E4 /* DavyWhisperPluginSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DavyWhisperPluginSDK;
+		};
+		DD000000000000000000C1 /* DavyWhisperPluginSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DavyWhisperPluginSDK;
 		};

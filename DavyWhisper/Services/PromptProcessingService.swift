@@ -31,6 +31,7 @@ class PromptProcessingService: ObservableObject {
         "GLM (Zhipu AI)",
         "Kimi",
         "MiniMax",
+        "Qwen",
     ]
 
     /// Returns (id, displayName) pairs for available Chinese LLM providers
