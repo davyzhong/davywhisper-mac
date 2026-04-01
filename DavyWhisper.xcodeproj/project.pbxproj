@@ -224,6 +224,10 @@
 		AA00000000000000000278 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = PP00000000000000000038 /* DavyWhisperPluginSDK */; };
 		BF1DFDDFBF91D87134DA57E7 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D584661B6B55F6329CB5FC4 /* manifest.json */; };
 		F774802B61AFC0DCA9E8E668 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 67BE633BCFA1507F72199015 /* DavyWhisperPluginSDK */; };
+		AA00000000000000000301 /* WhisperKitPlugin.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = BB00000000000000000153 /* WhisperKitPlugin.bundle */; };
+		AA00000000000000000302 /* DeepgramPlugin.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = BB00000000000000000199 /* DeepgramPlugin.bundle */; };
+		AA00000000000000000303 /* LiveTranscriptPlugin.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = BB00000000000000000219 /* LiveTranscriptPlugin.bundle */; };
+		AA00000000000000000310 /* plugins.json in Resources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000310 /* plugins.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,6 +251,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = DD00000000000000000014;
 			remoteInfo = DavyWhisperWidgetExtension;
+		};
+		HH00000000000000000010 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE00000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD00000000000000000010;
+			remoteInfo = WhisperKitPlugin;
+		};
+		HH00000000000000000011 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE00000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD00000000000000000016;
+			remoteInfo = DeepgramPlugin;
+		};
+		HH00000000000000000012 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE00000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD00000000000000000020;
+			remoteInfo = LiveTranscriptPlugin;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -281,6 +306,19 @@
 				AA00000000000000000198 /* DavyWhisperWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF00000000000000000083 /* Embed PlugIns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AA00000000000000000301 /* WhisperKitPlugin.bundle in Embed PlugIns */,
+				AA00000000000000000302 /* DeepgramPlugin.bundle in Embed PlugIns */,
+				AA00000000000000000303 /* LiveTranscriptPlugin.bundle in Embed PlugIns */,
+			);
+			name = "Embed PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -482,6 +520,7 @@
 		BB00000000000000000272 /* TermPackRegistryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermPackRegistryService.swift; sourceTree = "<group>"; };
 		A8D4F2B6E1C3097B5F8A4E62 /* DictionaryExporterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DictionaryExporterTests.swift; sourceTree = "<group>"; };
 		1D584661B6B55F6329CB5FC4 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+			BB00000000000000000310 /* plugins.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = plugins.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -926,6 +965,7 @@
 				BB00000000000000000109 /* PrivacyInfo.xcprivacy */,
 				BB00000000000000000052 /* Localizable.xcstrings */,
 				BB00000000000000000072 /* Assets.xcassets */,
+				BB00000000000000000310 /* plugins.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1155,6 +1195,8 @@
 				FF00000000000000000004 /* CopyFiles */,
 				FF00000000000000000036 /* Embed Frameworks */,
 				FF00000000000000000081 /* Embed App Extensions */,
+				FF00000000000000000083 /* Embed PlugIns */,
+				FF00000000000000000094 /* Build LLM Plugins */,
 				FF00000000000000000007 /* Remove CLI for App Store */,
 			);
 			buildRules = (
@@ -1162,6 +1204,9 @@
 			dependencies = (
 				GG00000000000000000001 /* PBXTargetDependency */,
 				GG00000000000000000009 /* PBXTargetDependency */,
+				GG00000000000000000010 /* PBXTargetDependency */,
+				GG00000000000000000011 /* PBXTargetDependency */,
+				GG00000000000000000012 /* PBXTargetDependency */,
 			);
 			name = DavyWhisper;
 			packageProductDependencies = (
@@ -1361,6 +1406,7 @@
 				AA00000000000000000088 /* transcription_success.wav in Resources */,
 				AA00000000000000000089 /* error.wav in Resources */,
 				AA00000000000000000108 /* PrivacyInfo.xcprivacy in Resources */,
+				AA00000000000000000310 /* plugins.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1614,6 +1660,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if echo \"${SWIFT_ACTIVE_COMPILATION_CONDITIONS}\" | grep -q \"APPSTORE\"; then\n    # Re-sign Sparkle in build products dir to match app Team ID (fixes dyld on macOS 26)\n    /usr/bin/codesign --force --deep --sign \"${EXPANDED_CODE_SIGN_IDENTITY}\" \"${BUILT_PRODUCTS_DIR}/Sparkle.framework\" 2>/dev/null || true\n    # Remove CLI and Sparkle from app bundle for App Store\n    rm -f \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Contents/MacOS/typewhisper-cli\"\n    rm -rf \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Contents/Frameworks/Sparkle.framework\"\nfi\ntouch \"${TARGET_TEMP_DIR}/appstore-prune.stamp\"\n";
+		};
+		FF00000000000000000094 /* Build LLM Plugins */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build LLM Plugins";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Build LLM plugins from separate project and copy to PlugIns\nLLM_PROJECT=\"${SRCROOT}/Plugins/DavyWhisperPlugins.xcodeproj\"\nPLUGINS_DIR=\"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Contents/PlugIns\"\n\nif [ -d \"${LLM_PROJECT}\" ]; then\n    for scheme in GLMPlugin KimiPlugin MiniMaxPlugin QwenLLMPlugin; do\n        xcodebuild -project \"${LLM_PROJECT}\" -scheme \"${scheme}\" \\\n            -configuration \"${CONFIGURATION}\" \\\n            -destination 'platform=macOS,arch=arm64' \\\n            CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \\\n            -skipPackageUpdates \\\n            -quiet 2>/dev/null\n\n        # Find the built bundle in DerivedData\n        BUNDLE=$(find \"${HOME}/Library/Developer/Xcode/DerivedData\" -name \"${scheme}.bundle\" -path \"*/Debug/*\" -not -path \"*/DavyWhisper.app/*\" 2>/dev/null | head -1)\n\n        if [ -n \"${BUNDLE}\" ] && [ -d \"${BUNDLE}\" ]; then\n            cp -R \"${BUNDLE}\" \"${PLUGINS_DIR}/\"\n            echo \"Copied ${scheme}.bundle to PlugIns\"\n        fi\n    done\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1974,6 +2038,21 @@
 			isa = PBXTargetDependency;
 			target = DD00000000000000000014 /* DavyWhisperWidgetExtension */;
 			targetProxy = HH00000000000000000009 /* PBXContainerItemProxy */;
+		};
+		GG00000000000000000010 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD00000000000000000010 /* WhisperKitPlugin */;
+			targetProxy = HH00000000000000000010 /* PBXContainerItemProxy */;
+		};
+		GG00000000000000000011 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD00000000000000000016 /* DeepgramPlugin */;
+			targetProxy = HH00000000000000000011 /* PBXContainerItemProxy */;
+		};
+		GG00000000000000000012 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD00000000000000000020 /* LiveTranscriptPlugin */;
+			targetProxy = HH00000000000000000012 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
