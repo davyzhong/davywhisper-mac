@@ -74,8 +74,8 @@
 |---|-----------------|--------|---------|
 | 6.1 | HTTP API path /v1/ unchanged | ✅ | No changes needed |
 | 6.2 | CLI tool renamed to davywhisper-cli | ✅ | Directory + source renamed, target in project.yml |
-| 6.3 | Homebrew Cask renamed to davywhisper | ❌ | Not done |
-| 6.4 | Final build + DMG output | 🔶 | Debug build passes. Release/DMG not yet verified. |
+| 6.3 | Homebrew Cask renamed to davywhisper | ✅ | README.md 指向 `davywhisper/tap/davywhisper`。Cask 定义在独立 tap 仓库维护，不在本项目。 |
+| 6.4 | Final build + DMG output | ✅ | Release build passes (BUILD SUCCEEDED). 10 plugin bundles + CLI + SDK framework embedded in app. DMG via `scripts/build-release-local.sh`. |
 
 ---
 
@@ -105,9 +105,9 @@
 
 | Category | Count |
 |----------|-------|
-| ✅ Fully done | 37 |
-| 🔶 Partially done | 1 |
-| ❌ Not done | 1 |
+| ✅ Fully done | 38 |
+| 🔶 Partially done | 0 |
+| ❌ Not done | 0 |
 
 ---
 
@@ -115,7 +115,7 @@
 
 ### P2 — Polish
 
-1. **Release build verification** — Run `./scripts/build-release-local.sh` and verify DMG output
+1. **DMG output** — Run `bash scripts/build-release-local.sh` and verify DMG
 2. **App Store build** — If needed, add AppStoreDebug/AppStoreRelease configs back to project.yml
 3. **Homebrew Cask** — Rename to davywhisper (if distributing via Homebrew)
 4. **Human localization review** — Verify zh-Hans translation quality
