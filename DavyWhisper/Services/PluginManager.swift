@@ -110,6 +110,21 @@ final class PluginManager: ObservableObject {
                 loadPlugin(at: bundleURL)
             }
         }
+
+        // Fallback: bundles embedded in Resources (e.g. by XcodeGen)
+        if let resourcesURL = Bundle.main.resourceURL,
+           let resources = try? fm.contentsOfDirectory(at: resourcesURL, includingPropertiesForKeys: nil) {
+            let loadedBundleNames = Set(loadedPlugins.map { $0.bundle.bundleURL.deletingPathExtension().lastPathComponent })
+            let resourceBundles = resources.filter {
+                $0.pathExtension == "bundle" && !loadedBundleNames.contains($0.deletingPathExtension().lastPathComponent)
+            }
+            if !resourceBundles.isEmpty {
+                logger.info("Found \(resourceBundles.count) plugin bundle(s) in Resources")
+                for bundleURL in resourceBundles {
+                    loadPlugin(at: bundleURL)
+                }
+            }
+        }
     }
 
     func loadPlugin(at url: URL) {

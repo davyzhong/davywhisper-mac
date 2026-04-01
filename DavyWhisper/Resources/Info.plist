@@ -19,7 +19,7 @@
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
-		<string>de</string>
+		<string>zh-Hans</string>
 	</array>
 	<key>LSUIElement</key>
 	<true/>
@@ -34,10 +34,6 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
-	<key>SUFeedURL</key>
-	<string>https://davywhisper.github.io/davywhisper-mac/appcast.xml</string>
-	<key>SUPublicEDKey</key>
-	<string>OdAMiN136Ckglxnq4FeLagPjcrZiASYGaeUWBkK6tuc=</string>
 	<key>DavyWhisperReleaseChannel</key>
 	<string>stable</string>
 	<key>AppGroupIdentifier</key>

@@ -342,7 +342,7 @@ private struct RecordingRow: View {
                             showTranscript.toggle()
                         } label: {
                             Image(systemName: showTranscript ? "text.quote" : "text.quote")
-                                .foregroundStyle(showTranscript ? .accent : .secondary)
+                                .foregroundStyle(showTranscript ? Color.accentColor : .secondary)
                         }
                         .buttonStyle(.borderless)
                         .help(String(localized: "recorder.showTranscript"))

@@ -3,7 +3,7 @@
   "strings" : {
     "Download & Load" : {
       "localizations" : {
-        "de" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Laden & Aktivieren"
@@ -13,7 +13,7 @@
     },
     "Loading model..." : {
       "localizations" : {
-        "de" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modell wird geladen ..."
@@ -23,7 +23,7 @@
     },
     "Loading..." : {
       "localizations" : {
-        "de" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Laden ..."
@@ -33,7 +33,7 @@
     },
     "Local speech-to-text using OpenAI Whisper via CoreML. 99+ languages, streaming, translation to English." : {
       "localizations" : {
-        "de" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lokale Sprache-zu-Text-Erkennung mit OpenAI Whisper via CoreML. 99+ Sprachen, Streaming, Übersetzung ins Englische."
@@ -43,7 +43,7 @@
     },
     "Models" : {
       "localizations" : {
-        "de" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modelle"
@@ -53,7 +53,7 @@
     },
     "Optimizing for Neural Engine..." : {
       "localizations" : {
-        "de" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Optimierung für Neural Engine ..."
@@ -63,7 +63,7 @@
     },
     "Recommended" : {
       "localizations" : {
-        "de" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Empfohlen"
@@ -73,7 +73,7 @@
     },
     "Unload" : {
       "localizations" : {
-        "de" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deaktivieren"
