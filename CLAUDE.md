@@ -14,15 +14,25 @@ DavyWhisper is a native macOS menu bar app for speech-to-text dictation and AI t
 
 ## Build Commands
 
+### Project generation (required after project.yml changes)
+```bash
+xcodegen generate
+# or:
+./scripts/generate-projects.sh
+```
+
+The Xcode project (`DavyWhisper.xcodeproj/project.pbxproj`) is **generated** from `project.yml` via XcodeGen. It is listed in `.gitignore` and should not be edited manually. Always run `xcodegen generate` after modifying `project.yml`.
+
 ### Xcode (development)
 ```bash
-cd davywhisper-mac
+xcodegen generate  # regenerate project
 open DavyWhisper.xcodeproj
 # Select DavyWhisper scheme, Cmd+B to build
 ```
 
 ### Command line (no signing)
 ```bash
+xcodegen generate  # ensure project is up to date
 xcodebuild -project DavyWhisper.xcodeproj \
   -scheme DavyWhisper \
   -configuration Debug \
@@ -82,11 +92,14 @@ Services are the core business logic. All registered in `ServiceContainer`. Key 
 | `SubtitleExporter` | SRT/VTT export with timestamps |
 
 ### Plugin System
-All transcription engines and LLM providers are plugins in `Plugins/`. The SDK is at `DavyWhisperPluginSDK/`. To add a new plugin:
-1. Create a bundle in `Plugins/YourPlugin/`
+All transcription engines and LLM providers are plugins in `Plugins/`. The SDK is at `DavyWhisperPluginSDK/`. Plugin bundles are built by XcodeGen (defined in `project.yml`) and embedded in `Contents/Resources/`. PluginManager scans both `Contents/PlugIns/` and `Contents/Resources/` to discover bundles.
+
+To add a new plugin:
+1. Create a bundle directory in `Plugins/YourPlugin/` with `YourPlugin.swift` + `manifest.json`
 2. Implement the appropriate plugin protocol (`TranscriptionEnginePlugin`, `LLMProviderPlugin`, `PostProcessorPlugin`, `ActionPlugin`)
-3. Include a `manifest.json`
-4. Plugins register with `PluginManager`
+3. Add a target block in `project.yml` under `targets:`
+4. Add `- target: YourPlugin` + `embed: true` to DavyWhisper's dependencies
+5. Run `xcodegen generate` to regenerate the project
 
 ### Data Models
 - `Profile` — per-app/URL settings (SwiftData)
