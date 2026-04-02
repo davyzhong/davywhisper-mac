@@ -74,6 +74,7 @@
 		617D3B872F109FCDD2C74F20 /* TermPackRegistryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A3831EC2AF376506633F85 /* TermPackRegistryService.swift */; };
 		61DD34D83A2BDF0D0D12E3CF /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33D9B31CF8205AD8B17080 /* UserDefaultsKeys.swift */; };
 		62E6BB9F7B5AAA9EFF5719FD /* davywhisper-cli in Resources */ = {isa = PBXBuildFile; fileRef = A020D100BEA47E0B1FF6F94D /* davywhisper-cli */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6457192B60BB5F3749EE395D /* ParaformerModel in Resources */ = {isa = PBXBuildFile; fileRef = D268C2A24EAAF8F6485A2C7E /* ParaformerModel */; };
 		64E839C4AADBCF4CACCD2D48 /* HomeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC31514AF98EBE8D664F2E6 /* HomeSettingsView.swift */; };
 		65E0C48AC1BF510EC3D533B4 /* DictionarySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7D8CA6E857B3AE5EAA9741 /* DictionarySettingsView.swift */; };
 		65F8CFFC93AE5AC6BC9BF34C /* AccessibilityAnnouncementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235AB0D9A4C89C42A9076C3 /* AccessibilityAnnouncementService.swift */; };
@@ -92,6 +93,7 @@
 		8186A0F386EFAB375330A755 /* HotkeyRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2CCE0FFA56BA675DF9EDC /* HotkeyRecorderView.swift */; };
 		81C6C8E7515FE48A55C391B9 /* WatchFolderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4F171B83892AFF9D10CD4D /* WatchFolderViewModel.swift */; };
 		81D5A834DE356C95A739F870 /* manifest_WhisperKitPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = D6EA284A0563F68F5932DD1B /* manifest_WhisperKitPlugin.json */; };
+		8276C9ECC797AF44266293E2 /* SherpaOnnx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B756BEDC9283BCCB1CB92F /* SherpaOnnx.swift */; };
 		85E55D24A6B6DB94B3AF5430 /* StreamingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1EED5A1B5AC875BC3FF524 /* StreamingHandler.swift */; };
 		871F8A19A4A7882329D9049D /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7507FE5CFE2F27AC18AFF958 /* APIRouter.swift */; };
 		872EDC9A9ADCEF0A8B5282C3 /* AudioRecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F4D07C0B9AB554276B7B27 /* AudioRecordingService.swift */; };
@@ -109,11 +111,11 @@
 		99E671797FDAE6AD06A4727E /* AudioRecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F3311B176793EA40B9CDA3 /* AudioRecorderViewModel.swift */; };
 		9AE933CA3F32F801639D145B /* TranscriptionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CC0B7EDF7B3686A8303FF3 /* TranscriptionResult.swift */; };
 		9B368E351DFD108F2E0B4728 /* FoundationModelsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FFF8F562F555C084EEC08D /* FoundationModelsProvider.swift */; };
-		9ED7B879A323ABC15C0853DE /* QwenLLMPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38261A04FE51C0FB45F3ABA0 /* QwenLLMPlugin.swift */; };
 		A0895F5739B252966E434320 /* AudioPlaybackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA7A0B851EB4E8534FA54E /* AudioPlaybackService.swift */; };
 		A62F1A8A76C3714CF00FC263 /* DeepgramPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B94C9EA3F45E121865310 /* DeepgramPlugin.swift */; };
 		A7406E09F6B58E83D74FB78A /* TranslationHostWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79333C501D05DFF0F26796BE /* TranslationHostWindow.swift */; };
 		A78498D49BFE846498ED675F /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776EF76E89E1B65976F243C5 /* HistoryViewModel.swift */; };
+		ABA573A394C7A07B0B694D12 /* manifest_ParaformerPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = B40D5775C3382B85EB53743B /* manifest_ParaformerPlugin.json */; };
 		AD3E09223C934FE2C23FCC12 /* ElevenLabsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AFD714E682201276024E77 /* ElevenLabsPlugin.swift */; };
 		AD483114875EE7245F8429AF /* DictionaryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2012B75C4474B7AD70F788CA /* DictionaryServiceTests.swift */; };
 		ADAD2D62388B95FC0FFE90FD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA347E47FCF0DAAF1D12A267 /* main.swift */; };
@@ -124,7 +126,9 @@
 		B46B4DB65E6DA89DFDBEB235 /* PluginManifestValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D083BC5E6FC4497FD42DBCA /* PluginManifestValidationTests.swift */; };
 		B70B449A17869D64B7306055 /* SnippetServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3C7991A909A221D1D62F62 /* SnippetServiceTests.swift */; };
 		B71E6652990BB68009AE8132 /* NotchIndicatorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A286887906734D9651E0A54E /* NotchIndicatorPanel.swift */; };
+		B7E3C63DD8084D5F1C870F2E /* sherpa-onnx.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC0A073DA652609E3C219294 /* sherpa-onnx.xcframework */; };
 		BAF7C7752DD1AF2588250730 /* DictationSettingsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B827DA161BF3AAB2B812A /* DictationSettingsHandler.swift */; };
+		BD8167339850B2D665DBCA60 /* sherpa-onnx.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC0A073DA652609E3C219294 /* sherpa-onnx.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BDA24005A7F026B500B0DFCE /* manifest_GLMPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = E146393F619F86156146D4EC /* manifest_GLMPlugin.json */; };
 		BE9D90794667D05B0BFF1D3C /* FluidAudio in Frameworks */ = {isa = PBXBuildFile; productRef = 15FF8E445C545384FCD82902 /* FluidAudio */; };
 		C1844ADA10E0496088D0D04D /* ProfilesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B242762B83CCED0DB568BB /* ProfilesSettingsView.swift */; };
@@ -154,7 +158,6 @@
 		EB9E30E7775609BEED73CD0C /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB7BC3A054F6551D83AD2E6 /* MenuBarView.swift */; };
 		EBAFD7226A412851C0D4BA7A /* Info.AppStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = B976DF21B1480A25433EF976 /* Info.AppStore.plist */; };
 		ECB5223DB087E294A94ED428 /* APIServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B79529FB42BBD1D58D8E3FE /* APIServerViewModel.swift */; };
-		EDA5801B1C3AD17960893AC6 /* manifest_QwenLLMPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 6DE605DFB1F54F5C6296D527 /* manifest_QwenLLMPlugin.json */; };
 		EE292F3A752B9D8087C2B201 /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00EDA0368A9BD9E030FCFF /* AboutSettingsView.swift */; };
 		F2B00407F452866DE63A8D11 /* MiniMaxPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAF1047F7FE010364BD8912 /* MiniMaxPlugin.swift */; };
 		F32D3C9E305D82C099E32FB5 /* PluginRegistryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC9686D0B7B38A51CDC623 /* PluginRegistryService.swift */; };
@@ -164,6 +167,7 @@
 		F765C3C1540A4ABBB1F94214 /* TranscriptionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6278273FB1F0624F1A6EB379 /* TranscriptionRecord.swift */; };
 		FBA42761D0C4CE0FA6EA4CC2 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEADD1C5E7E8D8BF35D28D7E /* ProfileService.swift */; };
 		FD1AA228853E364BB0760792 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = E1BFE72095A8A729E6FE641B /* WhisperKit */; };
+		FEF5768506BCE3491CF2E80E /* ParaformerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D7F099E74CC1C03EF49D7B /* ParaformerPlugin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,6 +195,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				770152FB27498D5A7B5C025E /* DavyWhisperPluginSDK in Embed Frameworks */,
+				BD8167339850B2D665DBCA60 /* sherpa-onnx.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,7 +238,6 @@
 		35CD9EDDCDF0C94CA892986B /* TextDiffService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDiffService.swift; sourceTree = "<group>"; };
 		375BD496298A97D282D380C7 /* manifest_KimiPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_KimiPlugin.json; sourceTree = "<group>"; };
 		3820BC78F51DA70DD6DA4E44 /* TextInsertionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInsertionService.swift; sourceTree = "<group>"; };
-		38261A04FE51C0FB45F3ABA0 /* QwenLLMPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QwenLLMPlugin.swift; sourceTree = "<group>"; };
 		393F09277214C4F05540F75B /* WatchFolderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFolderService.swift; sourceTree = "<group>"; };
 		3D446A5223FBEB9C25423437 /* WebhookPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebhookPlugin.swift; sourceTree = "<group>"; };
 		3F6EFD3F66FC392288499FCA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -260,7 +264,6 @@
 		6C9D3BB115FBCFCD07D79B4E /* EventBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBus.swift; sourceTree = "<group>"; };
 		6CCEA9334DCCF7A8B06A8879 /* OutputFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputFormatter.swift; sourceTree = "<group>"; };
 		6DD529DFCA0D7EE819E0A704 /* PortDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortDiscovery.swift; sourceTree = "<group>"; };
-		6DE605DFB1F54F5C6296D527 /* manifest_QwenLLMPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_QwenLLMPlugin.json; sourceTree = "<group>"; };
 		6EC284F5292894845DCB0293 /* DictionaryExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExporterTests.swift; sourceTree = "<group>"; };
 		704C291A4B190BD7057C436D /* DavyWhisperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DavyWhisperApp.swift; sourceTree = "<group>"; };
 		705E65943F70C01C496C02D4 /* PostProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProcessingPipeline.swift; sourceTree = "<group>"; };
@@ -276,12 +279,14 @@
 		78A700661B16C86A4AC1A031 /* DavyWhisper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DavyWhisper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79333C501D05DFF0F26796BE /* TranslationHostWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationHostWindow.swift; sourceTree = "<group>"; };
 		798F73F3358586C806BEAF2E /* Snippet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snippet.swift; sourceTree = "<group>"; };
+		79D7F099E74CC1C03EF49D7B /* ParaformerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParaformerPlugin.swift; sourceTree = "<group>"; };
 		79FC9686D0B7B38A51CDC623 /* PluginRegistryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginRegistryService.swift; sourceTree = "<group>"; };
 		7A88B57C6FD696EB154B1F95 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		7B79529FB42BBD1D58D8E3FE /* APIServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServerViewModel.swift; sourceTree = "<group>"; };
 		7D87FEE4AD2D1FDD020D3F83 /* TypeWhisper.AppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TypeWhisper.AppStore.entitlements; sourceTree = "<group>"; };
 		837C3BECA5D82FD91E5BC3A4 /* manifest_WebhookPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_WebhookPlugin.json; sourceTree = "<group>"; };
 		853123C636D5AB342B064DF3 /* ErrorLogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogEntry.swift; sourceTree = "<group>"; };
+		86B756BEDC9283BCCB1CB92F /* SherpaOnnx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SherpaOnnx.swift; sourceTree = "<group>"; };
 		8738ACF449ACDBD52830D807 /* AdvancedSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsView.swift; sourceTree = "<group>"; };
 		8744F6AA77608B8568C51AC9 /* HTTPResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponse.swift; sourceTree = "<group>"; };
 		888DF3665C1564305CC6B0F2 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
@@ -312,6 +317,7 @@
 		B149465053F76E3C1EF1B4BE /* PromptPalettePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptPalettePanel.swift; sourceTree = "<group>"; };
 		B1CC0B7EDF7B3686A8303FF3 /* TranscriptionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionResult.swift; sourceTree = "<group>"; };
 		B2FE6CB147AF98187FB5B002 /* SetupWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWizardView.swift; sourceTree = "<group>"; };
+		B40D5775C3382B85EB53743B /* manifest_ParaformerPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_ParaformerPlugin.json; sourceTree = "<group>"; };
 		B45E8CB5AA1EE40BCF37F166 /* HistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryService.swift; sourceTree = "<group>"; };
 		B5C3C9BF6D3D7320E2D137A3 /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
 		B5D7D3BA251616E77BAFFAB4 /* CLIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIClient.swift; sourceTree = "<group>"; };
@@ -328,6 +334,7 @@
 		CDC31514AF98EBE8D664F2E6 /* HomeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSettingsView.swift; sourceTree = "<group>"; };
 		CE234C7D9B71F50C359DD5F1 /* ErrorLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogView.swift; sourceTree = "<group>"; };
 		CF6F3A69FA5FA7649CB4B3EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D268C2A24EAAF8F6485A2C7E /* ParaformerModel */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ParaformerModel; path = DavyWhisper/Resources/ParaformerModel; sourceTree = SOURCE_ROOT; };
 		D29066F3E5B1EABF5F006055 /* GLMPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLMPlugin.swift; sourceTree = "<group>"; };
 		D5F794DD5F009AFECE95DB86 /* SpeechFeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechFeedbackService.swift; sourceTree = "<group>"; };
 		D6EA284A0563F68F5932DD1B /* manifest_WhisperKitPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_WhisperKitPlugin.json; sourceTree = "<group>"; };
@@ -342,6 +349,7 @@
 		E85E0EDB2FF5866A1A1076C2 /* DavyWhisperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DavyWhisperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB8FCE1C85E3C8CEC2A90B0B /* FileTranscriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTranscriptionViewModel.swift; sourceTree = "<group>"; };
 		EBEF808580827B6F46F4B0F6 /* HistoryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryServiceTests.swift; sourceTree = "<group>"; };
+		EC0A073DA652609E3C219294 /* sherpa-onnx.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "sherpa-onnx.xcframework"; path = "Libraries/sherpa-onnx.xcframework"; sourceTree = "<group>"; };
 		ED696B6D1028E36CE20061D0 /* ModelManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagerService.swift; sourceTree = "<group>"; };
 		EF21C3E5C117147FDA71C972 /* OverlayIndicatorPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayIndicatorPanel.swift; sourceTree = "<group>"; };
 		F28B94C9EA3F45E121865310 /* DeepgramPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepgramPlugin.swift; sourceTree = "<group>"; };
@@ -374,6 +382,7 @@
 				FD1AA228853E364BB0760792 /* WhisperKit in Frameworks */,
 				BE9D90794667D05B0BFF1D3C /* FluidAudio in Frameworks */,
 				C64FAFC2E0D7038734EC9ED8 /* DavyWhisperPluginSDK in Frameworks */,
+				B7E3C63DD8084D5F1C870F2E /* sherpa-onnx.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,14 +506,12 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		8928438932BF0EED606301BC /* QwenLLMPlugin */ = {
+		8ABD304615CC7D88D26D4A2F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6DE605DFB1F54F5C6296D527 /* manifest_QwenLLMPlugin.json */,
-				38261A04FE51C0FB45F3ABA0 /* QwenLLMPlugin.swift */,
+				EC0A073DA652609E3C219294 /* sherpa-onnx.xcframework */,
 			);
-			name = QwenLLMPlugin;
-			path = Plugins/QwenLLMPlugin;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		8C2EE791123242757E98562A /* Services */ = {
@@ -587,6 +594,17 @@
 			);
 			name = WebhookPlugin;
 			path = Plugins/WebhookPlugin;
+			sourceTree = "<group>";
+		};
+		97FCFE44080ADFCB87D2693B /* ParaformerPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				B40D5775C3382B85EB53743B /* manifest_ParaformerPlugin.json */,
+				79D7F099E74CC1C03EF49D7B /* ParaformerPlugin.swift */,
+				86B756BEDC9283BCCB1CB92F /* SherpaOnnx.swift */,
+			);
+			name = ParaformerPlugin;
+			path = Plugins/ParaformerPlugin;
 			sourceTree = "<group>";
 		};
 		98341C272103A4CFF37D26BF /* Models */ = {
@@ -681,9 +699,11 @@
 				59D69B0DFB4411D383148CE6 /* LiveTranscriptPlugin */,
 				244410F0793433BC70894BC1 /* MiniMaxPlugin */,
 				9A76E359367E24D1EE3FFD86 /* Packages */,
-				8928438932BF0EED606301BC /* QwenLLMPlugin */,
+				97FCFE44080ADFCB87D2693B /* ParaformerPlugin */,
 				92728F113C5A7367DD4BFF99 /* WebhookPlugin */,
 				3D14ED817429217E88C4CA2C /* WhisperKitPlugin */,
+				D268C2A24EAAF8F6485A2C7E /* ParaformerModel */,
+				8ABD304615CC7D88D26D4A2F /* Frameworks */,
 				F5CED00F0F5B3DC1B47FEA20 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -872,6 +892,7 @@
 				3DBF48A8C6697F82793B4507 /* Assets.xcassets in Resources */,
 				EBAFD7226A412851C0D4BA7A /* Info.AppStore.plist in Resources */,
 				91989133AA21BABAB97872E6 /* Localizable.xcstrings in Resources */,
+				6457192B60BB5F3749EE395D /* ParaformerModel in Resources */,
 				148166625CDA959C7A8C2070 /* PrivacyInfo.xcprivacy in Resources */,
 				5B02A3AD19CDD0A75B3F1426 /* error.wav in Resources */,
 				B0A09575569C4C1BC18BB742 /* manifest_DeepgramPlugin.json in Resources */,
@@ -880,7 +901,7 @@
 				1D02A00BFE7568C5BA76E752 /* manifest_KimiPlugin.json in Resources */,
 				60528923B20C753832FA4375 /* manifest_LiveTranscriptPlugin.json in Resources */,
 				26400E011ABE98F1B3718389 /* manifest_MiniMaxPlugin.json in Resources */,
-				EDA5801B1C3AD17960893AC6 /* manifest_QwenLLMPlugin.json in Resources */,
+				ABA573A394C7A07B0B694D12 /* manifest_ParaformerPlugin.json in Resources */,
 				14995B7511594A08A8CF5DB4 /* manifest_WebhookPlugin.json in Resources */,
 				81D5A834DE356C95A739F870 /* manifest_WhisperKitPlugin.json in Resources */,
 				3B556C9958D987604D07D4E6 /* plugins.json in Resources */,
@@ -962,6 +983,7 @@
 				7131444AFC78A88B60544EDE /* NotchShape.swift in Sources */,
 				5B7A3C737E2B68248ED356AD /* OverlayIndicatorPanel.swift in Sources */,
 				054B6EBAEC1A2CDBBBB9D8A5 /* OverlayIndicatorView.swift in Sources */,
+				FEF5768506BCE3491CF2E80E /* ParaformerPlugin.swift in Sources */,
 				D91D92B1C83C409FBA1623E1 /* PluginManager.swift in Sources */,
 				F32D3C9E305D82C099E32FB5 /* PluginRegistryService.swift in Sources */,
 				2F57F90E75E1D3F8774610CD /* PluginSettingsView.swift in Sources */,
@@ -977,12 +999,12 @@
 				87C2D90DB0B5D2972A3A26CE /* PromptPaletteHandler.swift in Sources */,
 				3DAD96DD49B16EE8D4D8E4B3 /* PromptPalettePanel.swift in Sources */,
 				45A2DAB754D7D1D3D3A878C8 /* PromptProcessingService.swift in Sources */,
-				9ED7B879A323ABC15C0853DE /* QwenLLMPlugin.swift in Sources */,
 				3AAE2981546DF3B4070B6AFC /* ServiceContainer.swift in Sources */,
 				709022F55A630E238F4F2998 /* SettingsView.swift in Sources */,
 				42E1A9826DA4082F6F3AF58A /* SettingsViewModel.swift in Sources */,
 				CB4CE9A813DBB5BC31432CC0 /* SetupWizardView.swift in Sources */,
 				4AD93B72EB50073084FE9399 /* SharedIndicatorComponents.swift in Sources */,
+				8276C9ECC797AF44266293E2 /* SherpaOnnx.swift in Sources */,
 				D42CFBE470729EF5E00BE19F /* Snippet.swift in Sources */,
 				3D11F8FD03CA5A300E7CA9F3 /* SnippetService.swift in Sources */,
 				E17453722769F659A5AC4397 /* SnippetsSettingsView.swift in Sources */,
@@ -1122,6 +1144,10 @@
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_DEBUG_DYLIB = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Libraries\"",
+				);
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = DavyWhisper/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DavyWhisper;
@@ -1135,6 +1161,11 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-force_load",
+					"$(PROJECT_DIR)/Libraries/libonnxruntime.a",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.mac.dev;
 				PRODUCT_NAME = DavyWhisper;
 				SDKROOT = macosx;
@@ -1158,6 +1189,10 @@
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_DEBUG_DYLIB = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Libraries\"",
+				);
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = DavyWhisper/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DavyWhisper;
@@ -1171,6 +1206,11 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-force_load",
+					"$(PROJECT_DIR)/Libraries/libonnxruntime.a",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.mac;
 				PRODUCT_NAME = DavyWhisper;
 				SDKROOT = macosx;

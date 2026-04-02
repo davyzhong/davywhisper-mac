@@ -23,6 +23,11 @@ targets:
       platform: macOS
       sources:
         - path: DavyWhisper
+          excludes:
+            - "Resources/ParaformerModel/**"
+        - path: DavyWhisper/Resources/ParaformerModel
+          type: folder
+          buildPhase: resources
         - path: Plugins/WhisperKitPlugin
           excludes:
             - "**/*.xcstrings"
@@ -47,7 +52,7 @@ targets:
         - path: Plugins/MiniMaxPlugin
           excludes:
             - "**/*.xcstrings"
-        - path: Plugins/QwenLLMPlugin
+        - path: Plugins/ParaformerPlugin
           excludes:
             - "**/*.xcstrings"
       dependencies:
@@ -57,6 +62,7 @@ targets:
         - package: FluidAudio
         - package: DavyWhisperPluginSDK
           embed: true
+        - framework: Libraries/sherpa-onnx.xcframework
       settings:
         base:
           SWIFT_VERSION: "6.0"
@@ -76,6 +82,10 @@ targets:
             - "@executable_path/../Frameworks"
             - "@loader_path/../Frameworks"
             - "@executable_path/../../PlugIns"
+          OTHER_LDFLAGS:
+            - "$(inherited)"
+            - "-force_load"
+            - "$(PROJECT_DIR)/Libraries/libonnxruntime.a"
           MARKETING_VERSION: 1.1.0
           CURRENT_PROJECT_VERSION: "$(MARKETING_VERSION)"
           PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.mac"

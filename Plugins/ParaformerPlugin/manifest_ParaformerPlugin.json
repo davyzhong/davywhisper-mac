@@ -1,0 +1,12 @@
+{
+    "id": "com.davywhisper.paraformer",
+    "name": "Paraformer",
+    "version": "1.0.0",
+    "minHostVersion": "0.12.0",
+    "minOSVersion": "14.0",
+    "author": "DavyWhisper",
+    "description": "中文优化的本地语音识别引擎。基于阿里巴巴 Paraformer，支持中文标点恢复，推理速度 15x 快于 Whisper。",
+    "category": "transcription",
+    "iconSystemName": "character.textbox",
+    "principalClass": "ParaformerPlugin"
+}

@@ -49,3 +49,10 @@ CodeSigning.local.xcconfig
 DavyWhisper.xcodeproj/project.pbxproj
 *.dmg
 build-release/
+
+# Large binary dependencies — use scripts/download-sherpa-onnx.sh
+Libraries/libonnxruntime.a
+Libraries/sherpa-onnx.xcframework/
+DavyWhisper/Resources/ParaformerModel/*.onnx
+DavyWhisper/Resources/ParaformerModel/tokens.txt
+DavyWhisper/Resources/ParaformerModel/PunctuationModel/

@@ -116,6 +116,23 @@ All ViewModels follow a `static let shared` singleton pattern and are `@Observab
 ### Views
 SwiftUI views in `Views/`. Settings UI is structured around `SettingsView` with sub-views per section. Menu bar / notch indicator lives in `NotchIndicatorView` / `OverlayIndicatorView`.
 
+## China Mirror Requirements
+
+This project targets Chinese users. All external resource downloads must use domestic mirrors:
+
+| Service | Mirror URL | Original |
+|---------|-----------|----------|
+| HuggingFace models | `hf-mirror.com` | `huggingface.co` |
+| GitHub Releases | `mirror.ghproxy.com` | `github.com` |
+| NPM packages | `registry.npmmirror.com` | `registry.npmjs.org` |
+| PyPI packages | `pypi.tuna.tsinghua.edu.cn` | `pypi.org` |
+
+**Rules:**
+- Hardcode mirror URLs in source code — do not rely on environment variables alone
+- `HF_ENDPOINT=hf-mirror.com` is already set in `main.swift` as default
+- Any new model download logic must use `hf-mirror.com` as the default URL
+- Provide a fallback toggle in Advanced Settings for users who can access originals directly
+
 ## Key Patterns
 
 - **Menu bar app**: `LSUIElement = YES` in entitlements — no dock icon by default

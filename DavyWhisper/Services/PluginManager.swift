@@ -123,7 +123,8 @@ final class PluginManager: ObservableObject {
 
         let pluginNames = ["WhisperKitPlugin", "DeepgramPlugin", "WebhookPlugin",
                           "ElevenLabsPlugin", "LiveTranscriptPlugin",
-                          "GLMPlugin", "KimiPlugin", "MiniMaxPlugin", "QwenLLMPlugin"]
+                          "GLMPlugin", "KimiPlugin", "MiniMaxPlugin", "QwenLLMPlugin",
+                          "ParaformerPlugin"]
 
         for name in pluginNames {
             // Compiled-in plugins have manifest_<PluginName>.json in Resources/
