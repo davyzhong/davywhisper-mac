@@ -4,15 +4,29 @@ import DavyWhisperPluginSDK
 
 final class PluginManifestValidationTests: XCTestCase {
     func testAllPluginManifestsDecodeAndDeclareCompatibility() throws {
-        let manifestURLs = try FileManager.default.contentsOfDirectory(
-            at: TestSupport.repoRoot.appendingPathComponent("Plugins"),
-            includingPropertiesForKeys: nil,
-            options: [.skipsHiddenFiles, .skipsPackageDescendants]
-        )
-        .map { $0.appendingPathComponent("manifest.json") }
-        .filter { FileManager.default.fileExists(atPath: $0.path) }
+        let projectRoot = TestSupport.repoRoot
+        let pluginsDir = projectRoot.appendingPathComponent("Plugins")
 
-        XCTAssertFalse(manifestURLs.isEmpty)
+        // Find all manifest_*.json files (compiled-in plugins use renamed manifests)
+        let pluginDirs = try FileManager.default.contentsOfDirectory(
+            at: pluginsDir,
+            includingPropertiesForKeys: nil,
+            options: [.skipsHiddenFiles]
+        ).filter { $0.hasDirectoryPath }
+
+        var manifestURLs: [URL] = []
+        for dir in pluginDirs {
+            let contents = try FileManager.default.contentsOfDirectory(
+                at: dir,
+                includingPropertiesForKeys: nil,
+                options: [.skipsHiddenFiles]
+            )
+            for file in contents where file.lastPathComponent.hasPrefix("manifest_") && file.pathExtension == "json" {
+                manifestURLs.append(file)
+            }
+        }
+
+        XCTAssertFalse(manifestURLs.isEmpty, "Should find at least one manifest_*.json")
 
         let versionPattern = try NSRegularExpression(pattern: #"^\d+\.\d+(\.\d+)?$"#)
 

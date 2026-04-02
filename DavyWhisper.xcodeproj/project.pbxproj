@@ -20,20 +20,21 @@
 		11052CF9520555BCBC7E7CBF /* ErrorLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE234C7D9B71F50C359DD5F1 /* ErrorLogView.swift */; };
 		111C35D50738B9CC594D4972 /* PortDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD529DFCA0D7EE819E0A704 /* PortDiscovery.swift */; };
 		1296D86A81055F3BAAC3E3A6 /* SpeechFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F794DD5F009AFECE95DB86 /* SpeechFeedbackService.swift */; };
-		132F90377956106E0174571C /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9D3A5BF0850F49B1968582E8 /* DavyWhisperPluginSDK */; };
 		148166625CDA959C7A8C2070 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A9D2A6611FC5FE3A20944F10 /* PrivacyInfo.xcprivacy */; };
+		14995B7511594A08A8CF5DB4 /* manifest_WebhookPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 837C3BECA5D82FD91E5BC3A4 /* manifest_WebhookPlugin.json */; };
 		17F879C0C423AE74FDB48E1B /* MemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB18CAFC6778C42D07FF11 /* MemoryService.swift */; };
-		184635424B210B85E9438491 /* WebhookPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E8E064B386253A3F937D657B /* WebhookPlugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1A930E628258425040E43997 /* SoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420F9C32B0F5D69E07099C77 /* SoundService.swift */; };
 		1A94FC2D8061D654D90DF76B /* DavyWhisperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704C291A4B190BD7057C436D /* DavyWhisperApp.swift */; };
 		1AC0D851D60EB06243E304BE /* HostServicesImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE21D9A1322ACFADB5055F7 /* HostServicesImpl.swift */; };
 		1BECFA5844C0E520BF24E9FD /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6BB1D2285F809FB97EB /* TestSupport.swift */; };
 		1CC02F75FCA1EFC29FE581F1 /* DictationEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCA46440FD39B36F9BF2B38 /* DictationEnums.swift */; };
+		1D02A00BFE7568C5BA76E752 /* manifest_KimiPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 375BD496298A97D282D380C7 /* manifest_KimiPlugin.json */; };
 		1D0E122F65268D3890EF2CA9 /* NotchIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE66F777E05DD50AA49B904 /* NotchIndicatorView.swift */; };
 		21E8A18AB146712799D131F4 /* HTTPServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAC36FD441125B2D62C924 /* HTTPServerTests.swift */; };
 		232E9CEAD4A47B634F2BB2F5 /* AudioFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DEE79DB29A9F9192ECFE25 /* AudioFileService.swift */; };
 		246A5FE6ACB8B4C5DD2DD5A3 /* HTTPRequestParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7F1131738B707036C4C470 /* HTTPRequestParserTests.swift */; };
-		253A41D638D89155282CCF5C /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = FA49D20B1CA6BFFB29D864D4 /* DavyWhisperPluginSDK */; };
+		24754B279EE8119D33CA46BC /* KimiPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DFA5879D80D5712013361 /* KimiPlugin.swift */; };
+		26400E011ABE98F1B3718389 /* manifest_MiniMaxPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DFB3C05B08AFF823A4F702B /* manifest_MiniMaxPlugin.json */; };
 		2A90CA5612245614B9091ACC /* DictationShortSpeechTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742187D9142ABC66C733731A /* DictationShortSpeechTests.swift */; };
 		2C4D9DF2434EBE7C394E14DB /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A88B57C6FD696EB154B1F95 /* Profile.swift */; };
 		2F57F90E75E1D3F8774610CD /* PluginSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FB4A3EF19298F5951727E /* PluginSettingsView.swift */; };
@@ -50,29 +51,26 @@
 		3DBF48A8C6697F82793B4507 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF6F3A69FA5FA7649CB4B3EC /* Assets.xcassets */; };
 		3F405D79FA6474C157C2454C /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F429B203EF888EF82B4FD434 /* LocalizationTests.swift */; };
 		405355033C3901D3AB0ADA1A /* SubtitleExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F6897E0F32881E4426EBE0 /* SubtitleExporterTests.swift */; };
+		40B172F29EDF64D66CC8E20B /* GLMPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29066F3E5B1EABF5F006055 /* GLMPlugin.swift */; };
 		40CB2F2BFAD900E8BDD9E1F3 /* AudioRecorderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74F3C74CB0DA230DBE2AD8A /* AudioRecorderService.swift */; };
 		418EA92D4E8B25B5219306CC /* AudioDuckingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434BB597848852F8482F6240 /* AudioDuckingService.swift */; };
 		42E1A9826DA4082F6F3AF58A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25890AB358D1F65FEB2372AE /* SettingsViewModel.swift */; };
-		44CA500DBFDB31958F05B5C8 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = FC1F95319CDA104A62AC04A9 /* DavyWhisperPluginSDK */; };
 		45A2DAB754D7D1D3D3A878C8 /* PromptProcessingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E30CC8998831A36A37C4FA /* PromptProcessingService.swift */; };
 		4AD93B72EB50073084FE9399 /* SharedIndicatorComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6AF50C118E8A6062A12473 /* SharedIndicatorComponents.swift */; };
-		4ADD0F212B286340E936A97A /* LiveTranscriptPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 35CEF47D9F2AF625F1C0D428 /* LiveTranscriptPlugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B0492D1DF82604214129B52 /* HistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45E8CB5AA1EE40BCF37F166 /* HistoryService.swift */; };
-		4B5FDE11B7C9E7AD8C5DE0AD /* QwenLLMPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8C233AB718589E6DEAD9E119 /* QwenLLMPlugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CCA8DCC67AD0245659E06AA /* ModelManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED696B6D1028E36CE20061D0 /* ModelManagerService.swift */; };
 		50B9012201AA274612C793AF /* TermPack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A80C679E75879AAADD105AB /* TermPack.swift */; };
 		52B099A539D5D92BE6F9443E /* CLIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D7D3BA251616E77BAFFAB4 /* CLIClient.swift */; };
-		53454F0089CB1D4B40F74E0B /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 45C4BD1B3DE7EE4F1AE50F8C /* DavyWhisperPluginSDK */; };
 		54A2C7432890091195A8BD47 /* SubtitleExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C2D6C04039F53DAF32DFBB /* SubtitleExporter.swift */; };
 		55CA755E8EF74ED0B3EB7E8A /* FileTranscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8FCE1C85E3C8CEC2A90B0B /* FileTranscriptionViewModel.swift */; };
 		57103DF2029CD617DCB03901 /* HistoryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEF808580827B6F46F4B0F6 /* HistoryServiceTests.swift */; };
 		5A9D5F41FCB9DE9441480CAD /* FileTranscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92F99FCD5B70A27C55830BE /* FileTranscriptionView.swift */; };
 		5B02A3AD19CDD0A75B3F1426 /* error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 54973F3900B912EC01712B49 /* error.wav */; };
-		5B2B62B26A6304010DDECAE7 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = 45F625D61A3C0F6EF6351696 /* WhisperKit */; };
 		5B7A3C737E2B68248ED356AD /* OverlayIndicatorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF21C3E5C117147FDA71C972 /* OverlayIndicatorPanel.swift */; };
-		5CB3D5D4B67A31C56BB9498D /* WhisperKitPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 29FFA4FED521008E1AB4A021 /* WhisperKitPlugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5D737A153FC24A0D578455E6 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AA51A4970F849E90053C56 /* KeychainService.swift */; };
 		5DE102C08E14709CA4E9F5C9 /* recording_start.wav in Resources */ = {isa = PBXBuildFile; fileRef = F9488D4CEF5ED8669204CA22 /* recording_start.wav */; };
+		5F63D78F9146F9EB1D0FD43B /* manifest_ElevenLabsPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 270B10183381BABB0D994C03 /* manifest_ElevenLabsPlugin.json */; };
+		60528923B20C753832FA4375 /* manifest_LiveTranscriptPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 93B946F714DA21454CFB8C7E /* manifest_LiveTranscriptPlugin.json */; };
 		617D3B872F109FCDD2C74F20 /* TermPackRegistryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A3831EC2AF376506633F85 /* TermPackRegistryService.swift */; };
 		61DD34D83A2BDF0D0D12E3CF /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A33D9B31CF8205AD8B17080 /* UserDefaultsKeys.swift */; };
 		62E6BB9F7B5AAA9EFF5719FD /* davywhisper-cli in Resources */ = {isa = PBXBuildFile; fileRef = A020D100BEA47E0B1FF6F94D /* davywhisper-cli */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -80,13 +78,11 @@
 		65E0C48AC1BF510EC3D533B4 /* DictionarySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7D8CA6E857B3AE5EAA9741 /* DictionarySettingsView.swift */; };
 		65F8CFFC93AE5AC6BC9BF34C /* AccessibilityAnnouncementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235AB0D9A4C89C42A9076C3 /* AccessibilityAnnouncementService.swift */; };
 		69B9B9F6BC938B1F1681124E /* HotkeySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA8CA36C90163C07E2D0C03 /* HotkeySettingsView.swift */; };
-		6A581FEA23AD55A8156AFE0C /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 1E0AE66EA8952070508EBE75 /* DavyWhisperPluginSDK */; };
+		6E5F728AA853BE2172B98139 /* WebhookPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D446A5223FBEB9C25423437 /* WebhookPlugin.swift */; };
 		6FCA9EB274CC6D9E164F9A75 /* IndicatorPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E2D459AD10B61A86C300DB /* IndicatorPreviewView.swift */; };
 		709022F55A630E238F4F2998 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C42CA3205007B116605B5E /* SettingsView.swift */; };
 		7131444AFC78A88B60544EDE /* NotchShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C95D7806B87C8E17130FF0 /* NotchShape.swift */; };
-		7142C3606448AF2F03B717B3 /* Qwen3Plugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 592396BF369CB0E7FBC11572 /* Qwen3Plugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		71F8E823D2F73270CA83EBA7 /* SnippetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACEEAC3A642B7AEF2FC9976 /* SnippetsViewModel.swift */; };
-		763C620D6C0BBCC216014FA7 /* KimiPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B1CE42418A81B287F7A0DD2 /* KimiPlugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		770152FB27498D5A7B5C025E /* DavyWhisperPluginSDK in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 6C10517594AC33BD63B72281 /* DavyWhisperPluginSDK */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7B3910F482C51FFDE7947D0F /* APIHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00CB276054F7C12D7A82AF3 /* APIHandlers.swift */; };
 		7BEEC05CA27BBE648E91B28E /* AppFormatterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F505AAF38E32B7A8024B24 /* AppFormatterService.swift */; };
@@ -95,6 +91,7 @@
 		7DB8575444EC704445FE2668 /* DictionaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B8441FA5764796C0238D9B /* DictionaryEntry.swift */; };
 		8186A0F386EFAB375330A755 /* HotkeyRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2CCE0FFA56BA675DF9EDC /* HotkeyRecorderView.swift */; };
 		81C6C8E7515FE48A55C391B9 /* WatchFolderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4F171B83892AFF9D10CD4D /* WatchFolderViewModel.swift */; };
+		81D5A834DE356C95A739F870 /* manifest_WhisperKitPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = D6EA284A0563F68F5932DD1B /* manifest_WhisperKitPlugin.json */; };
 		85E55D24A6B6DB94B3AF5430 /* StreamingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1EED5A1B5AC875BC3FF524 /* StreamingHandler.swift */; };
 		871F8A19A4A7882329D9049D /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7507FE5CFE2F27AC18AFF958 /* APIRouter.swift */; };
 		872EDC9A9ADCEF0A8B5282C3 /* AudioRecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F4D07C0B9AB554276B7B27 /* AudioRecordingService.swift */; };
@@ -102,9 +99,7 @@
 		8A090D04E138D466DFFB1B16 /* IndicatorCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5AC178470554EF5D41950F /* IndicatorCoordinator.swift */; };
 		8AD3DF0B926A9E5C3F74FFC6 /* TextDiffServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893932B28D68D90F5990AF4C /* TextDiffServiceTests.swift */; };
 		91989133AA21BABAB97872E6 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3F6EFD3F66FC392288499FCA /* Localizable.xcstrings */; };
-		920B7DF14DA5846105749007 /* MiniMaxPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FFF76525CBB499897552F309 /* MiniMaxPlugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		931CE06BB7458D09B8CCB723 /* ProfilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C9693C2A7456F4B1D9F729 /* ProfilesViewModel.swift */; };
-		93278623E83BE4F8CFBEAD75 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 81CBC4B0B34A69F48EE45808 /* DavyWhisperPluginSDK */; };
 		94C08D5550F8579C41BAF01D /* HTTPRequestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07398FE246C65716E29DE007 /* HTTPRequestParser.swift */; };
 		95E2DE4B71794E7C2A3ECF37 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1001A5B722F894D28E3D67 /* AppConstants.swift */; };
 		96D6C1B31B7E2F7BA71BC714 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7245FE21A3F289AEF94922AE /* main.swift */; };
@@ -114,53 +109,54 @@
 		99E671797FDAE6AD06A4727E /* AudioRecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F3311B176793EA40B9CDA3 /* AudioRecorderViewModel.swift */; };
 		9AE933CA3F32F801639D145B /* TranscriptionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CC0B7EDF7B3686A8303FF3 /* TranscriptionResult.swift */; };
 		9B368E351DFD108F2E0B4728 /* FoundationModelsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FFF8F562F555C084EEC08D /* FoundationModelsProvider.swift */; };
-		A03EECD4465C0A92E0C625E5 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 2A7E94AD102BA439F84D3EDF /* DavyWhisperPluginSDK */; };
+		9ED7B879A323ABC15C0853DE /* QwenLLMPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38261A04FE51C0FB45F3ABA0 /* QwenLLMPlugin.swift */; };
 		A0895F5739B252966E434320 /* AudioPlaybackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA7A0B851EB4E8534FA54E /* AudioPlaybackService.swift */; };
+		A62F1A8A76C3714CF00FC263 /* DeepgramPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B94C9EA3F45E121865310 /* DeepgramPlugin.swift */; };
 		A7406E09F6B58E83D74FB78A /* TranslationHostWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79333C501D05DFF0F26796BE /* TranslationHostWindow.swift */; };
-		A759ACCBDAA4A2B07D6307C3 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF6EF0DAE6F1BC42D8938FD /* DavyWhisperPluginSDK */; };
 		A78498D49BFE846498ED675F /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776EF76E89E1B65976F243C5 /* HistoryViewModel.swift */; };
+		AD3E09223C934FE2C23FCC12 /* ElevenLabsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AFD714E682201276024E77 /* ElevenLabsPlugin.swift */; };
 		AD483114875EE7245F8429AF /* DictionaryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2012B75C4474B7AD70F788CA /* DictionaryServiceTests.swift */; };
 		ADAD2D62388B95FC0FFE90FD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA347E47FCF0DAAF1D12A267 /* main.swift */; };
 		AE8DF0B18089DBF7BC8E4449 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9A1A06F392BCE736EA7ABAA3 /* DavyWhisperPluginSDK */; };
 		B076624CD5A7FB7D8954A84A /* AudioRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB45A663AA0C7748ED131EE /* AudioRecorderView.swift */; };
+		B0A09575569C4C1BC18BB742 /* manifest_DeepgramPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E318AA116DF13B2B643F1F7 /* manifest_DeepgramPlugin.json */; };
 		B1EADFE2CBA863D569A130E5 /* HotkeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6304F46C5D6F9909EFC1B1F /* HotkeyService.swift */; };
 		B46B4DB65E6DA89DFDBEB235 /* PluginManifestValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D083BC5E6FC4497FD42DBCA /* PluginManifestValidationTests.swift */; };
 		B70B449A17869D64B7306055 /* SnippetServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3C7991A909A221D1D62F62 /* SnippetServiceTests.swift */; };
 		B71E6652990BB68009AE8132 /* NotchIndicatorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A286887906734D9651E0A54E /* NotchIndicatorPanel.swift */; };
 		BAF7C7752DD1AF2588250730 /* DictationSettingsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B827DA161BF3AAB2B812A /* DictationSettingsHandler.swift */; };
-		BBEF0F4BE4BE4F2CC24B2FAA /* mlx-audio-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 5B506B31586828495DD31E2A /* mlx-audio-swift */; };
+		BDA24005A7F026B500B0DFCE /* manifest_GLMPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = E146393F619F86156146D4EC /* manifest_GLMPlugin.json */; };
 		BE9D90794667D05B0BFF1D3C /* FluidAudio in Frameworks */ = {isa = PBXBuildFile; productRef = 15FF8E445C545384FCD82902 /* FluidAudio */; };
 		C1844ADA10E0496088D0D04D /* ProfilesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B242762B83CCED0DB568BB /* ProfilesSettingsView.swift */; };
 		C4F3256B244166D1CADDE649 /* WavEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F07853C6482241E89CCAC0 /* WavEncoder.swift */; };
 		C5713A30DEEA736C3AD86E8B /* WatchFolderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393F09277214C4F05540F75B /* WatchFolderService.swift */; };
 		C64FAFC2E0D7038734EC9ED8 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 6C10517594AC33BD63B72281 /* DavyWhisperPluginSDK */; };
-		C7A6E23CB43A6BCA0AF3EAD8 /* ElevenLabsPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EBC51F866EC3AAD12788FAE5 /* ElevenLabsPlugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C8629CDFA84C61DCB74FDB97 /* PromptAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6BE3F79AE759231EB12084 /* PromptAction.swift */; };
 		CB4CE9A813DBB5BC31432CC0 /* SetupWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FE6CB147AF98187FB5B002 /* SetupWizardView.swift */; };
 		CC06D9CE7601A24E1AF233F7 /* ProfileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC3439AB4B6A1A34E184C8 /* ProfileServiceTests.swift */; };
-		CE876D595922BDB1898CD2E2 /* GLMPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C48CDB907B4937F6DAAA5CE3 /* GLMPlugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D42CFBE470729EF5E00BE19F /* Snippet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798F73F3358586C806BEAF2E /* Snippet.swift */; };
-		D630BD84EE461289E75FF5CD /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0D1889ABFBC2755C2763C72B /* DavyWhisperPluginSDK */; };
 		D735A4C0D1EE2DEE540D3792 /* TextInsertionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F1563390B4BA594D20AAB /* TextInsertionServiceTests.swift */; };
 		D89A7353130A5C1EA745575D /* EventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9D3BB115FBCFCD07D79B4E /* EventBus.swift */; };
 		D91D92B1C83C409FBA1623E1 /* PluginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888DF3665C1564305CC6B0F2 /* PluginManager.swift */; };
 		D92623CD27B0E820AB05CDF2 /* PromptActionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD74551DECFD2B09F5B9CFD /* PromptActionsViewModel.swift */; };
 		D999A7013D93CCC19C376854 /* TranscriptionResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A8B6D1DA7E8A0A575B05C1 /* TranscriptionResultTests.swift */; };
-		DBE8BEBA33F5D670561DE4D6 /* DeepgramPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1E05B057F8332C624AE5524E /* DeepgramPlugin.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DC43B65B56880FD166892588 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F3690E4E8D17966B40A329BA /* DavyWhisperPluginSDK */; };
 		DC8B6519C05A8AB884806E76 /* AudioDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDDA284730D70479A501D44 /* AudioDeviceService.swift */; };
 		DDF4A7BDF745B96748856F24 /* SoundServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A241ACE4194786425B7A3032 /* SoundServiceTests.swift */; };
 		DE075AB6FEF0ECD3B4BFCA72 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3C9BF6D3D7320E2D137A3 /* TranslationService.swift */; };
 		DE77CF07522DE8344A10B720 /* APIRouterAndHandlersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AAD320D1E13D6863733D0D /* APIRouterAndHandlersTests.swift */; };
 		E17453722769F659A5AC4397 /* SnippetsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038B35BD25DB2D69A56CCDE1 /* SnippetsSettingsView.swift */; };
 		E20DE8673CB6253A271AD8CE /* AdvancedSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8738ACF449ACDBD52830D807 /* AdvancedSettingsView.swift */; };
+		E4066B756324D07EC5F158EB /* WhisperKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686A4BC50F2D0369482FBEF5 /* WhisperKitPlugin.swift */; };
 		E526379CEF38881F595BD0E5 /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68A20D2685EEB30336AD61D /* DictionaryService.swift */; };
 		E55177CABC2B0D59FE09B93D /* DictionaryExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988D4EA755AC5A80AD29ED48 /* DictionaryExporter.swift */; };
+		E8353F592296CFC1752A4DCB /* LiveTranscriptPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773236593FB13DEBB8958E97 /* LiveTranscriptPlugin.swift */; };
 		EB28D8AB9CEC63B4D6A6083B /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7139A62AAAA0C8D80EFDE1F1 /* GeneralSettingsView.swift */; };
 		EB9E30E7775609BEED73CD0C /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB7BC3A054F6551D83AD2E6 /* MenuBarView.swift */; };
 		EBAFD7226A412851C0D4BA7A /* Info.AppStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = B976DF21B1480A25433EF976 /* Info.AppStore.plist */; };
 		ECB5223DB087E294A94ED428 /* APIServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B79529FB42BBD1D58D8E3FE /* APIServerViewModel.swift */; };
+		EDA5801B1C3AD17960893AC6 /* manifest_QwenLLMPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 6DE605DFB1F54F5C6296D527 /* manifest_QwenLLMPlugin.json */; };
 		EE292F3A752B9D8087C2B201 /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00EDA0368A9BD9E030FCFF /* AboutSettingsView.swift */; };
+		F2B00407F452866DE63A8D11 /* MiniMaxPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAF1047F7FE010364BD8912 /* MiniMaxPlugin.swift */; };
 		F32D3C9E305D82C099E32FB5 /* PluginRegistryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC9686D0B7B38A51CDC623 /* PluginRegistryService.swift */; };
 		F3E01573C4FFE93489425B01 /* transcription_success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 55192BB7D45163F9E8AA5567 /* transcription_success.wav */; };
 		F5730E2128D841AE32755012 /* AppFormatterServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EF29707937703115A3718A /* AppFormatterServiceTests.swift */; };
@@ -171,20 +167,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		070E1238A0C648313543FB4B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 55D95622EB299FA6AB47F892;
-			remoteInfo = QwenLLMPlugin;
-		};
-		0C9C0F725CB0E4B45B73693B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 106719EB10C549E7781EFB22;
-			remoteInfo = ElevenLabsPlugin;
-		};
 		214CE97DEFE6C0A3F2FE6ECE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 778B745B053F2F70855332FD /* Project object */;
@@ -192,68 +174,12 @@
 			remoteGlobalIDString = 2716519844CA147818E4232B;
 			remoteInfo = DavyWhisper;
 		};
-		4497729B7BD53A1683D9A617 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3D18208FEEA850EF45471136;
-			remoteInfo = Qwen3Plugin;
-		};
-		672041D435E2785E14605A5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7CB391B94F02A05F5F3C37D6;
-			remoteInfo = WebhookPlugin;
-		};
-		7BA706C0B0C900A1EE0A1800 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3614950197E06C34A267E365;
-			remoteInfo = DeepgramPlugin;
-		};
 		823961F38478E828EC91F301 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 778B745B053F2F70855332FD /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = EE17ED63F7B658665FA5FEA4;
 			remoteInfo = "davywhisper-cli";
-		};
-		92B067979158D3B1664E8B83 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 52929C7408829614323146BD;
-			remoteInfo = KimiPlugin;
-		};
-		A46EDB9ED2F6AF84A703FCF0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A80861AFF4A682CC638FBBF0;
-			remoteInfo = WhisperKitPlugin;
-		};
-		CEA9ABAA0ABBE2640447F2C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3D8296773402E3E697C8A8F1;
-			remoteInfo = MiniMaxPlugin;
-		};
-		D449D0461F327096B6863B4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 09BD844F4F37B9AFA63D4F6D;
-			remoteInfo = LiveTranscriptPlugin;
-		};
-		E2F131C06BD56EBF5479C9F9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 778B745B053F2F70855332FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8312A82B4A74E8C3586A77B8;
-			remoteInfo = GLMPlugin;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -284,16 +210,16 @@
 		0A9AF6953C31635054076738 /* ErrorLogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogService.swift; sourceTree = "<group>"; };
 		0ACEEAC3A642B7AEF2FC9976 /* SnippetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsViewModel.swift; sourceTree = "<group>"; };
 		0BDDA284730D70479A501D44 /* AudioDeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceService.swift; sourceTree = "<group>"; };
+		0DFB3C05B08AFF823A4F702B /* manifest_MiniMaxPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_MiniMaxPlugin.json; sourceTree = "<group>"; };
 		10F4D07C0B9AB554276B7B27 /* AudioRecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingService.swift; sourceTree = "<group>"; };
 		114B827DA161BF3AAB2B812A /* DictationSettingsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationSettingsHandler.swift; sourceTree = "<group>"; };
 		160FB4A3EF19298F5951727E /* PluginSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginSettingsView.swift; sourceTree = "<group>"; };
 		18C42CA3205007B116605B5E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1DD74551DECFD2B09F5B9CFD /* PromptActionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptActionsViewModel.swift; sourceTree = "<group>"; };
-		1E05B057F8332C624AE5524E /* DeepgramPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeepgramPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E3C7991A909A221D1D62F62 /* SnippetServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetServiceTests.swift; sourceTree = "<group>"; };
 		2012B75C4474B7AD70F788CA /* DictionaryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryServiceTests.swift; sourceTree = "<group>"; };
 		25890AB358D1F65FEB2372AE /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		29FFA4FED521008E1AB4A021 /* WhisperKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhisperKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		270B10183381BABB0D994C03 /* manifest_ElevenLabsPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_ElevenLabsPlugin.json; sourceTree = "<group>"; };
 		2A33D9B31CF8205AD8B17080 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		2AC1B6BC83243F83FFACC6FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2BDA7A0B851EB4E8534FA54E /* AudioPlaybackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaybackService.swift; sourceTree = "<group>"; };
@@ -305,10 +231,11 @@
 		2F9F1563390B4BA594D20AAB /* TextInsertionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInsertionServiceTests.swift; sourceTree = "<group>"; };
 		356BF6BB1D2285F809FB97EB /* TestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
 		35CD9EDDCDF0C94CA892986B /* TextDiffService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDiffService.swift; sourceTree = "<group>"; };
-		35CEF47D9F2AF625F1C0D428 /* LiveTranscriptPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTranscriptPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		375BD496298A97D282D380C7 /* manifest_KimiPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_KimiPlugin.json; sourceTree = "<group>"; };
 		3820BC78F51DA70DD6DA4E44 /* TextInsertionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInsertionService.swift; sourceTree = "<group>"; };
+		38261A04FE51C0FB45F3ABA0 /* QwenLLMPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QwenLLMPlugin.swift; sourceTree = "<group>"; };
 		393F09277214C4F05540F75B /* WatchFolderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFolderService.swift; sourceTree = "<group>"; };
-		3B1CE42418A81B287F7A0DD2 /* KimiPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KimiPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D446A5223FBEB9C25423437 /* WebhookPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebhookPlugin.swift; sourceTree = "<group>"; };
 		3F6EFD3F66FC392288499FCA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		420F9C32B0F5D69E07099C77 /* SoundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundService.swift; sourceTree = "<group>"; };
 		4235AB0D9A4C89C42A9076C3 /* AccessibilityAnnouncementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityAnnouncementService.swift; sourceTree = "<group>"; };
@@ -323,16 +250,17 @@
 		50BAC36FD441125B2D62C924 /* HTTPServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServerTests.swift; sourceTree = "<group>"; };
 		54973F3900B912EC01712B49 /* error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = error.wav; sourceTree = "<group>"; };
 		55192BB7D45163F9E8AA5567 /* transcription_success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = transcription_success.wav; sourceTree = "<group>"; };
-		592396BF369CB0E7FBC11572 /* Qwen3Plugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Qwen3Plugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A80C679E75879AAADD105AB /* TermPack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermPack.swift; sourceTree = "<group>"; };
 		5FA8CA36C90163C07E2D0C03 /* HotkeySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySettingsView.swift; sourceTree = "<group>"; };
 		6278273FB1F0624F1A6EB379 /* TranscriptionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionRecord.swift; sourceTree = "<group>"; };
 		64C2D6C04039F53DAF32DFBB /* SubtitleExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleExporter.swift; sourceTree = "<group>"; };
 		6528EC71BDCCF9FF56B8CC47 /* AudioFileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileServiceTests.swift; sourceTree = "<group>"; };
 		67E30CC8998831A36A37C4FA /* PromptProcessingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptProcessingService.swift; sourceTree = "<group>"; };
+		686A4BC50F2D0369482FBEF5 /* WhisperKitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperKitPlugin.swift; sourceTree = "<group>"; };
 		6C9D3BB115FBCFCD07D79B4E /* EventBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBus.swift; sourceTree = "<group>"; };
 		6CCEA9334DCCF7A8B06A8879 /* OutputFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputFormatter.swift; sourceTree = "<group>"; };
 		6DD529DFCA0D7EE819E0A704 /* PortDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortDiscovery.swift; sourceTree = "<group>"; };
+		6DE605DFB1F54F5C6296D527 /* manifest_QwenLLMPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_QwenLLMPlugin.json; sourceTree = "<group>"; };
 		6EC284F5292894845DCB0293 /* DictionaryExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExporterTests.swift; sourceTree = "<group>"; };
 		704C291A4B190BD7057C436D /* DavyWhisperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DavyWhisperApp.swift; sourceTree = "<group>"; };
 		705E65943F70C01C496C02D4 /* PostProcessingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProcessingPipeline.swift; sourceTree = "<group>"; };
@@ -343,6 +271,7 @@
 		742187D9142ABC66C733731A /* DictationShortSpeechTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationShortSpeechTests.swift; sourceTree = "<group>"; };
 		74F89F341E1DF7525A6810A2 /* OverlayIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayIndicatorView.swift; sourceTree = "<group>"; };
 		7507FE5CFE2F27AC18AFF958 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
+		773236593FB13DEBB8958E97 /* LiveTranscriptPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTranscriptPlugin.swift; sourceTree = "<group>"; };
 		776EF76E89E1B65976F243C5 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		78A700661B16C86A4AC1A031 /* DavyWhisper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DavyWhisper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79333C501D05DFF0F26796BE /* TranslationHostWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationHostWindow.swift; sourceTree = "<group>"; };
@@ -351,21 +280,24 @@
 		7A88B57C6FD696EB154B1F95 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		7B79529FB42BBD1D58D8E3FE /* APIServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServerViewModel.swift; sourceTree = "<group>"; };
 		7D87FEE4AD2D1FDD020D3F83 /* TypeWhisper.AppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TypeWhisper.AppStore.entitlements; sourceTree = "<group>"; };
+		837C3BECA5D82FD91E5BC3A4 /* manifest_WebhookPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_WebhookPlugin.json; sourceTree = "<group>"; };
 		853123C636D5AB342B064DF3 /* ErrorLogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogEntry.swift; sourceTree = "<group>"; };
 		8738ACF449ACDBD52830D807 /* AdvancedSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsView.swift; sourceTree = "<group>"; };
 		8744F6AA77608B8568C51AC9 /* HTTPResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponse.swift; sourceTree = "<group>"; };
 		888DF3665C1564305CC6B0F2 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
 		893932B28D68D90F5990AF4C /* TextDiffServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDiffServiceTests.swift; sourceTree = "<group>"; };
 		8B6AF50C118E8A6062A12473 /* SharedIndicatorComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedIndicatorComponents.swift; sourceTree = "<group>"; };
-		8C233AB718589E6DEAD9E119 /* QwenLLMPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QwenLLMPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DB7BC3A054F6551D83AD2E6 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		8F2CF2D83F8D3DF4110F524B /* AudioWaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWaveformView.swift; sourceTree = "<group>"; };
 		8FB45A663AA0C7748ED131EE /* AudioRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderView.swift; sourceTree = "<group>"; };
+		93B946F714DA21454CFB8C7E /* manifest_LiveTranscriptPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_LiveTranscriptPlugin.json; sourceTree = "<group>"; };
 		94CB18CAFC6778C42D07FF11 /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
 		95C9693C2A7456F4B1D9F729 /* ProfilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewModel.swift; sourceTree = "<group>"; };
 		96311715006C1FCBD3915322 /* LLMProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMProvider.swift; sourceTree = "<group>"; };
 		988D4EA755AC5A80AD29ED48 /* DictionaryExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExporter.swift; sourceTree = "<group>"; };
 		98C95D7806B87C8E17130FF0 /* NotchShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchShape.swift; sourceTree = "<group>"; };
+		9BAF1047F7FE010364BD8912 /* MiniMaxPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniMaxPlugin.swift; sourceTree = "<group>"; };
+		9E318AA116DF13B2B643F1F7 /* manifest_DeepgramPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_DeepgramPlugin.json; sourceTree = "<group>"; };
 		A020D100BEA47E0B1FF6F94D /* davywhisper-cli */ = {isa = PBXFileReference; includeInIndex = 0; path = "davywhisper-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A241ACE4194786425B7A3032 /* SoundServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundServiceTests.swift; sourceTree = "<group>"; };
 		A286887906734D9651E0A54E /* NotchIndicatorPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchIndicatorPanel.swift; sourceTree = "<group>"; };
@@ -390,26 +322,29 @@
 		BE0F5C8F3714E6FDE21F346D /* BrandAndConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandAndConfigTests.swift; sourceTree = "<group>"; };
 		C0DEE79DB29A9F9192ECFE25 /* AudioFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileService.swift; sourceTree = "<group>"; };
 		C3EF29707937703115A3718A /* AppFormatterServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFormatterServiceTests.swift; sourceTree = "<group>"; };
-		C48CDB907B4937F6DAAA5CE3 /* GLMPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GLMPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5AFD714E682201276024E77 /* ElevenLabsPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevenLabsPlugin.swift; sourceTree = "<group>"; };
 		C68A20D2685EEB30336AD61D /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
 		C9A3831EC2AF376506633F85 /* TermPackRegistryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermPackRegistryService.swift; sourceTree = "<group>"; };
 		CDC31514AF98EBE8D664F2E6 /* HomeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSettingsView.swift; sourceTree = "<group>"; };
 		CE234C7D9B71F50C359DD5F1 /* ErrorLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogView.swift; sourceTree = "<group>"; };
 		CF6F3A69FA5FA7649CB4B3EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D29066F3E5B1EABF5F006055 /* GLMPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLMPlugin.swift; sourceTree = "<group>"; };
 		D5F794DD5F009AFECE95DB86 /* SpeechFeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechFeedbackService.swift; sourceTree = "<group>"; };
+		D6EA284A0563F68F5932DD1B /* manifest_WhisperKitPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_WhisperKitPlugin.json; sourceTree = "<group>"; };
 		D8F505AAF38E32B7A8024B24 /* AppFormatterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFormatterService.swift; sourceTree = "<group>"; };
+		D96DFA5879D80D5712013361 /* KimiPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KimiPlugin.swift; sourceTree = "<group>"; };
 		DEADD1C5E7E8D8BF35D28D7E /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		E09E31F3330DB04CCAC7A37A /* SnippetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetService.swift; sourceTree = "<group>"; };
+		E146393F619F86156146D4EC /* manifest_GLMPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_GLMPlugin.json; sourceTree = "<group>"; };
 		E423093A439BE8421CDA7F5A /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
 		E74F3C74CB0DA230DBE2AD8A /* AudioRecorderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderService.swift; sourceTree = "<group>"; };
 		E7F2CCE0FFA56BA675DF9EDC /* HotkeyRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyRecorderView.swift; sourceTree = "<group>"; };
 		E85E0EDB2FF5866A1A1076C2 /* DavyWhisperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DavyWhisperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8E064B386253A3F937D657B /* WebhookPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebhookPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB8FCE1C85E3C8CEC2A90B0B /* FileTranscriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTranscriptionViewModel.swift; sourceTree = "<group>"; };
-		EBC51F866EC3AAD12788FAE5 /* ElevenLabsPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ElevenLabsPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBEF808580827B6F46F4B0F6 /* HistoryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryServiceTests.swift; sourceTree = "<group>"; };
 		ED696B6D1028E36CE20061D0 /* ModelManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagerService.swift; sourceTree = "<group>"; };
 		EF21C3E5C117147FDA71C972 /* OverlayIndicatorPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayIndicatorPanel.swift; sourceTree = "<group>"; };
+		F28B94C9EA3F45E121865310 /* DeepgramPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepgramPlugin.swift; sourceTree = "<group>"; };
 		F41FEE0D42D7411686138AD9 /* DavyWhisperPluginSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DavyWhisperPluginSDK; path = DavyWhisperPluginSDK; sourceTree = SOURCE_ROOT; };
 		F429B203EF888EF82B4FD434 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		F46A6D7812606B392445B620 /* PromptPaletteHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptPaletteHandler.swift; sourceTree = "<group>"; };
@@ -421,7 +356,6 @@
 		F9F3311B176793EA40B9CDA3 /* AudioRecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderViewModel.swift; sourceTree = "<group>"; };
 		F9F6897E0F32881E4426EBE0 /* SubtitleExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleExporterTests.swift; sourceTree = "<group>"; };
 		FFCA46440FD39B36F9BF2B38 /* DictationEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationEnums.swift; sourceTree = "<group>"; };
-		FFF76525CBB499897552F309 /* MiniMaxPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniMaxPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -430,88 +364,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE8DF0B18089DBF7BC8E4449 /* DavyWhisperPluginSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1B26C9BFAF12109C7D7FDFE2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				53454F0089CB1D4B40F74E0B /* DavyWhisperPluginSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2B17B4AF016B56A1646D938B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				132F90377956106E0174571C /* DavyWhisperPluginSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		482D1D08DC7D353BF06714D4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6A581FEA23AD55A8156AFE0C /* DavyWhisperPluginSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C114FD96E02D8322770E6330 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DC43B65B56880FD166892588 /* DavyWhisperPluginSDK in Frameworks */,
-				5B2B62B26A6304010DDECAE7 /* WhisperKit in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C5CAEE0DEEA19A6D2EC77EF5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D630BD84EE461289E75FF5CD /* DavyWhisperPluginSDK in Frameworks */,
-				BBEF0F4BE4BE4F2CC24B2FAA /* mlx-audio-swift in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CDF58F076693599E2CAF4038 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A759ACCBDAA4A2B07D6307C3 /* DavyWhisperPluginSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D4A2FA470CF52BCE08043CBD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93278623E83BE4F8CFBEAD75 /* DavyWhisperPluginSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E1C32B6F16DB2BF674D731FB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				253A41D638D89155282CCF5C /* DavyWhisperPluginSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F26D263168329C6E11B17B12 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A03EECD4465C0A92E0C625E5 /* DavyWhisperPluginSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F3115E13426A5D04B2E999E5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				44CA500DBFDB31958F05B5C8 /* DavyWhisperPluginSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,6 +414,8 @@
 		244410F0793433BC70894BC1 /* MiniMaxPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				0DFB3C05B08AFF823A4F702B /* manifest_MiniMaxPlugin.json */,
+				9BAF1047F7FE010364BD8912 /* MiniMaxPlugin.swift */,
 			);
 			name = MiniMaxPlugin;
 			path = Plugins/MiniMaxPlugin;
@@ -579,6 +433,8 @@
 		3682102F412A867B8662CD2E /* DeepgramPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				F28B94C9EA3F45E121865310 /* DeepgramPlugin.swift */,
+				9E318AA116DF13B2B643F1F7 /* manifest_DeepgramPlugin.json */,
 			);
 			name = DeepgramPlugin;
 			path = Plugins/DeepgramPlugin;
@@ -587,6 +443,8 @@
 		38DD8F6A07D01932F2564ADE /* KimiPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				D96DFA5879D80D5712013361 /* KimiPlugin.swift */,
+				375BD496298A97D282D380C7 /* manifest_KimiPlugin.json */,
 			);
 			name = KimiPlugin;
 			path = Plugins/KimiPlugin;
@@ -595,6 +453,8 @@
 		3D14ED817429217E88C4CA2C /* WhisperKitPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				D6EA284A0563F68F5932DD1B /* manifest_WhisperKitPlugin.json */,
+				686A4BC50F2D0369482FBEF5 /* WhisperKitPlugin.swift */,
 			);
 			name = WhisperKitPlugin;
 			path = Plugins/WhisperKitPlugin;
@@ -603,6 +463,8 @@
 		59D69B0DFB4411D383148CE6 /* LiveTranscriptPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				773236593FB13DEBB8958E97 /* LiveTranscriptPlugin.swift */,
+				93B946F714DA21454CFB8C7E /* manifest_LiveTranscriptPlugin.json */,
 			);
 			name = LiveTranscriptPlugin;
 			path = Plugins/LiveTranscriptPlugin;
@@ -638,6 +500,8 @@
 		8928438932BF0EED606301BC /* QwenLLMPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				6DE605DFB1F54F5C6296D527 /* manifest_QwenLLMPlugin.json */,
+				38261A04FE51C0FB45F3ABA0 /* QwenLLMPlugin.swift */,
 			);
 			name = QwenLLMPlugin;
 			path = Plugins/QwenLLMPlugin;
@@ -718,6 +582,8 @@
 		92728F113C5A7367DD4BFF99 /* WebhookPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				837C3BECA5D82FD91E5BC3A4 /* manifest_WebhookPlugin.json */,
+				3D446A5223FBEB9C25423437 /* WebhookPlugin.swift */,
 			);
 			name = WebhookPlugin;
 			path = Plugins/WebhookPlugin;
@@ -815,7 +681,6 @@
 				59D69B0DFB4411D383148CE6 /* LiveTranscriptPlugin */,
 				244410F0793433BC70894BC1 /* MiniMaxPlugin */,
 				9A76E359367E24D1EE3FFD86 /* Packages */,
-				B47415144C52D4E505EF7670 /* Qwen3Plugin */,
 				8928438932BF0EED606301BC /* QwenLLMPlugin */,
 				92728F113C5A7367DD4BFF99 /* WebhookPlugin */,
 				3D14ED817429217E88C4CA2C /* WhisperKitPlugin */,
@@ -823,17 +688,11 @@
 			);
 			sourceTree = "<group>";
 		};
-		B47415144C52D4E505EF7670 /* Qwen3Plugin */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Qwen3Plugin;
-			path = Plugins/Qwen3Plugin;
-			sourceTree = "<group>";
-		};
 		B6CF43FCFB92CC977EC701D1 /* GLMPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				D29066F3E5B1EABF5F006055 /* GLMPlugin.swift */,
+				E146393F619F86156146D4EC /* manifest_GLMPlugin.json */,
 			);
 			name = GLMPlugin;
 			path = Plugins/GLMPlugin;
@@ -842,6 +701,8 @@
 		D77A85C375D3E5607016F372 /* ElevenLabsPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				C5AFD714E682201276024E77 /* ElevenLabsPlugin.swift */,
+				270B10183381BABB0D994C03 /* manifest_ElevenLabsPlugin.json */,
 			);
 			name = ElevenLabsPlugin;
 			path = Plugins/ElevenLabsPlugin;
@@ -888,16 +749,6 @@
 				A020D100BEA47E0B1FF6F94D /* davywhisper-cli */,
 				78A700661B16C86A4AC1A031 /* DavyWhisper.app */,
 				E85E0EDB2FF5866A1A1076C2 /* DavyWhisperTests.xctest */,
-				1E05B057F8332C624AE5524E /* DeepgramPlugin.bundle */,
-				EBC51F866EC3AAD12788FAE5 /* ElevenLabsPlugin.bundle */,
-				C48CDB907B4937F6DAAA5CE3 /* GLMPlugin.bundle */,
-				3B1CE42418A81B287F7A0DD2 /* KimiPlugin.bundle */,
-				35CEF47D9F2AF625F1C0D428 /* LiveTranscriptPlugin.bundle */,
-				FFF76525CBB499897552F309 /* MiniMaxPlugin.bundle */,
-				592396BF369CB0E7FBC11572 /* Qwen3Plugin.bundle */,
-				8C233AB718589E6DEAD9E119 /* QwenLLMPlugin.bundle */,
-				E8E064B386253A3F937D657B /* WebhookPlugin.bundle */,
-				29FFA4FED521008E1AB4A021 /* WhisperKitPlugin.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -905,42 +756,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		09BD844F4F37B9AFA63D4F6D /* LiveTranscriptPlugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 16EFA802C82948BE9B1498B8 /* Build configuration list for PBXNativeTarget "LiveTranscriptPlugin" */;
-			buildPhases = (
-				D4A2FA470CF52BCE08043CBD /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LiveTranscriptPlugin;
-			packageProductDependencies = (
-				81CBC4B0B34A69F48EE45808 /* DavyWhisperPluginSDK */,
-			);
-			productName = LiveTranscriptPlugin;
-			productReference = 35CEF47D9F2AF625F1C0D428 /* LiveTranscriptPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		106719EB10C549E7781EFB22 /* ElevenLabsPlugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0A52A2045F7710EF8434B168 /* Build configuration list for PBXNativeTarget "ElevenLabsPlugin" */;
-			buildPhases = (
-				E1C32B6F16DB2BF674D731FB /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ElevenLabsPlugin;
-			packageProductDependencies = (
-				FA49D20B1CA6BFFB29D864D4 /* DavyWhisperPluginSDK */,
-			);
-			productName = ElevenLabsPlugin;
-			productReference = EBC51F866EC3AAD12788FAE5 /* ElevenLabsPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
 		2716519844CA147818E4232B /* DavyWhisper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17A682249206C6918B5514FD /* Build configuration list for PBXNativeTarget "DavyWhisper" */;
@@ -954,16 +769,6 @@
 			);
 			dependencies = (
 				5BBD9D44E25A76A3517F17BF /* PBXTargetDependency */,
-				5E1566245B9B8985DCF3CFDD /* PBXTargetDependency */,
-				79F7BFD06ADE74C175FED8E4 /* PBXTargetDependency */,
-				BE43536FC9251FBB4AD3B26D /* PBXTargetDependency */,
-				24528C3A0A20C5847C9945FC /* PBXTargetDependency */,
-				3AB86F94EDE88906AFCED4DC /* PBXTargetDependency */,
-				890FE1BC40CA8248778A287E /* PBXTargetDependency */,
-				0A030FE16DC436CFCE905B6D /* PBXTargetDependency */,
-				64AE34D0886C1779995E653A /* PBXTargetDependency */,
-				3A77989219CFC8F5E945B41F /* PBXTargetDependency */,
-				C02488FB4DACD5E8F6110712 /* PBXTargetDependency */,
 			);
 			name = DavyWhisper;
 			packageProductDependencies = (
@@ -974,97 +779,6 @@
 			productName = DavyWhisper;
 			productReference = 78A700661B16C86A4AC1A031 /* DavyWhisper.app */;
 			productType = "com.apple.product-type.application";
-		};
-		3614950197E06C34A267E365 /* DeepgramPlugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0572F853CE0F87E2FD136814 /* Build configuration list for PBXNativeTarget "DeepgramPlugin" */;
-			buildPhases = (
-				1B26C9BFAF12109C7D7FDFE2 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = DeepgramPlugin;
-			packageProductDependencies = (
-				45C4BD1B3DE7EE4F1AE50F8C /* DavyWhisperPluginSDK */,
-			);
-			productName = DeepgramPlugin;
-			productReference = 1E05B057F8332C624AE5524E /* DeepgramPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		3D18208FEEA850EF45471136 /* Qwen3Plugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 846D33F7B9734D43D8CA504C /* Build configuration list for PBXNativeTarget "Qwen3Plugin" */;
-			buildPhases = (
-				C5CAEE0DEEA19A6D2EC77EF5 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Qwen3Plugin;
-			packageProductDependencies = (
-				0D1889ABFBC2755C2763C72B /* DavyWhisperPluginSDK */,
-				5B506B31586828495DD31E2A /* mlx-audio-swift */,
-			);
-			productName = Qwen3Plugin;
-			productReference = 592396BF369CB0E7FBC11572 /* Qwen3Plugin.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		3D8296773402E3E697C8A8F1 /* MiniMaxPlugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BEC0F1AB9A35BF7DF90C3DFC /* Build configuration list for PBXNativeTarget "MiniMaxPlugin" */;
-			buildPhases = (
-				CDF58F076693599E2CAF4038 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MiniMaxPlugin;
-			packageProductDependencies = (
-				1BF6EF0DAE6F1BC42D8938FD /* DavyWhisperPluginSDK */,
-			);
-			productName = MiniMaxPlugin;
-			productReference = FFF76525CBB499897552F309 /* MiniMaxPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		52929C7408829614323146BD /* KimiPlugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C84B5959A11D30BFC04702B3 /* Build configuration list for PBXNativeTarget "KimiPlugin" */;
-			buildPhases = (
-				F3115E13426A5D04B2E999E5 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = KimiPlugin;
-			packageProductDependencies = (
-				FC1F95319CDA104A62AC04A9 /* DavyWhisperPluginSDK */,
-			);
-			productName = KimiPlugin;
-			productReference = 3B1CE42418A81B287F7A0DD2 /* KimiPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		55D95622EB299FA6AB47F892 /* QwenLLMPlugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5CF95AB8063C730C7D051321 /* Build configuration list for PBXNativeTarget "QwenLLMPlugin" */;
-			buildPhases = (
-				2B17B4AF016B56A1646D938B /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = QwenLLMPlugin;
-			packageProductDependencies = (
-				9D3A5BF0850F49B1968582E8 /* DavyWhisperPluginSDK */,
-			);
-			productName = QwenLLMPlugin;
-			productReference = 8C233AB718589E6DEAD9E119 /* QwenLLMPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
 		};
 		585FD3CD23F20E42790CCFEF /* DavyWhisperTests */ = {
 			isa = PBXNativeTarget;
@@ -1085,61 +799,6 @@
 			productName = DavyWhisperTests;
 			productReference = E85E0EDB2FF5866A1A1076C2 /* DavyWhisperTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		7CB391B94F02A05F5F3C37D6 /* WebhookPlugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D94478D313211E0ADB2C3E3F /* Build configuration list for PBXNativeTarget "WebhookPlugin" */;
-			buildPhases = (
-				482D1D08DC7D353BF06714D4 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = WebhookPlugin;
-			packageProductDependencies = (
-				1E0AE66EA8952070508EBE75 /* DavyWhisperPluginSDK */,
-			);
-			productName = WebhookPlugin;
-			productReference = E8E064B386253A3F937D657B /* WebhookPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		8312A82B4A74E8C3586A77B8 /* GLMPlugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CFB2761C0D6AC06053FEB10A /* Build configuration list for PBXNativeTarget "GLMPlugin" */;
-			buildPhases = (
-				F26D263168329C6E11B17B12 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = GLMPlugin;
-			packageProductDependencies = (
-				2A7E94AD102BA439F84D3EDF /* DavyWhisperPluginSDK */,
-			);
-			productName = GLMPlugin;
-			productReference = C48CDB907B4937F6DAAA5CE3 /* GLMPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		A80861AFF4A682CC638FBBF0 /* WhisperKitPlugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 306C3FDF07D290E8330D038B /* Build configuration list for PBXNativeTarget "WhisperKitPlugin" */;
-			buildPhases = (
-				C114FD96E02D8322770E6330 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = WhisperKitPlugin;
-			packageProductDependencies = (
-				F3690E4E8D17966B40A329BA /* DavyWhisperPluginSDK */,
-				45F625D61A3C0F6EF6351696 /* WhisperKit */,
-			);
-			productName = WhisperKitPlugin;
-			productReference = 29FFA4FED521008E1AB4A021 /* WhisperKitPlugin.bundle */;
-			productType = "com.apple.product-type.bundle";
 		};
 		EE17ED63F7B658665FA5FEA4 /* davywhisper-cli */ = {
 			isa = PBXNativeTarget;
@@ -1192,7 +851,6 @@
 			packageReferences = (
 				2D9AF898DBDE396E306ABBBE /* XCRemoteSwiftPackageReference "FluidAudio" */,
 				0921210F4C0A947EB084B985 /* XCRemoteSwiftPackageReference "WhisperKit" */,
-				D956433E5E60B2C04793742D /* XCRemoteSwiftPackageReference "mlx-audio-swift" */,
 				8A97DB33EF96F79A6BEECD00 /* XCLocalSwiftPackageReference "DavyWhisperPluginSDK" */,
 			);
 			preferredProjectObjectVersion = 54;
@@ -1201,16 +859,6 @@
 			targets = (
 				2716519844CA147818E4232B /* DavyWhisper */,
 				585FD3CD23F20E42790CCFEF /* DavyWhisperTests */,
-				3614950197E06C34A267E365 /* DeepgramPlugin */,
-				106719EB10C549E7781EFB22 /* ElevenLabsPlugin */,
-				8312A82B4A74E8C3586A77B8 /* GLMPlugin */,
-				52929C7408829614323146BD /* KimiPlugin */,
-				09BD844F4F37B9AFA63D4F6D /* LiveTranscriptPlugin */,
-				3D8296773402E3E697C8A8F1 /* MiniMaxPlugin */,
-				3D18208FEEA850EF45471136 /* Qwen3Plugin */,
-				55D95622EB299FA6AB47F892 /* QwenLLMPlugin */,
-				7CB391B94F02A05F5F3C37D6 /* WebhookPlugin */,
-				A80861AFF4A682CC638FBBF0 /* WhisperKitPlugin */,
 				EE17ED63F7B658665FA5FEA4 /* davywhisper-cli */,
 			);
 		};
@@ -1226,20 +874,19 @@
 				91989133AA21BABAB97872E6 /* Localizable.xcstrings in Resources */,
 				148166625CDA959C7A8C2070 /* PrivacyInfo.xcprivacy in Resources */,
 				5B02A3AD19CDD0A75B3F1426 /* error.wav in Resources */,
+				B0A09575569C4C1BC18BB742 /* manifest_DeepgramPlugin.json in Resources */,
+				5F63D78F9146F9EB1D0FD43B /* manifest_ElevenLabsPlugin.json in Resources */,
+				BDA24005A7F026B500B0DFCE /* manifest_GLMPlugin.json in Resources */,
+				1D02A00BFE7568C5BA76E752 /* manifest_KimiPlugin.json in Resources */,
+				60528923B20C753832FA4375 /* manifest_LiveTranscriptPlugin.json in Resources */,
+				26400E011ABE98F1B3718389 /* manifest_MiniMaxPlugin.json in Resources */,
+				EDA5801B1C3AD17960893AC6 /* manifest_QwenLLMPlugin.json in Resources */,
+				14995B7511594A08A8CF5DB4 /* manifest_WebhookPlugin.json in Resources */,
+				81D5A834DE356C95A739F870 /* manifest_WhisperKitPlugin.json in Resources */,
 				3B556C9958D987604D07D4E6 /* plugins.json in Resources */,
 				5DE102C08E14709CA4E9F5C9 /* recording_start.wav in Resources */,
 				F3E01573C4FFE93489425B01 /* transcription_success.wav in Resources */,
 				62E6BB9F7B5AAA9EFF5719FD /* davywhisper-cli in Resources */,
-				184635424B210B85E9438491 /* WebhookPlugin.bundle in Resources */,
-				7142C3606448AF2F03B717B3 /* Qwen3Plugin.bundle in Resources */,
-				5CB3D5D4B67A31C56BB9498D /* WhisperKitPlugin.bundle in Resources */,
-				DBE8BEBA33F5D670561DE4D6 /* DeepgramPlugin.bundle in Resources */,
-				4ADD0F212B286340E936A97A /* LiveTranscriptPlugin.bundle in Resources */,
-				C7A6E23CB43A6BCA0AF3EAD8 /* ElevenLabsPlugin.bundle in Resources */,
-				CE876D595922BDB1898CD2E2 /* GLMPlugin.bundle in Resources */,
-				763C620D6C0BBCC216014FA7 /* KimiPlugin.bundle in Resources */,
-				920B7DF14DA5846105749007 /* MiniMaxPlugin.bundle in Resources */,
-				4B5FDE11B7C9E7AD8C5DE0AD /* QwenLLMPlugin.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1268,6 +915,7 @@
 				872EDC9A9ADCEF0A8B5282C3 /* AudioRecordingService.swift in Sources */,
 				37E80CC43080C1ECCFB13B9C /* AudioWaveformView.swift in Sources */,
 				1A94FC2D8061D654D90DF76B /* DavyWhisperApp.swift in Sources */,
+				A62F1A8A76C3714CF00FC263 /* DeepgramPlugin.swift in Sources */,
 				1CC02F75FCA1EFC29FE581F1 /* DictationEnums.swift in Sources */,
 				BAF7C7752DD1AF2588250730 /* DictationSettingsHandler.swift in Sources */,
 				98A6957D8765D1CFB0BB9AE8 /* DictationViewModel.swift in Sources */,
@@ -1276,6 +924,7 @@
 				E526379CEF38881F595BD0E5 /* DictionaryService.swift in Sources */,
 				65E0C48AC1BF510EC3D533B4 /* DictionarySettingsView.swift in Sources */,
 				30065CECE67BB6C974B80A74 /* DictionaryViewModel.swift in Sources */,
+				AD3E09223C934FE2C23FCC12 /* ElevenLabsPlugin.swift in Sources */,
 				06B28631EBD4393E2F0DEDAE /* ErrorLogEntry.swift in Sources */,
 				340F906B756CE74A586283F4 /* ErrorLogService.swift in Sources */,
 				11052CF9520555BCBC7E7CBF /* ErrorLogView.swift in Sources */,
@@ -1283,6 +932,7 @@
 				5A9D5F41FCB9DE9441480CAD /* FileTranscriptionView.swift in Sources */,
 				55CA755E8EF74ED0B3EB7E8A /* FileTranscriptionViewModel.swift in Sources */,
 				9B368E351DFD108F2E0B4728 /* FoundationModelsProvider.swift in Sources */,
+				40B172F29EDF64D66CC8E20B /* GLMPlugin.swift in Sources */,
 				EB28D8AB9CEC63B4D6A6083B /* GeneralSettingsView.swift in Sources */,
 				94C08D5550F8579C41BAF01D /* HTTPRequestParser.swift in Sources */,
 				054C168326F2B268F8438958 /* HTTPResponse.swift in Sources */,
@@ -1300,9 +950,12 @@
 				8A090D04E138D466DFFB1B16 /* IndicatorCoordinator.swift in Sources */,
 				6FCA9EB274CC6D9E164F9A75 /* IndicatorPreviewView.swift in Sources */,
 				5D737A153FC24A0D578455E6 /* KeychainService.swift in Sources */,
+				24754B279EE8119D33CA46BC /* KimiPlugin.swift in Sources */,
 				F6F489C2D1D11E8FC0C4B845 /* LLMProvider.swift in Sources */,
+				E8353F592296CFC1752A4DCB /* LiveTranscriptPlugin.swift in Sources */,
 				17F879C0C423AE74FDB48E1B /* MemoryService.swift in Sources */,
 				EB9E30E7775609BEED73CD0C /* MenuBarView.swift in Sources */,
+				F2B00407F452866DE63A8D11 /* MiniMaxPlugin.swift in Sources */,
 				4CCA8DCC67AD0245659E06AA /* ModelManagerService.swift in Sources */,
 				B71E6652990BB68009AE8132 /* NotchIndicatorPanel.swift in Sources */,
 				1D0E122F65268D3890EF2CA9 /* NotchIndicatorView.swift in Sources */,
@@ -1324,6 +977,7 @@
 				87C2D90DB0B5D2972A3A26CE /* PromptPaletteHandler.swift in Sources */,
 				3DAD96DD49B16EE8D4D8E4B3 /* PromptPalettePanel.swift in Sources */,
 				45A2DAB754D7D1D3D3A878C8 /* PromptProcessingService.swift in Sources */,
+				9ED7B879A323ABC15C0853DE /* QwenLLMPlugin.swift in Sources */,
 				3AAE2981546DF3B4070B6AFC /* ServiceContainer.swift in Sources */,
 				709022F55A630E238F4F2998 /* SettingsView.swift in Sources */,
 				42E1A9826DA4082F6F3AF58A /* SettingsViewModel.swift in Sources */,
@@ -1349,6 +1003,8 @@
 				C5713A30DEEA736C3AD86E8B /* WatchFolderService.swift in Sources */,
 				81C6C8E7515FE48A55C391B9 /* WatchFolderViewModel.swift in Sources */,
 				C4F3256B244166D1CADDE649 /* WavEncoder.swift in Sources */,
+				6E5F728AA853BE2172B98139 /* WebhookPlugin.swift in Sources */,
+				E4066B756324D07EC5F158EB /* WhisperKitPlugin.swift in Sources */,
 				ADAD2D62388B95FC0FFE90FD /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1395,88 +1051,19 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0A030FE16DC436CFCE905B6D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8312A82B4A74E8C3586A77B8 /* GLMPlugin */;
-			targetProxy = E2F131C06BD56EBF5479C9F9 /* PBXContainerItemProxy */;
-		};
-		24528C3A0A20C5847C9945FC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3614950197E06C34A267E365 /* DeepgramPlugin */;
-			targetProxy = 7BA706C0B0C900A1EE0A1800 /* PBXContainerItemProxy */;
-		};
-		3A77989219CFC8F5E945B41F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3D8296773402E3E697C8A8F1 /* MiniMaxPlugin */;
-			targetProxy = CEA9ABAA0ABBE2640447F2C8 /* PBXContainerItemProxy */;
-		};
-		3AB86F94EDE88906AFCED4DC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 09BD844F4F37B9AFA63D4F6D /* LiveTranscriptPlugin */;
-			targetProxy = D449D0461F327096B6863B4A /* PBXContainerItemProxy */;
-		};
 		5BBD9D44E25A76A3517F17BF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EE17ED63F7B658665FA5FEA4 /* davywhisper-cli */;
 			targetProxy = 823961F38478E828EC91F301 /* PBXContainerItemProxy */;
-		};
-		5E1566245B9B8985DCF3CFDD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7CB391B94F02A05F5F3C37D6 /* WebhookPlugin */;
-			targetProxy = 672041D435E2785E14605A5E /* PBXContainerItemProxy */;
 		};
 		6188726B40600D14376DF486 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2716519844CA147818E4232B /* DavyWhisper */;
 			targetProxy = 214CE97DEFE6C0A3F2FE6ECE /* PBXContainerItemProxy */;
 		};
-		64AE34D0886C1779995E653A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 52929C7408829614323146BD /* KimiPlugin */;
-			targetProxy = 92B067979158D3B1664E8B83 /* PBXContainerItemProxy */;
-		};
-		79F7BFD06ADE74C175FED8E4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3D18208FEEA850EF45471136 /* Qwen3Plugin */;
-			targetProxy = 4497729B7BD53A1683D9A617 /* PBXContainerItemProxy */;
-		};
-		890FE1BC40CA8248778A287E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 106719EB10C549E7781EFB22 /* ElevenLabsPlugin */;
-			targetProxy = 0C9C0F725CB0E4B45B73693B /* PBXContainerItemProxy */;
-		};
-		BE43536FC9251FBB4AD3B26D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A80861AFF4A682CC638FBBF0 /* WhisperKitPlugin */;
-			targetProxy = A46EDB9ED2F6AF84A703FCF0 /* PBXContainerItemProxy */;
-		};
-		C02488FB4DACD5E8F6110712 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 55D95622EB299FA6AB47F892 /* QwenLLMPlugin */;
-			targetProxy = 070E1238A0C648313543FB4B /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0E71185BDC3DEE14376CA582 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.kimi;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
 		1DB33B7E0BBFEC59E73150C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1497,158 +1084,6 @@
 				SDKROOT = macosx;
 				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DavyWhisper.app/Contents/MacOS/DavyWhisper";
-			};
-			name = Debug;
-		};
-		35FDCC3F925B3AD3940BA795 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.kimi;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		3B32439755BB936F6EA1FBE8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.glm;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		50196E714C9328E4990DA9C3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.qwenllm;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		595D21A57F771EF97EC8979A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.livetranscript;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		641D6A9B1C0169D1F4F0C114 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.deepgram;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		656DD01F478BD168325D3B97 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.webhook;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		7814E06C8F8F724698A50386 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.minimax;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		7E89408F3F74E2506D0F5381 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.qwen3;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -1674,82 +1109,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DavyWhisper.app/Contents/MacOS/DavyWhisper";
 			};
 			name = Release;
-		};
-		82F3BC0F362B54F326357EC6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.livetranscript;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		835A1CD2132A2196877C77E5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.deepgram;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		8E11BD39EC7A3720B330B94A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.elevenlabs;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		8EE581B4705958EB1A3524D7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.qwenllm;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
 		};
 		9F47785C72783AE483A96032 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1786,120 +1145,6 @@
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
-		};
-		A3722E3A7C29E782D65DB883 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.elevenlabs;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		A45142442D2E0B560BD9450A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.webhook;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		AB54731E4482046255ECBCF5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.minimax;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		AB9F8F4170C5204927D03FD2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.glm;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		ACD5569325BE4A48ACE746AB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.whisperkit;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		B1502DE244F159CE8496F868 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.qwen3;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
 		};
 		B1D88B1E2F3E0B7794E535F9 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1957,25 +1202,6 @@
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
-		};
-		D1BF78BA9D419F4E41376AD6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.davywhisper.whisperkit;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
 		};
 		DE25B0D692DFEB18DE83D7F8 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2120,56 +1346,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0572F853CE0F87E2FD136814 /* Build configuration list for PBXNativeTarget "DeepgramPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				835A1CD2132A2196877C77E5 /* Debug */,
-				641D6A9B1C0169D1F4F0C114 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		0A52A2045F7710EF8434B168 /* Build configuration list for PBXNativeTarget "ElevenLabsPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A3722E3A7C29E782D65DB883 /* Debug */,
-				8E11BD39EC7A3720B330B94A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		16EFA802C82948BE9B1498B8 /* Build configuration list for PBXNativeTarget "LiveTranscriptPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				82F3BC0F362B54F326357EC6 /* Debug */,
-				595D21A57F771EF97EC8979A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		17A682249206C6918B5514FD /* Build configuration list for PBXNativeTarget "DavyWhisper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F47785C72783AE483A96032 /* Debug */,
 				B1D88B1E2F3E0B7794E535F9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		306C3FDF07D290E8330D038B /* Build configuration list for PBXNativeTarget "WhisperKitPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				ACD5569325BE4A48ACE746AB /* Debug */,
-				D1BF78BA9D419F4E41376AD6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		5CF95AB8063C730C7D051321 /* Build configuration list for PBXNativeTarget "QwenLLMPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8EE581B4705958EB1A3524D7 /* Debug */,
-				50196E714C9328E4990DA9C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -2192,56 +1373,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		846D33F7B9734D43D8CA504C /* Build configuration list for PBXNativeTarget "Qwen3Plugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7E89408F3F74E2506D0F5381 /* Debug */,
-				B1502DE244F159CE8496F868 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		8CB396530B3F33D95B34CB83 /* Build configuration list for PBXNativeTarget "davywhisper-cli" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C410EB7FCB594FE559D1AC03 /* Debug */,
 				DE25B0D692DFEB18DE83D7F8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		BEC0F1AB9A35BF7DF90C3DFC /* Build configuration list for PBXNativeTarget "MiniMaxPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AB54731E4482046255ECBCF5 /* Debug */,
-				7814E06C8F8F724698A50386 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		C84B5959A11D30BFC04702B3 /* Build configuration list for PBXNativeTarget "KimiPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0E71185BDC3DEE14376CA582 /* Debug */,
-				35FDCC3F925B3AD3940BA795 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		CFB2761C0D6AC06053FEB10A /* Build configuration list for PBXNativeTarget "GLMPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AB9F8F4170C5204927D03FD2 /* Debug */,
-				3B32439755BB936F6EA1FBE8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		D94478D313211E0ADB2C3E3F /* Build configuration list for PBXNativeTarget "WebhookPlugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A45142442D2E0B560BD9450A /* Debug */,
-				656DD01F478BD168325D3B97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -2272,57 +1408,15 @@
 				kind = branch;
 			};
 		};
-		D956433E5E60B2C04793742D /* XCRemoteSwiftPackageReference "mlx-audio-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Blaizzy/mlx-audio-swift.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0D1889ABFBC2755C2763C72B /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
-		};
 		15FF8E445C545384FCD82902 /* FluidAudio */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2D9AF898DBDE396E306ABBBE /* XCRemoteSwiftPackageReference "FluidAudio" */;
 			productName = FluidAudio;
 		};
-		1BF6EF0DAE6F1BC42D8938FD /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
-		};
-		1E0AE66EA8952070508EBE75 /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
-		};
-		2A7E94AD102BA439F84D3EDF /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
-		};
-		45C4BD1B3DE7EE4F1AE50F8C /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
-		};
-		45F625D61A3C0F6EF6351696 /* WhisperKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0921210F4C0A947EB084B985 /* XCRemoteSwiftPackageReference "WhisperKit" */;
-			productName = WhisperKit;
-		};
-		5B506B31586828495DD31E2A /* mlx-audio-swift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D956433E5E60B2C04793742D /* XCRemoteSwiftPackageReference "mlx-audio-swift" */;
-			productName = "mlx-audio-swift";
-		};
 		6C10517594AC33BD63B72281 /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
-		};
-		81CBC4B0B34A69F48EE45808 /* DavyWhisperPluginSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DavyWhisperPluginSDK;
 		};
@@ -2330,26 +1424,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = DavyWhisperPluginSDK;
 		};
-		9D3A5BF0850F49B1968582E8 /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
-		};
 		E1BFE72095A8A729E6FE641B /* WhisperKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0921210F4C0A947EB084B985 /* XCRemoteSwiftPackageReference "WhisperKit" */;
 			productName = WhisperKit;
-		};
-		F3690E4E8D17966B40A329BA /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
-		};
-		FA49D20B1CA6BFFB29D864D4 /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
-		};
-		FC1F95319CDA104A62AC04A9 /* DavyWhisperPluginSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DavyWhisperPluginSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

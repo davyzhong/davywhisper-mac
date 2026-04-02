@@ -14,9 +14,6 @@ packages:
   FluidAudio:
     url: https://github.com/FluidInference/FluidAudio.git
     branch: main
-  mlx-audio-swift:
-    url: https://github.com/Blaizzy/mlx-audio-swift.git
-    branch: main
   DavyWhisperPluginSDK:
     path: DavyWhisperPluginSDK
 
@@ -25,29 +22,36 @@ targets:
       type: application
       platform: macOS
       sources:
-        - DavyWhisper
+        - path: DavyWhisper
+        - path: Plugins/WhisperKitPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/DeepgramPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/WebhookPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/ElevenLabsPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/LiveTranscriptPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/GLMPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/KimiPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/MiniMaxPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/QwenLLMPlugin
+          excludes:
+            - "**/*.xcstrings"
       dependencies:
         - target: davywhisper-cli
-          embed: true
-        - target: WebhookPlugin
-          embed: true
-        - target: Qwen3Plugin
-          embed: true
-        - target: WhisperKitPlugin
-          embed: true
-        - target: DeepgramPlugin
-          embed: true
-        - target: LiveTranscriptPlugin
-          embed: true
-        - target: ElevenLabsPlugin
-          embed: true
-        - target: GLMPlugin
-          embed: true
-        - target: KimiPlugin
-          embed: true
-        - target: MiniMaxPlugin
-          embed: true
-        - target: QwenLLMPlugin
           embed: true
         - package: WhisperKit
         - package: FluidAudio
@@ -130,215 +134,3 @@ targets:
           GENERATE_INFOPLIST_FILE: YES
           PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.tests"
           TEST_HOST: "$(BUILT_PRODUCTS_DIR)/DavyWhisper.app/Contents/MacOS/DavyWhisper"
-    WebhookPlugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/WebhookPlugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.webhook"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"
-    Qwen3Plugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/Qwen3Plugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-        - package: mlx-audio-swift
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.qwen3"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"
-    WhisperKitPlugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/WhisperKitPlugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-        - package: WhisperKit
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.whisperkit"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"
-    DeepgramPlugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/DeepgramPlugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.deepgram"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"
-    LiveTranscriptPlugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/LiveTranscriptPlugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.livetranscript"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"
-    ElevenLabsPlugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/ElevenLabsPlugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.elevenlabs"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"
-    GLMPlugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/GLMPlugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.glm"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"
-    KimiPlugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/KimiPlugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.kimi"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"
-    MiniMaxPlugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/MiniMaxPlugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.minimax"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"
-    QwenLLMPlugin:
-      type: bundle
-      platform: macOS
-      sources:
-        - path: Plugins/QwenLLMPlugin
-          excludes:
-            - "**/.*"
-      dependencies:
-        - package: DavyWhisperPluginSDK
-      settings:
-        base:
-          SWIFT_VERSION: "6.0"
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
-          GENERATE_INFOPLIST_FILE: YES
-          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.qwenllm"
-          WRAPPER_EXTENSION: bundle
-          SKIP_INSTALL: YES
-          LD_RUNPATH_SEARCH_PATHS:
-            - "$(inherited)"
-            - "@executable_path/../Frameworks"
-            - "@loader_path/../Frameworks"

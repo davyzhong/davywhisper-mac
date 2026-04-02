@@ -2,6 +2,9 @@ import Foundation
 import SwiftUI
 import WhisperKit
 import DavyWhisperPluginSDK
+import os.log
+
+private let wkLogger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "DavyWhisper", category: "WhisperKitPlugin")
 
 // MARK: - Plugin Entry Point
 
@@ -24,7 +27,10 @@ final class WhisperKitPlugin: NSObject, TranscriptionEnginePlugin, PluginSetting
     func activate(host: HostServices) {
         self.host = host
         _selectedModelId = host.userDefault(forKey: "selectedModel") as? String
-        Task { await restoreLoadedModel() }
+        Task {
+            await installBundledModelIfNeeded()
+            await restoreLoadedModel()
+        }
     }
 
     func deactivate() {
@@ -172,17 +178,39 @@ final class WhisperKitPlugin: NSObject, TranscriptionEnginePlugin, PluginSetting
             // Migrate old models if they exist
             migrateOldModels(for: modelDef)
 
-            // Download
-            var lastProgress = 0.0
-            let modelFolder = try await WhisperKit.download(
-                variant: modelDef.id,
-                downloadBase: downloadBase
-            ) { progress in
-                let fraction = progress.fractionCompleted
-                let mapped = 0.05 + fraction * 0.75
-                guard mapped - lastProgress >= 0.01 else { return }
-                lastProgress = mapped
-                self.downloadProgress = mapped
+            // Determine model folder — check local cache first to avoid network download.
+            // 1) Bundled model: downloadBase/<variant>/
+            // 2) HubApi download: downloadBase/models/argmaxinc/whisperkit-coreml/<variant>/
+            let bundledDir = downloadBase.appendingPathComponent(modelDef.id)
+            let hubDir = downloadBase
+                .appendingPathComponent("models")
+                .appendingPathComponent("argmaxinc")
+                .appendingPathComponent("whisperkit-coreml")
+                .appendingPathComponent(modelDef.id)
+
+            let modelFolder: URL
+            if FileManager.default.fileExists(atPath: bundledDir.path) {
+                modelFolder = bundledDir
+                downloadProgress = 0.80
+            } else if FileManager.default.fileExists(atPath: hubDir.path) {
+                modelFolder = hubDir
+                downloadProgress = 0.80
+            } else {
+                // Download — pass mirror endpoint explicitly since WhisperKit.download()
+                // hardcodes "huggingface.co" and bypasses the HF_ENDPOINT env var.
+                let hfEndpoint = ProcessInfo.processInfo.environment["HF_ENDPOINT"] ?? "https://huggingface.co"
+                var lastProgress = 0.0
+                modelFolder = try await WhisperKit.download(
+                    variant: modelDef.id,
+                    downloadBase: downloadBase,
+                    endpoint: hfEndpoint
+                ) { progress in
+                    let fraction = progress.fractionCompleted
+                    let mapped = 0.05 + fraction * 0.75
+                    guard mapped - lastProgress >= 0.01 else { return }
+                    lastProgress = mapped
+                    self.downloadProgress = mapped
+                }
             }
 
             // Load
@@ -246,11 +274,16 @@ final class WhisperKitPlugin: NSObject, TranscriptionEnginePlugin, PluginSetting
     }
 
     fileprivate func deleteModelFiles(_ modelDef: WhisperModelDef) {
-        let modelPath = downloadBase
+        // HubApi stores downloaded models at downloadBase/models/<repo_owner>/<repo_name>/<variant>/
+        let downloadedPath = downloadBase
+            .appendingPathComponent("models")
             .appendingPathComponent("argmaxinc")
             .appendingPathComponent("whisperkit-coreml")
             .appendingPathComponent(modelDef.id)
-        try? FileManager.default.removeItem(at: modelPath)
+        try? FileManager.default.removeItem(at: downloadedPath)
+        // Also remove bundled model location (downloadBase/<variant>/)
+        let bundledPath = downloadBase.appendingPathComponent(modelDef.id)
+        try? FileManager.default.removeItem(at: bundledPath)
     }
 
     func restoreLoadedModel() async {
@@ -262,11 +295,16 @@ final class WhisperKitPlugin: NSObject, TranscriptionEnginePlugin, PluginSetting
     }
 
     fileprivate func isModelDownloaded(_ modelDef: WhisperModelDef) -> Bool {
-        let modelPath = downloadBase
+        // Check HubApi download location
+        let downloadedPath = downloadBase
+            .appendingPathComponent("models")
             .appendingPathComponent("argmaxinc")
             .appendingPathComponent("whisperkit-coreml")
             .appendingPathComponent(modelDef.id)
-        return FileManager.default.fileExists(atPath: modelPath.path)
+        if FileManager.default.fileExists(atPath: downloadedPath.path) { return true }
+        // Check bundled model location
+        let bundledPath = downloadBase.appendingPathComponent(modelDef.id)
+        return FileManager.default.fileExists(atPath: bundledPath.path)
     }
 
     /// Migrate models from old location (DavyWhisper/models/) to plugin data directory
@@ -286,6 +324,7 @@ final class WhisperKitPlugin: NSObject, TranscriptionEnginePlugin, PluginSetting
             guard fm.fileExists(atPath: oldPath.path) else { continue }
 
             let newPath = downloadBase
+                .appendingPathComponent("models")
                 .appendingPathComponent("argmaxinc")
                 .appendingPathComponent("whisperkit-coreml")
                 .appendingPathComponent(modelDef.id)
@@ -294,6 +333,34 @@ final class WhisperKitPlugin: NSObject, TranscriptionEnginePlugin, PluginSetting
 
             try? fm.createDirectory(at: newPath.deletingLastPathComponent(), withIntermediateDirectories: true)
             try? fm.moveItem(at: oldPath, to: newPath)
+        }
+    }
+
+    // MARK: - Bundled Model
+
+    /// Copy pre-bundled base model from app resources to plugin data directory on first launch.
+    private func installBundledModelIfNeeded() async {
+        let bundledId = "openai_whisper-base"
+
+        let targetDir = downloadBase.appendingPathComponent(bundledId)
+
+        // Already installed — skip
+        if FileManager.default.fileExists(atPath: targetDir.path) { return }
+
+        guard let resourceURL = Bundle.main.resourceURL else { return }
+        let bundledDir = resourceURL.appendingPathComponent("WhisperKitBaseModel").appendingPathComponent(bundledId)
+        guard FileManager.default.fileExists(atPath: bundledDir.path) else { return }
+
+        do {
+            try FileManager.default.createDirectory(at: targetDir.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try FileManager.default.copyItem(at: bundledDir, to: targetDir)
+            wkLogger.info("Installed bundled model \(bundledId)")
+
+            // Set as default model so it auto-loads
+            host?.setUserDefault(bundledId, forKey: "selectedModel")
+            host?.setUserDefault(bundledId, forKey: "loadedModel")
+        } catch {
+            wkLogger.error("Failed to install bundled model: \(error.localizedDescription)")
         }
     }
 

@@ -133,20 +133,26 @@ final class BrandAndConfigTests: XCTestCase {
             "DavyWhisper:",
             "davywhisper-cli:",
             "DavyWhisperTests:",
-            "WebhookPlugin:",
-            "Qwen3Plugin:",
-            "WhisperKitPlugin:",
-            "DeepgramPlugin:",
-            "LiveTranscriptPlugin:",
-            "ElevenLabsPlugin:",
-            "GLMPlugin:",
-            "KimiPlugin:",
-            "MiniMaxPlugin:",
-            "QwenLLMPlugin:",
         ]
         for target in expectedTargets {
             XCTAssertTrue(content.contains(target),
                           "project.yml should define target: \(target)")
+        }
+
+        // Plugin sources compiled into main app
+        let expectedPluginSources = [
+            "Plugins/WhisperKitPlugin",
+            "Plugins/DeepgramPlugin",
+            "Plugins/WebhookPlugin",
+            "Plugins/ElevenLabsPlugin",
+            "Plugins/GLMPlugin",
+            "Plugins/KimiPlugin",
+            "Plugins/MiniMaxPlugin",
+            "Plugins/QwenLLMPlugin",
+        ]
+        for source in expectedPluginSources {
+            XCTAssertTrue(content.contains(source),
+                          "project.yml should include plugin source: \(source)")
         }
     }
 
@@ -196,9 +202,10 @@ final class BrandAndConfigTests: XCTestCase {
         let projectRoot = TestSupport.repoRoot
         let newPlugins = ["GLMPlugin", "KimiPlugin", "MiniMaxPlugin", "QwenLLMPlugin"]
         for plugin in newPlugins {
-            let manifest = projectRoot.appendingPathComponent("Plugins/\(plugin)/manifest.json")
+            // Plugins compiled into main app use manifest_<Name>.json naming
+            let manifest = projectRoot.appendingPathComponent("Plugins/\(plugin)/manifest_\(plugin).json")
             XCTAssertTrue(FileManager.default.fileExists(atPath: manifest.path),
-                          "\(plugin)/manifest.json should exist")
+                          "\(plugin)/manifest_\(plugin).json should exist")
         }
     }
 }

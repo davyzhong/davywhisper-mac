@@ -34,7 +34,10 @@ private class OverrideBundle: Bundle, @unchecked Sendable {
 
 // Set HF_ENDPOINT before any HuggingFace SDK calls.
 // hf_hub reads this env var at first use; setenv must happen before that.
-if UserDefaults.standard.bool(forKey: UserDefaultsKeys.useHuggingFaceMirror) {
+// Default to mirror for China users; can be disabled via Advanced Settings.
+let useMirror = UserDefaults.standard.object(forKey: UserDefaultsKeys.useHuggingFaceMirror) as? Bool
+    ?? true  // default ON
+if useMirror {
     setenv("HF_ENDPOINT", "https://hf-mirror.com", 1)
 }
 

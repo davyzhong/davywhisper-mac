@@ -17,8 +17,12 @@ struct LoadedPlugin: Identifiable {
     var id: String { manifest.id }
 
     var isBundled: Bool {
-        guard let builtInURL = Bundle.main.builtInPlugInsURL else { return false }
-        return sourceURL.path.hasPrefix(builtInURL.path)
+        // Compiled-in plugins are always bundled
+        if bundle == Bundle.main { return true }
+        let builtInPrefix = Bundle.main.builtInPlugInsURL?.path
+        let resourcePrefix = Bundle.main.resourceURL?.path
+        return (builtInPrefix.map { sourceURL.path.hasPrefix($0) } ?? false)
+            || (resourcePrefix.map { sourceURL.path.hasPrefix($0) } ?? false)
     }
 }
 
@@ -86,45 +90,90 @@ final class PluginManager: ObservableObject {
     // MARK: - Plugin Loading
 
     func scanAndLoadPlugins() {
-        logger.info("Scanning plugins directory: \(self.pluginsDirectory.path)")
+        // 1. Load compiled-in plugins (Swift code compiled into main app, manifest.json in Resources)
+        loadCompiledPlugins()
 
+        // 2. Load dynamic plugins from user's Plugins directory
         let fm = FileManager.default
-        guard let contents = try? fm.contentsOfDirectory(at: pluginsDirectory, includingPropertiesForKeys: nil) else {
-            logger.info("No plugins directory or empty")
-            return
-        }
-
-        let bundles = contents.filter { $0.pathExtension == "bundle" }
-        logger.info("Found \(bundles.count) plugin bundle(s)")
-
-        for bundleURL in bundles {
-            loadPlugin(at: bundleURL)
-        }
-
-        // Built-in plugins from app bundle
-        if let builtInURL = Bundle.main.builtInPlugInsURL,
-           let builtIn = try? fm.contentsOfDirectory(at: builtInURL, includingPropertiesForKeys: nil) {
-            let builtInBundles = builtIn.filter { $0.pathExtension == "bundle" }
-            logger.info("Found \(builtInBundles.count) built-in plugin bundle(s)")
-            for bundleURL in builtInBundles {
+        if let contents = try? fm.contentsOfDirectory(at: pluginsDirectory, includingPropertiesForKeys: nil) {
+            let bundles = contents.filter { $0.pathExtension == "bundle" }
+            logger.info("Found \(bundles.count) user plugin bundle(s)")
+            for bundleURL in bundles {
                 loadPlugin(at: bundleURL)
             }
         }
 
-        // Fallback: bundles embedded in Resources (e.g. by XcodeGen)
-        if let resourcesURL = Bundle.main.resourceURL,
-           let resources = try? fm.contentsOfDirectory(at: resourcesURL, includingPropertiesForKeys: nil) {
-            let loadedBundleNames = Set(loadedPlugins.map { $0.bundle.bundleURL.deletingPathExtension().lastPathComponent })
-            let resourceBundles = resources.filter {
-                $0.pathExtension == "bundle" && !loadedBundleNames.contains($0.deletingPathExtension().lastPathComponent)
-            }
-            if !resourceBundles.isEmpty {
-                logger.info("Found \(resourceBundles.count) plugin bundle(s) in Resources")
-                for bundleURL in resourceBundles {
+        // 3. Load dynamic plugins from PlugIns/ directory
+        if let builtInURL = Bundle.main.builtInPlugInsURL,
+           let builtIn = try? fm.contentsOfDirectory(at: builtInURL, includingPropertiesForKeys: nil) {
+            let builtInBundles = builtIn.filter { $0.pathExtension == "bundle" }
+            if !builtInBundles.isEmpty {
+                logger.info("Found \(builtInBundles.count) PlugIns/ bundle(s)")
+                for bundleURL in builtInBundles {
                     loadPlugin(at: bundleURL)
                 }
             }
         }
+    }
+
+    /// Load plugins whose Swift code is compiled directly into the main app binary.
+    /// Scans for manifest.json files in the app's Resources to discover compiled-in plugins.
+    private func loadCompiledPlugins() {
+        guard let resourceURL = Bundle.main.resourceURL else { return }
+
+        let pluginNames = ["WhisperKitPlugin", "DeepgramPlugin", "WebhookPlugin",
+                          "ElevenLabsPlugin", "LiveTranscriptPlugin",
+                          "GLMPlugin", "KimiPlugin", "MiniMaxPlugin", "QwenLLMPlugin"]
+
+        for name in pluginNames {
+            // Compiled-in plugins have manifest_<PluginName>.json in Resources/
+            let manifestURL = resourceURL.appendingPathComponent("manifest_\(name).json")
+            guard let data = try? Data(contentsOf: manifestURL),
+                  let manifest = try? JSONDecoder().decode(PluginManifest.self, from: data) else {
+                continue
+            }
+            loadCompiledPlugin(manifest: manifest, manifestURL: manifestURL)
+        }
+    }
+
+    private func loadCompiledPlugin(manifest: PluginManifest, manifestURL: URL) {
+        guard !loadedPlugins.contains(where: { $0.manifest.id == manifest.id }) else {
+            logger.warning("Plugin \(manifest.id) already loaded, skipping")
+            return
+        }
+
+        // Try bare @objc name first (plugins use @objc(ClassName)), then module-prefixed
+        let pluginClass = NSClassFromString(manifest.principalClass) as? DavyWhisperPlugin.Type
+            ?? NSClassFromString("DavyWhisper.\(manifest.principalClass)") as? DavyWhisperPlugin.Type
+
+        guard let pluginClass else {
+            logger.error("Failed to find class \(manifest.principalClass) for compiled plugin \(manifest.name)")
+            return
+        }
+
+        let instance = pluginClass.init()
+
+        // Auto-enable compiled-in plugins
+        let enabledKey = "plugin.\(manifest.id).enabled"
+        let isEnabled = (UserDefaults.standard.object(forKey: enabledKey) as? Bool) ?? true
+        if UserDefaults.standard.object(forKey: enabledKey) == nil {
+            UserDefaults.standard.set(true, forKey: enabledKey)
+        }
+
+        let loaded = LoadedPlugin(
+            manifest: manifest,
+            instance: instance,
+            bundle: Bundle.main,
+            sourceURL: manifestURL,
+            isEnabled: isEnabled
+        )
+        loadedPlugins.append(loaded)
+
+        if isEnabled {
+            activatePlugin(loaded)
+        }
+
+        logger.info("Loaded compiled plugin: \(manifest.name) v\(manifest.version)")
     }
 
     func loadPlugin(at url: URL) {
@@ -133,19 +182,6 @@ final class PluginManager: ObservableObject {
               let manifest = try? JSONDecoder().decode(PluginManifest.self, from: data) else {
             logger.error("Failed to read manifest from \(url.lastPathComponent)")
             return
-        }
-
-        if let minOS = manifest.minOSVersion {
-            let parts = minOS.split(separator: ".").compactMap { Int($0) }
-            let required = OperatingSystemVersion(
-                majorVersion: parts.count > 0 ? parts[0] : 0,
-                minorVersion: parts.count > 1 ? parts[1] : 0,
-                patchVersion: parts.count > 2 ? parts[2] : 0
-            )
-            if !ProcessInfo.processInfo.isOperatingSystemAtLeast(required) {
-                logger.info("Plugin \(manifest.name) requires macOS \(minOS), skipping")
-                return
-            }
         }
 
         guard !loadedPlugins.contains(where: { $0.manifest.id == manifest.id }) else {
@@ -177,8 +213,10 @@ final class PluginManager: ObservableObject {
         if let stored = UserDefaults.standard.object(forKey: enabledKey) as? Bool {
             isEnabled = stored
         } else {
-            // Auto-enable bundled plugins on first encounter
-            let isBundled = Bundle.main.builtInPlugInsURL.map { url.path.hasPrefix($0.path) } ?? false
+            let builtInPrefix = Bundle.main.builtInPlugInsURL?.path
+            let resourcePrefix = Bundle.main.resourceURL?.path
+            let isBundled = (builtInPrefix.map { url.path.hasPrefix($0) } ?? false)
+                || (resourcePrefix.map { url.path.hasPrefix($0) } ?? false)
             isEnabled = isBundled
             if isBundled {
                 UserDefaults.standard.set(true, forKey: enabledKey)
@@ -216,7 +254,6 @@ final class PluginManager: ObservableObject {
         if enabled {
             activatePlugin(loadedPlugins[index])
         } else {
-            // If the deactivated plugin was selected as default engine, fall back to first available
             if let engine = loadedPlugins[index].instance as? TranscriptionEnginePlugin {
                 let selectedProvider = UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedEngine)
                 if selectedProvider == engine.providerId {
@@ -248,7 +285,10 @@ final class PluginManager: ObservableObject {
         if plugin.isEnabled {
             plugin.instance.deactivate()
         }
-        plugin.bundle.unload()
+        // Only unload bundle for dynamic plugins (not compiled-in)
+        if plugin.bundle != Bundle.main {
+            plugin.bundle.unload()
+        }
         loadedPlugins.remove(at: index)
         logger.info("Unloaded plugin: \(pluginId)")
     }
