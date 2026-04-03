@@ -2,8 +2,8 @@
 
 > Generated: 2026-04-03
 > Author: Plan Agent + P8 Engineer Review
-> Status: PARTIALLY IMPLEMENTED — Phase 1 complete (Protocols, Mocks, TestServiceContainer)
-> Version: 1.0 → 1.1 (Phase 1 implementation notes)
+> Status: PARTIALLY IMPLEMENTED — Phase 1–2 complete (Protocols, Mocks, TestServiceContainer + Service/Model unit tests)
+> Version: 1.0 → 1.1 → 1.2 (Phase 2 implementation notes)
 
 ---
 
@@ -1067,3 +1067,47 @@ Tier A Mock 类（`MockTextInsertionService`、`MockHotkeyService` 等）作为*
 
 *方案版本 1.1 — 2026-04-03*
 *Owner: P8 Engineer Agent + Plan Agent*
+
+---
+
+## 实现备注 v1.2（Phase 2 完成后的关键架构决策）
+
+### Decision 5：PostProcessingPipelineTests — 服务 API 实际签名
+
+**实践发现**：通过 grep 源码确认：
+- `SnippetService.addSnippet(trigger: String, replacement: String, caseSensitive:)` — **不接受 Snippet 对象**，直接传参
+- `DictionaryService.addEntry(type: DictionaryEntryType, original: String, replacement:, caseSensitive:)` — **不接受 DictionaryEntry 对象**，直接传参
+- `DictionaryEntry.init(type: DictionaryEntryType, original: String, ...)` — 使用 `type` 和 `original`（不是 `term`/`correction`）
+- `Snippet.init(trigger: String, replacement: String, ...)` — 使用 `replacement`（不是 `expansion`）
+
+**结论**：禁用条目无法通过公开 API 创建（`addSnippet`/`addEntry` 无 `isEnabled` 参数，所有条目默认 `isEnabled = true`）。禁用条目过滤在 `applySnippets` / `corrections` getter 中进行，无法从外部测试验证。
+
+### Decision 6：MemoryServiceTests — UserDefaults 跨测试污染
+
+**实践发现**：`MemoryService.minimumTextLength` 是 `@Published` property，每次赋值直接写入 `UserDefaults.standard`。不同测试修改后不会自动还原。
+
+**实际方案**：`setUp` 保存原始 UserDefaults 键值到 `originalUserDefaults: [String: Any?]`；`tearDown` 逐一恢复。对于 `testDefaultValues_setCorrectDefaults`，先 `removeObject(forKey:)` 确保干净环境，然后重建 `MemoryService` 实例读取默认值。
+
+### Decision 7：PromptActionService — @MainActor 隔离 + toggleAction
+
+**实践发现**：所有 PromptActionService 方法都是 `@MainActor` isolated（类本身是 `@MainActor`）。`toggleEnabled` 方法不存在，实际方法是 `toggleAction(_ action: PromptAction)`。`addPreset` 接受 `PromptAction` 对象而非参数列表。
+
+### Decision 8：TranscriptionRecord — durationSeconds 是必填参数
+
+**实践发现**：`TranscriptionRecord.init` 有显式定义，其中 `durationSeconds: Double` 是**非可选必填参数**（不是 `Double?`）。`pipelineSteps` 是 `String?` 类型（不是 `String`）。
+
+### Decision 9：TranscriptionCompletedPayload — init 参数顺序
+
+**实践发现**：`TranscriptionCompletedPayload.init` 参数顺序：`timestamp` 第一个（带默认值），然后 `rawText`、`finalText`、`language`、`engineUsed`、`modelUsed`、`durationSeconds`、`appName`、`bundleIdentifier`、`url`、`profileName`。
+
+### Phase 2 已完成文件
+
+| 文件 | 类型 | 说明 |
+|------|------|------|
+| `DavyWhisperTests/Services/PostProcessingPipelineTests.swift` | 新增 | 16 tests：snippet/dictionary/LLM 管道、优先级、链式 |
+| `DavyWhisperTests/Services/MemoryServiceTests.swift` | 新增 | 11 tests：生命周期、默认值、UserDefaults 隔离 |
+| `DavyWhisperTests/Services/PromptActionServiceTests.swift` | 新增 | 8 tests：CRUD、presets、enable/disable |
+| `DavyWhisperTests/Models/TranscriptionRecordTests.swift` | 新增 | 12 tests：pipelineStepList JSON 往返、preview、appDomain |
+| `DavyWhisperTests/Models/UnifiedHotkeyTests.swift` | 新增 | 15 tests：Codable、Kind、Equatable、HotkeySlotType |
+
+*方案版本 1.2 — 2026-04-03*
