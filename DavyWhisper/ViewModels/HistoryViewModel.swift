@@ -323,7 +323,7 @@ final class HistoryViewModel: ObservableObject {
 
     // MARK: - Static Helpers
 
-    private static func applyFilters(
+    static func applyFilters(
         records: [TranscriptionRecord],
         query: String,
         appFilter: String?,

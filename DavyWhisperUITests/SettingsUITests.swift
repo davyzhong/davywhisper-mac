@@ -7,6 +7,8 @@ final class SettingsUITests: UITestCase {
 
     override func setUp() {
         super.setUp()
+        // Guard: only launch if display is available
+        guard Self.hasDisplaySession else { return }
         launchApp(args: ["--test-mode"])
         openSettingsWindow()
     }
@@ -41,6 +43,7 @@ final class SettingsUITests: UITestCase {
     // MARK: - Tab Navigation
 
     func testTabNavigation_generalTab_isSelectable() {
+        guard Self.hasDisplaySession else { return }
         let app = XCUIApplication()
         let tab = app.tabGroups.buttons[AccessibilityIdentifiers.Settings.tabGeneral]
         if tab.waitForExistence(timeout: 2.0) {
@@ -50,6 +53,7 @@ final class SettingsUITests: UITestCase {
     }
 
     func testTabNavigation_allNineTabs_exist() {
+        guard Self.hasDisplaySession else { return }
         let app = XCUIApplication()
         let tabs = [
             AccessibilityIdentifiers.Settings.tabGeneral,
@@ -73,6 +77,7 @@ final class SettingsUITests: UITestCase {
     // MARK: - General Settings
 
     func testGeneralSettings_soundFeedbackToggle_exists() {
+        guard Self.hasDisplaySession else { return }
         navigateToSettingsTab(identifier: AccessibilityIdentifiers.Settings.tabGeneral)
         let app = XCUIApplication()
         let toggle = app.switches[AccessibilityIdentifiers.Settings.soundFeedbackToggle]
@@ -82,6 +87,7 @@ final class SettingsUITests: UITestCase {
     }
 
     func testGeneralSettings_languagePicker_exists() {
+        guard Self.hasDisplaySession else { return }
         navigateToSettingsTab(identifier: AccessibilityIdentifiers.Settings.tabGeneral)
         let app = XCUIApplication()
         let picker = app.comboBoxes[AccessibilityIdentifiers.Settings.languagePicker]
@@ -93,6 +99,7 @@ final class SettingsUITests: UITestCase {
     // MARK: - Recording Settings
 
     func testRecordingSettings_microphonePicker_exists() {
+        guard Self.hasDisplaySession else { return }
         navigateToSettingsTab(identifier: AccessibilityIdentifiers.Settings.tabRecording)
         let app = XCUIApplication()
         let picker = app.popUpButtons[AccessibilityIdentifiers.Settings.microphonePicker]
@@ -102,6 +109,7 @@ final class SettingsUITests: UITestCase {
     }
 
     func testRecordingSettings_hybridHotkeyField_exists() {
+        guard Self.hasDisplaySession else { return }
         navigateToSettingsTab(identifier: AccessibilityIdentifiers.Settings.tabRecording)
         let app = XCUIApplication()
         let field = app.textFields[AccessibilityIdentifiers.Settings.hotkeyHybrid]
@@ -113,6 +121,7 @@ final class SettingsUITests: UITestCase {
     // MARK: - History Settings
 
     func testHistorySettings_list_exists() {
+        guard Self.hasDisplaySession else { return }
         navigateToSettingsTab(identifier: AccessibilityIdentifiers.Settings.tabHistory)
         let app = XCUIApplication()
         let list = app.tables[AccessibilityIdentifiers.Settings.historyList]
@@ -124,6 +133,7 @@ final class SettingsUITests: UITestCase {
     // MARK: - Advanced Settings
 
     func testAdvancedSettings_apiServerToggle_exists() {
+        guard Self.hasDisplaySession else { return }
         navigateToSettingsTab(identifier: AccessibilityIdentifiers.Settings.tabAdvanced)
         let app = XCUIApplication()
         let toggle = app.switches[AccessibilityIdentifiers.Settings.apiServerToggle]

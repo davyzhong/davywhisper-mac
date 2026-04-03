@@ -8,7 +8,7 @@ final class AppLifecycleUITests: UITestCase {
 
     override func setUp() {
         super.setUp()
-        // Launch with test-mode argument to suppress first-run UI
+        guard Self.hasDisplaySession else { return }
         launchApp(args: ["--test-mode"])
     }
 
@@ -19,21 +19,22 @@ final class AppLifecycleUITests: UITestCase {
 
     // MARK: - App Launch
 
-    func testApp_launchesWithoutCrash() {
+    func testApp_launchesWithoutCrash() throws {
+        try requireDisplay()
         let app = XCUIApplication()
-        // App should be running
         XCTAssertTrue(app.exists)
     }
 
-    func testApp_launchArguments_areParsed() {
+    func testApp_launchArguments_areParsed() throws {
+        try requireDisplay()
         let app = XCUIApplication()
-        // Verify launch arguments are accessible
         XCTAssertTrue(app.launchArguments.contains("--test-mode"))
     }
 
     // MARK: - Settings Window
 
-    func testSettingsWindow_opensFromMenuBar() {
+    func testSettingsWindow_opensFromMenuBar() throws {
+        try requireDisplay()
         let app = XCUIApplication()
 
         // Menu bar app — open settings via menu bar icon
@@ -56,7 +57,8 @@ final class AppLifecycleUITests: UITestCase {
 
     // MARK: - Quit
 
-    func testQuit_terminatesApp() {
+    func testQuit_terminatesApp() throws {
+        try requireDisplay()
         let app = XCUIApplication()
         // Open menu bar menu
         let menuBarButton = app.statusItems.firstMatch

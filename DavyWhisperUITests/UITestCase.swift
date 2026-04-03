@@ -6,9 +6,26 @@ import AppKit
 @MainActor
 class UITestCase: XCTestCase {
 
+    /// Whether a display session is available (true in normal GUI, false in CI/headless).
+    /// MenuBarExtra apps require a running display session to initialize.
+    /// Whether a display session is available (true in normal GUI, false in CI/headless).
+    /// MenuBarExtra apps require a running display session to initialize.
+    nonisolated(unsafe) static var hasDisplaySession: Bool {
+        guard let screen = NSScreen.screens.first else { return false }
+        return screen.frame.width > 0 && screen.frame.height > 0
+    }
+
+    /// Checks if the test should skip due to missing display and throws XCTSkip.
+    nonisolated(unsafe) func requireDisplay() throws {
+        if !Self.hasDisplaySession {
+            throw XCTSkip("Skipped: no display session (headless environment)")
+        }
+    }
+
     // MARK: - App Lifecycle
 
     /// Launches the DavyWhisper app with optional launch arguments.
+    /// Note: Call requireDisplay() in each test before calling this.
     func launchApp(args: [String] = []) {
         let app = XCUIApplication()
         app.launchArguments = args
