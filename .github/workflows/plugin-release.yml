@@ -89,8 +89,8 @@ jobs:
       - name: Resolve Swift packages
         run: |
           xcodebuild -resolvePackageDependencies \
-            -project TypeWhisper.xcodeproj \
-            -scheme TypeWhisper
+            -project DavyWhisper.xcodeproj \
+            -scheme DavyWhisper
 
       - name: Patch manifest version
         run: |
@@ -124,7 +124,7 @@ jobs:
             # and add @loader_path/../Frameworks to rpath so they are found on macOS 15
             EXTRA_SETTINGS="ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES=YES LD_RUNPATH_SEARCH_PATHS=@loader_path/../Frameworks"
           fi
-          xcodebuild -project TypeWhisper.xcodeproj \
+          xcodebuild -project DavyWhisper.xcodeproj \
             -target "$TARGET" \
             -configuration Release \
             SYMROOT="$(pwd)/build" \
@@ -245,7 +245,7 @@ jobs:
                       "name": manifest["name"],
                       "version": version,
                       "minHostVersion": manifest.get("minHostVersion", "0.9.0"),
-                      "author": manifest.get("author", "TypeWhisper"),
+                      "author": manifest.get("author", "DavyWhisper"),
                       "description": manifest.get("description", ""),
                       "descriptions": manifest.get("descriptions", {}),
                       "category": manifest.get("category", "utility"),

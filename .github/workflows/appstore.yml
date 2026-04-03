@@ -9,9 +9,9 @@ on:
         type: string
 
 env:
-  SCHEME: "TypeWhisper AppStore"
-  PROJECT: TypeWhisper.xcodeproj
-  BUNDLE_ID: com.typewhisper.typewhisper-mac
+  SCHEME: "DavyWhisper AppStore"
+  PROJECT: DavyWhisper.xcodeproj
+  BUNDLE_ID: com.davywhisper.mac
   APPLE_APP_ID: "6759301174"
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
           MACOS_SIGNING_P12: ${{ secrets.MACOS_SIGNING_P12 }}
           MACOS_SIGNING_PASSWORD: ${{ secrets.MACOS_SIGNING_PASSWORD }}
         run: |
-          KEYCHAIN_PATH="$RUNNER_TEMP/typewhisper-signing.keychain-db"
+          KEYCHAIN_PATH="$RUNNER_TEMP/davywhisper-signing.keychain-db"
           KEYCHAIN_PASSWORD="$(uuidgen)"
 
           echo "$MACOS_SIGNING_P12" | base64 --decode > /tmp/cert.p12
@@ -65,7 +65,7 @@ jobs:
           echo "Installed profile '$PROFILE_NAME' (UUID: $PROFILE_UUID)"
 
           # Patch pbxproj to match the actual profile name from the secret
-          sed -i '' "s|match AppStore com.typewhisper.typewhisper-mac macos|${PROFILE_NAME}|g" $PROJECT/project.pbxproj
+          sed -i '' "s|match AppStore com.davywhisper.mac macos|${PROFILE_NAME}|g" $PROJECT/project.pbxproj
           echo "Patched pbxproj with profile name: $PROFILE_NAME"
 
       - name: Archive App
@@ -77,7 +77,7 @@ jobs:
             -project $PROJECT \
             -scheme "$SCHEME" \
             -configuration AppStoreRelease \
-            -archivePath build/TypeWhisper.xcarchive \
+            -archivePath build/DavyWhisper.xcarchive \
             -destination 'generic/platform=macOS' \
             DEVELOPMENT_TEAM=2D8ALY3LCL \
             MARKETING_VERSION="$VERSION" \
@@ -85,7 +85,7 @@ jobs:
 
       - name: Build Package
         run: |
-          APP_PATH="build/TypeWhisper.xcarchive/Products/Applications/TypeWhisper.app"
+          APP_PATH="build/DavyWhisper.xcarchive/Products/Applications/DavyWhisper.app"
 
           # Remove empty Frameworks directory if present
           rmdir "$APP_PATH/Contents/Frameworks" 2>/dev/null || true
@@ -93,7 +93,7 @@ jobs:
           productbuild \
             --component "$APP_PATH" /Applications \
             --sign "3rd Party Mac Developer Installer" \
-            build/TypeWhisper.pkg
+            build/DavyWhisper.pkg
 
       - name: Upload to App Store Connect
         env:
@@ -107,7 +107,7 @@ jobs:
           printf '%s' "$APPLE_API_KEY_P8" > ~/.private_keys/AuthKey_${APPLE_API_KEY_ID}.p8
           chmod 600 ~/.private_keys/AuthKey_${APPLE_API_KEY_ID}.p8
 
-          xcrun altool --upload-package build/TypeWhisper.pkg \
+          xcrun altool --upload-package build/DavyWhisper.pkg \
             -t macos \
             --apple-id "$APPLE_APP_ID" \
             --bundle-id "$BUNDLE_ID" \

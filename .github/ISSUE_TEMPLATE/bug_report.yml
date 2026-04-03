@@ -15,7 +15,7 @@ body:
       label: Steps to Reproduce
       description: How can we reproduce this?
       placeholder: |
-        1. Open TypeWhisper
+        1. Open DavyWhisper
         2. Go to ...
         3. Click on ...
         4. See error
@@ -38,7 +38,7 @@ body:
   - type: input
     id: app-version
     attributes:
-      label: TypeWhisper Version
+      label: DavyWhisper Version
       placeholder: "e.g. 0.10.0"
     validations:
       required: true
@@ -46,5 +46,5 @@ body:
     id: logs
     attributes:
       label: Logs
-      description: Paste any relevant log output (Console.app, filter by "TypeWhisper").
+      description: Paste any relevant log output (Console.app, filter by "DavyWhisper").
       render: shell
