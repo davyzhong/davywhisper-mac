@@ -7,6 +7,7 @@
     "author": "DavyWhisper",
     "description": "Show a floating live transcript window during recording.",
     "descriptions": {
+        "zh-Hans": "录音时显示悬浮实时转写窗口。",
         "de": "Zeigt ein schwebendes Live-Transkript-Fenster waehrend der Aufnahme."
     },
     "category": "utility",

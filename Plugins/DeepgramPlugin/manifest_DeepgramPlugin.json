@@ -7,6 +7,7 @@
     "author": "DavyWhisper",
     "description": "Cloud transcription via Deepgram API with real-time WebSocket streaming. Requires API key.",
     "descriptions": {
+        "zh-Hans": "通过 Deepgram API 实现云端转写，支持实时 WebSocket 流式识别。需要 API 密钥。",
         "de": "Cloud-Transkription ueber die Deepgram-API mit Echtzeit-WebSocket-Streaming. Erfordert API-Key."
     },
     "category": "transcription",

@@ -6,7 +6,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "API-Schl\u00FCssel"
+            "value" : "API 密钥"
           }
         }
       }
@@ -16,7 +16,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "API-Schl\u00FCssel werden sicher im Schl\u00FCsselbund gespeichert"
+            "value" : "API 密钥安全存储在钥匙串中"
           }
         }
       }
@@ -26,7 +26,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erweitert"
+            "value" : "高级"
           }
         }
       }
@@ -36,7 +36,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eigener Auth-Header"
+            "value" : "自定义认证头"
           }
         }
       }
@@ -46,7 +46,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eigene Basis-URL"
+            "value" : "自定义 Base URL"
           }
         }
       }
@@ -56,7 +56,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "F\u00FCr Cloudflare AI Gateway oder eigene Proxies"
+            "value" : "用于 Cloudflare AI Gateway 或自定义代理"
           }
         }
       }
@@ -66,7 +66,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ung\u00FCltiger API-Schl\u00FCssel"
+            "value" : "无效的 API 密钥"
           }
         }
       }
@@ -76,7 +76,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modell"
+            "value" : "模型"
           }
         }
       }
@@ -86,7 +86,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Entfernen"
+            "value" : "移除"
           }
         }
       }
@@ -96,7 +96,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speichern"
+            "value" : "保存"
           }
         }
       }
@@ -106,7 +106,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "G\u00FCltiger API-Schl\u00FCssel"
+            "value" : "有效的 API 密钥"
           }
         }
       }
@@ -116,7 +116,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wird \u00FCberpr\u00FCft..."
+            "value" : "验证中..."
           }
         }
       }

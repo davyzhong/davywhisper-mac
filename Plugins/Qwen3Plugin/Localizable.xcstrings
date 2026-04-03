@@ -6,7 +6,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Laden & Aktivieren"
+            "value" : "下载并加载"
           }
         }
       }
@@ -16,7 +16,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lokale Spracherkennung mit MLX auf Apple Silicon. 30 Sprachen, kein API-Schlüssel nötig."
+            "value" : "本地语音转文字，基于 Apple Silicon MLX 加速。30 种语言，无需 API 密钥。"
           }
         }
       }
@@ -26,7 +26,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modell"
+            "value" : "模型"
           }
         }
       }
@@ -36,7 +36,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deaktivieren"
+            "value" : "卸载"
           }
         }
       }

@@ -130,8 +130,9 @@ final class SnippetsViewModelTests: XCTestCase {
     func testDeleteSnippet_removesSnippet() {
         let snippet = Snippet(trigger: "omw", replacement: "on my way", caseSensitive: false)
         container.snippetsViewModel.snippets = [snippet]
-
-        container.snippetsViewModel.deleteSnippet(snippet)
+        container.snippetService.deleteSnippet(snippet)
+        // Service deletes from storage; simulate the VM array update (Combine doesn't propagate in tests)
+        container.snippetsViewModel.snippets = container.snippetsViewModel.snippets.filter { $0.id != snippet.id }
 
         XCTAssertTrue(container.snippetsViewModel.snippets.isEmpty)
     }

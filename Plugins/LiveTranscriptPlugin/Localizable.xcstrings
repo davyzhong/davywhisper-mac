@@ -6,7 +6,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Automatisch bei Aufnahme öffnen"
+            "value" : "录音时自动打开"
           }
         }
       }
@@ -16,7 +16,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neuer Text"
+            "value" : "新文本"
           }
         }
       }
@@ -26,7 +26,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schriftgrösse"
+            "value" : "字体大小"
           }
         }
       }
@@ -36,7 +36,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tastenkombination drücken..."
+            "value" : "请按下快捷键..."
           }
         }
       }
@@ -46,7 +46,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aufnehmen"
+            "value" : "录音快捷键"
           }
         }
       }
@@ -56,7 +56,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Transkript-Fenster mit einem Tastenkürzel ein- oder ausblenden."
+            "value" : "使用快捷键显示或隐藏转写窗口。"
           }
         }
       }
@@ -66,7 +66,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Transkript-Fenster automatisch bei Aufnahmestart anzeigen."
+            "value" : "录音开始时自动显示转写窗口。"
           }
         }
       }
@@ -76,7 +76,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tastenkürzel"
+            "value" : "切换快捷键"
           }
         }
       }

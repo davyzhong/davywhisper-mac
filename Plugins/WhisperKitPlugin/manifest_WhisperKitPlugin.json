@@ -7,6 +7,7 @@
     "author": "DavyWhisper",
     "description": "Local speech-to-text powered by WhisperKit. 7 model sizes, 99 languages, streaming support.",
     "descriptions": {
+        "zh-Hans": "本地语音转文字，由 WhisperKit 强力驱动。7 种模型规格，99 种语言，支持流式识别。",
         "de": "Lokale Spracherkennung mit WhisperKit. 7 Modellgroessen, 99 Sprachen, Streaming-Unterstuetzung."
     },
     "category": "transcription",

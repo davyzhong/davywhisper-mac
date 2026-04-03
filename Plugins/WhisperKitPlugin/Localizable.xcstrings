@@ -6,7 +6,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Laden & Aktivieren"
+            "value" : "下载并加载"
           }
         }
       }
@@ -16,7 +16,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modell wird geladen ..."
+            "value" : "正在加载模型..."
           }
         }
       }
@@ -26,7 +26,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Laden ..."
+            "value" : "加载中..."
           }
         }
       }
@@ -36,7 +36,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lokale Sprache-zu-Text-Erkennung mit OpenAI Whisper via CoreML. 99+ Sprachen, Streaming, Übersetzung ins Englische."
+            "value" : "使用 CoreML 驱动的 OpenAI Whisper 进行本地语音转文字。99+ 语言，支持流式识别和英文翻译。"
           }
         }
       }
@@ -46,7 +46,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modelle"
+            "value" : "模型"
           }
         }
       }
@@ -56,7 +56,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Optimierung für Neural Engine ..."
+            "value" : "正在为神经网络引擎优化..."
           }
         }
       }
@@ -66,7 +66,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Empfohlen"
+            "value" : "推荐"
           }
         }
       }
@@ -76,7 +76,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deaktivieren"
+            "value" : "卸载"
           }
         }
       }
