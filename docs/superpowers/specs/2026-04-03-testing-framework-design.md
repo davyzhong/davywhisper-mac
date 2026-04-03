@@ -2,8 +2,8 @@
 
 > Generated: 2026-04-03
 > Author: Plan Agent + P8 Engineer Review
-> Status: PARTIALLY IMPLEMENTED — Phase 1–8 complete
-> Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 → 1.5 (Phase 5 XCUITest + Swift 6 concurrency fixes)
+> Status: PARTIALLY IMPLEMENTED — Phase 1–9 complete
+> Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 (Phase 9 AccessibilityIdentifiers)
 
 ---
 
@@ -1414,4 +1414,30 @@ if isinstance(data, list) and data and isinstance(data[0], dict) and "files" in 
 
 **Phase 8 测试结果**：**248 tests, 0 failures**（新增 15 个）
 
-*方案版本 1.8 — 2026-04-03*
+### Phase 9: AccessibilityIdentifiers 集成（2026-04-03）
+
+**目标**：所有 SwiftUI 可交互元素添加 `.accessibilityIdentifier()` modifier，使 XCUITest 能准确定位 UI 元素。
+
+**已知问题**：UITests 与主 app 的静态常量共享存在链接器边界——主 app 的 `static let` 在 UITests bundle 中不可见（链接时 undefined symbol）。解决方案：视图使用 raw string literals，UITests 保留 `AccessibilityIdentifiers.swift` 供内部参考。
+
+**Phase 9 完成文件**
+
+| 文件 | 变更 | 说明 |
+|------|------|------|
+| `DavyWhisper/Views/SettingsView.swift` | 修改 | 窗口 + 9 个 Tab navigation items 添加 raw string identifiers |
+| `DavyWhisper/Views/GeneralSettingsView.swift` | 修改 | language/translation/launchAtLogin/menuBarIcon/recorderTab/indicatorVisibility/indicatorDisplay/leftContent/rightContent/indicatorStyle pickers |
+| `DavyWhisper/Views/AdvancedSettingsView.swift` | 修改 | memoryToggle/extractionProvider/autoUnloadModel/hfMirror/saveAudio/apiServer/clearMemories |
+| `DavyWhisper/Views/ProfilesSettingsView.swift` | 修改 | addButton/profileList/nameField/inputLanguage/translationLanguage/engine/prompt/inlineCommands/memory/outputFormat/saveButton |
+| `DavyWhisper/Views/HotkeySettingsView.swift` | 修改 | hybrid/PTT/toggle/promptPalette hotkey recorder views |
+| `DavyWhisper/Views/PluginSettingsView.swift` | 修改 | pluginList segmented picker, refresh/install section |
+| `DavyWhisper/Views/SetupWizardView.swift` | 修改 | welcomeContinue/permissionMic/permissionAccessibility/finishDone |
+| `DavyWhisperUITests/AccessibilityIdentifiers.swift` | 增强 | 新增 9 个 General/Advanced/Profiles/Wizard identifiers |
+
+**Phase 9 测试结果**：**248 tests, 0 failures** | Build: ✅ clean
+
+**下一步（Phase 10 候选）**：
+- ViewModel 单元测试扩展（`SettingsViewModel`, `ProfilesViewModel`, `DictationViewModel` mock 化）
+- HTTP Server 集成测试用例扩展
+- XCUITest 实际 UI 交互测试编写
+
+*方案版本 1.9 — 2026-04-03*
