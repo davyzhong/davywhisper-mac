@@ -2,8 +2,8 @@
 
 > Generated: 2026-04-03
 > Author: Plan Agent + P8 Engineer Review
-> Status: PARTIALLY IMPLEMENTED — Phase 1–9 complete
-> Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 (Phase 9 AccessibilityIdentifiers)
+> Status: PARTIALLY IMPLEMENTED — Phase 1–10 complete
+> Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 (Phase 9) → 1.7 (Phase 10)
 
 ---
 
@@ -1435,9 +1435,24 @@ if isinstance(data, list) and data and isinstance(data[0], dict) and "files" in 
 
 **Phase 9 测试结果**：**248 tests, 0 failures** | Build: ✅ clean
 
-**下一步（Phase 10 候选）**：
-- ViewModel 单元测试扩展（`SettingsViewModel`, `ProfilesViewModel`, `DictationViewModel` mock 化）
-- HTTP Server 集成测试用例扩展
-- XCUITest 实际 UI 交互测试编写
+### Phase 10: ViewModel 单元测试扩展（2026-04-03）
 
-*方案版本 1.9 — 2026-04-03*
+**目标**：为 Phase 9 后仍无测试覆盖的 ViewModels 编写完整单元测试。
+
+**已知问题与解决方案**：
+- `DictionaryViewModel` 使用 `@Published` + SwiftData `context.fetch()` 批量赋值 —— 测试环境中 Combine 绑定不触发。**解决方案**：直接设置 `vm.entries = [...]` 绕开绑定。
+- `PromptAction` SwiftData init 参数顺序：`isEnabled` 必须在 `providerType` 之前。
+- `Bool?` 可选类型：`entries.first?.isEnabled ?? false`（不是 `?? true`）。
+- `saveEditing()` 验证失败时设置 `error` 但不调用 `cancelEditing()` —— `isEditing` 保持 `true`。
+
+**Phase 10 完成文件**
+
+| 文件 | 变更 | 说明 |
+|------|------|------|
+| `DavyWhisperTests/ViewModels/DictionaryViewModelTests.swift` | 新增 | 14 tests：init、filteredEntries 四种 filter、startCreating/startEditing/cancelEditing、saveEditing 验证、error clearing、counts |
+| `DavyWhisperTests/ViewModels/PromptActionsViewModelTests.swift` | 新增 | 9 tests：init、startCreating/startEditing/cancelEditing、saveEditing 验证、presets、counts、navigateToIntegrations |
+| `DavyWhisperTests/ViewModels/SnippetsViewModelTests.swift` | 新增 | 11 tests：init、startCreating/startEditing/cancelEditing、saveEditing CRUD、deleteSnippet、toggleSnippet、counts、error clearing |
+
+**Phase 10 测试结果**：**272 tests, 0 failures**（新增 24 个）
+
+*方案版本 1.7 — 2026-04-03*
