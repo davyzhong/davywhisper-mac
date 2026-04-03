@@ -2,8 +2,8 @@
 
 > Generated: 2026-04-03
 > Author: Plan Agent + P8 Engineer Review
-> Status: PARTIALLY IMPLEMENTED — Phase 1–3 complete
-> Version: 1.0 → 1.1 → 1.2 → 1.3 (Phase 3 ViewModel tests)
+> Status: PARTIALLY IMPLEMENTED — Phase 1–4 complete
+> Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 (Phase 4 integration tests)
 
 ---
 
@@ -1142,3 +1142,31 @@ Tier A Mock 类（`MockTextInsertionService`、`MockHotkeyService` 等）作为*
 | `DavyWhisperTests/ViewModels/ProfilesViewModelTests.swift` | 新增 | 1 test：初始状态 |
 
 *方案版本 1.3 — 2026-04-03*
+
+---
+
+## 实现备注 v1.4（Phase 4 — Integration Tests）
+
+### Decision 12：HTTP API 测试不启动网络服务器
+
+**实践发现**：`HTTPServer` 启动真实 TCP 服务器（`Network.framework` NWListener），不适合单元测试。`APIRouter` 有 `route(_ request: HTTPRequest) async -> HTTPResponse` 方法，可直接测试路由逻辑，无需启动服务器。
+
+**实际方案**：测试中直接创建 `APIRouter` 实例，用 `APIHandlers.register(on:)` 注册路由，调用 `router.route(...)` 测试，无需启动 `HTTPServer`。
+
+### Decision 13：EventBus 测试用 `subscribe`/`unsubscribe`/`emit` 三角验证
+
+**实际方案**：直接测试 EventBus 的订阅/退订/事件发布三元组，验证 MemoryService 的生命周期集成。
+
+### Decision 14：SwiftData 跨 Service 实例持久化测试
+
+**实践发现**：每个测试使用 `TestSupport.makeTemporaryDirectory()` 创建独立目录，确保测试之间完全隔离。跨实例持久化通过在同一目录创建新服务实例验证。
+
+### Phase 4 已完成文件
+
+| 文件 | 类型 | 说明 |
+|------|------|------|
+| `DavyWhisperTests/Integration/SwiftDataPersistenceTests.swift` | 新增 | 7 tests：History/Profile/Dictionary/Snippet/PromptAction 跨服务实例持久化 |
+| `DavyWhisperTests/Integration/HTTPAPIRoundTripTests.swift` | 新增 | 10 tests：/v1/status, /v1/history, /v1/profiles, CORS, 404 |
+| `DavyWhisperTests/Integration/EventBusIntegrationTests.swift` | 新增 | 7 tests：subscribe/unsubscribe、事件投递、MemoryService 生命周期 |
+
+*方案版本 1.4 — 2026-04-03*
