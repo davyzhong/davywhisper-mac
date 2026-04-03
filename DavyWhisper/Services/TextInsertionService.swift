@@ -592,3 +592,7 @@ enum InsertionResult {
     }
 
 }
+
+// MARK: - Protocol Conformance
+
+extension TextInsertionService: TextInsertionProtocol {}

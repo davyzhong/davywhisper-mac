@@ -144,9 +144,7 @@ final class BrandAndConfigTests: XCTestCase {
             "Plugins/WhisperKitPlugin",
             "Plugins/DeepgramPlugin",
             "Plugins/ElevenLabsPlugin",
-            "Plugins/GLMPlugin",
-            "Plugins/KimiPlugin",
-            "Plugins/MiniMaxPlugin",
+            "Plugins/OpenAICompatiblePlugin",
             "Plugins/ParaformerPlugin",
         ]
         for source in expectedPluginSources {
@@ -185,26 +183,23 @@ final class BrandAndConfigTests: XCTestCase {
         }
     }
 
-    // MARK: - New LLM plugins exist (spec 3.1-3.4)
+    // MARK: - OpenAICompatiblePlugin unified (spec 3.x — Phase 3 consolidation)
 
     func testNewLLMPluginsExist() {
         let projectRoot = TestSupport.repoRoot
-        let newPlugins = ["GLMPlugin", "KimiPlugin", "MiniMaxPlugin", "QwenLLMPlugin"]
-        for plugin in newPlugins {
-            let dir = projectRoot.appendingPathComponent("Plugins/\(plugin)")
-            XCTAssertTrue(FileManager.default.fileExists(atPath: dir.path),
-                          "\(plugin) directory should exist")
-        }
+        // Phase 3: 4 LLM plugins merged into 1 unified plugin
+        let unifiedPlugin = "OpenAICompatiblePlugin"
+        let dir = projectRoot.appendingPathComponent("Plugins/\(unifiedPlugin)")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: dir.path),
+                      "\(unifiedPlugin) directory should exist")
     }
 
     func testNewLLMPluginsHaveManifest() {
         let projectRoot = TestSupport.repoRoot
-        let newPlugins = ["GLMPlugin", "KimiPlugin", "MiniMaxPlugin", "QwenLLMPlugin"]
-        for plugin in newPlugins {
-            // Plugins compiled into main app use manifest_<Name>.json naming
-            let manifest = projectRoot.appendingPathComponent("Plugins/\(plugin)/manifest_\(plugin).json")
-            XCTAssertTrue(FileManager.default.fileExists(atPath: manifest.path),
-                          "\(plugin)/manifest_\(plugin).json should exist")
-        }
+        // Phase 3: unified plugin has a single manifest
+        let plugin = "OpenAICompatiblePlugin"
+        let manifest = projectRoot.appendingPathComponent("Plugins/\(plugin)/manifest_\(plugin).json")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: manifest.path),
+                      "\(plugin)/manifest_\(plugin).json should exist")
     }
 }

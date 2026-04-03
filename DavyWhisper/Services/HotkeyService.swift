@@ -831,3 +831,7 @@ final class HotkeyService: ObservableObject {
         }
     }
 }
+
+// MARK: - Protocol Conformance
+
+extension HotkeyService: HotkeyProtocol {}

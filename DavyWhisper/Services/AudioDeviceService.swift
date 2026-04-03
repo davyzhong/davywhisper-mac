@@ -346,3 +346,7 @@ final class AudioDeviceService: ObservableObject, @unchecked Sendable {
         }
     }
 }
+
+// MARK: - Protocol Conformance
+
+extension AudioDeviceService: AudioDeviceProtocol {}

@@ -374,3 +374,7 @@ final class AudioRecordingService: ObservableObject, @unchecked Sendable {
         return samples
     }
 }
+
+// MARK: - Protocol Conformance
+
+extension AudioRecordingService: AudioRecordingProtocol {}

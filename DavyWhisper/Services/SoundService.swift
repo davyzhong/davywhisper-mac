@@ -215,3 +215,7 @@ class SoundService {
         }
     }
 }
+
+// MARK: - Protocol Conformance
+
+extension SoundService: SoundProtocol {}
