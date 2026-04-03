@@ -133,6 +133,27 @@ This project targets Chinese users. All external resource downloads must use dom
 - Any new model download logic must use `hf-mirror.com` as the default URL
 - Provide a fallback toggle in Advanced Settings for users who can access originals directly
 
+## Testing Framework
+
+Tests live in `DavyWhisperTests/` (XCTest) and `DavyWhisperUITests/` (XCUITest).
+Key testing infrastructure:
+- `DavyWhisperTests/Support/TestSupport.swift` — temp directory isolation
+- `DavyWhisperTests/Support/TestServiceContainer.swift` — isolated service container with temp dirs + static ref cleanup
+- `DavyWhisperTests/Mocks/` — mock implementations for service/protocol testing
+- `DavyWhisper/Protocols/` — protocol definitions for testability (AudioRecordingProtocol, HotkeyProtocol, etc.)
+
+See `docs/superpowers/specs/2026-04-03-testing-framework-design.md` for the full testing framework design.
+
+## Phase Completion Rule
+
+**Every phase must close the loop before moving to the next:**
+
+1. Update all relevant project docs (README, design docs, `docs/superpowers/specs/`, etc.)
+2. Commit with a descriptive message covering what changed
+3. Push to remote
+
+Do not proceed to the next phase without completing all three steps.
+
 ## Key Patterns
 
 - **Menu bar app**: `LSUIElement = YES` in entitlements — no dock icon by default
