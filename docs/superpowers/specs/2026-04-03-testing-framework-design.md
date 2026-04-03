@@ -2,8 +2,8 @@
 
 > Generated: 2026-04-03
 > Author: Plan Agent + P8 Engineer Review
-> Status: PARTIALLY IMPLEMENTED — Phase 1–2 complete (Protocols, Mocks, TestServiceContainer + Service/Model unit tests)
-> Version: 1.0 → 1.1 → 1.2 (Phase 2 implementation notes)
+> Status: PARTIALLY IMPLEMENTED — Phase 1–3 complete
+> Version: 1.0 → 1.1 → 1.2 → 1.3 (Phase 3 ViewModel tests)
 
 ---
 
@@ -1111,3 +1111,34 @@ Tier A Mock 类（`MockTextInsertionService`、`MockHotkeyService` 等）作为*
 | `DavyWhisperTests/Models/UnifiedHotkeyTests.swift` | 新增 | 15 tests：Codable、Kind、Equatable、HotkeySlotType |
 
 *方案版本 1.2 — 2026-04-03*
+
+---
+
+## 实现备注 v1.3（Phase 3 — ViewModel 测试）
+
+### Decision 10：DictationViewModel — 可测试子集
+
+**实践发现**：`DictationViewModel` 依赖 17 个服务（`AudioRecordingService`、`HotkeyService` 等），其 `startRecording()` 会触发真实音频录制，无法在 CI 中可靠测试。但以下子集可测：
+
+- 纯函数：`classifyShortSpeech`、`paddedSamplesForFinalTranscription`、`DictationViewModel.buildInlineCommandSystemPrompt`
+- `State` enum：`Equatable` 行为
+- 计算属性：`isRecording`（从 `state` 派生）、`canDictate`（委托 `modelManager.canTranscribe`）
+- 热键方法：`clearHotkey(for:)`、`isHotkeyAssigned(_:excluding:)` — 同步无副作用
+- 初始状态：`.idle`、`partialText = ""`、`recordingDuration = 0`
+
+**实际方案**：使用 `TestServiceContainer` 提供所有依赖，创建真实 `DictationViewModel` 实例，测试上述可测试路径。
+
+### Decision 11：`TestServiceContainer` 是 ViewModel 测试的基础设施
+
+所有 ViewModel 测试使用 `TestServiceContainer` 获取服务实例和 ViewModel。`tearDown()` 重置所有 `._shared` 静态引用，防止跨测试污染。
+
+### Phase 3 已完成文件
+
+| 文件 | 类型 | 说明 |
+|------|------|------|
+| `DavyWhisperTests/ViewModels/DictationViewModelTests.swift` | 新增 | 26 tests：纯函数、State enum、计算属性、热键方法、初始状态 |
+| `DavyWhisperTests/ViewModels/SettingsViewModelTests.swift` | 新增 | 2 tests：初始状态、canTranscribe 委托 |
+| `DavyWhisperTests/ViewModels/HistoryViewModelTests.swift` | 新增 | 2 tests：初始状态、服务注入 |
+| `DavyWhisperTests/ViewModels/ProfilesViewModelTests.swift` | 新增 | 1 test：初始状态 |
+
+*方案版本 1.3 — 2026-04-03*
