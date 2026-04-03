@@ -209,9 +209,6 @@ final class DictationViewModel: ObservableObject {
         promptPaletteHandler.onShowError = { [weak self] message in
             self?.showError(message, category: "prompt")
         }
-        promptPaletteHandler.executeActionPlugin = { [weak self] plugin, pluginId, text, activeApp, originalText, language in
-            try await self?.executeActionPlugin(plugin, pluginId: pluginId, text: text, activeApp: activeApp, language: language, originalText: originalText)
-        }
         promptPaletteHandler.getActionFeedback = { [weak self] in
             (self?.actionFeedbackMessage, self?.actionFeedbackIcon, self?.actionDisplayDuration ?? 3.5)
         }
@@ -631,21 +628,13 @@ final class DictationViewModel: ObservableObject {
 
                 partialText = ""
 
-                // Route to action plugin or insert text
-                if let actionPluginId = self.effectivePromptAction?.targetActionPluginId,
-                   let actionPlugin = PluginManager.shared.actionPlugin(for: actionPluginId) {
-                    try await executeActionPlugin(
-                        actionPlugin, pluginId: actionPluginId, text: text,
-                        activeApp: activeApp, language: language, originalText: result.text
-                    )
-                } else {
-                    _ = try await textInsertionService.insertText(text, preserveClipboard: preserveClipboard)
-                    EventBus.shared.emit(.textInserted(TextInsertedPayload(
-                        text: text,
-                        appName: activeApp.name,
-                        bundleIdentifier: activeApp.bundleId
-                    )))
-                }
+                // Insert text
+                _ = try await textInsertionService.insertText(text, preserveClipboard: preserveClipboard)
+                EventBus.shared.emit(.textInserted(TextInsertedPayload(
+                    text: text,
+                    appName: activeApp.name,
+                    bundleIdentifier: activeApp.bundleId
+                )))
 
                 let modelDisplayName = modelManager.resolvedModelDisplayName(
                     engineOverrideId: engineOverride,
@@ -821,42 +810,6 @@ final class DictationViewModel: ObservableObject {
             prompt += "\nAlso apply this style context: \(baseContext)"
         }
         return prompt
-    }
-
-    /// Executes an action plugin and handles its result (feedback, clipboard URL, events).
-    private func executeActionPlugin(
-        _ plugin: any ActionPlugin,
-        pluginId: String,
-        text: String,
-        activeApp: (name: String?, bundleId: String?, url: String?),
-        language: String? = nil,
-        originalText: String? = nil
-    ) async throws {
-        let actionContext = ActionContext(
-            appName: activeApp.name,
-            bundleIdentifier: activeApp.bundleId,
-            url: activeApp.url,
-            language: language,
-            originalText: originalText ?? text
-        )
-        let actionResult = try await plugin.execute(input: text, context: actionContext)
-
-        guard actionResult.success else {
-            throw NSError(domain: "ActionPlugin", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: actionResult.message])
-        }
-
-        if let url = actionResult.url {
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(url, forType: .string)
-        }
-        actionFeedbackMessage = actionResult.message
-        actionFeedbackIcon = actionResult.icon ?? "checkmark.circle.fill"
-        actionDisplayDuration = actionResult.displayDuration ?? 3.5
-        EventBus.shared.emit(.actionCompleted(ActionCompletedPayload(
-            actionId: pluginId, success: true, message: actionResult.message,
-            url: actionResult.url, appName: activeApp.name, bundleIdentifier: activeApp.bundleId
-        )))
     }
 
     // MARK: - Standalone Prompt Palette

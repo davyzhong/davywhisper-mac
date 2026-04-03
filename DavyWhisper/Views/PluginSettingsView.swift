@@ -128,8 +128,6 @@ struct PluginSettingsView: View {
         }
         if plugin.instance is TranscriptionEnginePlugin { return .transcription }
         if plugin.instance is LLMProviderPlugin { return .llm }
-        if plugin.instance is PostProcessorPlugin { return .postProcessor }
-        if plugin.instance is ActionPlugin { return .action }
         return .utility
     }
 

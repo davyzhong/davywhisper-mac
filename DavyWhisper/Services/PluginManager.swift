@@ -37,13 +37,6 @@ final class PluginManager: ObservableObject {
     let pluginsDirectory: URL
     private var profileNamesProvider: () -> [String] = { [] }
 
-    var postProcessors: [PostProcessorPlugin] {
-        loadedPlugins
-            .filter { $0.isEnabled }
-            .compactMap { $0.instance as? PostProcessorPlugin }
-            .sorted { $0.priority < $1.priority }
-    }
-
     var llmProviders: [LLMProviderPlugin] {
         loadedPlugins
             .filter { $0.isEnabled }
@@ -56,24 +49,8 @@ final class PluginManager: ObservableObject {
             .compactMap { $0.instance as? TranscriptionEnginePlugin }
     }
 
-    var actionPlugins: [ActionPlugin] {
-        loadedPlugins
-            .filter { $0.isEnabled }
-            .compactMap { $0.instance as? ActionPlugin }
-    }
-
-    var memoryStoragePlugins: [MemoryStoragePlugin] {
-        loadedPlugins
-            .filter { $0.isEnabled }
-            .compactMap { $0.instance as? MemoryStoragePlugin }
-    }
-
     func transcriptionEngine(for providerId: String) -> TranscriptionEnginePlugin? {
         transcriptionEngines.first { $0.providerId == providerId }
-    }
-
-    func actionPlugin(for actionId: String) -> ActionPlugin? {
-        actionPlugins.first { $0.actionId == actionId }
     }
 
     func llmProvider(for providerName: String) -> LLMProviderPlugin? {

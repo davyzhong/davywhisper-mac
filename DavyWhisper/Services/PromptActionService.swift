@@ -116,7 +116,7 @@ class PromptActionService: ObservableObject {
         }
     }
 
-    func addAction(name: String, prompt: String, icon: String = "sparkles", providerType: String? = nil, cloudModel: String? = nil, targetActionPluginId: String? = nil) {
+    func addAction(name: String, prompt: String, icon: String = "sparkles", providerType: String? = nil, cloudModel: String? = nil) {
         guard let context = modelContext else { return }
 
         let maxOrder = promptActions.map(\.sortOrder).max() ?? -1
@@ -126,8 +126,7 @@ class PromptActionService: ObservableObject {
             icon: icon,
             sortOrder: maxOrder + 1,
             providerType: providerType,
-            cloudModel: cloudModel,
-            targetActionPluginId: targetActionPluginId
+            cloudModel: cloudModel
         )
 
         context.insert(action)

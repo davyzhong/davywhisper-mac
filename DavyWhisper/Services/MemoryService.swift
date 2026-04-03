@@ -122,24 +122,17 @@ Return ONLY the JSON array, nothing else.
             skipMemoryInjection: true
         )
 
-        let entries = parseExtractedMemories(result, source: MemorySource(
+        let source = MemorySource(
             appName: payload.appName,
             bundleIdentifier: payload.bundleIdentifier,
             profileName: payload.profileName,
             timestamp: payload.timestamp
-        ))
+        )
+        let entries = parseExtractedMemories(result, source: source)
         guard !entries.isEmpty else { return }
 
-        let plugins = PluginManager.shared.memoryStoragePlugins
-        guard !plugins.isEmpty else { return }
-
-        let deduped = await deduplicate(entries: entries, using: plugins)
-        guard !deduped.isEmpty else { return }
-
-        for plugin in plugins where plugin.isReady {
-            try? await plugin.store(deduped)
-            logger.info("Stored \(deduped.count) memories in \(plugin.storageName)")
-        }
+        // No memory storage plugins available — extraction result discarded
+        logger.info("Extracted \(entries.count) memories (no storage plugin)")
     }
 
     private func parseExtractedMemories(_ json: String, source: MemorySource) -> [MemoryEntry] {
@@ -165,107 +158,24 @@ Return ONLY the JSON array, nothing else.
         }
     }
 
-    // MARK: - Deduplication
-
-    private func deduplicate(entries: [MemoryEntry], using plugins: [MemoryStoragePlugin]) async -> [MemoryEntry] {
-        var unique: [MemoryEntry] = []
-        for entry in entries {
-            let query = MemoryQuery(text: entry.content, maxResults: 1, minConfidence: 0.0)
-            var isDuplicate = false
-
-            for plugin in plugins where plugin.isReady {
-                if let results = try? await plugin.search(query),
-                   let best = results.first,
-                   best.relevanceScore > 0.85 {
-                    var updated = best.entry
-                    updated.lastAccessedAt = Date()
-                    updated.accessCount += 1
-                    try? await plugin.update(updated)
-                    isDuplicate = true
-                    break
-                }
-            }
-            if !isDuplicate { unique.append(entry) }
-        }
-        return unique
-    }
-
     // MARK: - Retrieval
 
     func retrieveRelevantMemories(for text: String) async -> String {
         guard isEnabled else { return "" }
-
-        let plugins = PluginManager.shared.memoryStoragePlugins
-        guard !plugins.isEmpty else { return "" }
-
-        let query = MemoryQuery(text: text, maxResults: 10, minConfidence: 0.3)
-
-        // Collect results with their source plugin for targeted updates
-        var pluginResults: [(plugin: MemoryStoragePlugin, result: MemorySearchResult)] = []
-        for plugin in plugins where plugin.isReady {
-            if let results = try? await plugin.search(query) {
-                for r in results { pluginResults.append((plugin, r)) }
-            }
-        }
-        guard !pluginResults.isEmpty else { return "" }
-
-        // Deduplicate by content, keep highest relevance
-        var seen = Set<String>()
-        let unique = pluginResults
-            .sorted { $0.result.relevanceScore > $1.result.relevanceScore }
-            .filter { seen.insert($0.result.entry.content.lowercased()).inserted }
-
-        let top = Array(unique.prefix(10))
-
-        // Update access timestamps only in the originating plugin
-        for item in top {
-            var updated = item.result.entry
-            updated.lastAccessedAt = Date()
-            updated.accessCount += 1
-            try? await item.plugin.update(updated)
-        }
-
-        let lines = top.map { "- \($0.result.entry.content)" }
-        return """
-        <memory_context>
-        The following is known about the user from previous interactions:
-        \(lines.joined(separator: "\n"))
-        </memory_context>
-        """
+        // No memory storage plugins available
+        return ""
     }
 
     // MARK: - Correction Tracking
 
     func storeCorrections(_ corrections: [(original: String, replacement: String)], appName: String? = nil, bundleIdentifier: String? = nil) {
         guard isEnabled else { return }
-
-        let plugins = PluginManager.shared.memoryStoragePlugins
-        guard !plugins.isEmpty else { return }
-
-        let entries = corrections.map {
-            MemoryEntry(
-                content: "\($0.replacement) (not \($0.original))",
-                type: .correction,
-                source: MemorySource(appName: appName, bundleIdentifier: bundleIdentifier),
-                confidence: 1.0
-            )
-        }
-        guard !entries.isEmpty else { return }
-
-        Task {
-            for plugin in plugins where plugin.isReady {
-                try? await plugin.store(entries)
-                logger.info("Stored \(entries.count) correction(s) in \(plugin.storageName)")
-            }
-        }
+        // No memory storage plugins available
     }
 
     // MARK: - Management
 
     func clearAllMemories() async {
-        for plugin in PluginManager.shared.memoryStoragePlugins {
-            try? await plugin.deleteAll()
-            logger.info("Cleared all memories in \(plugin.storageName)")
-        }
+        // No memory storage plugins available
     }
 }

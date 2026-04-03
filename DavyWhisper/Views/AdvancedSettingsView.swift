@@ -69,22 +69,17 @@ struct AdvancedSettingsView: View {
                         .font(.caption)
                     }
 
-                    let pluginCount = PluginManager.shared.memoryStoragePlugins.count
                     HStack {
                         Image(systemName: "circle.fill")
-                            .foregroundStyle(pluginCount > 0 && !memoryService.extractionProviderId.isEmpty ? .green : .orange)
+                            .foregroundStyle(memoryService.extractionProviderId.isEmpty ? .orange : .green)
                             .font(.caption2)
                             .accessibilityHidden(true)
-                        if pluginCount == 0 {
-                            Text(String(localized: "No memory storage plugins active. Enable one in Integrations."))
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
-                        } else if memoryService.extractionProviderId.isEmpty {
+                        if memoryService.extractionProviderId.isEmpty {
                             Text(String(localized: "Select an extraction provider to start collecting memories."))
                                 .font(.callout)
                                 .foregroundStyle(.secondary)
                         } else {
-                            Text(String(localized: "\(pluginCount) storage plugin(s) active"))
+                            Text(String(localized: "Memory extraction active"))
                                 .font(.callout)
                                 .foregroundStyle(.secondary)
                         }

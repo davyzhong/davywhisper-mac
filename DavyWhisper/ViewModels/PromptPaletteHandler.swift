@@ -34,8 +34,6 @@ final class PromptPaletteHandler {
 
     var onShowNotchFeedback: ((String, String, TimeInterval, Bool, String?) -> Void)?
     var onShowError: ((String) -> Void)?
-    var executeActionPlugin: ((any ActionPlugin, String, String,
-        (name: String?, bundleId: String?, url: String?), String?, String?) async throws -> Void)?
     var getActionFeedback: (() -> (message: String?, icon: String?, duration: TimeInterval))?
     var getPreserveClipboard: (() -> Bool)?
 
@@ -166,30 +164,6 @@ final class PromptPaletteHandler {
                     cloudModelOverride: action.cloudModel
                 )
                 guard !Task.isCancelled else { return }
-
-                // Route to action plugin if configured
-                if let actionPluginId = action.targetActionPluginId,
-                   let actionPlugin = PluginManager.shared.actionPlugin(for: actionPluginId) {
-                    let browserInfo = await ctx.browserInfoTask?.value
-                    let resolvedUrl = browserInfo?.url ?? ctx.activeApp.url
-                    let resolvedApp = (name: browserInfo?.title ?? ctx.activeApp.name,
-                                       bundleId: ctx.activeApp.bundleId, url: resolvedUrl)
-                    try await executeActionPlugin?(
-                        actionPlugin, actionPluginId, result,
-                        resolvedApp, ctx.text, nil
-                    )
-                    soundService.play(.transcriptionSuccess, enabled: soundFeedbackEnabled)
-                    self.accessibilityAnnouncementService.announcePromptComplete()
-                    let feedback = getActionFeedback?() ?? (message: nil, icon: nil, duration: 3.5)
-                    onShowNotchFeedback?(
-                        feedback.0 ?? "Done",
-                        feedback.1 ?? "checkmark.circle.fill",
-                        feedback.2,
-                        false,
-                        nil
-                    )
-                    return
-                }
 
                 // Save clipboard if preservation is enabled
                 let preserveClipboard = getPreserveClipboard?() ?? false

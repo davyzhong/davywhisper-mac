@@ -287,17 +287,6 @@ private struct PromptActionCardView: View {
                                 .foregroundColor(.accentColor)
                                 .cornerRadius(3)
                         }
-
-                        if let actionId = action.targetActionPluginId,
-                           let plugin = PluginManager.shared.actionPlugin(for: actionId) {
-                            Text(plugin.actionName)
-                                .font(.caption2)
-                                .padding(.horizontal, 4)
-                                .padding(.vertical, 1)
-                                .background(Color.orange.opacity(0.12))
-                                .foregroundColor(.orange)
-                                .cornerRadius(3)
-                        }
                     }
                     Text(action.prompt)
                         .font(.caption)
@@ -501,28 +490,8 @@ private struct PromptActionEditorSheet: View {
                             .padding(.vertical, 4)
                         }
                     }
-
-                    let actionPlugins = PluginManager.shared.actionPlugins
-                    if !actionPlugins.isEmpty {
-                        GroupBox(String(localized: "Action Target")) {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Picker(String(localized: "Target"), selection: $viewModel.editTargetActionPluginId) {
-                                    Text(String(localized: "Insert Text")).tag(nil as String?)
-                                    ForEach(actionPlugins, id: \.actionId) { plugin in
-                                        Label(plugin.actionName, systemImage: plugin.actionIcon)
-                                            .tag(plugin.actionId as String?)
-                                    }
-                                }
-
-                                Text(String(localized: "Instead of inserting the LLM result as text, send it to an action plugin."))
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                            .padding(.vertical, 4)
-                        }
-                    }
-                }
-                .padding()
+	                }
+	                .padding()
             }
 
             Divider()

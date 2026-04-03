@@ -23,7 +23,6 @@ class PromptActionsViewModel: ObservableObject {
     @Published var editIcon = "sparkles"
     @Published var editProviderId: String?
     @Published var editCloudModel = ""
-    @Published var editTargetActionPluginId: String?
 
     private let promptActionService: PromptActionService
     var promptProcessingService: PromptProcessingService
@@ -61,7 +60,6 @@ class PromptActionsViewModel: ObservableObject {
         editIcon = "sparkles"
         editProviderId = nil
         editCloudModel = ""
-        editTargetActionPluginId = nil
     }
 
     func startEditing(_ action: PromptAction) {
@@ -73,7 +71,6 @@ class PromptActionsViewModel: ObservableObject {
         editIcon = action.icon
         editProviderId = action.providerType
         editCloudModel = action.cloudModel ?? ""
-        editTargetActionPluginId = action.targetActionPluginId
     }
 
     func cancelEditing() {
@@ -85,7 +82,6 @@ class PromptActionsViewModel: ObservableObject {
         editIcon = "sparkles"
         editProviderId = nil
         editCloudModel = ""
-        editTargetActionPluginId = nil
     }
 
     func saveEditing() {
@@ -100,8 +96,7 @@ class PromptActionsViewModel: ObservableObject {
                 prompt: editPrompt,
                 icon: editIcon,
                 providerType: editProviderId,
-                cloudModel: editCloudModel.isEmpty ? nil : editCloudModel,
-                targetActionPluginId: editTargetActionPluginId
+                cloudModel: editCloudModel.isEmpty ? nil : editCloudModel
             )
         } else if let action = selectedAction {
             promptActionService.updateAction(
@@ -110,8 +105,7 @@ class PromptActionsViewModel: ObservableObject {
                 prompt: editPrompt,
                 icon: editIcon,
                 providerType: editProviderId,
-                cloudModel: editCloudModel.isEmpty ? nil : editCloudModel,
-                targetActionPluginId: editTargetActionPluginId
+                cloudModel: editCloudModel.isEmpty ? nil : editCloudModel
             )
         }
 

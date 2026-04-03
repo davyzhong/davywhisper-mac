@@ -28,11 +28,8 @@ final class PostProcessingPipeline {
         outputFormat: String? = nil,
         llmStepName: String? = nil
     ) async throws -> PostProcessingResult {
-        // Collect plugin processors with their priorities
-        let plugins = PluginManager.shared.postProcessors
-
         // Build priority-ordered step list: (priority, id)
-        // IDs: -1 = LLM, -2 = snippets, -3 = dictionary, -4 = app formatter, 0+ = plugin index
+        // IDs: -1 = LLM, -2 = snippets, -3 = dictionary, -4 = app formatter
         var steps: [(priority: Int, id: Int)] = []
 
         // App formatter at priority 150 (before LLM at 300)
@@ -43,9 +40,6 @@ final class PostProcessingPipeline {
 
         if llmHandler != nil {
             steps.append((300, -1))
-        }
-        for (index, plugin) in plugins.enumerated() {
-            steps.append((plugin.priority, index))
         }
         steps.append((500, -2))
         steps.append((600, -3))
@@ -70,7 +64,7 @@ final class PostProcessingPipeline {
                 case -3:
                     result = dictionaryService.applyCorrections(to: result)
                 default:
-                    result = try await plugins[step.id].process(text: result, context: context)
+                    break
                 }
                 if result != before {
                     let name: String
@@ -79,7 +73,7 @@ final class PostProcessingPipeline {
                     case -1: name = llmStepName ?? "Prompt"
                     case -2: name = "Snippets"
                     case -3: name = "Corrections"
-                    default: name = plugins[step.id].processorName
+                    default: name = "Unknown"
                     }
                     appliedSteps.append(name)
                 }
@@ -90,7 +84,7 @@ final class PostProcessingPipeline {
                 case -1: name = "LLM/Translation"
                 case -2: name = "Snippets"
                 case -3: name = "Dictionary"
-                default: name = plugins[step.id].processorName
+                default: name = "Unknown"
                 }
                 logger.error("Post-processor '\(name)' failed: \(error.localizedDescription)")
                 // Only re-throw for LLM step

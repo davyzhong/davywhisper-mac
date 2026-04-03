@@ -75,7 +75,7 @@ public protocol LLMProviderPlugin: DavyWhisperPlugin {
     func process(systemPrompt: String, userText: String, model: String?) async throws -> String
 }
 
-// MARK: - Post-Processor Plugin
+// MARK: - Post-Processing Context
 
 public struct PostProcessingContext: Sendable {
     public let appName: String?
@@ -93,12 +93,6 @@ public struct PostProcessingContext: Sendable {
         self.profileName = profileName
         self.selectedText = selectedText
     }
-}
-
-public protocol PostProcessorPlugin: DavyWhisperPlugin {
-    var processorName: String { get }
-    var priority: Int { get }
-    @MainActor func process(text: String, context: PostProcessingContext) async throws -> String
 }
 
 // MARK: - Transcription Engine Plugin
@@ -164,49 +158,7 @@ public extension TranscriptionEnginePlugin {
     }
 }
 
-// MARK: - Action Plugin
-
-public struct ActionContext: Sendable {
-    public let appName: String?
-    public let bundleIdentifier: String?
-    public let url: String?
-    public let language: String?
-    public let originalText: String
-
-    public init(appName: String? = nil, bundleIdentifier: String? = nil,
-                url: String? = nil, language: String? = nil, originalText: String = "") {
-        self.appName = appName
-        self.bundleIdentifier = bundleIdentifier
-        self.url = url
-        self.language = language
-        self.originalText = originalText
-    }
-}
-
-public struct ActionResult: Sendable {
-    public let success: Bool
-    public let message: String
-    public let url: String?
-    public let icon: String?
-    public let displayDuration: TimeInterval?
-
-    public init(success: Bool, message: String, url: String? = nil, icon: String? = nil, displayDuration: TimeInterval? = nil) {
-        self.success = success
-        self.message = message
-        self.url = url
-        self.icon = icon
-        self.displayDuration = displayDuration
-    }
-}
-
-public protocol ActionPlugin: DavyWhisperPlugin {
-    var actionName: String { get }
-    var actionId: String { get }
-    var actionIcon: String { get }
-    func execute(input: String, context: ActionContext) async throws -> ActionResult
-}
-
-// MARK: - Memory Storage Plugin
+// MARK: - Memory Types
 
 public enum MemoryType: String, Codable, Sendable, CaseIterable {
     case fact
@@ -367,16 +319,4 @@ public struct MemorySearchResult: Sendable {
         self.entry = entry
         self.relevanceScore = relevanceScore
     }
-}
-
-public protocol MemoryStoragePlugin: DavyWhisperPlugin {
-    var storageName: String { get }
-    var isReady: Bool { get }
-    var memoryCount: Int { get }
-    func store(_ entries: [MemoryEntry]) async throws
-    func search(_ query: MemoryQuery) async throws -> [MemorySearchResult]
-    func delete(_ ids: [UUID]) async throws
-    func update(_ entry: MemoryEntry) async throws
-    func listAll(offset: Int, limit: Int) async throws -> [MemoryEntry]
-    func deleteAll() async throws
 }
