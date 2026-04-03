@@ -2,7 +2,7 @@
 
 > Generated: 2026-04-03
 > Author: Plan Agent + P8 Engineer Review
-> Status: PARTIALLY IMPLEMENTED — Phase 1–6 complete
+> Status: PARTIALLY IMPLEMENTED — Phase 1–7 complete
 > Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 → 1.5 (Phase 5 XCUITest + Swift 6 concurrency fixes)
 
 ---
@@ -1374,3 +1374,24 @@ if isinstance(data, list) and data and isinstance(data[0], dict) and "files" in 
 **覆盖率 Gate 触发条件**：任一类别跌破 Phase 1 基线阈值。Views 类（SetupWizard、Settings 等）目前 0%，不影响 gate — 在完善 UI 测试后逐步提高。
 
 *方案版本 1.6 — 2026-04-03*
+
+## 实现备注 v1.7（Phase 7 — TranslationService 单元测试）
+
+### Decision 27：TranslationService 的可测试部分
+
+**实际方案**：`TranslationService` 类使用 `#if canImport(Translation)` + `@available(macOS 15, *)`。其 `nonisolated static` 方法（`makeLanguage`、`normalizedLanguageIdentifier`、`availableTargetLanguages`）完全可测试。异步的 `translate()`、`requestTranslation()` 依赖 Apple Translation.framework，无法在单元测试中 mock，跳过。
+
+### Phase 7 已完成文件
+
+| 文件 | 类型 | 说明 |
+|------|------|------|
+| `DavyWhisperTests/Services/TranslationServiceTests.swift` | 新增 | 23 个测试用例，覆盖 `makeLanguage`/`normalizedLanguageIdentifier`/`availableTargetLanguages` 全部公开 API |
+
+**TranslationServiceTests 测试覆盖**：
+- `availableTargetLanguages`：非空、包含 en/zh-Hans、名称升序、无空值
+- `normalizedLanguageIdentifier`：nil/空/空白输入、auto 拒绝、underscore 替换、区域变体、script-specific (zh-Hans/zh-Hant)、native aliases (german/deutsch/english 等)、未知语言返回 nil、音标折叠、大小写不敏感
+- `makeLanguage`：有效/无效标识符、中文简繁体、德语别名、区域变体
+
+**Phase 7 测试结果**：**233 tests, 0 failures**（新增 23 个）
+
+*方案版本 1.7 — 2026-04-03*
