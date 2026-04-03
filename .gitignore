@@ -56,3 +56,4 @@ Libraries/sherpa-onnx.xcframework/
 DavyWhisper/Resources/ParaformerModel/*.onnx
 DavyWhisper/Resources/ParaformerModel/tokens.txt
 DavyWhisper/Resources/ParaformerModel/PunctuationModel/
+*.profraw
