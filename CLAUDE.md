@@ -49,10 +49,14 @@ xcodebuild -project DavyWhisper.xcodeproj \
 
 ### Tests
 ```bash
-# App tests
+# Unit tests (all schemes auto-generated, DavyWhisper.xcscheme runs DavyWhisperTests only)
 xcodebuild test -project DavyWhisper.xcodeproj -scheme DavyWhisper \
   -destination 'platform=macOS,arch=arm64' \
-  -parallel-testing-enabled NO \
+  CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+
+# UITests (requires display session — will skip in headless/CI)
+xcodebuild test -project DavyWhisper.xcodeproj -scheme DavyWhisperUITests \
+  -destination 'platform=macOS,arch=arm64' \
   CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
 # Plugin SDK tests
