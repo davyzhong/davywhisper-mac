@@ -2,8 +2,8 @@
 
 > Generated: 2026-04-03
 > Author: Plan Agent + P8 Engineer Review
-> Status: PARTIALLY IMPLEMENTED — Phase 1–11 complete
-> Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 (Phase 9) → 1.7 (Phase 10) → 1.8 (Phase 11)
+> Status: PARTIALLY IMPLEMENTED — Phase 1–14 complete
+> Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 (Phase 9) → 1.7 (Phase 10) → 1.8 (Phase 11) → 1.9 (Phase 14)
 
 ---
 
@@ -1486,3 +1486,22 @@ if isinstance(data, list) and data and isinstance(data[0], dict) and "files" in 
 **Phase 11 测试结果**：**329 tests, 0 failures**（unit tests）
 
 *方案版本 1.8 — 2026-04-04*
+
+### Phase 14: UITests Runner 崩溃根除（2026-04-04）
+
+**问题**：Xcode auto-generated 默认 scheme 运行所有 test bundles。`DavyWhisperUITests-Runner` 在无显示会话环境中尝试启动菜单栏 app，导致 runner 挂死。`guard hasDisplaySession else { return }` 只让测试方法跳过，但 **runner 进程本身仍然挂起**。
+
+**解决方案**：创建两个显式 scheme 文件，存于 `DavyWhisper.xcodeproj/xcshareddata/xcschemes/`：
+
+| Scheme | 测试目标 | 适用场景 |
+|--------|---------|---------|
+| `DavyWhisper.xcscheme` | DavyWhisperTests (unit tests) | 默认 CI/CD，headless 安全 |
+| `DavyWhisperUITests.xcscheme` | DavyWhisperUITests | 需真实显示会话，GUI 环境手动运行 |
+
+**关键配置**：
+- 每个 scheme 的 `<TestAction><Testables>` 只包含对应的 `<TestableReference>`
+- UITests scheme 通过独立 scheme 隔离，CI 默认命令不受影响
+
+**测试结果**：`xcodebuild test -scheme DavyWhisper` → **TEST SUCCEEDED**，329 unit tests，无 runner 崩溃。
+
+*方案版本 1.9 — 2026-04-04*
