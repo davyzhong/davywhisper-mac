@@ -154,7 +154,7 @@ struct SetupWizardView: View {
                 .controlSize(.large)
 
                 Button(String(localized: "Skip Setup")) {
-                    HomeViewModel.shared.completeSetupWizard()
+                    UserDefaults.standard.set(true, forKey: UserDefaultsKeys.setupWizardCompleted)
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.secondary)
@@ -1002,7 +1002,7 @@ struct SetupWizardView: View {
                     ? String(localized: "I'll try later")
                     : String(localized: "Skip Setup")
                 ) {
-                    HomeViewModel.shared.completeSetupWizard()
+                    UserDefaults.standard.set(true, forKey: UserDefaultsKeys.setupWizardCompleted)
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.secondary)
@@ -1024,7 +1024,7 @@ struct SetupWizardView: View {
                     .buttonStyle(.bordered)
 
                     Button(String(localized: "Go to Dashboard")) {
-                        HomeViewModel.shared.completeSetupWizard()
+                        UserDefaults.standard.set(true, forKey: UserDefaultsKeys.setupWizardCompleted)
                     }
                     .buttonStyle(.borderedProminent)
                 } else {

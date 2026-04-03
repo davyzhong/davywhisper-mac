@@ -139,7 +139,7 @@ class PromptActionService: ObservableObject {
         }
     }
 
-    func updateAction(_ action: PromptAction, name: String, prompt: String, icon: String, providerType: String? = nil, cloudModel: String? = nil, targetActionPluginId: String? = nil) {
+    func updateAction(_ action: PromptAction, name: String, prompt: String, icon: String, providerType: String? = nil, cloudModel: String? = nil) {
         guard let context = modelContext else { return }
 
         action.name = name
@@ -147,7 +147,6 @@ class PromptActionService: ObservableObject {
         action.icon = icon
         action.providerType = providerType
         action.cloudModel = cloudModel
-        action.targetActionPluginId = targetActionPluginId
         action.updatedAt = Date()
 
         do {

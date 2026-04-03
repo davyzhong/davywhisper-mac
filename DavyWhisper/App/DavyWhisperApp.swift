@@ -176,10 +176,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             DictationViewModel.shared.triggerStandalonePromptSelection()
         }
 
-        // Auto-open Settings with setup wizard when microphone permission is not yet granted
+        // Auto-open Settings when microphone permission is not yet granted
         if AVAudioApplication.shared.recordPermission != .granted {
             UserDefaults.standard.set(false, forKey: UserDefaultsKeys.setupWizardCompleted)
-            HomeViewModel.shared.showSetupWizard = true
             NSApp.setActivationPolicy(.regular)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.openSettingsWindow()

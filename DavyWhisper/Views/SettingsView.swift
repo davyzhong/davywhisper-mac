@@ -1,40 +1,32 @@
 import SwiftUI
 
 enum SettingsTab: Hashable {
-    case home, general, recording, hotkeys, recorder
-    case fileTranscription, history, dictionary, snippets, profiles, prompts, integrations, advanced, about
+    case general, recording, fileTranscription, history
+    case dictionary, profiles, prompts, integrations, advanced
 }
 
 struct SettingsView: View {
-    @State private var selectedTab: SettingsTab = .home
+    @State private var selectedTab: SettingsTab = .general
     @ObservedObject private var fileTranscription = FileTranscriptionViewModel.shared
     @ObservedObject private var registryService = PluginRegistryService.shared
-    @ObservedObject private var homeViewModel = HomeViewModel.shared
     @ObservedObject private var promptActionsViewModel = PromptActionsViewModel.shared
-    @AppStorage(UserDefaultsKeys.showRecorderTab) private var showRecorderTab = false
 
     var body: some View {
         Group {
             if #available(macOS 15, *) {
                 TabView(selection: $selectedTab) {
-                    SettingsMainTabs(pluginUpdatesBadge: registryService.availableUpdatesCount, showRecorderTab: showRecorderTab)
+                    SettingsMainTabs(pluginUpdatesBadge: registryService.availableUpdatesCount)
                 }
                 .tabViewStyle(.sidebarAdaptable)
             } else {
                 TabView(selection: $selectedTab) {
                     Group {
-                        HomeSettingsView()
-                            .tabItem { Label(String(localized: "Home"), systemImage: "house") }
-                            .tag(SettingsTab.home)
                         GeneralSettingsView()
                             .tabItem { Label(String(localized: "General"), systemImage: "gear") }
                             .tag(SettingsTab.general)
                         RecordingSettingsView()
                             .tabItem { Label(String(localized: "Recording"), systemImage: "mic.fill") }
                             .tag(SettingsTab.recording)
-                        HotkeySettingsView()
-                            .tabItem { Label(String(localized: "Hotkeys"), systemImage: "keyboard") }
-                            .tag(SettingsTab.hotkeys)
                         FileTranscriptionView()
                             .tabItem { Label(String(localized: "File Transcription"), systemImage: "doc.text") }
                             .tag(SettingsTab.fileTranscription)
@@ -43,17 +35,9 @@ struct SettingsView: View {
                             .tag(SettingsTab.history)
                     }
                     Group {
-                        if showRecorderTab {
-                            AudioRecorderView(viewModel: AudioRecorderViewModel.shared)
-                                .tabItem { Label(String(localized: "settings.tab.recorder"), systemImage: "waveform.circle") }
-                                .tag(SettingsTab.recorder)
-                        }
-                        DictionarySettingsView()
+                        DictionarySnippetsSettingsView()
                             .tabItem { Label(String(localized: "Dictionary"), systemImage: "book.closed") }
                             .tag(SettingsTab.dictionary)
-                        SnippetsSettingsView()
-                            .tabItem { Label(String(localized: "Snippets"), systemImage: "text.badge.plus") }
-                            .tag(SettingsTab.snippets)
                         ProfilesSettingsView()
                             .tabItem { Label(String(localized: "Profiles"), systemImage: "person.crop.rectangle.stack") }
                             .tag(SettingsTab.profiles)
@@ -66,9 +50,6 @@ struct SettingsView: View {
                         AdvancedSettingsView()
                             .tabItem { Label(String(localized: "Advanced"), systemImage: "gearshape.2") }
                             .tag(SettingsTab.advanced)
-                        AboutSettingsView()
-                            .tabItem { Label(String(localized: "About"), systemImage: "info.circle") }
-                            .tag(SettingsTab.about)
                     }
                 }
             }
@@ -77,12 +58,6 @@ struct SettingsView: View {
         .onAppear { navigateToFileTranscriptionIfNeeded() }
         .onChange(of: fileTranscription.showFilePickerFromMenu) { _, _ in
             navigateToFileTranscriptionIfNeeded()
-        }
-        .onChange(of: homeViewModel.navigateToHistory) { _, navigate in
-            if navigate {
-                selectedTab = .history
-                homeViewModel.navigateToHistory = false
-            }
         }
         .onChange(of: promptActionsViewModel.navigateToIntegrations) { _, navigate in
             if navigate {
@@ -102,44 +77,21 @@ struct SettingsView: View {
 @available(macOS 15, *)
 private struct SettingsMainTabs: TabContent {
     var pluginUpdatesBadge: Int
-    var showRecorderTab: Bool
     var body: some TabContent<SettingsTab> {
-        Tab(String(localized: "Home"), systemImage: "house", value: SettingsTab.home) {
-            HomeSettingsView()
-        }
         Tab(String(localized: "General"), systemImage: "gear", value: SettingsTab.general) {
             GeneralSettingsView()
         }
         Tab(String(localized: "Recording"), systemImage: "mic.fill", value: SettingsTab.recording) {
             RecordingSettingsView()
         }
-        Tab(String(localized: "Hotkeys"), systemImage: "keyboard", value: SettingsTab.hotkeys) {
-            HotkeySettingsView()
-        }
         Tab(String(localized: "File Transcription"), systemImage: "doc.text", value: SettingsTab.fileTranscription) {
             FileTranscriptionView()
-        }
-        if showRecorderTab {
-            Tab(String(localized: "settings.tab.recorder"), systemImage: "waveform.circle", value: SettingsTab.recorder) {
-                AudioRecorderView(viewModel: AudioRecorderViewModel.shared)
-            }
         }
         Tab(String(localized: "History"), systemImage: "clock.arrow.circlepath", value: SettingsTab.history) {
             HistoryView()
         }
-        SettingsExtraTabs(pluginUpdatesBadge: pluginUpdatesBadge)
-    }
-}
-
-@available(macOS 15, *)
-private struct SettingsExtraTabs: TabContent {
-    var pluginUpdatesBadge: Int
-    var body: some TabContent<SettingsTab> {
         Tab(String(localized: "Dictionary"), systemImage: "book.closed", value: SettingsTab.dictionary) {
-            DictionarySettingsView()
-        }
-        Tab(String(localized: "Snippets"), systemImage: "text.badge.plus", value: SettingsTab.snippets) {
-            SnippetsSettingsView()
+            DictionarySnippetsSettingsView()
         }
         Tab(String(localized: "Profiles"), systemImage: "person.crop.rectangle.stack", value: SettingsTab.profiles) {
             ProfilesSettingsView()
@@ -153,9 +105,6 @@ private struct SettingsExtraTabs: TabContent {
         .badge(self.pluginUpdatesBadge)
         Tab(String(localized: "Advanced"), systemImage: "gearshape.2", value: SettingsTab.advanced) {
             AdvancedSettingsView()
-        }
-        Tab(String(localized: "About"), systemImage: "info.circle", value: SettingsTab.about) {
-            AboutSettingsView()
         }
     }
 }

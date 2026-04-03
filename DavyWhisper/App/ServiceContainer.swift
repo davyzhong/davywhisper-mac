@@ -42,7 +42,6 @@ final class ServiceContainer: ObservableObject {
     let profilesViewModel: ProfilesViewModel
     let dictionaryViewModel: DictionaryViewModel
     let snippetsViewModel: SnippetsViewModel
-    let homeViewModel: HomeViewModel
     let promptActionsViewModel: PromptActionsViewModel
     let audioRecorderViewModel: AudioRecorderViewModel
 
@@ -126,7 +125,6 @@ final class ServiceContainer: ObservableObject {
         )
         dictionaryViewModel = DictionaryViewModel(dictionaryService: dictionaryService)
         snippetsViewModel = SnippetsViewModel(snippetService: snippetService)
-        homeViewModel = HomeViewModel(historyService: historyService)
         promptActionsViewModel = PromptActionsViewModel(
             promptActionService: promptActionService,
             promptProcessingService: promptProcessingService
@@ -142,7 +140,6 @@ final class ServiceContainer: ObservableObject {
         ProfilesViewModel._shared = profilesViewModel
         DictionaryViewModel._shared = dictionaryViewModel
         SnippetsViewModel._shared = snippetsViewModel
-        HomeViewModel._shared = homeViewModel
         PromptActionsViewModel._shared = promptActionsViewModel
         AudioRecorderViewModel._shared = audioRecorderViewModel
 
