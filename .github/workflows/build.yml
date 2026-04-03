@@ -13,8 +13,8 @@ on:
     branches: [main]
 
 env:
-  SCHEME: TypeWhisper
-  PROJECT: TypeWhisper.xcodeproj
+  SCHEME: DavyWhisper
+  PROJECT: DavyWhisper.xcodeproj
 
 jobs:
   release-build:
@@ -61,9 +61,9 @@ jobs:
       - name: Create DMG
         run: |
           SHORT_SHA="${GITHUB_SHA::7}"
-          APP_NAME="TypeWhisper"
-          DMG_NAME="TypeWhisper-${SHORT_SHA}.dmg"
-          APP_PATH="build/Build/Products/Release/TypeWhisper.app"
+          APP_NAME="DavyWhisper"
+          DMG_NAME="DavyWhisper-${SHORT_SHA}.dmg"
+          APP_PATH="build/Build/Products/Release/DavyWhisper.app"
           SETTINGS="${GITHUB_WORKSPACE}/.github/dmgbuild-settings.py"
           BACKGROUND="${GITHUB_WORKSPACE}/.github/dmg-background.png"
 
@@ -77,8 +77,8 @@ jobs:
       - name: Upload DMG
         uses: actions/upload-artifact@v7
         with:
-          name: TypeWhisper-DMG
-          path: build/TypeWhisper-*.dmg
+          name: DavyWhisper-DMG
+          path: build/DavyWhisper-*.dmg
           retention-days: 14
 
   app-tests:
@@ -105,12 +105,17 @@ jobs:
             -scheme $SCHEME \
             -destination 'platform=macOS,arch=arm64' \
             -parallel-testing-enabled NO \
+            -enableCodeCoverage YES \
+            -resultBundlePath build/DavyWhisperCodeCoverage.xcresult \
             CODE_SIGN_IDENTITY="-" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO | tee test.log
 
       - name: Check First-Party Warnings
         run: bash scripts/check_first_party_warnings.sh test.log
+
+      - name: Coverage Gate
+        run: python3 scripts/check_coverage.py build/DavyWhisperCodeCoverage.xcresult
 
   plugin-sdk-tests:
     runs-on: macos-15
@@ -119,4 +124,4 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Run Plugin SDK Tests
-        run: swift test --package-path TypeWhisperPluginSDK
+        run: swift test --package-path DavyWhisperPluginSDK

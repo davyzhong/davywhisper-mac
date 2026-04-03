@@ -2,7 +2,7 @@
 
 > Generated: 2026-04-03
 > Author: Plan Agent + P8 Engineer Review
-> Status: PARTIALLY IMPLEMENTED — Phase 1–5 complete
+> Status: PARTIALLY IMPLEMENTED — Phase 1–6 complete
 > Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 → 1.5 (Phase 5 XCUITest + Swift 6 concurrency fixes)
 
 ---
@@ -1302,4 +1302,75 @@ XCTAssertNotEqual(state, .processing, "State should not be mid-processing after 
 
 **最终测试结果**：**210 tests, 0 failures**
 
-*方案版本 1.5 — 2026-04-03*
+## 实现备注 v1.6（Phase 6 — 覆盖率门槛 Gate）
+
+### Decision 23：xcrun xccov JSON 结构
+
+**问题**：xccov 的 `--report --only-targets --json` 和 `--report --files-for-target --json` 均返回顶层列表（无 `"targets"` 或 `"files"` 外层 key）。
+
+**实际方案**：
+```python
+# targets: data 是 list，每个元素有 name/lineCoverage
+for t in data if isinstance(data, list) else data.get("targets", []):
+
+# files-for-target: data 是 list，内含一个 dict { "files": [...], "product": "..." }
+if isinstance(data, list) and data and isinstance(data[0], dict) and "files" in data[0]:
+    return data[0]["files"]
+```
+
+### Decision 24：xccov 路径规范化
+
+**问题**：xcodebuild 创建的 result bundle 路径 `/tmp/DWCov2` 没有 `.xcresult` 后缀；xcrun 需要后缀才能识别。
+
+**实际方案**：`main()` 在解析路径后，若目录存在且不以 `.xcresult` 结尾，自动追加 `.xcresult`。
+
+### Decision 25：覆盖率字段名
+
+**问题**：xccov 报告使用 `executableLines`/`coveredLines`，不是 `lineCount`/`executedLineCount`。
+
+**实际方案**：统一在 `check_coverage.py` 中使用 `executableLines` 和 `coveredLines`。
+
+### Decision 26：Phase 1 覆盖率基准
+
+**实际方案**：设置当前实际覆盖率为 Phase 1 基线（不让 CI 红），计划每个 sprint 逐步提高：
+
+| 类别 | Phase 1 基线 | Phase 2 目标 |
+|------|-------------|-------------|
+| DavyWhisper.app | 8% | 35% |
+| Services (core) | 29% | 60% |
+| ViewModels | 22% | 25% |
+| Models | 68% | 75% |
+| HTTP Server | 61% | 80% |
+
+### Phase 6 已完成文件
+
+| 文件 | 类型 | 说明 |
+|------|------|------|
+| `scripts/check_coverage.py` | 新增 | 覆盖率门槛 gate：xccov 解析 + 分类阈值 + 低覆盖率警告 |
+| `.github/workflows/build.yml` | 修改 | 添加 `-enableCodeCoverage YES` + `-resultBundlePath` + Coverage Gate step；SCHEME/PROJECT 更名为 DavyWhisper |
+
+### CI 覆盖率 Gate 输出示例
+
+```
+=== Coverage Thresholds ===
+
+--- Target Coverage ---
+  ✓ DavyWhisper.app: 9.7%  (threshold: 8%)
+
+--- Category Coverage (excl. plugins & vendor) ---
+  ✓ Services (core): 30.8%  (threshold: 29%, files: 2595/8426)
+  ✓ ViewModels: 22.6%  (threshold: 22%, files: 855/3783)
+  ✓ Models: 69.2%  (threshold: 68%, files: 269/389)
+  ✓ HTTP Server: 62.1%  (threshold: 61%, files: 667/1074)
+
+--- Low-Coverage Files (< 20%) ---
+  ⚠  TranslationService.swift: 0.0%  (374 lines)
+  ⚠  SetupWizardView.swift: 0.0%  (2699 lines)
+  ...
+
+=== COVERAGE GATE PASSED ===
+```
+
+**覆盖率 Gate 触发条件**：任一类别跌破 Phase 1 基线阈值。Views 类（SetupWizard、Settings 等）目前 0%，不影响 gate — 在完善 UI 测试后逐步提高。
+
+*方案版本 1.6 — 2026-04-03*
