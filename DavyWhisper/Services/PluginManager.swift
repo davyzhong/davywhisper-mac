@@ -121,7 +121,7 @@ final class PluginManager: ObservableObject {
     private func loadCompiledPlugins() {
         guard let resourceURL = Bundle.main.resourceURL else { return }
 
-        let pluginNames = ["WhisperKitPlugin", "DeepgramPlugin", "WebhookPlugin",
+        let pluginNames = ["WhisperKitPlugin", "DeepgramPlugin",
                           "ElevenLabsPlugin", "LiveTranscriptPlugin",
                           "GLMPlugin", "KimiPlugin", "MiniMaxPlugin", "QwenLLMPlugin",
                           "ParaformerPlugin"]

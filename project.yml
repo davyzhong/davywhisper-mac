@@ -34,9 +34,6 @@ targets:
         - path: Plugins/DeepgramPlugin
           excludes:
             - "**/*.xcstrings"
-        - path: Plugins/WebhookPlugin
-          excludes:
-            - "**/*.xcstrings"
         - path: Plugins/ElevenLabsPlugin
           excludes:
             - "**/*.xcstrings"

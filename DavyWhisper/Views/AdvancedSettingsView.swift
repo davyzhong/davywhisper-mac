@@ -138,12 +138,6 @@ struct AdvancedSettingsView: View {
                 Text(String(localized: "Uses hf-mirror.com for faster downloads in China. Restart required."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
-
-                Toggle(String(localized: "Spoken feedback"), isOn: $dictation.spokenFeedbackEnabled)
-
-                Text(String(localized: "Reads back the transcribed text via speech synthesis after each dictation."))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
 
             // MARK: - History

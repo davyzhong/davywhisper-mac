@@ -47,7 +47,7 @@ final class LocalizationTests: XCTestCase {
     func testPluginLocalizationsAreZhHans() {
         let projectRoot = TestSupport.repoRoot
         let plugins = [
-            "WhisperKitPlugin", "DeepgramPlugin", "WebhookPlugin",
+            "WhisperKitPlugin", "DeepgramPlugin",
             "ElevenLabsPlugin", "LiveTranscriptPlugin", "Qwen3Plugin",
         ]
         for plugin in plugins {

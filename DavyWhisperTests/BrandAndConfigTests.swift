@@ -143,12 +143,11 @@ final class BrandAndConfigTests: XCTestCase {
         let expectedPluginSources = [
             "Plugins/WhisperKitPlugin",
             "Plugins/DeepgramPlugin",
-            "Plugins/WebhookPlugin",
             "Plugins/ElevenLabsPlugin",
             "Plugins/GLMPlugin",
             "Plugins/KimiPlugin",
             "Plugins/MiniMaxPlugin",
-            "Plugins/QwenLLMPlugin",
+            "Plugins/ParaformerPlugin",
         ]
         for source in expectedPluginSources {
             XCTAssertTrue(content.contains(source),

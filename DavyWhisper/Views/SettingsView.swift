@@ -319,24 +319,6 @@ struct RecordingSettingsView: View {
                     .foregroundStyle(.secondary)
             }
 
-            Section(String(localized: "Audio Ducking")) {
-                Toggle(String(localized: "Reduce system volume during recording"), isOn: $dictation.audioDuckingEnabled)
-
-                if dictation.audioDuckingEnabled {
-                    HStack {
-                        Image(systemName: "speaker.slash")
-                            .foregroundStyle(.secondary)
-                        Slider(value: $dictation.audioDuckingLevel, in: 0...0.5, step: 0.05)
-                        Image(systemName: "speaker.wave.2")
-                            .foregroundStyle(.secondary)
-                    }
-
-                    Text(String(localized: "Percentage of your current volume to use during recording. 0% mutes completely."))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-
             if needsPermissions {
                 Section(String(localized: "Permissions")) {
                     if dictation.needsMicPermission {

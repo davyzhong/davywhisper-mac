@@ -124,7 +124,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
         let textInsertionService = TextInsertionService()
         let historyService = HistoryService(appSupportDirectory: appSupportDirectory)
         let profileService = ProfileService(appSupportDirectory: appSupportDirectory)
-        let audioDuckingService = AudioDuckingService()
         let dictionaryService = DictionaryService(appSupportDirectory: appSupportDirectory)
         let snippetService = SnippetService(appSupportDirectory: appSupportDirectory)
         let soundService = SoundService()
@@ -132,7 +131,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
         let promptActionService = PromptActionService(appSupportDirectory: appSupportDirectory)
         let promptProcessingService = PromptProcessingService()
         let appFormatterService = AppFormatterService()
-        let speechFeedbackService = SpeechFeedbackService()
         let accessibilityAnnouncementService = AccessibilityAnnouncementService()
         let errorLogService = ErrorLogService(appSupportDirectory: appSupportDirectory)
         let settingsViewModel = SettingsViewModel(modelManager: modelManager)
@@ -146,7 +144,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
             historyService: historyService,
             profileService: profileService,
             translationService: nil,
-            audioDuckingService: audioDuckingService,
             dictionaryService: dictionaryService,
             snippetService: snippetService,
             soundService: soundService,
@@ -154,7 +151,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
             promptActionService: promptActionService,
             promptProcessingService: promptProcessingService,
             appFormatterService: appFormatterService,
-            speechFeedbackService: speechFeedbackService,
             accessibilityAnnouncementService: accessibilityAnnouncementService,
             errorLogService: errorLogService
         )
@@ -183,7 +179,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
                 textInsertionService,
                 historyService,
                 profileService,
-                audioDuckingService,
                 dictionaryService,
                 snippetService,
                 soundService,
@@ -191,7 +186,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
                 promptActionService,
                 promptProcessingService,
                 appFormatterService,
-                speechFeedbackService,
                 accessibilityAnnouncementService,
                 errorLogService,
                 settingsViewModel,

@@ -31,7 +31,6 @@ final class PromptPaletteHandler {
     private let promptProcessingService: PromptProcessingService
     private let soundService: SoundService
     private let accessibilityAnnouncementService: AccessibilityAnnouncementService
-    private let speechFeedbackService: SpeechFeedbackService
 
     var onShowNotchFeedback: ((String, String, TimeInterval, Bool, String?) -> Void)?
     var onShowError: ((String) -> Void)?
@@ -47,15 +46,13 @@ final class PromptPaletteHandler {
         promptActionService: PromptActionService,
         promptProcessingService: PromptProcessingService,
         soundService: SoundService,
-        accessibilityAnnouncementService: AccessibilityAnnouncementService,
-        speechFeedbackService: SpeechFeedbackService
+        accessibilityAnnouncementService: AccessibilityAnnouncementService
     ) {
         self.textInsertionService = textInsertionService
         self.promptActionService = promptActionService
         self.promptProcessingService = promptProcessingService
         self.soundService = soundService
         self.accessibilityAnnouncementService = accessibilityAnnouncementService
-        self.speechFeedbackService = speechFeedbackService
     }
 
     func hide() {
@@ -158,7 +155,6 @@ final class PromptPaletteHandler {
 
         onShowNotchFeedback?(action.name + "...", "ellipsis.circle", 30, false, nil)
         accessibilityAnnouncementService.announcePromptProcessing(action.name)
-        speechFeedbackService.announceEvent(.promptProcessing)
 
         Task { [weak self] in
             guard let self else { return }
@@ -184,7 +180,6 @@ final class PromptPaletteHandler {
                     )
                     soundService.play(.transcriptionSuccess, enabled: soundFeedbackEnabled)
                     self.accessibilityAnnouncementService.announcePromptComplete()
-                    self.speechFeedbackService.announceEvent(.promptComplete)
                     let feedback = getActionFeedback?() ?? (message: nil, icon: nil, duration: 3.5)
                     onShowNotchFeedback?(
                         feedback.0 ?? "Done",
@@ -242,7 +237,6 @@ final class PromptPaletteHandler {
 
                 soundService.play(.transcriptionSuccess, enabled: soundFeedbackEnabled)
                 self.accessibilityAnnouncementService.announcePromptComplete()
-                self.speechFeedbackService.announceEvent(.promptComplete)
                 onShowNotchFeedback?(
                     insertionOutcome == .failed ? String(localized: "Copied to clipboard") : String(localized: "Text replaced"),
                     insertionOutcome == .failed ? "doc.on.clipboard.fill" : "checkmark.circle.fill",
@@ -254,7 +248,6 @@ final class PromptPaletteHandler {
                 guard !Task.isCancelled else { return }
                 soundService.play(.error, enabled: soundFeedbackEnabled)
                 self.accessibilityAnnouncementService.announceError(error.localizedDescription)
-                self.speechFeedbackService.announceEvent(.error(reason: error.localizedDescription))
                 onShowNotchFeedback?(error.localizedDescription, "xmark.circle.fill", 2.5, true, "prompt")
             }
         }

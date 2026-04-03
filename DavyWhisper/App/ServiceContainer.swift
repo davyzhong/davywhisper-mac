@@ -15,7 +15,6 @@ final class ServiceContainer: ObservableObject {
     let textDiffService: TextDiffService
     let profileService: ProfileService
     let translationService: AnyObject? // TranslationService (macOS 15+)
-    let audioDuckingService: AudioDuckingService
     let dictionaryService: DictionaryService
     let snippetService: SnippetService
     let soundService: SoundService
@@ -28,9 +27,7 @@ final class ServiceContainer: ObservableObject {
     let memoryService: MemoryService
     let appFormatterService: AppFormatterService
     let audioRecorderService: AudioRecorderService
-    let watchFolderService: WatchFolderService
     let accessibilityAnnouncementService: AccessibilityAnnouncementService
-    let speechFeedbackService: SpeechFeedbackService
     let errorLogService: ErrorLogService
 
     // HTTP API
@@ -48,7 +45,6 @@ final class ServiceContainer: ObservableObject {
     let homeViewModel: HomeViewModel
     let promptActionsViewModel: PromptActionsViewModel
     let audioRecorderViewModel: AudioRecorderViewModel
-    let watchFolderViewModel: WatchFolderViewModel
 
     private init() {
         // Services
@@ -69,7 +65,6 @@ final class ServiceContainer: ObservableObject {
         #else
         translationService = nil
         #endif
-        audioDuckingService = AudioDuckingService()
         dictionaryService = DictionaryService()
         snippetService = SnippetService()
         soundService = SoundService()
@@ -83,9 +78,7 @@ final class ServiceContainer: ObservableObject {
         appFormatterService = AppFormatterService()
         audioRecorderService = AudioRecorderService()
         promptProcessingService.memoryService = memoryService
-        watchFolderService = WatchFolderService(audioFileService: audioFileService, modelManagerService: modelManagerService)
         accessibilityAnnouncementService = AccessibilityAnnouncementService()
-        speechFeedbackService = SpeechFeedbackService()
         errorLogService = ErrorLogService()
 
         // ViewModels (created before HTTP API so DictationViewModel is available)
@@ -103,7 +96,6 @@ final class ServiceContainer: ObservableObject {
             historyService: historyService,
             profileService: profileService,
             translationService: translationService,
-            audioDuckingService: audioDuckingService,
             dictionaryService: dictionaryService,
             snippetService: snippetService,
             soundService: soundService,
@@ -111,7 +103,6 @@ final class ServiceContainer: ObservableObject {
             promptActionService: promptActionService,
             promptProcessingService: promptProcessingService,
             appFormatterService: appFormatterService,
-            speechFeedbackService: speechFeedbackService,
             accessibilityAnnouncementService: accessibilityAnnouncementService,
             errorLogService: errorLogService
         )
@@ -141,7 +132,6 @@ final class ServiceContainer: ObservableObject {
             promptProcessingService: promptProcessingService
         )
         audioRecorderViewModel = AudioRecorderViewModel(recorderService: audioRecorderService, modelManager: modelManagerService, dictionaryService: dictionaryService)
-        watchFolderViewModel = WatchFolderViewModel(watchFolderService: watchFolderService)
 
         // Set shared references
         FileTranscriptionViewModel._shared = fileTranscriptionViewModel
@@ -155,7 +145,6 @@ final class ServiceContainer: ObservableObject {
         HomeViewModel._shared = homeViewModel
         PromptActionsViewModel._shared = promptActionsViewModel
         AudioRecorderViewModel._shared = audioRecorderViewModel
-        WatchFolderViewModel._shared = watchFolderViewModel
 
         // Plugin system
         EventBus.shared = EventBus()
@@ -197,15 +186,6 @@ final class ServiceContainer: ObservableObject {
 
         // Start memory service
         memoryService.startListening()
-
-        // Auto-start watch folder if configured
-        if UserDefaults.standard.bool(forKey: UserDefaultsKeys.watchFolderAutoStart),
-           let bookmark = UserDefaults.standard.data(forKey: UserDefaultsKeys.watchFolderBookmark) {
-            var isStale = false
-            if let url = try? URL(resolvingBookmarkData: bookmark, options: .withSecurityScope, bookmarkDataIsStale: &isStale) {
-                watchFolderService.startWatching(folderURL: url)
-            }
-        }
 
         // Migrate stale cloudModelOverride in profiles
         for profile in profileService.profiles {

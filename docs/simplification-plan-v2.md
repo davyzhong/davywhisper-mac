@@ -198,12 +198,12 @@ PluginSDK 中定义了 3 种零实现的插件协议：
 
 ## 9. 执行顺序
 
-| Phase | 内容 | 风险 |
-|-------|------|------|
-| Phase 1 | 方向 B：砍低价值模块（最安全，无依赖） | 低 |
-| Phase 2 | 方向 D：砍零实现协议（SDK 层清理） | 低 |
-| Phase 3 | 方向 A：LLM 插件统一（核心变更） | 中 |
-| Phase 4 | 方向 C：设置 Tab 合并（UI 层调整） | 低 |
+| Phase | 内容 | 风险 | 状态 |
+|-------|------|------|------|
+| Phase 1 | 方向 B：砍低价值模块（WebhookPlugin + WatchFolder + SpeechFeedback + AudioDucking） | 低 | ✅ 完成 |
+| Phase 2 | 方向 D：砍零实现协议（SDK 层清理） | 低 | 待执行 |
+| Phase 3 | 方向 A：LLM 插件统一（核心变更） | 中 | 待执行 |
+| Phase 4 | 方向 C：设置 Tab 合并（UI 层调整） | 低 | 待执行 |
 
 每个 Phase 完成后：build 验证 → commit → push → 进入下一 Phase。
 
