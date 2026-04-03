@@ -89,6 +89,7 @@ struct PluginSettingsView: View {
             .padding(.horizontal)
             .padding(.top, 12)
             .padding(.bottom, 4)
+            .accessibilityIdentifier("com.davywhisper.settings.integrations.pluginList")
 
             if selectedTab == 0 {
                 installedTab
@@ -204,6 +205,7 @@ struct PluginSettingsView: View {
                     }
                 }
             }
+            .accessibilityIdentifier("com.davywhisper.settings.integrations.refresh")
         }
         .formStyle(.grouped)
         .padding(.horizontal)

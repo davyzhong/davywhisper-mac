@@ -21,6 +21,7 @@ struct AdvancedSettingsView: View {
             // MARK: - Memory
             Section(String(localized: "Memory")) {
                 Toggle(String(localized: "Enable Memory"), isOn: $memoryService.isEnabled)
+                    .accessibilityIdentifier("com.davywhisper.settings.advanced.memoryToggle")
                 Text(String(localized: "Automatically extracts facts, preferences and patterns from your transcriptions using an LLM. Memories are injected into prompt context."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -32,6 +33,7 @@ struct AdvancedSettingsView: View {
                             Text(provider.displayName).tag(provider.id)
                         }
                     }
+                    .accessibilityIdentifier("com.davywhisper.settings.advanced.extractionProvider")
 
                     if !memoryService.extractionProviderId.isEmpty {
                         let models = promptProcessingService.modelsForProvider(memoryService.extractionProviderId)
@@ -90,6 +92,7 @@ struct AdvancedSettingsView: View {
                     } label: {
                         Label(String(localized: "Clear All Memories"), systemImage: "trash")
                     }
+                    .accessibilityIdentifier("com.davywhisper.settings.advanced.clearMemories")
                     .confirmationDialog(
                         String(localized: "Clear All Memories?"),
                         isPresented: $showClearMemoryConfirmation
@@ -118,6 +121,7 @@ struct AdvancedSettingsView: View {
                     Text(String(localized: "After 30 minutes")).tag(1800)
                     Text(String(localized: "After 1 hour")).tag(3600)
                 }
+                .accessibilityIdentifier("com.davywhisper.settings.advanced.autoUnloadModel")
 
                 Text(String(localized: "Automatically unloads local models from memory after inactivity. It reloads when needed. Does not affect cloud engines."))
                     .font(.caption)
@@ -129,6 +133,7 @@ struct AdvancedSettingsView: View {
                         UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.useHuggingFaceMirror)
                     }
                 ))
+                .accessibilityIdentifier("com.davywhisper.settings.advanced.hfMirror")
 
                 Text(String(localized: "Uses hf-mirror.com for faster downloads in China. Restart required."))
                     .font(.caption)
@@ -138,6 +143,7 @@ struct AdvancedSettingsView: View {
             // MARK: - History
             Section(String(localized: "History")) {
                 Toggle(String(localized: "Save audio with transcriptions"), isOn: $saveAudioWithHistory)
+                    .accessibilityIdentifier("com.davywhisper.settings.advanced.saveAudio")
                 Text(String(localized: "Stores a WAV recording alongside each transcription. Uses approximately 1 MB per 30 seconds."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -157,6 +163,7 @@ struct AdvancedSettingsView: View {
             // MARK: - API Server
             Section(String(localized: "API Server")) {
                 Toggle(String(localized: "Enable API Server"), isOn: $viewModel.isEnabled)
+                    .accessibilityIdentifier("com.davywhisper.settings.advanced.apiServer")
                     .onChange(of: viewModel.isEnabled) { _, enabled in
                         if enabled {
                             viewModel.startServer()

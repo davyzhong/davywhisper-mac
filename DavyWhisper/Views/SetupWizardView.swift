@@ -152,6 +152,7 @@ struct SetupWizardView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
+                .accessibilityIdentifier("com.davywhisper.setup.welcome.continue")
 
                 Button(String(localized: "Skip Setup")) {
                     UserDefaults.standard.set(true, forKey: UserDefaultsKeys.setupWizardCompleted)
@@ -192,7 +193,8 @@ struct SetupWizardView: View {
                 iconGranted: "mic.fill",
                 iconMissing: "mic.slash",
                 isGranted: !dictation.needsMicPermission,
-                isRequired: true
+                isRequired: true,
+                identifier: "com.davywhisper.setup.permission.mic"
             ) {
                 dictation.requestMicPermission()
             }
@@ -208,7 +210,8 @@ struct SetupWizardView: View {
                 iconGranted: "lock.shield.fill",
                 iconMissing: "lock.shield",
                 isGranted: !dictation.needsAccessibilityPermission,
-                isRequired: false
+                isRequired: false,
+                identifier: "com.davywhisper.setup.permission.accessibility"
             ) {
                 dictation.requestAccessibilityPermission()
             }
@@ -278,6 +281,7 @@ struct SetupWizardView: View {
         iconMissing: String,
         isGranted: Bool,
         isRequired: Bool,
+        identifier: String = "",
         action: @escaping () -> Void
     ) -> some View {
         HStack {
@@ -306,6 +310,7 @@ struct SetupWizardView: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
+                .accessibilityIdentifier(identifier)
             }
         }
         .padding(10)
@@ -1027,6 +1032,7 @@ struct SetupWizardView: View {
                         UserDefaults.standard.set(true, forKey: UserDefaultsKeys.setupWizardCompleted)
                     }
                     .buttonStyle(.borderedProminent)
+                    .accessibilityIdentifier("com.davywhisper.setup.finish.done")
                 } else {
                     Button(String(localized: "Back")) {
                         withAnimation { currentStep -= 1 }

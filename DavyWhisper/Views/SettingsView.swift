@@ -18,40 +18,51 @@ struct SettingsView: View {
                     SettingsMainTabs(pluginUpdatesBadge: registryService.availableUpdatesCount)
                 }
                 .tabViewStyle(.sidebarAdaptable)
+                .accessibilityIdentifier("com.davywhisper.settings.window")
             } else {
                 TabView(selection: $selectedTab) {
                     Group {
                         GeneralSettingsView()
                             .tabItem { Label(String(localized: "General"), systemImage: "gear") }
                             .tag(SettingsTab.general)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.general")
                         RecordingSettingsView()
                             .tabItem { Label(String(localized: "Recording"), systemImage: "mic.fill") }
                             .tag(SettingsTab.recording)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.recording")
                         FileTranscriptionView()
                             .tabItem { Label(String(localized: "File Transcription"), systemImage: "doc.text") }
                             .tag(SettingsTab.fileTranscription)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.fileTranscription")
                         HistoryView()
                             .tabItem { Label(String(localized: "History"), systemImage: "clock.arrow.circlepath") }
                             .tag(SettingsTab.history)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.history")
                     }
                     Group {
                         DictionarySnippetsSettingsView()
                             .tabItem { Label(String(localized: "Dictionary"), systemImage: "book.closed") }
                             .tag(SettingsTab.dictionary)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.dictionary")
                         ProfilesSettingsView()
                             .tabItem { Label(String(localized: "Profiles"), systemImage: "person.crop.rectangle.stack") }
                             .tag(SettingsTab.profiles)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.profiles")
                         PromptActionsSettingsView()
                             .tabItem { Label(String(localized: "Prompts"), systemImage: "sparkles") }
                             .tag(SettingsTab.prompts)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.prompts")
                         PluginSettingsView()
                             .tabItem { Label(String(localized: "Integrations"), systemImage: "puzzlepiece.extension") }
                             .tag(SettingsTab.integrations)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.integrations")
                         AdvancedSettingsView()
                             .tabItem { Label(String(localized: "Advanced"), systemImage: "gearshape.2") }
                             .tag(SettingsTab.advanced)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.advanced")
                     }
                 }
+                .accessibilityIdentifier("com.davywhisper.settings.window")
             }
         }
         .frame(minWidth: 950, idealWidth: 1050, minHeight: 550, idealHeight: 600)
@@ -81,31 +92,40 @@ private struct SettingsMainTabs: TabContent {
         Tab(String(localized: "General"), systemImage: "gear", value: SettingsTab.general) {
             GeneralSettingsView()
         }
+        .accessibilityIdentifier("com.davywhisper.settings.tab.general")
         Tab(String(localized: "Recording"), systemImage: "mic.fill", value: SettingsTab.recording) {
             RecordingSettingsView()
         }
+        .accessibilityIdentifier("com.davywhisper.settings.tab.recording")
         Tab(String(localized: "File Transcription"), systemImage: "doc.text", value: SettingsTab.fileTranscription) {
             FileTranscriptionView()
         }
+        .accessibilityIdentifier("com.davywhisper.settings.tab.fileTranscription")
         Tab(String(localized: "History"), systemImage: "clock.arrow.circlepath", value: SettingsTab.history) {
             HistoryView()
         }
+        .accessibilityIdentifier("com.davywhisper.settings.tab.history")
         Tab(String(localized: "Dictionary"), systemImage: "book.closed", value: SettingsTab.dictionary) {
             DictionarySnippetsSettingsView()
         }
+        .accessibilityIdentifier("com.davywhisper.settings.tab.dictionary")
         Tab(String(localized: "Profiles"), systemImage: "person.crop.rectangle.stack", value: SettingsTab.profiles) {
             ProfilesSettingsView()
         }
+        .accessibilityIdentifier("com.davywhisper.settings.tab.profiles")
         Tab(String(localized: "Prompts"), systemImage: "sparkles", value: SettingsTab.prompts) {
             PromptActionsSettingsView()
         }
+        .accessibilityIdentifier("com.davywhisper.settings.tab.prompts")
         Tab(String(localized: "Integrations"), systemImage: "puzzlepiece.extension", value: SettingsTab.integrations) {
             PluginSettingsView()
         }
         .badge(self.pluginUpdatesBadge)
+        .accessibilityIdentifier("com.davywhisper.settings.tab.integrations")
         Tab(String(localized: "Advanced"), systemImage: "gearshape.2", value: SettingsTab.advanced) {
             AdvancedSettingsView()
         }
+        .accessibilityIdentifier("com.davywhisper.settings.tab.advanced")
     }
 }
 

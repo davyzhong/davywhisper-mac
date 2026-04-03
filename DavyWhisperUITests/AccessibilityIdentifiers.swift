@@ -46,6 +46,15 @@ enum AccessibilityIdentifiers {
         static let preserveClipboardToggle = "com.davywhisper.settings.general.preserveClipboard"
         static let indicatorStylePicker = "com.davywhisper.settings.general.indicatorStyle"
         static let languagePicker = "com.davywhisper.settings.general.language"
+        static let launchAtLoginToggle = "com.davywhisper.settings.general.launchAtLogin"
+        static let showMenuBarIconToggle = "com.davywhisper.settings.general.showMenuBarIcon"
+        static let showRecorderTabToggle = "com.davywhisper.settings.general.showRecorderTab"
+        static let indicatorVisibilityPicker = "com.davywhisper.settings.general.indicatorVisibility"
+        static let indicatorDisplayPicker = "com.davywhisper.settings.general.indicatorDisplay"
+        static let indicatorLeftContentPicker = "com.davywhisper.settings.general.indicatorLeftContent"
+        static let indicatorRightContentPicker = "com.davywhisper.settings.general.indicatorRightContent"
+        static let translationToggle = "com.davywhisper.settings.general.translationToggle"
+        static let translationTargetLanguagePicker = "com.davywhisper.settings.general.translationTargetLanguage"
 
         // Recording settings
         static let microphonePicker = "com.davywhisper.settings.recording.microphone"

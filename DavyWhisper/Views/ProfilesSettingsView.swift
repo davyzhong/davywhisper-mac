@@ -17,6 +17,7 @@ struct ProfilesSettingsView: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
+                .accessibilityIdentifier("com.davywhisper.settings.profiles.add")
             }
             .padding(12)
             .background(.bar)
@@ -37,6 +38,7 @@ struct ProfilesSettingsView: View {
                     }
                 }
                 .listStyle(.inset)
+                .accessibilityIdentifier("com.davywhisper.settings.profiles.list")
             }
         }
         .frame(minWidth: 500, minHeight: 300)
@@ -125,6 +127,7 @@ private struct ProfileEditorSheet: View {
             Form {
                 Section(String(localized: "Name")) {
                     TextField(String(localized: "Profile name"), text: $viewModel.editorName)
+                        .accessibilityIdentifier("com.davywhisper.settings.profiles.name")
                 }
 
                 Section(String(localized: "Hotkey")) {
@@ -282,6 +285,7 @@ private struct ProfileEditorSheet: View {
                             Text(lang.name).tag(lang.code as String?)
                         }
                     }
+                    .accessibilityIdentifier("com.davywhisper.settings.profiles.inputLanguage")
 
                     // Translation target language override
                     #if canImport(Translation)
@@ -293,6 +297,7 @@ private struct ProfileEditorSheet: View {
                                 Text(lang.name).tag(lang.code as String?)
                             }
                         }
+                        .accessibilityIdentifier("com.davywhisper.settings.profiles.translationLanguage")
                     }
                     #endif
 
@@ -304,6 +309,7 @@ private struct ProfileEditorSheet: View {
                             Text(engine.providerDisplayName).tag(engine.providerId as String?)
                         }
                     }
+                    .accessibilityIdentifier("com.davywhisper.settings.profiles.engine")
 
                     if let override = viewModel.editorEngineOverride,
                        let plugin = PluginManager.shared.transcriptionEngine(for: override) {
@@ -327,6 +333,7 @@ private struct ProfileEditorSheet: View {
                             Label(action.name, systemImage: action.icon).tag(action.id.uuidString as String?)
                         }
                     }
+                    .accessibilityIdentifier("com.davywhisper.settings.profiles.prompt")
 
                     if let promptId = viewModel.editorPromptActionId,
                        let action = PromptActionsViewModel.shared.promptActions.first(where: { $0.id.uuidString == promptId }),
@@ -350,6 +357,7 @@ private struct ProfileEditorSheet: View {
                         .foregroundStyle(.secondary)
 
                     Toggle(String(localized: "Inline Commands"), isOn: $viewModel.editorInlineCommandsEnabled)
+                        .accessibilityIdentifier("com.davywhisper.settings.profiles.inlineCommands")
 
                     Text(String(localized: "Detect spoken instructions in your dictation (e.g., 'write this as an email') and apply them automatically via LLM."))
                         .font(.caption)
@@ -357,6 +365,7 @@ private struct ProfileEditorSheet: View {
 
                     // Memory toggle
                     Toggle(String(localized: "Memory"), isOn: $viewModel.editorMemoryEnabled)
+                        .accessibilityIdentifier("com.davywhisper.settings.profiles.memory")
                     Text(String(localized: "When enabled, transcriptions from this profile are stored as memories and used as context for prompts."))
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -371,6 +380,7 @@ private struct ProfileEditorSheet: View {
                         Text(String(localized: "Plain Text")).tag("plaintext" as String?)
                         Text(String(localized: "Code")).tag("code" as String?)
                     }
+                    .accessibilityIdentifier("com.davywhisper.settings.profiles.outputFormat")
                     Text(String(localized: "Format transcribed text for the target app. Auto-detect chooses the format based on the app's bundle ID. Requires app-aware formatting to be enabled in Recording settings."))
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -410,6 +420,7 @@ private struct ProfileEditorSheet: View {
                 }
                 .keyboardShortcut(.defaultAction)
                 .disabled(viewModel.editorName.trimmingCharacters(in: .whitespaces).isEmpty)
+                .accessibilityIdentifier("com.davywhisper.settings.profiles.save")
             }
             .padding()
         }

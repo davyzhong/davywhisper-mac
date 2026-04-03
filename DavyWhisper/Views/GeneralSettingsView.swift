@@ -27,6 +27,7 @@ struct GeneralSettingsView: View {
                         Text(lang.name).tag(lang.code as String?)
                     }
                 }
+                .accessibilityIdentifier("com.davywhisper.settings.general.language")
 
                 Text(String(localized: "The language being spoken. Setting this explicitly improves accuracy."))
                     .font(.caption)
@@ -37,6 +38,7 @@ struct GeneralSettingsView: View {
             if #available(macOS 15, *) {
                 Section(String(localized: "Translation")) {
                     Toggle(String(localized: "Enable translation"), isOn: $settings.translationEnabled)
+                        .accessibilityIdentifier("com.davywhisper.settings.general.translationToggle")
 
                     if settings.translationEnabled {
                         Picker(String(localized: "Target language"), selection: $settings.translationTargetLanguage) {
@@ -44,6 +46,7 @@ struct GeneralSettingsView: View {
                                 Text(lang.name).tag(lang.code)
                             }
                         }
+                        .accessibilityIdentifier("com.davywhisper.settings.general.translationTargetLanguage")
                     }
 
                     Text(String(localized: "Uses Apple Translate (on-device)"))
@@ -58,6 +61,7 @@ struct GeneralSettingsView: View {
                     Text("English").tag("en")
                     Text("简体中文").tag("zh-Hans")
                 }
+                .accessibilityIdentifier("com.davywhisper.settings.general.language")
                 .onChange(of: appLanguage) {
                     UserDefaults.standard.set(appLanguage, forKey: UserDefaultsKeys.preferredAppLanguage)
                     UserDefaults.standard.set([appLanguage], forKey: "AppleLanguages")
@@ -67,6 +71,7 @@ struct GeneralSettingsView: View {
 
             Section(String(localized: "Startup")) {
                 Toggle(String(localized: "Launch at Login"), isOn: $launchAtLogin)
+                    .accessibilityIdentifier("com.davywhisper.settings.general.launchAtLogin")
                     .onChange(of: launchAtLogin) { _, newValue in
                         toggleLaunchAtLogin(newValue)
                     }
@@ -78,6 +83,7 @@ struct GeneralSettingsView: View {
 
             Section(String(localized: "Appearance")) {
                 Toggle(String(localized: "Show menu bar icon"), isOn: $showMenuBarIcon)
+                    .accessibilityIdentifier("com.davywhisper.settings.general.showMenuBarIcon")
                     .onChange(of: showMenuBarIcon) { _, newValue in
                         if !newValue {
                             let alertShown = UserDefaults.standard.bool(forKey: UserDefaultsKeys.menuBarIconHiddenAlertShown)
@@ -93,6 +99,7 @@ struct GeneralSettingsView: View {
                     .foregroundStyle(.secondary)
 
                 Toggle(String(localized: "settings.showRecorderTab"), isOn: $showRecorderTab)
+                    .accessibilityIdentifier("com.davywhisper.settings.general.showRecorderTab")
 
                 Text(String(localized: "settings.showRecorderTab.description"))
                     .font(.caption)
@@ -107,18 +114,21 @@ struct GeneralSettingsView: View {
                 IndicatorStylePicker()
                     .listRowInsets(EdgeInsets())
                     .listRowBackground(Color.clear)
+                    .accessibilityIdentifier("com.davywhisper.settings.general.indicatorStyle")
 
                 Picker(String(localized: "Visibility"), selection: $dictation.notchIndicatorVisibility) {
                     Text(String(localized: "Always visible")).tag(NotchIndicatorVisibility.always)
                     Text(String(localized: "Only during activity")).tag(NotchIndicatorVisibility.duringActivity)
                     Text(String(localized: "Never")).tag(NotchIndicatorVisibility.never)
                 }
+                .accessibilityIdentifier("com.davywhisper.settings.general.indicatorVisibility")
 
                 Picker(String(localized: "Display"), selection: $dictation.notchIndicatorDisplay) {
                     Text(String(localized: "Active Screen")).tag(NotchIndicatorDisplay.activeScreen)
                     Text(String(localized: "Primary Screen")).tag(NotchIndicatorDisplay.primaryScreen)
                     Text(String(localized: "Built-in Display")).tag(NotchIndicatorDisplay.builtInScreen)
                 }
+                .accessibilityIdentifier("com.davywhisper.settings.general.indicatorDisplay")
 
                 if dictation.indicatorStyle == .overlay {
                     Picker(String(localized: "Position"), selection: $dictation.overlayPosition) {
@@ -130,10 +140,12 @@ struct GeneralSettingsView: View {
                 Picker(String(localized: "Left Side"), selection: $dictation.notchIndicatorLeftContent) {
                     notchContentPickerOptions
                 }
+                .accessibilityIdentifier("com.davywhisper.settings.general.indicatorLeftContent")
 
                 Picker(String(localized: "Right Side"), selection: $dictation.notchIndicatorRightContent) {
                     notchContentPickerOptions
                 }
+                .accessibilityIdentifier("com.davywhisper.settings.general.indicatorRightContent")
 
                 if dictation.indicatorStyle == .notch {
                     Text(String(localized: "The notch indicator extends the MacBook notch area to show recording status."))

@@ -18,6 +18,7 @@ struct HotkeySettingsView: View {
                     },
                     onClear: { dictation.clearHotkey(for: .hybrid) }
                 )
+                .accessibilityIdentifier("com.davywhisper.settings.recording.hotkey.hybrid")
 
                 HotkeyRecorderView(
                     label: dictation.pttHotkeyLabel,
@@ -31,6 +32,7 @@ struct HotkeySettingsView: View {
                     },
                     onClear: { dictation.clearHotkey(for: .pushToTalk) }
                 )
+                .accessibilityIdentifier("com.davywhisper.settings.recording.hotkey.ptt")
 
                 HotkeyRecorderView(
                     label: dictation.toggleHotkeyLabel,
@@ -44,6 +46,7 @@ struct HotkeySettingsView: View {
                     },
                     onClear: { dictation.clearHotkey(for: .toggle) }
                 )
+                .accessibilityIdentifier("com.davywhisper.settings.recording.hotkey.toggle")
             }
 
             Section(String(localized: "Prompt Palette")) {
@@ -58,6 +61,7 @@ struct HotkeySettingsView: View {
                     },
                     onClear: { dictation.clearHotkey(for: .promptPalette) }
                 )
+                .accessibilityIdentifier("com.davywhisper.settings.recording.hotkey.promptPalette")
 
                 Text(String(localized: "Select text in any app, press the shortcut, and choose a prompt to process the text."))
                     .font(.caption)
