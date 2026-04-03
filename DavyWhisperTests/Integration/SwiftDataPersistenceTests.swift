@@ -1,4 +1,4 @@
-import XCTest
+@preconcurrency import XCTest
 @testable import DavyWhisper
 
 /// Tests SwiftData persistence across HistoryService, ProfileService, DictionaryService, SnippetService.
@@ -6,17 +6,12 @@ import XCTest
 @MainActor
 final class SwiftDataPersistenceTests: XCTestCase {
 
-    var tempDir: URL!
-    var appDir: URL!
-
-    private func makeAppDir() -> URL {
-        tempDir.appendingPathComponent("AppSupport", isDirectory: true)
-    }
+    nonisolated(unsafe) private var tempDir: URL!
+    nonisolated(unsafe) private var appDir: URL!
 
     override func setUp() {
-        super.setUp()
         tempDir = try! TestSupport.makeTemporaryDirectory()
-        appDir = makeAppDir()
+        appDir = tempDir.appendingPathComponent("AppSupport", isDirectory: true)
         try! FileManager.default.createDirectory(at: appDir, withIntermediateDirectories: true)
 
         let original = AppConstants.testAppSupportDirectoryOverride
@@ -26,7 +21,6 @@ final class SwiftDataPersistenceTests: XCTestCase {
 
     override func tearDown() {
         TestSupport.remove(tempDir)
-        super.tearDown()
     }
 
     // MARK: - HistoryService Persistence
@@ -43,13 +37,13 @@ final class SwiftDataPersistenceTests: XCTestCase {
             appName: "TestApp",
             appBundleIdentifier: "com.test.app",
             durationSeconds: 1.5,
+            language: "en",
             engineUsed: "WhisperKit"
         )
 
         // Create new service instance pointing to same directory
         let service2 = HistoryService(appSupportDirectory: appDir)
-        service2.loadRecords()
-
+        // fetchRecords is called automatically in init; records should already be populated
         XCTAssertEqual(service2.records.count, 1)
         XCTAssertEqual(service2.records.first?.rawText, "original text")
         XCTAssertEqual(service2.records.first?.finalText, "final text")
@@ -62,12 +56,18 @@ final class SwiftDataPersistenceTests: XCTestCase {
         AppConstants.testAppSupportDirectoryOverride = appDir
 
         let service1 = HistoryService(appSupportDirectory: appDir)
-        service1.addRecord(rawText: "r1", finalText: "R1", appBundleIdentifier: nil, durationSeconds: 1.0, engineUsed: "X")
-        service1.addRecord(rawText: "r2", finalText: "R2", appBundleIdentifier: nil, durationSeconds: 2.0, engineUsed: "Y")
+        service1.addRecord(
+            rawText: "r1", finalText: "R1",
+            appName: nil, appBundleIdentifier: nil,
+            durationSeconds: 1.0, language: nil, engineUsed: "X"
+        )
+        service1.addRecord(
+            rawText: "r2", finalText: "R2",
+            appName: nil, appBundleIdentifier: nil,
+            durationSeconds: 2.0, language: nil, engineUsed: "Y"
+        )
 
         let service2 = HistoryService(appSupportDirectory: appDir)
-        service2.loadRecords()
-
         XCTAssertEqual(service2.records.count, 2)
         XCTAssertTrue(service2.records.contains { $0.rawText == "r1" })
         XCTAssertTrue(service2.records.contains { $0.rawText == "r2" })
@@ -82,16 +82,9 @@ final class SwiftDataPersistenceTests: XCTestCase {
         AppConstants.testAppSupportDirectoryOverride = appDir
 
         let service1 = ProfileService(appSupportDirectory: appDir)
-        let profile = Profile(
-            name: "TestProfile",
-            bundleIdentifier: "com.test.app",
-            isEnabled: true
-        )
-        service1.addProfile(profile)
+        service1.addProfile(name: "TestProfile", bundleIdentifiers: ["com.test.app"])
 
         let service2 = ProfileService(appSupportDirectory: appDir)
-        service2.loadProfiles()
-
         XCTAssertEqual(service2.profiles.count, 1)
         XCTAssertEqual(service2.profiles.first?.name, "TestProfile")
 
@@ -110,9 +103,9 @@ final class SwiftDataPersistenceTests: XCTestCase {
         let service2 = DictionaryService(appSupportDirectory: appDir)
         service2.loadEntries()
 
-        XCTAssertEqual(service2.dictionaryEntries.count, 1)
-        XCTAssertEqual(service2.dictionaryEntries.first?.original, "teh")
-        XCTAssertEqual(service2.dictionaryEntries.first?.replacement, "the")
+        XCTAssertEqual(service2.entries.count, 1)
+        XCTAssertEqual(service2.entries.first?.original, "teh")
+        XCTAssertEqual(service2.entries.first?.replacement, "the")
 
         AppConstants.testAppSupportDirectoryOverride = original
     }
@@ -161,16 +154,18 @@ final class SwiftDataPersistenceTests: XCTestCase {
         AppConstants.testAppSupportDirectoryOverride = appDir
 
         let service1 = HistoryService(appSupportDirectory: appDir)
-        service1.addRecord(rawText: "to delete", finalText: "deleted", appBundleIdentifier: nil, durationSeconds: 1.0, engineUsed: "X")
+        service1.addRecord(
+            rawText: "to delete", finalText: "deleted",
+            appName: nil, appBundleIdentifier: nil,
+            durationSeconds: 1.0, language: nil, engineUsed: "X"
+        )
 
         let service2 = HistoryService(appSupportDirectory: appDir)
-        service2.loadRecords()
         let recordToDelete = service2.records.first { $0.rawText == "to delete" }
         XCTAssertNotNil(recordToDelete)
         service2.deleteRecord(recordToDelete!)
 
         let service3 = HistoryService(appSupportDirectory: appDir)
-        service3.loadRecords()
         XCTAssertEqual(service3.records.count, 0)
 
         AppConstants.testAppSupportDirectoryOverride = original

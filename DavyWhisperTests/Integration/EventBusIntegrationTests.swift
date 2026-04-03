@@ -3,6 +3,35 @@ import XCTest
 import DavyWhisperPluginSDK
 
 /// Tests EventBus pub/sub and the event → MemoryService pipeline.
+/// Uses an actor to safely capture events from callbacks that may run on any thread.
+actor EventCollector {
+    private(set) var events: [DavyWhisperEvent] = []
+    private(set) var count: Int = 0
+    private(set) var recordingPayload: RecordingStartedPayload?
+    private(set) var transcriptionPayload: TranscriptionCompletedPayload?
+
+    func addEvent(_ event: DavyWhisperEvent) {
+        events.append(event)
+        count += 1
+    }
+
+    func setRecordingPayload(_ payload: RecordingStartedPayload) {
+        recordingPayload = payload
+    }
+
+    func setTranscriptionPayload(_ payload: TranscriptionCompletedPayload) {
+        transcriptionPayload = payload
+    }
+
+    func reset() {
+        events = []
+        count = 0
+        recordingPayload = nil
+        transcriptionPayload = nil
+    }
+}
+
+/// Tests EventBus pub/sub and the event → MemoryService pipeline.
 @MainActor
 final class EventBusIntegrationTests: XCTestCase {
 
@@ -38,21 +67,25 @@ final class EventBusIntegrationTests: XCTestCase {
     }
 
     func testUnsubscribe_preventsDelivery() async {
-        var deliveryCount = 0
-        let id = EventBus.shared.subscribe { _ in
-            deliveryCount += 1
+        let collector = EventCollector()
+        let id = EventBus.shared.subscribe { event in
+            Task { await collector.addEvent(event) }
         }
 
         // Emit before unsubscribe
         EventBus.shared.emit(.recordingStarted(RecordingStartedPayload(appName: nil, bundleIdentifier: nil)))
-        XCTAssertEqual(deliveryCount, 1)
+        try? await Task.sleep(for: .milliseconds(50))
+        let count1 = await collector.count
+        XCTAssertEqual(count1, 1)
 
         // Unsubscribe
         EventBus.shared.unsubscribe(id: id)
 
         // Emit after unsubscribe — count should still be 1
         EventBus.shared.emit(.recordingStopped(RecordingStoppedPayload(durationSeconds: 1.0)))
-        XCTAssertEqual(deliveryCount, 1)
+        try? await Task.sleep(for: .milliseconds(50))
+        let count2 = await collector.count
+        XCTAssertEqual(count2, 1)
     }
 
     func testDoubleUnsubscribe_isSafe() {
@@ -65,25 +98,27 @@ final class EventBusIntegrationTests: XCTestCase {
     // MARK: - Event Delivery
 
     func testEmit_deliversAllRegisteredEvents() async {
-        var receivedEvents: [DavyWhisperEvent] = []
+        let collector = EventCollector()
         let id = EventBus.shared.subscribe { event in
-            receivedEvents.append(event)
+            Task { await collector.addEvent(event) }
         }
 
         EventBus.shared.emit(.recordingStarted(RecordingStartedPayload(appName: nil, bundleIdentifier: nil)))
         EventBus.shared.emit(.recordingStopped(RecordingStoppedPayload(durationSeconds: 1.0)))
         EventBus.shared.emit(.recordingStarted(RecordingStartedPayload(appName: "Test", bundleIdentifier: nil)))
 
-        XCTAssertEqual(receivedEvents.count, 3)
+        try? await Task.sleep(for: .milliseconds(50))
+        let count = await collector.count
+        XCTAssertEqual(count, 3)
 
         EventBus.shared.unsubscribe(id: id)
     }
 
     func testEmit_recordingStarted_deliversCorrectPayload() async {
-        var received: RecordingStartedPayload?
+        let collector = EventCollector()
         let id = EventBus.shared.subscribe { event in
             if case .recordingStarted(let payload) = event {
-                received = payload
+                Task { await collector.setRecordingPayload(payload) }
             }
         }
 
@@ -92,18 +127,20 @@ final class EventBusIntegrationTests: XCTestCase {
             bundleIdentifier: "com.example.myapp"
         )))
 
-        XCTAssertNotNil(received)
-        XCTAssertEqual(received?.appName, "MyApp")
-        XCTAssertEqual(received?.bundleIdentifier, "com.example.myapp")
+        try? await Task.sleep(for: .milliseconds(50))
+        let payload = await collector.recordingPayload
+        XCTAssertNotNil(payload)
+        XCTAssertEqual(payload?.appName, "MyApp")
+        XCTAssertEqual(payload?.bundleIdentifier, "com.example.myapp")
 
         EventBus.shared.unsubscribe(id: id)
     }
 
     func testEmit_transcriptionCompleted_deliversCorrectPayload() async {
-        var received: TranscriptionCompletedPayload?
+        let collector = EventCollector()
         let id = EventBus.shared.subscribe { event in
             if case .transcriptionCompleted(let payload) = event {
-                received = payload
+                Task { await collector.setTranscriptionPayload(payload) }
             }
         }
 
@@ -118,10 +155,12 @@ final class EventBusIntegrationTests: XCTestCase {
             bundleIdentifier: "com.test"
         )))
 
-        XCTAssertNotNil(received)
-        XCTAssertEqual(received?.rawText, "raw")
-        XCTAssertEqual(received?.finalText, "final")
-        XCTAssertEqual(received?.engineUsed, "WhisperKit")
+        try? await Task.sleep(for: .milliseconds(50))
+        let payload = await collector.transcriptionPayload
+        XCTAssertNotNil(payload)
+        XCTAssertEqual(payload?.rawText, "raw")
+        XCTAssertEqual(payload?.finalText, "final")
+        XCTAssertEqual(payload?.engineUsed, "WhisperKit")
 
         EventBus.shared.unsubscribe(id: id)
     }

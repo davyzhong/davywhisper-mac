@@ -13,27 +13,23 @@ final class EventBus: EventBusProtocol, @unchecked Sendable {
         let handler: @Sendable (DavyWhisperEvent) async -> Void
     }
 
-    private var subscriptions: [Subscription] = []
-    private let lock = NSLock()
+    private nonisolated(unsafe) var subscriptions: [Subscription] = []
+    private nonisolated(unsafe) let lock = NSLock()
 
     @discardableResult
     nonisolated func subscribe(handler: @escaping @Sendable (DavyWhisperEvent) async -> Void) -> UUID {
         let id = UUID()
         let subscription = Subscription(id: id, handler: handler)
-        DispatchQueue.main.async {
-            self.lock.lock()
-            self.subscriptions.append(subscription)
-            self.lock.unlock()
-        }
+        lock.lock()
+        subscriptions.append(subscription)
+        lock.unlock()
         return id
     }
 
     nonisolated func unsubscribe(id: UUID) {
-        DispatchQueue.main.async {
-            self.lock.lock()
-            self.subscriptions.removeAll { $0.id == id }
-            self.lock.unlock()
-        }
+        lock.lock()
+        subscriptions.removeAll { $0.id == id }
+        lock.unlock()
     }
 
     func emit(_ event: DavyWhisperEvent) {

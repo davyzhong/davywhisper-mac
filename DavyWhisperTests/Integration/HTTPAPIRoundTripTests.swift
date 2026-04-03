@@ -50,10 +50,10 @@ final class HTTPAPIRoundTripTests: XCTestCase {
     func testStatusEndpoint_returns200() async {
         let response = await router.route(makeRequest(method: "GET", path: "/v1/status"))
         XCTAssertEqual(response.status, 200)
-        XCTAssertTrue(response.contentType?.contains("application/json") == true)
+        XCTAssertTrue(response.contentType.contains("application/json"))
     }
 
-    func testStatusEndpoint_returnsModelStatus() async {
+    func testStatusEndpoint_returnsModelStatus() async throws {
         let response = await router.route(makeRequest(method: "GET", path: "/v1/status"))
         let json = try parseJSONResponse(response)
         // No model loaded in test environment — status should be no_model or similar
@@ -63,13 +63,14 @@ final class HTTPAPIRoundTripTests: XCTestCase {
 
     // MARK: - History CRUD
 
-    func testHistoryGET_returnsEntries() async {
+    func testHistoryGET_returnsEntries() async throws {
         container.historyService.addRecord(
             rawText: "hello world",
             finalText: "Hello World",
             appName: "TestApp",
             appBundleIdentifier: "com.test.app",
             durationSeconds: 1.5,
+            language: "en",
             engineUsed: "WhisperKit"
         )
 
@@ -79,11 +80,11 @@ final class HTTPAPIRoundTripTests: XCTestCase {
         let json = try parseJSONResponse(response)
         let entries = json["entries"] as? [[String: Any]]
         XCTAssertEqual(entries?.count, 1)
-        XCTAssertEqual(entries?.first?["rawText"] as? String, "hello world")
-        XCTAssertEqual(entries?.first?["finalText"] as? String, "Hello World")
+        XCTAssertEqual(entries?.first?["raw_text"] as? String, "hello world")
+        XCTAssertEqual(entries?.first?["text"] as? String, "Hello World")
     }
 
-    func testHistoryGET_returnsEmptyWhenNoRecords() async {
+    func testHistoryGET_returnsEmptyWhenNoRecords() async throws {
         let response = await router.route(makeRequest(method: "GET", path: "/v1/history"))
         XCTAssertEqual(response.status, 200)
 
@@ -92,9 +93,25 @@ final class HTTPAPIRoundTripTests: XCTestCase {
         XCTAssertEqual(entries?.count, 0)
     }
 
-    func testHistoryGET_returnsMultipleEntries() async {
-        container.historyService.addRecord(rawText: "r1", finalText: "R1", appBundleIdentifier: nil, durationSeconds: 1.0, engineUsed: "X")
-        container.historyService.addRecord(rawText: "r2", finalText: "R2", appBundleIdentifier: nil, durationSeconds: 2.0, engineUsed: "Y")
+    func testHistoryGET_returnsMultipleEntries() async throws {
+        container.historyService.addRecord(
+            rawText: "r1",
+            finalText: "R1",
+            appName: nil,
+            appBundleIdentifier: nil,
+            durationSeconds: 1.0,
+            language: nil,
+            engineUsed: "X"
+        )
+        container.historyService.addRecord(
+            rawText: "r2",
+            finalText: "R2",
+            appName: nil,
+            appBundleIdentifier: nil,
+            durationSeconds: 2.0,
+            language: nil,
+            engineUsed: "Y"
+        )
 
         let response = await router.route(makeRequest(method: "GET", path: "/v1/history"))
         let json = try parseJSONResponse(response)
@@ -115,10 +132,10 @@ final class HTTPAPIRoundTripTests: XCTestCase {
     func testProfilesGET_returnsJSON() async {
         let response = await router.route(makeRequest(method: "GET", path: "/v1/profiles"))
         XCTAssertEqual(response.status, 200)
-        XCTAssertTrue(response.contentType?.contains("application/json") == true)
+        XCTAssertTrue(response.contentType.contains("application/json"))
     }
 
-    func testProfilesGET_emptyWhenNoProfiles() async {
+    func testProfilesGET_emptyWhenNoProfiles() async throws {
         let response = await router.route(makeRequest(method: "GET", path: "/v1/profiles"))
         let json = try parseJSONResponse(response)
         let profiles = json["profiles"] as? [[String: Any]]

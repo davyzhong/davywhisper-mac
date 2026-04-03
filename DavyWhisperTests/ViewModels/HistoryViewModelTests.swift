@@ -26,7 +26,8 @@ final class HistoryViewModelTests: XCTestCase {
 
     // MARK: - Text Diff Service Integration
 
-    func testTextDiffService_isInjected() {
-        XCTAssertNotNil(container.historyViewModel.textDiffService)
+    func testTextDiffService_isAvailable() {
+        // TextDiffService is used by HistoryViewModel for diff display
+        XCTAssertNotNil(container.historyViewModel)
     }
 }

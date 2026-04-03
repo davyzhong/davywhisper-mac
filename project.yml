@@ -135,3 +135,22 @@ targets:
           GENERATE_INFOPLIST_FILE: YES
           PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.tests"
           TEST_HOST: "$(BUILT_PRODUCTS_DIR)/DavyWhisper.app/Contents/MacOS/DavyWhisper"
+
+    DavyWhisperUITests:
+      type: bundle.ui-testing
+      platform: macOS
+      sources:
+        - path: DavyWhisperUITests
+      dependencies:
+        - target: DavyWhisper
+      settings:
+        base:
+          SWIFT_VERSION: "6.0"
+          MACOSX_DEPLOYMENT_TARGET: "14.0"
+          SDKROOT: macosx
+          DEVELOPMENT_TEAM: ""
+          CODE_SIGN_IDENTITY: "-"
+          CODE_SIGNING_REQUIRED: NO
+          CODE_SIGNING_ALLOWED: NO
+          GENERATE_INFOPLIST_FILE: YES
+          PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.uitests"
