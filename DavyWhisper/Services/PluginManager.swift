@@ -100,7 +100,7 @@ final class PluginManager: ObservableObject {
 
         let pluginNames = ["WhisperKitPlugin", "DeepgramPlugin",
                           "ElevenLabsPlugin", "LiveTranscriptPlugin",
-                          "GLMPlugin", "KimiPlugin", "MiniMaxPlugin", "QwenLLMPlugin",
+                          "OpenAICompatiblePlugin",
                           "ParaformerPlugin"]
 
         for name in pluginNames {

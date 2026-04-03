@@ -1,0 +1,17 @@
+{
+  "id": "com.davywhisper.openai-compatible",
+  "name": "OpenAI Compatible",
+  "version": "1.0.0",
+  "minHostVersion": "0.11.0",
+  "minOSVersion": "14.0",
+  "author": "DavyWhisper",
+  "description": "Unified LLM provider supporting OpenAI-compatible APIs. Includes presets for GLM, Kimi, MiniMax, Qwen, and DeepSeek.",
+  "descriptions": {
+    "zh-Hans": "统一的 LLM 提供商，支持所有 OpenAI 兼容 API。预置智谱 GLM、Kimi、MiniMax、通义千问、DeepSeek。",
+    "en": "Unified LLM provider supporting OpenAI-compatible APIs. Includes presets for GLM, Kimi, MiniMax, Qwen, and DeepSeek."
+  },
+  "category": "llm",
+  "iconSystemName": "brain",
+  "requiresAPIKey": true,
+  "principalClass": "OpenAICompatiblePlugin"
+}

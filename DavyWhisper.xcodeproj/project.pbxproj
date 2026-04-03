@@ -26,13 +26,10 @@
 		1AC0D851D60EB06243E304BE /* HostServicesImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE21D9A1322ACFADB5055F7 /* HostServicesImpl.swift */; };
 		1BECFA5844C0E520BF24E9FD /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356BF6BB1D2285F809FB97EB /* TestSupport.swift */; };
 		1CC02F75FCA1EFC29FE581F1 /* DictationEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCA46440FD39B36F9BF2B38 /* DictationEnums.swift */; };
-		1D02A00BFE7568C5BA76E752 /* manifest_KimiPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 375BD496298A97D282D380C7 /* manifest_KimiPlugin.json */; };
 		1D0E122F65268D3890EF2CA9 /* NotchIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE66F777E05DD50AA49B904 /* NotchIndicatorView.swift */; };
 		21E8A18AB146712799D131F4 /* HTTPServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAC36FD441125B2D62C924 /* HTTPServerTests.swift */; };
 		232E9CEAD4A47B634F2BB2F5 /* AudioFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DEE79DB29A9F9192ECFE25 /* AudioFileService.swift */; };
 		246A5FE6ACB8B4C5DD2DD5A3 /* HTTPRequestParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7F1131738B707036C4C470 /* HTTPRequestParserTests.swift */; };
-		24754B279EE8119D33CA46BC /* KimiPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DFA5879D80D5712013361 /* KimiPlugin.swift */; };
-		26400E011ABE98F1B3718389 /* manifest_MiniMaxPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DFB3C05B08AFF823A4F702B /* manifest_MiniMaxPlugin.json */; };
 		2A90CA5612245614B9091ACC /* DictationShortSpeechTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742187D9142ABC66C733731A /* DictationShortSpeechTests.swift */; };
 		2C4D9DF2434EBE7C394E14DB /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A88B57C6FD696EB154B1F95 /* Profile.swift */; };
 		2F57F90E75E1D3F8774610CD /* PluginSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FB4A3EF19298F5951727E /* PluginSettingsView.swift */; };
@@ -49,7 +46,6 @@
 		3DBF48A8C6697F82793B4507 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF6F3A69FA5FA7649CB4B3EC /* Assets.xcassets */; };
 		3F405D79FA6474C157C2454C /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F429B203EF888EF82B4FD434 /* LocalizationTests.swift */; };
 		405355033C3901D3AB0ADA1A /* SubtitleExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F6897E0F32881E4426EBE0 /* SubtitleExporterTests.swift */; };
-		40B172F29EDF64D66CC8E20B /* GLMPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29066F3E5B1EABF5F006055 /* GLMPlugin.swift */; };
 		40CB2F2BFAD900E8BDD9E1F3 /* AudioRecorderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74F3C74CB0DA230DBE2AD8A /* AudioRecorderService.swift */; };
 		42E1A9826DA4082F6F3AF58A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25890AB358D1F65FEB2372AE /* SettingsViewModel.swift */; };
 		45A2DAB754D7D1D3D3A878C8 /* PromptProcessingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E30CC8998831A36A37C4FA /* PromptProcessingService.swift */; };
@@ -66,6 +62,7 @@
 		5B7A3C737E2B68248ED356AD /* OverlayIndicatorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF21C3E5C117147FDA71C972 /* OverlayIndicatorPanel.swift */; };
 		5D737A153FC24A0D578455E6 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AA51A4970F849E90053C56 /* KeychainService.swift */; };
 		5DE102C08E14709CA4E9F5C9 /* recording_start.wav in Resources */ = {isa = PBXBuildFile; fileRef = F9488D4CEF5ED8669204CA22 /* recording_start.wav */; };
+		5E20338342F1EA2DB81BF20A /* manifest_OpenAICompatiblePlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 762132A21710C1F1411DA519 /* manifest_OpenAICompatiblePlugin.json */; };
 		5F63D78F9146F9EB1D0FD43B /* manifest_ElevenLabsPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 270B10183381BABB0D994C03 /* manifest_ElevenLabsPlugin.json */; };
 		60528923B20C753832FA4375 /* manifest_LiveTranscriptPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 93B946F714DA21454CFB8C7E /* manifest_LiveTranscriptPlugin.json */; };
 		617D3B872F109FCDD2C74F20 /* TermPackRegistryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A3831EC2AF376506633F85 /* TermPackRegistryService.swift */; };
@@ -86,6 +83,7 @@
 		7C9BAE166C7F09F7356EAD5E /* PromptActionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4059BA8C08D6C9287E49A7 /* PromptActionService.swift */; };
 		7D57F7FF471DF257D604EC19 /* HistoryExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDA51EF893C0A5612914AB /* HistoryExporter.swift */; };
 		7DB8575444EC704445FE2668 /* DictionaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B8441FA5764796C0238D9B /* DictionaryEntry.swift */; };
+		80A5C02D56E01A94205B9692 /* OpenAICompatiblePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E03BEED653604764242DEDD6 /* OpenAICompatiblePlugin.swift */; };
 		8186A0F386EFAB375330A755 /* HotkeyRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2CCE0FFA56BA675DF9EDC /* HotkeyRecorderView.swift */; };
 		81D5A834DE356C95A739F870 /* manifest_WhisperKitPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = D6EA284A0563F68F5932DD1B /* manifest_WhisperKitPlugin.json */; };
 		8276C9ECC797AF44266293E2 /* SherpaOnnx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B756BEDC9283BCCB1CB92F /* SherpaOnnx.swift */; };
@@ -124,7 +122,6 @@
 		B7E3C63DD8084D5F1C870F2E /* sherpa-onnx.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC0A073DA652609E3C219294 /* sherpa-onnx.xcframework */; };
 		BAF7C7752DD1AF2588250730 /* DictationSettingsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114B827DA161BF3AAB2B812A /* DictationSettingsHandler.swift */; };
 		BD8167339850B2D665DBCA60 /* sherpa-onnx.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC0A073DA652609E3C219294 /* sherpa-onnx.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BDA24005A7F026B500B0DFCE /* manifest_GLMPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = E146393F619F86156146D4EC /* manifest_GLMPlugin.json */; };
 		BE9D90794667D05B0BFF1D3C /* FluidAudio in Frameworks */ = {isa = PBXBuildFile; productRef = 15FF8E445C545384FCD82902 /* FluidAudio */; };
 		C1844ADA10E0496088D0D04D /* ProfilesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B242762B83CCED0DB568BB /* ProfilesSettingsView.swift */; };
 		C4F3256B244166D1CADDE649 /* WavEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F07853C6482241E89CCAC0 /* WavEncoder.swift */; };
@@ -153,7 +150,6 @@
 		EBAFD7226A412851C0D4BA7A /* Info.AppStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = B976DF21B1480A25433EF976 /* Info.AppStore.plist */; };
 		ECB5223DB087E294A94ED428 /* APIServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B79529FB42BBD1D58D8E3FE /* APIServerViewModel.swift */; };
 		EE292F3A752B9D8087C2B201 /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00EDA0368A9BD9E030FCFF /* AboutSettingsView.swift */; };
-		F2B00407F452866DE63A8D11 /* MiniMaxPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAF1047F7FE010364BD8912 /* MiniMaxPlugin.swift */; };
 		F32D3C9E305D82C099E32FB5 /* PluginRegistryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC9686D0B7B38A51CDC623 /* PluginRegistryService.swift */; };
 		F3E01573C4FFE93489425B01 /* transcription_success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 55192BB7D45163F9E8AA5567 /* transcription_success.wav */; };
 		F5730E2128D841AE32755012 /* AppFormatterServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EF29707937703115A3718A /* AppFormatterServiceTests.swift */; };
@@ -208,7 +204,6 @@
 		0A9AF6953C31635054076738 /* ErrorLogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogService.swift; sourceTree = "<group>"; };
 		0ACEEAC3A642B7AEF2FC9976 /* SnippetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsViewModel.swift; sourceTree = "<group>"; };
 		0BDDA284730D70479A501D44 /* AudioDeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceService.swift; sourceTree = "<group>"; };
-		0DFB3C05B08AFF823A4F702B /* manifest_MiniMaxPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_MiniMaxPlugin.json; sourceTree = "<group>"; };
 		10F4D07C0B9AB554276B7B27 /* AudioRecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingService.swift; sourceTree = "<group>"; };
 		114B827DA161BF3AAB2B812A /* DictationSettingsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationSettingsHandler.swift; sourceTree = "<group>"; };
 		160FB4A3EF19298F5951727E /* PluginSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginSettingsView.swift; sourceTree = "<group>"; };
@@ -229,7 +224,6 @@
 		2F9F1563390B4BA594D20AAB /* TextInsertionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInsertionServiceTests.swift; sourceTree = "<group>"; };
 		356BF6BB1D2285F809FB97EB /* TestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
 		35CD9EDDCDF0C94CA892986B /* TextDiffService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDiffService.swift; sourceTree = "<group>"; };
-		375BD496298A97D282D380C7 /* manifest_KimiPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_KimiPlugin.json; sourceTree = "<group>"; };
 		3820BC78F51DA70DD6DA4E44 /* TextInsertionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInsertionService.swift; sourceTree = "<group>"; };
 		3F6EFD3F66FC392288499FCA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		420F9C32B0F5D69E07099C77 /* SoundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundService.swift; sourceTree = "<group>"; };
@@ -264,6 +258,7 @@
 		742187D9142ABC66C733731A /* DictationShortSpeechTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationShortSpeechTests.swift; sourceTree = "<group>"; };
 		74F89F341E1DF7525A6810A2 /* OverlayIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayIndicatorView.swift; sourceTree = "<group>"; };
 		7507FE5CFE2F27AC18AFF958 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
+		762132A21710C1F1411DA519 /* manifest_OpenAICompatiblePlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_OpenAICompatiblePlugin.json; sourceTree = "<group>"; };
 		773236593FB13DEBB8958E97 /* LiveTranscriptPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTranscriptPlugin.swift; sourceTree = "<group>"; };
 		776EF76E89E1B65976F243C5 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		78A700661B16C86A4AC1A031 /* DavyWhisper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DavyWhisper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,7 +285,6 @@
 		96311715006C1FCBD3915322 /* LLMProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMProvider.swift; sourceTree = "<group>"; };
 		988D4EA755AC5A80AD29ED48 /* DictionaryExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExporter.swift; sourceTree = "<group>"; };
 		98C95D7806B87C8E17130FF0 /* NotchShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchShape.swift; sourceTree = "<group>"; };
-		9BAF1047F7FE010364BD8912 /* MiniMaxPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniMaxPlugin.swift; sourceTree = "<group>"; };
 		9E318AA116DF13B2B643F1F7 /* manifest_DeepgramPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_DeepgramPlugin.json; sourceTree = "<group>"; };
 		A020D100BEA47E0B1FF6F94D /* davywhisper-cli */ = {isa = PBXFileReference; includeInIndex = 0; path = "davywhisper-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A241ACE4194786425B7A3032 /* SoundServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundServiceTests.swift; sourceTree = "<group>"; };
@@ -324,13 +318,11 @@
 		CE234C7D9B71F50C359DD5F1 /* ErrorLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogView.swift; sourceTree = "<group>"; };
 		CF6F3A69FA5FA7649CB4B3EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D268C2A24EAAF8F6485A2C7E /* ParaformerModel */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ParaformerModel; path = DavyWhisper/Resources/ParaformerModel; sourceTree = SOURCE_ROOT; };
-		D29066F3E5B1EABF5F006055 /* GLMPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLMPlugin.swift; sourceTree = "<group>"; };
 		D6EA284A0563F68F5932DD1B /* manifest_WhisperKitPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_WhisperKitPlugin.json; sourceTree = "<group>"; };
 		D8F505AAF38E32B7A8024B24 /* AppFormatterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFormatterService.swift; sourceTree = "<group>"; };
-		D96DFA5879D80D5712013361 /* KimiPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KimiPlugin.swift; sourceTree = "<group>"; };
 		DEADD1C5E7E8D8BF35D28D7E /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		E03BEED653604764242DEDD6 /* OpenAICompatiblePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAICompatiblePlugin.swift; sourceTree = "<group>"; };
 		E09E31F3330DB04CCAC7A37A /* SnippetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetService.swift; sourceTree = "<group>"; };
-		E146393F619F86156146D4EC /* manifest_GLMPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_GLMPlugin.json; sourceTree = "<group>"; };
 		E423093A439BE8421CDA7F5A /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
 		E74F3C74CB0DA230DBE2AD8A /* AudioRecorderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderService.swift; sourceTree = "<group>"; };
 		E7F2CCE0FFA56BA675DF9EDC /* HotkeyRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyRecorderView.swift; sourceTree = "<group>"; };
@@ -407,16 +399,6 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		244410F0793433BC70894BC1 /* MiniMaxPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				0DFB3C05B08AFF823A4F702B /* manifest_MiniMaxPlugin.json */,
-				9BAF1047F7FE010364BD8912 /* MiniMaxPlugin.swift */,
-			);
-			name = MiniMaxPlugin;
-			path = Plugins/MiniMaxPlugin;
-			sourceTree = "<group>";
-		};
 		34F2965B0554C720ED28ABDB /* LLM */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,16 +418,6 @@
 			path = Plugins/DeepgramPlugin;
 			sourceTree = "<group>";
 		};
-		38DD8F6A07D01932F2564ADE /* KimiPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				D96DFA5879D80D5712013361 /* KimiPlugin.swift */,
-				375BD496298A97D282D380C7 /* manifest_KimiPlugin.json */,
-			);
-			name = KimiPlugin;
-			path = Plugins/KimiPlugin;
-			sourceTree = "<group>";
-		};
 		3D14ED817429217E88C4CA2C /* WhisperKitPlugin */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,6 +426,16 @@
 			);
 			name = WhisperKitPlugin;
 			path = Plugins/WhisperKitPlugin;
+			sourceTree = "<group>";
+		};
+		550B2F02E6BFF048D1ADEF42 /* OpenAICompatiblePlugin */ = {
+			isa = PBXGroup;
+			children = (
+				762132A21710C1F1411DA519 /* manifest_OpenAICompatiblePlugin.json */,
+				E03BEED653604764242DEDD6 /* OpenAICompatiblePlugin.swift */,
+			);
+			name = OpenAICompatiblePlugin;
+			path = Plugins/OpenAICompatiblePlugin;
 			sourceTree = "<group>";
 		};
 		59D69B0DFB4411D383148CE6 /* LiveTranscriptPlugin */ = {
@@ -668,10 +650,8 @@
 				8FFE3F8AC966E425C4A7AC25 /* DavyWhisperTests */,
 				3682102F412A867B8662CD2E /* DeepgramPlugin */,
 				D77A85C375D3E5607016F372 /* ElevenLabsPlugin */,
-				B6CF43FCFB92CC977EC701D1 /* GLMPlugin */,
-				38DD8F6A07D01932F2564ADE /* KimiPlugin */,
 				59D69B0DFB4411D383148CE6 /* LiveTranscriptPlugin */,
-				244410F0793433BC70894BC1 /* MiniMaxPlugin */,
+				550B2F02E6BFF048D1ADEF42 /* OpenAICompatiblePlugin */,
 				9A76E359367E24D1EE3FFD86 /* Packages */,
 				97FCFE44080ADFCB87D2693B /* ParaformerPlugin */,
 				3D14ED817429217E88C4CA2C /* WhisperKitPlugin */,
@@ -679,16 +659,6 @@
 				8ABD304615CC7D88D26D4A2F /* Frameworks */,
 				F5CED00F0F5B3DC1B47FEA20 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		B6CF43FCFB92CC977EC701D1 /* GLMPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				D29066F3E5B1EABF5F006055 /* GLMPlugin.swift */,
-				E146393F619F86156146D4EC /* manifest_GLMPlugin.json */,
-			);
-			name = GLMPlugin;
-			path = Plugins/GLMPlugin;
 			sourceTree = "<group>";
 		};
 		D77A85C375D3E5607016F372 /* ElevenLabsPlugin */ = {
@@ -870,10 +840,8 @@
 				5B02A3AD19CDD0A75B3F1426 /* error.wav in Resources */,
 				B0A09575569C4C1BC18BB742 /* manifest_DeepgramPlugin.json in Resources */,
 				5F63D78F9146F9EB1D0FD43B /* manifest_ElevenLabsPlugin.json in Resources */,
-				BDA24005A7F026B500B0DFCE /* manifest_GLMPlugin.json in Resources */,
-				1D02A00BFE7568C5BA76E752 /* manifest_KimiPlugin.json in Resources */,
 				60528923B20C753832FA4375 /* manifest_LiveTranscriptPlugin.json in Resources */,
-				26400E011ABE98F1B3718389 /* manifest_MiniMaxPlugin.json in Resources */,
+				5E20338342F1EA2DB81BF20A /* manifest_OpenAICompatiblePlugin.json in Resources */,
 				ABA573A394C7A07B0B694D12 /* manifest_ParaformerPlugin.json in Resources */,
 				81D5A834DE356C95A739F870 /* manifest_WhisperKitPlugin.json in Resources */,
 				3B556C9958D987604D07D4E6 /* plugins.json in Resources */,
@@ -924,7 +892,6 @@
 				5A9D5F41FCB9DE9441480CAD /* FileTranscriptionView.swift in Sources */,
 				55CA755E8EF74ED0B3EB7E8A /* FileTranscriptionViewModel.swift in Sources */,
 				9B368E351DFD108F2E0B4728 /* FoundationModelsProvider.swift in Sources */,
-				40B172F29EDF64D66CC8E20B /* GLMPlugin.swift in Sources */,
 				EB28D8AB9CEC63B4D6A6083B /* GeneralSettingsView.swift in Sources */,
 				94C08D5550F8579C41BAF01D /* HTTPRequestParser.swift in Sources */,
 				054C168326F2B268F8438958 /* HTTPResponse.swift in Sources */,
@@ -942,16 +909,15 @@
 				8A090D04E138D466DFFB1B16 /* IndicatorCoordinator.swift in Sources */,
 				6FCA9EB274CC6D9E164F9A75 /* IndicatorPreviewView.swift in Sources */,
 				5D737A153FC24A0D578455E6 /* KeychainService.swift in Sources */,
-				24754B279EE8119D33CA46BC /* KimiPlugin.swift in Sources */,
 				F6F489C2D1D11E8FC0C4B845 /* LLMProvider.swift in Sources */,
 				E8353F592296CFC1752A4DCB /* LiveTranscriptPlugin.swift in Sources */,
 				17F879C0C423AE74FDB48E1B /* MemoryService.swift in Sources */,
 				EB9E30E7775609BEED73CD0C /* MenuBarView.swift in Sources */,
-				F2B00407F452866DE63A8D11 /* MiniMaxPlugin.swift in Sources */,
 				4CCA8DCC67AD0245659E06AA /* ModelManagerService.swift in Sources */,
 				B71E6652990BB68009AE8132 /* NotchIndicatorPanel.swift in Sources */,
 				1D0E122F65268D3890EF2CA9 /* NotchIndicatorView.swift in Sources */,
 				7131444AFC78A88B60544EDE /* NotchShape.swift in Sources */,
+				80A5C02D56E01A94205B9692 /* OpenAICompatiblePlugin.swift in Sources */,
 				5B7A3C737E2B68248ED356AD /* OverlayIndicatorPanel.swift in Sources */,
 				054B6EBAEC1A2CDBBBB9D8A5 /* OverlayIndicatorView.swift in Sources */,
 				FEF5768506BCE3491CF2E80E /* ParaformerPlugin.swift in Sources */,

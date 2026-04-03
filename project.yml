@@ -40,13 +40,7 @@ targets:
         - path: Plugins/LiveTranscriptPlugin
           excludes:
             - "**/*.xcstrings"
-        - path: Plugins/GLMPlugin
-          excludes:
-            - "**/*.xcstrings"
-        - path: Plugins/KimiPlugin
-          excludes:
-            - "**/*.xcstrings"
-        - path: Plugins/MiniMaxPlugin
+        - path: Plugins/OpenAICompatiblePlugin
           excludes:
             - "**/*.xcstrings"
         - path: Plugins/ParaformerPlugin
