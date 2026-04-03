@@ -9,7 +9,9 @@ final class MockAudioDeviceService: AudioDeviceProtocol {
     // MARK: - State
 
     var inputDevices: [AudioInputDevice] = []
-    var selectedDeviceUID: String? = nil
+    var selectedDeviceUID: String? = nil {
+        didSet { selectedDeviceUIDDidSetCount += 1 }
+    }
     var isPreviewActive: Bool = false
     var previewAudioLevel: Float = 0.0
 
@@ -17,6 +19,7 @@ final class MockAudioDeviceService: AudioDeviceProtocol {
 
     var startPreviewCallCount = 0
     var stopPreviewCallCount = 0
+    var selectedDeviceUIDDidSetCount = 0
 
     // MARK: - Stubs
 
@@ -44,6 +47,17 @@ final class MockAudioDeviceService: AudioDeviceProtocol {
         inputDevices = devices
     }
 
+    func simulateDeviceConnected(deviceID: AudioDeviceID, name: String, uid: String) {
+        inputDevices.append(AudioInputDevice(deviceID: deviceID, name: name, uid: uid))
+    }
+
+    func simulateDeviceDisconnected(uid: String) {
+        inputDevices.removeAll { $0.uid == uid }
+        if selectedDeviceUID == uid {
+            selectedDeviceUID = nil
+        }
+    }
+
     func simulatePreviewActive(level: Float) {
         isPreviewActive = true
         previewAudioLevel = level
@@ -56,6 +70,7 @@ final class MockAudioDeviceService: AudioDeviceProtocol {
         previewAudioLevel = 0.0
         startPreviewCallCount = 0
         stopPreviewCallCount = 0
+        selectedDeviceUIDDidSetCount = 0
         startPreviewStub = nil
         stopPreviewStub = nil
     }

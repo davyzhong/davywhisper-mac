@@ -2,7 +2,7 @@
 
 > Generated: 2026-04-03
 > Author: Plan Agent + P8 Engineer Review
-> Status: PARTIALLY IMPLEMENTED — Phase 1–7 complete
+> Status: PARTIALLY IMPLEMENTED — Phase 1–8 complete
 > Version: 1.0 → 1.1 → 1.2 → 1.3 → 1.4 → 1.5 (Phase 5 XCUITest + Swift 6 concurrency fixes)
 
 ---
@@ -1395,3 +1395,23 @@ if isinstance(data, list) and data and isinstance(data[0], dict) and "files" in 
 **Phase 7 测试结果**：**233 tests, 0 failures**（新增 23 个）
 
 *方案版本 1.7 — 2026-04-03*
+
+## 实现备注 v1.8（Phase 8 — Models 补测 + Mock 增强）
+
+### Decision 28：UnifiedHotkey API 实际字段
+
+**问题**：代码中 `UnifiedHotkey` 使用 `keyCode`/`modifierFlags`/`isFn` 原始字段，不是 Builder 模式。
+
+**实际方案**：使用 `UnifiedHotkey(keyCode: UInt16, modifierFlags: UInt, isFn: Bool, isDoubleTap: Bool)` 构造，`kind` 是 computed 属性。
+
+### Phase 8 已完成文件
+
+| 文件 | 类型 | 说明 |
+|------|------|------|
+| `DavyWhisperTests/Models/AudioInputDeviceTests.swift` | 新增 | 5 个测试：Equatable 四个场景 + id computed property |
+| `DavyWhisperTests/Models/ProfileTests.swift` | 新增 | 10 个测试：init defaults/full args、hotkey round-trip（computed property ↔ Data）、UnifiedHotkey.Kind 四个 kind 覆盖 |
+| `DavyWhisperTests/Mocks/MockAudioDeviceService.swift` | 增强 | 添加 `simulateDeviceConnected/disconnected` helpers + `selectedDeviceUIDDidSetCount` |
+
+**Phase 8 测试结果**：**248 tests, 0 failures**（新增 15 个）
+
+*方案版本 1.8 — 2026-04-03*
