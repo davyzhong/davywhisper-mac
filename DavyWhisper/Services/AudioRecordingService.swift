@@ -97,20 +97,34 @@ final class AudioRecordingService: ObservableObject, @unchecked Sendable {
         AVAudioApplication.shared.recordPermission == .granted
     }
 
+    /// Set to true while a permission request is in flight to prevent concurrent calls.
+    private var permissionRequestInFlight = false
+
     func requestMicrophonePermission() async -> Bool {
-        let permission = AVAudioApplication.shared.recordPermission
-        if permission == .granted { return true }
-        if permission == .undetermined {
-            // Request permission via the official AVAudioApplication API
+        // Prevent concurrent requests
+        guard !permissionRequestInFlight else { return hasMicrophonePermission }
+        permissionRequestInFlight = true
+        defer { permissionRequestInFlight = false }
+
+        let currentPermission = AVAudioApplication.shared.recordPermission
+        if currentPermission == .granted { return true }
+
+        if currentPermission == .undetermined {
+            // Request via the official system dialog — this is what triggers the TCC prompt
             return await withCheckedContinuation { continuation in
                 AVAudioApplication.requestRecordPermission { granted in
                     continuation.resume(returning: granted)
                 }
             }
         }
+
         // .denied — open System Settings so user can grant manually
+        // Do NOT call requestRecordPermission again here — that would re-trigger the system prompt
+        // which causes the "click Allow but it keeps popping up" loop
         DispatchQueue.main.async {
-            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")!)
+            NSWorkspace.shared.open(
+                URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")!
+            )
         }
         return false
     }
