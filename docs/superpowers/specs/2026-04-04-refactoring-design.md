@@ -1,206 +1,207 @@
-# DavyWhisper v1.x Refactoring Design
+# DavyWhisper v1.x 重构设计
 
-**Date:** 2026-04-04
-**Status:** Draft (v2 — post spec-review fixes)
-**Author:** Claude Code (brainstorming session with user)
-**Reviewed-by:** spec-document-reviewer (14 issues found, all addressed)
+**日期:** 2026-04-04
+**状态:** 草案 (v2 — 已修复 spec review 发现的 14 个问题)
+**作者:** Claude Code（brainstorming 会议产出）
+**审核:** spec-document-reviewer（14 个问题，全部已修复）
 
 ---
 
-## 1. Background
+## 1. 背景
 
-DavyWhisper is a macOS menu bar speech-to-text app forked from TypeWhisper (German → Simplified Chinese). The fork phases 1-6 are complete. The codebase sits at:
+DavyWhisper 是一个 macOS 菜单栏语音转文字应用，fork 自 TypeWhisper（德语 → 简体中文）。Fork 阶段 1-6 已完成。代码库现状：
 
-- **~35,000 lines** Swift across **144 files**
-- **97 main app** Swift files, **36 services**, **14 ViewModels**, **30 views**
-- **7 source plugins** in `Plugins/`: WhisperKit, Deepgram, ElevenLabs, Paraformer, Qwen3, OpenAICompatible, LiveTranscript
-- **4 downloadable-only LLM plugins** in `plugins.json`: GLM, Kimi, MiniMax (no source directories)
-- **~330 unit tests** passing, coverage estimated ~8-9% overall (per testing-framework-design.md baseline)
-- **9 Settings tabs** (already merged from 14 in earlier phases)
+- **~35,000 行** Swift，**144 个文件**
+- **97 个主 App** Swift 文件，**36 个 Service**，**14 个 ViewModel**，**30 个 View**
+- **7 个源码插件**（`Plugins/` 目录下）：WhisperKit、Deepgram、ElevenLabs、Paraformer、Qwen3、OpenAICompatible、LiveTranscript
+- **3 个仅下载的 LLM 插件**（仅存在于 `plugins.json`）：GLM、Kimi、MiniMax（无源码目录）
+- **~330 个单元测试**全部通过，覆盖率估算约 8-9%（参考 testing-framework-design.md 基线）
+- **9 个 Settings Tab**（已在早期阶段从 14 合并到 9）
 
-**Verified plugin provider IDs** (from source code):
-| Plugin | `providerId` |
-|--------|-------------|
+**已验证的插件 providerId**（来自源码）：
+
+| 插件 | `providerId` |
+|------|-------------|
 | WhisperKit | `"whisper"` |
 | Paraformer | `"paraformer"` |
 | Qwen3 | `"qwen3"` |
 | Deepgram | `"deepgram"` |
 | ElevenLabs | `"elevenlabs"` |
 
-Three critical gaps exist:
+三个关键差距：
 
-1. **Chinese ASR accuracy**: Paraformer plugin exists in code but is not the default engine. WhisperKit (~8-10% CER on Chinese) is still the default. Target: ~2-3% CER.
-2. **Plugin registry bloat**: `plugins.json` still lists WebhookPlugin (downloadable-only) and 3 separate LLM plugins. These should be cleaned up and LLM plugins unified.
-3. **Test coverage**: ~8-9% overall is far below the 75% stability contract target.
-
----
-
-## 2. Goals
-
-| Dimension | Current | Target |
-|-----------|---------|--------|
-| Chinese ASR accuracy | ~8-10% CER (WhisperKit base) | ~2-3% CER (Paraformer) |
-| Out-of-box usability | Requires model download | Works immediately (151MB bundled) |
-| Default engine | None (nil on fresh install) | Paraformer |
-| Downloadable plugins in plugins.json | 9 entries | 5 entries (remove Webhook + 3 LLM) |
-| LLM providers | 3 separate downloadable plugins | 1 unified OpenAICompatiblePlugin with presets |
-| Settings tabs | 9 (already merged) | 9 (no change needed) |
-| Test coverage | ~8-9% (measured baseline) | >=75% (CI gate) |
+1. **中文 ASR 准确率**：Paraformer 插件代码已存在，但不是默认引擎。WhisperKit（中文 CER ~8-10%）仍是默认选择。目标：~2-3% CER。
+2. **插件注册表膨胀**：`plugins.json` 仍包含 WebhookPlugin（仅可下载）和 3 个独立的 LLM 插件。需要清理并统一 LLM 插件。
+3. **测试覆盖率**：~8-9% 远低于 75% 稳定性合约目标。
 
 ---
 
-## 3. Execution Model
+## 2. 目标
 
-**P9 Tech Lead orchestrator** manages three workstreams. Key path sequencing: C-line runs first as the critical path. A-line and B-line start after C-line completes.
+| 维度 | 当前状态 | 目标 |
+|------|---------|------|
+| 中文 ASR 准确率 | ~8-10% CER（WhisperKit base） | ~2-3% CER（Paraformer） |
+| 开箱即用体验 | 需要下载模型 | 立即可用（151MB 内置） |
+| 默认引擎 | 无（全新安装时为 nil） | Paraformer |
+| plugins.json 中的可下载插件 | 9 个条目 | 5 个条目（移除 Webhook + 3 个 LLM） |
+| LLM 提供商 | 3 个独立可下载插件 | 1 个统一的 OpenAICompatiblePlugin（含预设） |
+| Settings Tab 数量 | 9（已合并） | 9（无需变更） |
+| 测试覆盖率 | ~8-9%（实测基线） | >=75%（CI 门禁） |
+
+---
+
+## 3. 执行模型
+
+**P9 Tech Lead 编排器**管理三条工作线。关键路径定序：C 线（中文体验）作为关键路径先跑，完成后 A 线和 B 线并行。
 
 ```
-Phase 0: Baseline — Measure current test coverage
+Phase 0: 基线 — 测量当前测试覆盖率
     |
     v
-Phase 1: C-line (Critical Path — Chinese ASR Experience)
-    ├── C1: ModelManager default engine
-    ├── C2: Profile migration
-    ├── C3: Model bundling
-    └── C4: E2E verification
+Phase 1: C 线（关键路径 — 中文 ASR 体验）
+    ├── C1: ModelManager 默认引擎切换
+    ├── C2: Profile 迁移
+    ├── C3: 模型打包
+    └── C4: 端到端验证
     |
     v
-Phase 2: A-line + B-line (Parallel)
-    ├── A-line: Simplification (plugin cleanup, LLM unification)
-    └── B-line: Test coverage >=75% CI gate
+Phase 2: A 线 + B 线（并行）
+    ├── A 线: 简化（插件清理、LLM 统一）
+    └── B 线: 测试覆盖率 >=75% CI 门禁
 ```
 
-**Why C-line must complete first**: A-line modifies `plugins.json` and plugin discovery logic. C-line modifies `ModelManagerService` default engine selection. Running them simultaneously risks merge conflicts in shared files (`SettingsView.swift`, `project.yml`, `PluginManager.swift`). Completing C-line first establishes a stable baseline for A-line changes.
+**C 线必须先完成的原因**：A 线修改 `plugins.json` 和插件发现逻辑，C 线修改 `ModelManagerService` 默认引擎选择。同时跑会冒着 `SettingsView.swift`、`project.yml`、`PluginManager.swift` 等共享文件合并冲突的风险。C 线先完成为 A 线建立稳定基线。
 
-### Module-Level TDD
+### 模块级 TDD
 
-Every module change follows this cycle:
+每个模块的变更遵循此循环：
 
-1. **Red**: Write all tests for the module (covering current behavior + expected new behavior)
-2. **Green**: Implement changes until all tests pass
-3. **Refactor**: Clean up within the module
-4. **Gate**: Coverage for the module must meet threshold before merge
+1. **Red**：先写该模块的全部测试（覆盖当前行为 + 预期新行为）
+2. **Green**：实现变更直到所有测试通过
+3. **Refactor**：在模块内清理代码
+4. **Gate**：模块覆盖率必须达标后才允许合入
 
-This applies to: ModelManagerService, ProfileService, OpenAICompatiblePlugin, Settings tabs, and all other modules touched by this refactor.
-
----
-
-## 4. C-Line: Chinese Experience (Critical Path)
-
-### C1: ModelManager — Default Engine Switch
-
-**Module**: `DavyWhisper/Services/ModelManagerService.swift`
-
-**Current behavior**: `selectedProviderId` is loaded from `UserDefaults.standard.string(forKey: providerKey)`. On fresh install, this returns `nil` — no engine is selected. The user must manually pick one.
-
-**TDD approach**: Write tests asserting default engine selection logic first, then add Paraformer as the hardcoded fallback.
-
-**Changes**:
-- Add a fallback in `ModelManagerService.init()`: when `selectedProviderId` is nil (fresh install), set it to `"paraformer"` and persist to UserDefaults
-- Add a constant `static let defaultProviderId = "paraformer"` to `ModelManagerService`
-- Ensure engine selection persists across app restarts via UserDefaults (already works)
-- WhisperKit (`"whisper"`) remains available as a manual option for English/translation
-
-### C2: ProfileService — Forced Migration
-
-**Module**: `DavyWhisper/Services/ProfileService.swift`
-
-**TDD approach**: Write tests for migration logic first (detect old WhisperKit override → migrate to Paraformer → notify user).
-
-**Changes**:
-- On first launch after upgrade, scan all profiles with `engineOverride == "whisper"` (the actual `providerId` for WhisperKit, not "WhisperKit")
-- Migrate those overrides to `"paraformer"`
-- Show a one-time notification to the user explaining the engine change
-- Preserve all other profile settings (language, prompts, etc.)
-- Migration runs once, guarded by a `UserDefaults` flag (e.g., `didMigrateDefaultEngine_v1`)
-
-### C3: Model Bundling — Bundle-First Strategy
-
-**Module**: `Plugins/ParaformerPlugin/ParaformerPlugin.swift`, `Plugins/ParaformerPlugin/SherpaOnnx.swift`
-
-**Changes**:
-- Model files already exist at `DavyWhisper/Resources/ParaformerModel/` (79MB ASR + 72MB punctuation = 151MB)
-- Implement Bundle-first model resolution in `ParaformerPlugin`:
-  1. Check user Application Support directory (`~/Library/Application Support/DavyWhisper/PluginData/com.davywhisper.paraformer/`) for downloaded/updated model
-  2. If not found, fall back to `Bundle.main.url(forResource: "ParaformerModel", withExtension: nil)`
-  3. User directory model overrides bundled model (allows updates without app reinstall)
-- Remove any mandatory download requirement for first launch
-
-### C4: End-to-End Verification
-
-**Acceptance criteria**:
-- Fresh install → launch → immediately transcribe Chinese audio → CER < 3%
-- No network required for first transcription
-- Existing profiles migrated to Paraformer with notification
-- WhisperKit still selectable manually
+适用于：ModelManagerService、ProfileService、OpenAICompatiblePlugin、以及本次重构涉及的所有其他模块。
 
 ---
 
-## 5. A-Line: Simplification
+## 4. C 线：中文体验（关键路径）
 
-### A1: Remove WebhookPlugin from plugins.json
+### C1: ModelManager — 默认引擎切换
 
-**Scope**: WebhookPlugin has no source directory in `Plugins/` — it exists only as a downloadable entry in `DavyWhisper/Resources/plugins.json` (lines 71-85, ID: `com.davywhisper.webhook`). There is no WatchFolder plugin entry in `plugins.json` — this was already removed.
+**模块**：`DavyWhisper/Services/ModelManagerService.swift`
 
-**TDD approach**: Write test asserting plugins.json contains no webhook entry after cleanup. Write test asserting no source code references `com.davywhisper.webhook`.
+**当前行为**：`selectedProviderId` 从 `UserDefaults.standard.string(forKey: providerKey)` 加载。全新安装时返回 `nil`——没有选择任何引擎，用户必须手动选择。
 
-**Changes**:
-- Remove `com.davywhisper.webhook` entry from `plugins.json`
-- Grep for any remaining references to webhook plugin in source code and remove
-- No Settings UI cleanup needed (WebhookPlugin was never integrated into Settings tabs)
+**TDD 方式**：先写测试断言默认引擎选择逻辑，然后添加 Paraformer 作为硬编码兜底。
 
-### A2: Delete AudioDucking (After Confirmation)
+**变更**：
+- 在 `ModelManagerService.init()` 中添加兜底逻辑：当 `selectedProviderId` 为 nil（全新安装）时，设置为 `"paraformer"` 并持久化到 UserDefaults
+- 添加常量 `static let defaultProviderId = "paraformer"` 到 `ModelManagerService`
+- 引擎选择通过 UserDefaults 跨重启持久化（已有逻辑，无需变更）
+- WhisperKit（`"whisper"`）仍可手动选择用于英文/翻译场景
 
-**TDD approach**: Grep all references to AudioDucking across the codebase. If no service, view, or user-facing setting references it, delete with full cleanup.
+### C2: ProfileService — 强制迁移
 
-**Confirmation required**: Verify no user-facing settings or internal services depend on AudioDucking before deletion.
+**模块**：`DavyWhisper/Services/ProfileService.swift`
 
-### A3: LLM Unification — Merge Downloadable LLM Plugins into OpenAICompatiblePlugin
+**TDD 方式**：先写迁移逻辑测试（检测旧 WhisperKit override → 迁移到 Paraformer → 通知用户）。
 
-**Scope**: GLM, Kimi, and MiniMax LLM plugins exist only as downloadable entries in `plugins.json` — they have **no source directories** under `Plugins/`. The work is: (1) remove their `plugins.json` entries, (2) add built-in presets to the existing `Plugins/OpenAICompatiblePlugin/`, (3) migrate user API key configs.
+**变更**：
+- 升级后首次启动，扫描所有 `engineOverride == "whisper"` 的 Profile（WhisperKit 的实际 `providerId` 是 `"whisper"`，不是 `"WhisperKit"`）
+- 将这些 override 迁移为 `"paraformer"`
+- 向用户展示一次性通知说明引擎变更
+- 保留所有其他 Profile 设置（语言、Prompt 等）
+- 迁移只执行一次，由 `UserDefaults` 标志位守护（例如 `didMigrateDefaultEngine_v1`）
 
-**Module**: `Plugins/OpenAICompatiblePlugin/OpenAICompatiblePlugin.swift`
+### C3: 模型打包 — Bundle 优先策略
 
-**TDD approach**: Write tests for preset selection, API URL construction, and API key retrieval per preset.
+**模块**：`Plugins/ParaformerPlugin/ParaformerPlugin.swift`、`Plugins/ParaformerPlugin/SherpaOnnx.swift`
 
-**Changes**:
-- Add built-in LLM presets to `OpenAICompatiblePlugin`:
+**变更**：
+- 模型文件已存在于 `DavyWhisper/Resources/ParaformerModel/`（79MB ASR + 72MB 标点 = 151MB）
+- 在 `ParaformerPlugin` 中实现 Bundle 优先模型解析：
+  1. 先检查用户 Application Support 目录（`~/Library/Application Support/DavyWhisper/PluginData/com.davywhisper.paraformer/`）是否有下载/更新的模型
+  2. 未找到则回退到 `Bundle.main.url(forResource: "ParaformerModel", withExtension: nil)`
+  3. 用户目录模型覆盖内置模型（允许不重装 App 即可更新）
+- 移除首次启动时的强制下载要求
 
-  | Preset | Plugin ID (old) | Base URL | API Key Storage |
-  |--------|-----------------|----------|----------------|
-  | GLM (Zhipu AI) | `com.davywhisper.glm` | `open.bigmodel.cn/api/paas/v4` | Keychain |
-  | Kimi (Moonshot) | `com.davywhisper.kimi` | `api.moonshot.cn/v1` | Keychain |
+### C4: 端到端验证
+
+**验收标准**：
+- 全新安装 → 启动 → 立即转录中文音频 → CER < 3%
+- 首次转录无需网络
+- 已有 Profile 迁移到 Paraformer 并弹出通知
+- WhisperKit 仍可手动选择
+
+---
+
+## 5. A 线：简化
+
+### A1: 从 plugins.json 移除 WebhookPlugin
+
+**范围**：WebhookPlugin 在 `Plugins/` 下没有源码目录——仅作为可下载条目存在于 `DavyWhisper/Resources/plugins.json`（第 71-85 行，ID: `com.davywhisper.webhook`）。WatchFolder 插件条目已不存在于 `plugins.json` 中——之前已移除。
+
+**TDD 方式**：写测试断言清理后 plugins.json 不包含 webhook 条目。写测试断言源码中没有对 `com.davywhisper.webhook` 的引用。
+
+**变更**：
+- 从 `plugins.json` 移除 `com.davywhisper.webhook` 条目
+- Grep 搜索源码中所有对 webhook 插件的引用并移除
+- 无需清理 Settings UI（WebhookPlugin 从未集成到 Settings Tab）
+
+### A2: 删除 AudioDucking（确认后执行）
+
+**TDD 方式**：Grep 代码库中所有对 AudioDucking 的引用。如果没有 Service、View 或用户可见设置依赖它，则执行完整清理。
+
+**前提**：确认没有用户可见设置或内部 Service 依赖 AudioDucking 后才可删除。
+
+### A3: LLM 统一 — 将可下载 LLM 插件合并到 OpenAICompatiblePlugin
+
+**范围**：GLM、Kimi、MiniMax 三个 LLM 插件仅作为可下载条目存在于 `plugins.json`——`Plugins/` 下**没有源码目录**。工作内容：(1) 移除它们的 `plugins.json` 条目，(2) 在现有 `Plugins/OpenAICompatiblePlugin/` 中添加内置预设，(3) 迁移用户 API Key 配置。
+
+**模块**：`Plugins/OpenAICompatiblePlugin/OpenAICompatiblePlugin.swift`
+
+**TDD 方式**：先写测试覆盖预设选择、API URL 构造、每个预设的 API Key 获取。
+
+**变更**：
+- 在 `OpenAICompatiblePlugin` 中添加内置 LLM 预设：
+
+  | 预设名称 | 旧插件 ID | Base URL | API Key 存储 |
+  |---------|----------|----------|-------------|
+  | GLM（智谱 AI） | `com.davywhisper.glm` | `open.bigmodel.cn/api/paas/v4` | Keychain |
+  | Kimi（月之暗面） | `com.davywhisper.kimi` | `api.moonshot.cn/v1` | Keychain |
   | MiniMax | `com.davywhisper.minimax` | `api.minimax.chat/v1` | Keychain |
 
-- Remove entries for `com.davywhisper.glm`, `com.davywhisper.kimi`, `com.davywhisper.minimax` from `plugins.json`
-- Preserve existing keychain entries for each provider (users don't need to re-enter API keys)
-- Add "Custom OpenAI Compatible" option for any other provider (base URL + model name)
-- Update Settings UI to show unified provider selector with preset dropdown
+- 从 `plugins.json` 移除 `com.davywhisper.glm`、`com.davywhisper.kimi`、`com.davywhisper.minimax` 条目
+- 保留每个提供商的已有 Keychain 条目（用户无需重新输入 API Key）
+- 添加"自定义 OpenAI Compatible"选项，支持任意其他提供商（base URL + model name）
+- 更新 Settings UI 显示统一的提供商选择器（含预设下拉菜单）
 
-### A4: Settings Tab Merge — Already Complete
+### A4: Settings Tab 合并 — 已完成
 
-Settings tabs were already merged from 14 to 9 in an earlier phase. Current tabs (verified from `SettingsView.swift`):
+Settings Tab 已在早期阶段从 14 合并到 9。当前 Tab（已从 `SettingsView.swift` 验证）：
 
 `general, recording, fileTranscription, history, dictionary, profiles, prompts, integrations, advanced`
 
-**No additional work needed.** This step is marked as complete.
+**无需额外工作。** 此步骤标记为已完成。
 
 ---
 
-## 6. B-Line: Test Coverage (CI Gate)
+## 6. B 线：测试覆盖率（CI 门禁）
 
-### Baseline Measurement
+### 基线测量
 
-Before any refactoring begins:
-1. Run `xcodebuild test -project DavyWhisper.xcodeproj -scheme DavyWhisper -enableCodeCoverage YES`
-2. Extract real coverage numbers per module
-3. Document baseline in this spec
+重构开始之前：
+1. 运行 `xcodebuild test -project DavyWhisper.xcodeproj -scheme DavyWhisper -enableCodeCoverage YES`
+2. 提取各模块真实覆盖率数据
+3. 在此 spec 中记录基线
 
-### Coverage Targets
+### 覆盖率目标
 
-**Baseline**: Must be measured before refactoring starts using `xcodebuild test -enableCodeCoverage YES`. Estimated current coverage per testing-framework-design.md: ~8% overall, ~29% Services, ~22% ViewModels.
+**基线**：重构开始前必须用 `xcodebuild test -enableCodeCoverage YES` 实测。参考 testing-framework-design.md 估算：整体 ~8%，Service ~29%，ViewModel ~22%。
 
-| Module | Current (est.) | Target |
-|--------|----------------|--------|
+| 模块 | 当前（估算） | 目标 |
+|------|------------|------|
 | ModelManagerService | ~10% | >=80% |
 | ProfileService | ~40% | >=80% |
 | HTTPServer/Handlers | ~40% | >=85% |
@@ -209,117 +210,117 @@ Before any refactoring begins:
 | DictationViewModel | ~10% | >=80% |
 | PromptProcessingService | ~20% | >=80% |
 | SettingsViewModel | ~10% | >=80% |
-| Overall | ~8-9% | >=75% |
+| 整体 | ~8-9% | >=75% |
 
-### CI Gate Rule
+### CI 门禁规则
 
-Every PR must achieve >=75% overall coverage before merge. This is enforced by:
-- Running `xcodebuild test -enableCodeCoverage YES` in CI
-- Parsing coverage report
-- Blocking merge if threshold not met
+每个 PR 必须达到 >=75% 整体覆盖率才允许合入。执行方式：
+- 在 CI 中运行 `xcodebuild test -enableCodeCoverage YES`
+- 解析覆盖率报告
+- 未达标则阻止合入
 
-### Test Infrastructure
+### 测试基础设施
 
-Existing test infrastructure is sufficient:
-- `TestServiceContainer` for dependency injection
-- Mock implementations in `DavyWhisperTests/Mocks/`
-- Protocol definitions in `DavyWhisper/Protocols/`
-- `UserDefaultsProviding` protocol for test isolation
-
----
-
-## 7. Version Strategy
-
-Version number will be decided after C-line completes and real behavioral differences are measured. Options:
-
-- **1.x.z**: If changes are transparent to users (same API, enhanced defaults)
-- **2.0.0-pre**: If breaking changes to HTTP API or plugin interface occur
-- **1.x "zh-enhanced"**: Labeled build for Chinese market distribution
-
-Decision deferred to post-C-line evaluation.
+现有测试基础设施足够使用：
+- `TestServiceContainer` 用于依赖注入
+- `DavyWhisperTests/Mocks/` 中的 Mock 实现
+- `DavyWhisper/Protocols/` 中的协议定义
+- `UserDefaultsProviding` 协议用于测试隔离
 
 ---
 
-## 8. Data Migration
+## 7. 版本策略
 
-| Data Type | Migration Strategy |
-|-----------|-------------------|
-| Profile engine overrides | Force-migrate `engineOverride == "whisper"` → `"paraformer"`, notify user |
-| Plugin-specific settings | Direct delete (WebhookPlugin has no persistent user data) |
-| LLM provider selections | Map old plugin IDs to new unified preset IDs (see mapping below) |
-| History | Unchanged (engine name in history records is informational only) |
-| Dictionary/Snippets | Unchanged |
+版本号在 C 线完成后根据实际行为差异决定。选项：
 
-**LLM Plugin ID Migration Map**:
+- **1.x.z**：如果变更对用户透明（API 不变，仅增强默认值）
+- **2.0.0-pre**：如果 HTTP API 或插件接口发生破坏性变更
+- **1.x "zh-enhanced"**：面向中国市场的标签化构建
 
-| Old Plugin ID | New Preset Key | API Key Location |
-|---------------|---------------|-----------------|
-| `com.davywhisper.glm` | `glm` (preset in OpenAICompatiblePlugin) | Keychain — preserve existing key |
-| `com.davywhisper.kimi` | `kimi` (preset in OpenAICompatiblePlugin) | Keychain — preserve existing key |
-| `com.davywhisper.minimax` | `minimax` (preset in OpenAICompatiblePlugin) | Keychain — preserve existing key |
+决策推迟到 C 线完成后评估。
 
 ---
 
-## 9. Risk Matrix
+## 8. 数据迁移
 
-| Risk | Likelihood | Impact | Mitigation |
-|------|-----------|--------|------------|
-| Paraformer 151MB bundle increases download size | High | Medium | GitHub Releases have no size limit; acceptable trade-off for Chinese users |
-| Profile migration breaks user workflows | Low | High | Write migration tests first; show notification with undo option |
-| LLM unification breaks existing API key configs | Medium | Medium | Preserve keychain entries; map old plugin IDs to new preset keys |
-| Test coverage gate blocks PR velocity | Medium | Medium | Start with baseline; incrementally raise threshold |
-| Bundle-first model resolution picks wrong model | Low | High | Write tests for resolution order (user dir > bundle); add logging |
+| 数据类型 | 迁移策略 |
+|---------|---------|
+| Profile 引擎 override | 强制迁移 `engineOverride == "whisper"` → `"paraformer"`，通知用户 |
+| 插件特定设置 | 直接删除（WebhookPlugin 无持久化用户数据） |
+| LLM 提供商选择 | 将旧插件 ID 映射到新的统一预设 ID（见下方映射表） |
+| 历史记录 | 不变（历史记录中的引擎名称仅为展示信息） |
+| 词典/片段 | 不变 |
 
----
+**LLM 插件 ID 迁移映射表**：
 
-## 10. Success Criteria
-
-1. **Chinese ASR**: Fresh install transcribes Chinese audio with CER < 3%, no download required
-2. **Default engine**: Paraformer is auto-selected on fresh install (no nil state)
-3. **Plugin registry cleanup**: WebhookPlugin + 3 separate LLM plugins removed from plugins.json
-4. **LLM unification**: OpenAICompatiblePlugin handles GLM/Kimi/MiniMax via presets
-5. **Test coverage**: >=75% overall, CI-gated
-6. **All existing tests**: ~330+ tests continue to pass
-7. **HTTP API**: All `/v1/*` endpoints unchanged and passing
-8. **No regressions**: Profiles (migrated), history, dictionary, snippets all functional
+| 旧插件 ID | 新预设 Key | API Key 位置 |
+|----------|-----------|-------------|
+| `com.davywhisper.glm` | `glm`（OpenAICompatiblePlugin 中的预设） | Keychain — 保留已有 Key |
+| `com.davywhisper.kimi` | `kimi`（OpenAICompatiblePlugin 中的预设） | Keychain — 保留已有 Key |
+| `com.davywhisper.minimax` | `minimax`（OpenAICompatiblePlugin 中的预设） | Keychain — 保留已有 Key |
 
 ---
 
-## Appendix A: File Impact Estimate
+## 9. 风险矩阵
 
-### C-Line Files
+| 风险 | 可能性 | 影响 | 缓解措施 |
+|------|-------|------|---------|
+| Paraformer 151MB 打包增加下载体积 | 高 | 中 | GitHub Releases 无大小限制；对中国用户可接受的权衡 |
+| Profile 迁移破坏用户工作流 | 低 | 高 | 先写迁移测试；展示带撤销选项的通知 |
+| LLM 统一破坏已有 API Key 配置 | 中 | 中 | 保留 Keychain 条目；将旧插件 ID 映射到新预设 Key |
+| 测试覆盖率门禁阻塞 PR 流速 | 中 | 中 | 从基线开始；逐步提高阈值 |
+| Bundle 优先模型解析选错模型 | 低 | 高 | 为解析顺序写测试（用户目录 > Bundle）；加日志 |
 
-| File | Change Type |
-|------|------------|
-| `DavyWhisper/Services/ModelManagerService.swift` | Add defaultProviderId fallback |
-| `DavyWhisper/Services/ProfileService.swift` | Add migration logic for engine overrides |
-| `Plugins/ParaformerPlugin/ParaformerPlugin.swift` | Add Bundle-first model resolution |
-| `DavyWhisper/Resources/ParaformerModel/` | Already contains bundled models |
-| `DavyWhisperTests/` | New tests for default engine + migration |
+---
 
-### A-Line Files
+## 10. 成功标准
 
-| File | Change Type |
-|------|------------|
-| `DavyWhisper/Resources/plugins.json` | Remove webhook + LLM plugin entries |
-| `Plugins/OpenAICompatiblePlugin/OpenAICompatiblePlugin.swift` | Add GLM/Kimi/MiniMax presets |
-| `DavyWhisper/ViewModels/SettingsViewModel.swift` | Update provider selector |
-| `DavyWhisperTests/` | Tests for preset selection + migration |
+1. **中文 ASR**：全新安装转录中文音频 CER < 3%，无需下载
+2. **默认引擎**：全新安装自动选择 Paraformer（无 nil 状态）
+3. **插件注册表清理**：WebhookPlugin + 3 个独立 LLM 插件已从 plugins.json 移除
+4. **LLM 统一**：OpenAICompatiblePlugin 通过预设处理 GLM/Kimi/MiniMax
+5. **测试覆盖率**：整体 >=75%，CI 门禁生效
+6. **已有测试**：~330+ 测试持续全部通过
+7. **HTTP API**：所有 `/v1/*` 端点不变且通过测试
+8. **无回归**：Profile（已迁移）、历史记录、词典、片段全部功能正常
 
-### B-Line Files
+---
 
-| File | Change Type |
-|------|------------|
-| `DavyWhisperTests/` | Expand with new test files |
-| `.github/workflows/` | Add coverage gate to CI |
+## 附录 A：文件影响估算
 
-## Appendix B: Existing Specs Referenced
+### C 线文件
 
-| Spec | Path | Relevance |
-|------|------|-----------|
-| DavyWhisper Design | `docs/superpowers/specs/2026-03-31-davywhisper-design.md` | Original fork spec |
-| Testing Framework | `docs/superpowers/specs/2026-04-03-testing-framework-design.md` | Test infrastructure |
-| Simplification Plan v2 | `docs/simplification-plan-v2.md` | A-line source |
-| Paraformer Integration | `docs/paraformer-integration-plan.md` | C-line source |
-| Model Integration | `docs/model-integration-plan.md` | Model bundling |
-| Consolidated Optimization | `docs/consolidated-optimization-plan.md` | Combined plan |
+| 文件 | 变更类型 |
+|------|---------|
+| `DavyWhisper/Services/ModelManagerService.swift` | 添加 defaultProviderId 兜底 |
+| `DavyWhisper/Services/ProfileService.swift` | 添加引擎 override 迁移逻辑 |
+| `Plugins/ParaformerPlugin/ParaformerPlugin.swift` | 添加 Bundle 优先模型解析 |
+| `DavyWhisper/Resources/ParaformerModel/` | 已包含内置模型 |
+| `DavyWhisperTests/` | 新增默认引擎 + 迁移测试 |
+
+### A 线文件
+
+| 文件 | 变更类型 |
+|------|---------|
+| `DavyWhisper/Resources/plugins.json` | 移除 webhook + LLM 插件条目 |
+| `Plugins/OpenAICompatiblePlugin/OpenAICompatiblePlugin.swift` | 添加 GLM/Kimi/MiniMax 预设 |
+| `DavyWhisper/ViewModels/SettingsViewModel.swift` | 更新提供商选择器 |
+| `DavyWhisperTests/` | 预设选择 + 迁移测试 |
+
+### B 线文件
+
+| 文件 | 变更类型 |
+|------|---------|
+| `DavyWhisperTests/` | 扩展新测试文件 |
+| `.github/workflows/` | 添加覆盖率门禁到 CI |
+
+## 附录 B：引用的已有文档
+
+| 文档 | 路径 | 相关性 |
+|------|------|--------|
+| DavyWhisper 设计 | `docs/superpowers/specs/2026-03-31-davywhisper-design.md` | 原始 fork spec |
+| 测试框架 | `docs/superpowers/specs/2026-04-03-testing-framework-design.md` | 测试基础设施 |
+| 简化计划 v2 | `docs/simplification-plan-v2.md` | A 线参考来源 |
+| Paraformer 集成 | `docs/paraformer-integration-plan.md` | C 线参考来源 |
+| 模型集成 | `docs/model-integration-plan.md` | 模型打包 |
+| 整合优化 | `docs/consolidated-optimization-plan.md` | 综合计划 |
