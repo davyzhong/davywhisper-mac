@@ -269,19 +269,19 @@ Settings Tab 已在早期阶段从 14 合并到 9。当前 Tab（已从 `Setting
 
 ### 覆盖率目标
 
-**基线**：重构开始前必须用 `xcodebuild test -enableCodeCoverage YES` 实测。参考 testing-framework-design.md 估算：整体 ~8%，Service ~29%，ViewModel ~22%。
+**基线**：2026-04-04 实测。整体 **11.31%** (4478/39587)。
 
-| 模块 | 当前（估算） | 目标 |
+| 模块 | 当前（实测） | 目标 |
 |------|------------|------|
-| ModelManagerService | ~10% | >=80% |
+| ModelManagerService | **8.86%** | >=80% |
 | ProfileService | ~40% | >=80% |
 | HTTPServer/Handlers | ~40% | >=85% |
 | AudioRecordingService | ~5% | >=70% |
 | PluginManager | ~15% | >=75% |
 | DictationViewModel | ~10% | >=80% |
 | PromptProcessingService | ~20% | >=80% |
-| SettingsViewModel | ~10% | >=80% |
-| 整体 | ~8-9% | >=75% |
+| SettingsViewModel | **64.71%** | >=80% |
+| 整体 | **11.31%** | >=75% |
 
 ### CI 门禁规则
 
