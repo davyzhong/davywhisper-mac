@@ -288,7 +288,7 @@ private struct RecordRow: View {
                 .font(.body)
 
             HStack {
-                Text(relativeTime(record.timestamp))
+                Text(record.timestamp.relativeTimeString())
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
@@ -306,40 +306,13 @@ private struct RecordRow: View {
 
                 Spacer()
 
-                Text(formatDuration(record.durationSeconds))
+                Text(record.durationSeconds.durationString)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
         }
         .padding(.vertical, 2)
         .accessibilityElement(children: .combine)
-    }
-
-    private func relativeTime(_ date: Date) -> String {
-        let seconds = Date().timeIntervalSince(date)
-        let minutes = Int(seconds / 60)
-        let hours = Int(seconds / 3600)
-        let days = Int(seconds / 86400)
-
-        if minutes < 1 {
-            return String(localized: "just_now")
-        } else if minutes < 60 {
-            return String(localized: "\(minutes) min ago")
-        } else if hours < 24 {
-            return String(localized: "\(hours) hr ago")
-        } else if Calendar.current.isDateInYesterday(date) {
-            return String(localized: "yesterday")
-        } else if days < 7 {
-            return String(localized: "\(days) days ago")
-        } else {
-            return date.formatted(.dateTime.day().month(.abbreviated))
-        }
-    }
-
-    private func formatDuration(_ seconds: Double) -> String {
-        let s = Int(seconds)
-        if s < 60 { return "\(s)s" }
-        return "\(s / 60)m \(s % 60)s"
     }
 }
 
@@ -357,7 +330,7 @@ private struct RecordDetailView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(record.timestamp, format: .dateTime)
                             .font(.headline)
-                        Text(formatDuration(record.durationSeconds) + " - " + "\(record.wordsCount) \(String(localized: "words"))")
+                        Text(record.durationSeconds.durationString + " - " + "\(record.wordsCount) \(String(localized: "words"))")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -562,12 +535,6 @@ private struct RecordDetailView: View {
             .padding(.vertical, 2)
             .background(.quaternary, in: RoundedRectangle(cornerRadius: 4))
     }
-
-    private func formatDuration(_ seconds: Double) -> String {
-        let s = Int(seconds)
-        if s < 60 { return "\(s)s" }
-        return "\(s / 60)m \(s % 60)s"
-    }
 }
 
 // MARK: - Audio Playback Bar
@@ -599,7 +566,7 @@ private struct AudioPlaybackBar: View {
                 .controlSize(.small)
                 .accessibilityLabel(String(localized: "Playback position"))
 
-                Text(formatTime(playbackService.currentTime) + " / " + formatTime(playbackService.duration))
+                Text(playbackService.currentTime.playbackTimeString + " / " + playbackService.duration.playbackTimeString)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .monospacedDigit()
@@ -620,13 +587,6 @@ private struct AudioPlaybackBar: View {
             .help(String(localized: "Show in Finder"))
             .accessibilityLabel(String(localized: "Show in Finder"))
         }
-    }
-
-    private func formatTime(_ seconds: TimeInterval) -> String {
-        let s = Int(seconds)
-        let m = s / 60
-        let r = s % 60
-        return String(format: "%d:%02d", m, r)
     }
 }
 
