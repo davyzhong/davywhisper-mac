@@ -49,6 +49,8 @@ final class TestServiceContainer {
     let pluginRegistryService: PluginRegistryService
     let termPackRegistryService: TermPackRegistryService
     let httpServer: HTTPServer
+    /// Mock HTTP server used for APIServerViewModel tests that need to simulate failures.
+    let mockHTTPServer: MockHTTPServer
 
     // MARK: - ViewModels
 
@@ -147,6 +149,7 @@ final class TestServiceContainer {
         )
         handlers.register(on: router)
         httpServer = HTTPServer(router: router)
+        mockHTTPServer = MockHTTPServer(router: router)
 
         historyViewModel = HistoryViewModel(
             historyService: historyService,
@@ -169,7 +172,7 @@ final class TestServiceContainer {
             modelManager: modelManagerService,
             dictionaryService: dictionaryService
         )
-        apiServerViewModel = APIServerViewModel(httpServer: httpServer)
+        apiServerViewModel = APIServerViewModel(httpServer: mockHTTPServer)
 
         // Set static shared references
         DictationViewModel._shared = dictationViewModel

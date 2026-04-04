@@ -12,6 +12,9 @@ final class APIServerViewModelTests: XCTestCase {
     }
 
     override func tearDown() {
+        // Reset API server UserDefaults to avoid polluting other tests
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.apiServerPort)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.apiServerEnabled)
         container.tearDown()
         container = nil
         super.tearDown()

@@ -20,9 +20,9 @@ final class APIServerViewModel: ObservableObject {
     }
     @Published var errorMessage: String?
 
-    private let httpServer: HTTPServer
+    private let httpServer: any HTTPServerProtocol
 
-    init(httpServer: HTTPServer) {
+    init(httpServer: any HTTPServerProtocol) {
         self.httpServer = httpServer
         self.isEnabled = UserDefaults.standard.bool(forKey: UserDefaultsKeys.apiServerEnabled)
         let savedPort = UserDefaults.standard.integer(forKey: UserDefaultsKeys.apiServerPort)

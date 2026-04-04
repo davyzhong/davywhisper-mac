@@ -7,6 +7,41 @@ options:
   groupSortPosition: top
   generateEmptyDirectories: true
 
+schemes:
+  DavyWhisper:
+    build:
+      targets:
+        DavyWhisper: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: false
+      targets:
+        - DavyWhisperTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+  DavyWhisperUITests:
+    build:
+      targets:
+        DavyWhisper: all
+        DavyWhisperUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: false
+      targets:
+        - DavyWhisperUITests
+    profile:
+      config: Release
+    archive:
+      config: Release
+
 packages:
   WhisperKit:
     url: https://github.com/argmaxinc/WhisperKit.git
@@ -54,15 +89,17 @@ targets:
         - package: DavyWhisperPluginSDK
           embed: true
         - framework: Libraries/sherpa-onnx.xcframework
+          embed: false
       settings:
         base:
           SWIFT_VERSION: "6.0"
           MACOSX_DEPLOYMENT_TARGET: "14.0"
           SDKROOT: macosx
-          DEVELOPMENT_TEAM: ""
+          DEVELOPMENT_TEAM: "29T9W2PDGP"
+          CODE_SIGN_STYLE: Automatic
           CODE_SIGN_IDENTITY: "-"
-          CODE_SIGNING_REQUIRED: NO
-          CODE_SIGNING_ALLOWED: NO
+          CODE_SIGNING_REQUIRED: YES
+          CODE_SIGNING_ALLOWED: YES
           GENERATE_INFOPLIST_FILE: NO
           INFOPLIST_FILE: DavyWhisper/Resources/Info.plist
           INFOPLIST_KEY_CFBundleDisplayName: DavyWhisper
@@ -91,6 +128,7 @@ targets:
             PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.mac.dev"
             SWIFT_ACTIVE_COMPILATION_CONDITIONS: "DEBUG $(inherited)"
             SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+            CODE_SIGNING_REQUIRED: NO
           Release:
             CODE_SIGN_ENTITLEMENTS: DavyWhisper/Resources/DavyWhisper.entitlements
             PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.mac"
@@ -107,7 +145,7 @@ targets:
           SWIFT_VERSION: "6.0"
           MACOSX_DEPLOYMENT_TARGET: "14.0"
           SDKROOT: macosx
-          DEVELOPMENT_TEAM: ""
+          DEVELOPMENT_TEAM: "29T9W2PDGP"
           CODE_SIGN_IDENTITY: "-"
           CODE_SIGNING_REQUIRED: NO
           CODE_SIGNING_ALLOWED: NO
@@ -128,7 +166,7 @@ targets:
           SWIFT_VERSION: "6.0"
           MACOSX_DEPLOYMENT_TARGET: "14.0"
           SDKROOT: macosx
-          DEVELOPMENT_TEAM: ""
+          DEVELOPMENT_TEAM: "29T9W2PDGP"
           CODE_SIGN_IDENTITY: "-"
           CODE_SIGNING_REQUIRED: NO
           CODE_SIGNING_ALLOWED: NO
@@ -148,7 +186,7 @@ targets:
           SWIFT_VERSION: "6.0"
           MACOSX_DEPLOYMENT_TARGET: "14.0"
           SDKROOT: macosx
-          DEVELOPMENT_TEAM: ""
+          DEVELOPMENT_TEAM: "29T9W2PDGP"
           CODE_SIGN_IDENTITY: "-"
           CODE_SIGNING_REQUIRED: NO
           CODE_SIGNING_ALLOWED: NO
