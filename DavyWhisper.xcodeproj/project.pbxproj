@@ -137,6 +137,7 @@
 		9B368E351DFD108F2E0B4728 /* FoundationModelsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FFF8F562F555C084EEC08D /* FoundationModelsProvider.swift */; };
 		9B8C8977BA7609415EBE5F5F /* PostProcessingPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65030BA331C66F000EB04E83 /* PostProcessingPipelineTests.swift */; };
 		9EEE51611645C7EA115740CD /* SettingsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32DE264E0F0D7A8B40D67DA /* SettingsUITests.swift */; };
+		9FE7206C60AB149BD8ED3EE3 /* HistoryExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD283173BD96F1774AED483E /* HistoryExporterTests.swift */; };
 		A0895F5739B252966E434320 /* AudioPlaybackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDA7A0B851EB4E8534FA54E /* AudioPlaybackService.swift */; };
 		A488E1F0CDA746E0BBB86493 /* HotkeyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449AF39B6A1936E63FA5843 /* HotkeyProtocol.swift */; };
 		A62F1A8A76C3714CF00FC263 /* DeepgramPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B94C9EA3F45E121865310 /* DeepgramPlugin.swift */; };
@@ -414,6 +415,7 @@
 		C68A20D2685EEB30336AD61D /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
 		C9A3831EC2AF376506633F85 /* TermPackRegistryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermPackRegistryService.swift; sourceTree = "<group>"; };
 		CC5E6DF36F9008D9EC5690CB /* ProfileEngineMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEngineMigrationTests.swift; sourceTree = "<group>"; };
+		CD283173BD96F1774AED483E /* HistoryExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryExporterTests.swift; sourceTree = "<group>"; };
 		CE234C7D9B71F50C359DD5F1 /* ErrorLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogView.swift; sourceTree = "<group>"; };
 		CF6F3A69FA5FA7649CB4B3EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D268C2A24EAAF8F6485A2C7E /* ParaformerModel */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ParaformerModel; path = DavyWhisper/Resources/ParaformerModel; sourceTree = SOURCE_ROOT; };
@@ -631,6 +633,7 @@
 		5F835FCB485046163A8259FD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CD283173BD96F1774AED483E /* HistoryExporterTests.swift */,
 				AB124DCC920DA2297A48B6AB /* LLMPluginTests.swift */,
 				1B5A6D808FF0415A09BFEB0D /* MemoryServiceTests.swift */,
 				AD0267571E9C3604ABBD5629 /* ModelManagerDefaultEngineTests.swift */,
@@ -1297,6 +1300,7 @@
 				D7F5B71B30E3FC96A437B616 /* HTTPAPIRoundTripTests.swift in Sources */,
 				246A5FE6ACB8B4C5DD2DD5A3 /* HTTPRequestParserTests.swift in Sources */,
 				21E8A18AB146712799D131F4 /* HTTPServerTests.swift in Sources */,
+				9FE7206C60AB149BD8ED3EE3 /* HistoryExporterTests.swift in Sources */,
 				57103DF2029CD617DCB03901 /* HistoryServiceTests.swift in Sources */,
 				C0DC9C4B7EEEF33BDC3A2FC5 /* HistoryViewModelTests.swift in Sources */,
 				E5691485C05C49F33DDA3B39 /* LLMPluginTests.swift in Sources */,
