@@ -15,6 +15,7 @@ DavyWhisper 是一个 macOS 菜单栏语音转文字应用，fork 自 TypeWhispe
 - **97 个主 App** Swift 文件，**36 个 Service**，**14 个 ViewModel**，**30 个 View**
 - **7 个源码插件**（`Plugins/` 目录下）：WhisperKit、Deepgram、ElevenLabs、Paraformer、Qwen3、OpenAICompatible、LiveTranscript
 - **3 个仅下载的 LLM 插件**（仅存在于 `plugins.json`）：GLM、Kimi、MiniMax（无源码目录）
+- **百炼（阿里云 DashScope）** 尚未集成
 - **~330 个单元测试**全部通过，覆盖率估算约 8-9%（参考 testing-framework-design.md 基线）
 - **9 个 Settings Tab**（已在早期阶段从 14 合并到 9）
 
@@ -31,7 +32,7 @@ DavyWhisper 是一个 macOS 菜单栏语音转文字应用，fork 自 TypeWhispe
 三个关键差距：
 
 1. **中文 ASR 准确率**：Paraformer 插件代码已存在，但不是默认引擎。WhisperKit（中文 CER ~8-10%）仍是默认选择。目标：~2-3% CER。
-2. **插件注册表膨胀**：`plugins.json` 仍包含 WebhookPlugin（仅可下载）和 3 个独立的 LLM 插件。需要清理并统一 LLM 插件。
+2. **LLM 插件不完整**：`plugins.json` 中 GLM、Kimi、MiniMax 三个插件仅有条目但**没有源码实现**，无法真正使用。需要创建完整的源码插件，并新增百炼（阿里云 DashScope）插件。
 3. **测试覆盖率**：~8-9% 远低于 75% 稳定性合约目标。
 
 ---
@@ -43,8 +44,8 @@ DavyWhisper 是一个 macOS 菜单栏语音转文字应用，fork 自 TypeWhispe
 | 中文 ASR 准确率 | ~8-10% CER（WhisperKit base） | ~2-3% CER（Paraformer） |
 | 开箱即用体验 | 需要下载模型 | 立即可用（151MB 内置） |
 | 默认引擎 | 无（全新安装时为 nil） | Paraformer |
-| plugins.json 中的可下载插件 | 9 个条目 | 5 个条目（移除 Webhook + 3 个 LLM） |
-| LLM 提供商 | 3 个独立可下载插件 | 1 个统一的 OpenAICompatiblePlugin（含预设） |
+| plugins.json 中的可下载插件 | 9 个条目 | 8 个条目（移除 Webhook，新增百炼） |
+| LLM 提供商 | 3 个仅有条目无源码 | 4 个完整可用的独立插件（GLM、Kimi、MiniMax、百炼） |
 | Settings Tab 数量 | 9（已合并） | 9（无需变更） |
 | 测试覆盖率 | ~8-9%（实测基线） | >=75%（CI 门禁） |
 
@@ -72,16 +73,21 @@ Phase 2: A 线 + B 线（并行）
 
 **C 线必须先完成的原因**：A 线修改 `plugins.json` 和插件发现逻辑，C 线修改 `ModelManagerService` 默认引擎选择。同时跑会冒着 `SettingsView.swift`、`project.yml`、`PluginManager.swift` 等共享文件合并冲突的风险。C 线先完成为 A 线建立稳定基线。
 
-### 模块级 TDD
+### 功能级 TDD
 
-每个模块的变更遵循此循环：
+每一个功能（不仅是模块）都必须经过完整的 TDD 循环：
 
-1. **Red**：先写该模块的全部测试（覆盖当前行为 + 预期新行为）
-2. **Green**：实现变更直到所有测试通过
-3. **Refactor**：在模块内清理代码
-4. **Gate**：模块覆盖率必须达标后才允许合入
+1. **Red**：为该功能写全部测试（覆盖正常路径 + 边界条件 + 错误处理）
+2. **Green**：实现功能直到所有测试通过
+3. **Refactor**：清理代码，消除重复
+4. **Gate**：该功能测试覆盖率达标后才允许合入
 
-适用于：ModelManagerService、ProfileService、OpenAICompatiblePlugin、以及本次重构涉及的所有其他模块。
+**功能粒度定义**：一个功能是一个可独立验证的行为单元。例如：
+- "ModelManager 在全新安装时默认选择 Paraformer" → 1 个功能，3+ 个测试（nil→默认、持久化、重启后保持）
+- "Profile 迁移将 WhisperKit override 改为 Paraformer" → 1 个功能，4+ 个测试（匹配 "whisper"、迁移为 "paraformer"、只迁移一次、无 override 时不报错）
+- "GLM 插件完成 Chat Completion 请求" → 1 个功能，5+ 个测试（正常请求、API Key 缺失、网络超时、流式响应、错误 JSON）
+
+适用于本次重构涉及的所有功能。
 
 ---
 
@@ -155,27 +161,92 @@ Phase 2: A 线 + B 线（并行）
 
 **前提**：确认没有用户可见设置或内部 Service 依赖 AudioDucking 后才可删除。
 
-### A3: LLM 统一 — 将可下载 LLM 插件合并到 OpenAICompatiblePlugin
+### A3: LLM 插件 — 4 个独立完整可用的中文大模型插件
 
-**范围**：GLM、Kimi、MiniMax 三个 LLM 插件仅作为可下载条目存在于 `plugins.json`——`Plugins/` 下**没有源码目录**。工作内容：(1) 移除它们的 `plugins.json` 条目，(2) 在现有 `Plugins/OpenAICompatiblePlugin/` 中添加内置预设，(3) 迁移用户 API Key 配置。
+**要求**：GLM、Kimi、MiniMax、百炼四个中文大模型插件必须**独立、完整、可用**。每个插件都有源码实现、manifest.json、Settings UI 配置入口。用户安装后填入 API Key 即可使用，无需额外配置。
 
-**模块**：`Plugins/OpenAICompatiblePlugin/OpenAICompatiblePlugin.swift`
+**范围**：当前 GLM、Kimi、MiniMax 在 `plugins.json` 中仅有下载条目，`Plugins/` 下**没有源码目录**。百炼尚未有任何条目。需要为 4 个 LLM 插件创建完整源码实现。
 
-**TDD 方式**：先写测试覆盖预设选择、API URL 构造、每个预设的 API Key 获取。
+#### 四个 LLM 插件完整规格
 
-**变更**：
-- 在 `OpenAICompatiblePlugin` 中添加内置 LLM 预设：
+**GLMPlugin（智谱 AI）**
 
-  | 预设名称 | 旧插件 ID | Base URL | API Key 存储 |
-  |---------|----------|----------|-------------|
-  | GLM（智谱 AI） | `com.davywhisper.glm` | `open.bigmodel.cn/api/paas/v4` | Keychain |
-  | Kimi（月之暗面） | `com.davywhisper.kimi` | `api.moonshot.cn/v1` | Keychain |
-  | MiniMax | `com.davywhisper.minimax` | `api.minimax.chat/v1` | Keychain |
+| 项目 | 值 |
+|------|---|
+| 插件 ID | `com.davywhisper.glm` |
+| 源码目录 | `Plugins/GLMPlugin/` |
+| Base URL | `https://open.bigmodel.cn/api/paas/v4` |
+| API Key 获取 | https://open.bigmodel.cn → 控制台 → API Keys |
+| 默认模型 | `glm-4-flash` |
+| 可选模型 | `glm-4-flash`, `glm-4-air`, `glm-4-plus`, `glm-4-long` |
+| 协议兼容 | OpenAI Chat Completions 兼容 |
+| Key 存储 | Keychain (`com.davywhisper.glm.apikey`) |
 
-- 从 `plugins.json` 移除 `com.davywhisper.glm`、`com.davywhisper.kimi`、`com.davywhisper.minimax` 条目
-- 保留每个提供商的已有 Keychain 条目（用户无需重新输入 API Key）
-- 添加"自定义 OpenAI Compatible"选项，支持任意其他提供商（base URL + model name）
-- 更新 Settings UI 显示统一的提供商选择器（含预设下拉菜单）
+**KimiPlugin（月之暗面 Moonshot）**
+
+| 项目 | 值 |
+|------|---|
+| 插件 ID | `com.davywhisper.kimi` |
+| 源码目录 | `Plugins/KimiPlugin/` |
+| Base URL | `https://api.moonshot.cn/v1` |
+| API Key 获取 | https://platform.moonshot.cn → API Keys |
+| 默认模型 | `moonshot-v1-auto` |
+| 可选模型 | `moonshot-v1-8k`, `moonshot-v1-32k`, `moonshot-v1-128k`, `moonshot-v1-auto` |
+| 协议兼容 | OpenAI Chat Completions 兼容 |
+| Key 存储 | Keychain (`com.davywhisper.kimi.apikey`) |
+
+**MiniMaxPlugin**
+
+| 项目 | 值 |
+|------|---|
+| 插件 ID | `com.davywhisper.minimax` |
+| 源码目录 | `Plugins/MiniMaxPlugin/` |
+| Base URL | `https://api.minimax.io/v1` |
+| API Key 获取 | https://platform.minimaxi.com → API Keys |
+| 默认模型 | `MiniMax-Text-01` |
+| 可选模型 | `MiniMax-Text-01`, `abab6.5s-chat` |
+| 协议兼容 | OpenAI Chat Completions 兼容 |
+| Key 存储 | Keychain (`com.davywhisper.minimax.apikey`) |
+
+**BailianPlugin（阿里云百炼 DashScope）**
+
+| 项目 | 值 |
+|------|---|
+| 插件 ID | `com.davywhisper.bailian` |
+| 源码目录 | `Plugins/BailianPlugin/` |
+| Base URL | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
+| API Key 获取 | https://dashscope.console.aliyun.com → API-KEY 管理 |
+| 默认模型 | `qwen-plus` |
+| 可选模型 | `qwen-plus`, `qwen-turbo`, `qwen-max`, `qwen-long` |
+| 协议兼容 | OpenAI Chat Completions 兼容 |
+| Key 存储 | Keychain (`com.davywhisper.bailian.apikey`) |
+
+#### TDD 方式
+
+每个插件按以下顺序开发：
+1. **Red**：写测试覆盖插件注册、API Key 存储/读取、模型列表获取、Chat Completion 请求构造、响应解析、错误处理
+2. **Green**：实现插件源码，所有测试通过
+3. **Refactor**：提取共用逻辑到 SDK 或基类（4 个插件共享 OpenAI Compatible 协议）
+
+#### 共用架构
+
+4 个插件都兼容 OpenAI Chat Completions API，共享以下逻辑：
+- 请求构造（`messages` → `POST /chat/completions`）
+- 响应解析（`choices[0].message.content`）
+- 流式响应处理（SSE `data:` 行解析）
+- API Key Keychain 存取
+- 模型列表展示
+
+建议：在 `DavyWhisperPluginSDK` 中提供 `OpenAICompatibleLLMBase` 基类，4 个插件继承它并仅需配置 `baseURL`、`modelList`、`apiKeyKeychainId`。
+
+#### 变更清单
+
+- 创建 4 个插件源码目录及完整实现
+- 更新 `plugins.json`：移除旧的 GLM/Kimi/MiniMax 占位条目，添加百炼条目，更新 GLM/Kimi/MiniMax 为有实际下载包的条目
+- 更新 `project.yml`：添加 4 个插件 target（`GLMPlugin`、`KimiPlugin`、`MiniMaxPlugin`、`BailianPlugin`）
+- 在 SDK 中添加 `OpenAICompatibleLLMBase` 基类（可选，减少重复代码）
+- 每个 Settings 界面提供：API Key 输入框、模型选择下拉框、连通性测试按钮
+- 为每个插件编写完整单元测试
 
 ### A4: Settings Tab 合并 — 已完成
 
@@ -247,17 +318,18 @@ Settings Tab 已在早期阶段从 14 合并到 9。当前 Tab（已从 `Setting
 |---------|---------|
 | Profile 引擎 override | 强制迁移 `engineOverride == "whisper"` → `"paraformer"`，通知用户 |
 | 插件特定设置 | 直接删除（WebhookPlugin 无持久化用户数据） |
-| LLM 提供商选择 | 将旧插件 ID 映射到新的统一预设 ID（见下方映射表） |
+| LLM 提供商选择 | 无需迁移（保留独立插件架构，新增百炼插件） |
 | 历史记录 | 不变（历史记录中的引擎名称仅为展示信息） |
 | 词典/片段 | 不变 |
 
-**LLM 插件 ID 迁移映射表**：
+**LLM 插件 Keychain Key 一览**（已有 Key 无需迁移）：
 
-| 旧插件 ID | 新预设 Key | API Key 位置 |
-|----------|-----------|-------------|
-| `com.davywhisper.glm` | `glm`（OpenAICompatiblePlugin 中的预设） | Keychain — 保留已有 Key |
-| `com.davywhisper.kimi` | `kimi`（OpenAICompatiblePlugin 中的预设） | Keychain — 保留已有 Key |
-| `com.davywhisper.minimax` | `minimax`（OpenAICompatiblePlugin 中的预设） | Keychain — 保留已有 Key |
+| 插件 | Keychain Key | 状态 |
+|------|-------------|------|
+| GLM | `com.davywhisper.glm.apikey` | 已有，保留 |
+| Kimi | `com.davywhisper.kimi.apikey` | 已有，保留 |
+| MiniMax | `com.davywhisper.minimax.apikey` | 已有，保留 |
+| 百炼 | `com.davywhisper.bailian.apikey` | 新增 |
 
 ---
 
@@ -267,7 +339,7 @@ Settings Tab 已在早期阶段从 14 合并到 9。当前 Tab（已从 `Setting
 |------|-------|------|---------|
 | Paraformer 151MB 打包增加下载体积 | 高 | 中 | GitHub Releases 无大小限制；对中国用户可接受的权衡 |
 | Profile 迁移破坏用户工作流 | 低 | 高 | 先写迁移测试；展示带撤销选项的通知 |
-| LLM 统一破坏已有 API Key 配置 | 中 | 中 | 保留 Keychain 条目；将旧插件 ID 映射到新预设 Key |
+| LLM 插件 API 接口变更导致请求失败 | 中 | 高 | 每个插件完整 TDD；用真实 API Key 做集成测试 |
 | 测试覆盖率门禁阻塞 PR 流速 | 中 | 中 | 从基线开始；逐步提高阈值 |
 | Bundle 优先模型解析选错模型 | 低 | 高 | 为解析顺序写测试（用户目录 > Bundle）；加日志 |
 
@@ -277,12 +349,13 @@ Settings Tab 已在早期阶段从 14 合并到 9。当前 Tab（已从 `Setting
 
 1. **中文 ASR**：全新安装转录中文音频 CER < 3%，无需下载
 2. **默认引擎**：全新安装自动选择 Paraformer（无 nil 状态）
-3. **插件注册表清理**：WebhookPlugin + 3 个独立 LLM 插件已从 plugins.json 移除
-4. **LLM 统一**：OpenAICompatiblePlugin 通过预设处理 GLM/Kimi/MiniMax
-5. **测试覆盖率**：整体 >=75%，CI 门禁生效
-6. **已有测试**：~330+ 测试持续全部通过
-7. **HTTP API**：所有 `/v1/*` 端点不变且通过测试
-8. **无回归**：Profile（已迁移）、历史记录、词典、片段全部功能正常
+3. **WebhookPlugin 清理**：已从 plugins.json 移除
+4. **LLM 插件完整可用**：GLM、Kimi、MiniMax、百炼 4 个插件独立、完整、安装后填 API Key 即可用
+5. **每个 LLM 插件功能经过 TDD 验证**：注册、API Key 存取、模型列表、Chat Completion、流式响应、错误处理
+6. **测试覆盖率**：整体 >=75%，CI 门禁生效
+7. **已有测试**：~330+ 测试持续全部通过
+8. **HTTP API**：所有 `/v1/*` 端点不变且通过测试
+9. **无回归**：Profile（已迁移）、历史记录、词典、片段全部功能正常
 
 ---
 
@@ -302,10 +375,14 @@ Settings Tab 已在早期阶段从 14 合并到 9。当前 Tab（已从 `Setting
 
 | 文件 | 变更类型 |
 |------|---------|
-| `DavyWhisper/Resources/plugins.json` | 移除 webhook + LLM 插件条目 |
-| `Plugins/OpenAICompatiblePlugin/OpenAICompatiblePlugin.swift` | 添加 GLM/Kimi/MiniMax 预设 |
-| `DavyWhisper/ViewModels/SettingsViewModel.swift` | 更新提供商选择器 |
-| `DavyWhisperTests/` | 预设选择 + 迁移测试 |
+| `DavyWhisper/Resources/plugins.json` | 移除 WebhookPlugin 条目，更新 GLM/Kimi/MiniMax 条目，新增百炼条目 |
+| `Plugins/GLMPlugin/` | 新建完整源码实现 |
+| `Plugins/KimiPlugin/` | 新建完整源码实现 |
+| `Plugins/MiniMaxPlugin/` | 新建完整源码实现 |
+| `Plugins/BailianPlugin/` | 新建完整源码实现 |
+| `DavyWhisperPluginSDK/Sources/` | 可选：添加 `OpenAICompatibleLLMBase` 基类 |
+| `project.yml` | 添加 4 个 LLM 插件 target |
+| `DavyWhisperTests/` | 每个插件的完整单元测试 |
 
 ### B 线文件
 
