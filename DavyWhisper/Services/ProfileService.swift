@@ -163,7 +163,8 @@ final class ProfileService: ObservableObject {
     }
 
     /// Extracts a clean domain from a URL string, stripping "www." prefix.
-    private func extractDomain(from urlString: String?) -> String? {
+    /// - Tag: extractDomain
+    func extractDomain(from urlString: String?) -> String? {
         guard let urlString, !urlString.isEmpty,
               let url = URL(string: urlString),
               let host = url.host() else { return nil }
@@ -172,7 +173,8 @@ final class ProfileService: ObservableObject {
 
     /// Checks if a domain matches a pattern. Supports exact match and subdomain match.
     /// e.g. pattern "google.com" matches "google.com" and "docs.google.com"
-    private func domainMatches(_ domain: String, pattern: String) -> Bool {
+    /// - Tag: domainMatches
+    func domainMatches(_ domain: String, pattern: String) -> Bool {
         let d = domain.lowercased()
         let p = pattern.lowercased()
         return d == p || d.hasSuffix("." + p)
