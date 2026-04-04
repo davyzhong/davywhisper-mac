@@ -119,7 +119,7 @@ final class ParaformerPlugin: NSObject, TranscriptionEnginePlugin, PluginSetting
 
     // MARK: - Model Management
 
-    private func resolveModelDir() -> URL? {
+    func resolveModelDir() -> URL? {
         // 1. Bundle resources (pre-bundled model)
         if let url = Bundle.main.url(forResource: "ParaformerModel", withExtension: nil),
            FileManager.default.fileExists(atPath: url.appendingPathComponent("model.int8.onnx").path) {
@@ -135,7 +135,7 @@ final class ParaformerPlugin: NSObject, TranscriptionEnginePlugin, PluginSetting
         return nil
     }
 
-    private func resolvePunctuationModelPath() -> String? {
+    func resolvePunctuationModelPath() -> String? {
         // 1. Bundle resources
         if let url = Bundle.main.url(forResource: "PunctuationModel", withExtension: nil,
                                      subdirectory: "ParaformerModel"),
