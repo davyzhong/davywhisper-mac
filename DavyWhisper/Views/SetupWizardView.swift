@@ -2,42 +2,28 @@ import SwiftUI
 import DavyWhisperPluginSDK
 
 struct SetupWizardView: View {
+    @ObservedObject private var viewModel: SetupWizardViewModel
     @ObservedObject private var dictation = DictationViewModel.shared
     @ObservedObject private var pluginManager = PluginManager.shared
     @ObservedObject private var registryService = PluginRegistryService.shared
     @ObservedObject private var audioDevice = ServiceContainer.shared.audioDeviceService
     @ObservedObject private var modelManager = ServiceContainer.shared.modelManagerService
     @ObservedObject private var promptActionsViewModel = PromptActionsViewModel.shared
-    @ObservedObject private var promptProcessingService: PromptProcessingService
 
-    @State private var currentStep: Int
     @State private var selectedProvider: String?
-    @State private var selectedHotkeyMode: HotkeySlotType
     @State private var trialSuccess = false
     @State private var trialText = ""
     @FocusState private var isTrialFieldFocused: Bool
 
-    private let totalSteps = 6
-
     init() {
-        let saved = UserDefaults.standard.integer(forKey: UserDefaultsKeys.setupWizardCurrentStep)
-        _currentStep = State(initialValue: min(saved, 5))
-        _promptProcessingService = ObservedObject(wrappedValue: PromptActionsViewModel.shared.promptProcessingService)
-
-        if UserDefaults.standard.data(forKey: UserDefaultsKeys.hybridHotkey) != nil {
-            _selectedHotkeyMode = State(initialValue: .hybrid)
-        } else if UserDefaults.standard.data(forKey: UserDefaultsKeys.pttHotkey) != nil {
-            _selectedHotkeyMode = State(initialValue: .pushToTalk)
-        } else if UserDefaults.standard.data(forKey: UserDefaultsKeys.toggleHotkey) != nil {
-            _selectedHotkeyMode = State(initialValue: .toggle)
-        } else {
-            _selectedHotkeyMode = State(initialValue: .hybrid)
-        }
+        _viewModel = ObservedObject(wrappedValue: SetupWizardViewModel(
+            promptProcessingService: PromptActionsViewModel.shared.promptProcessingService
+        ))
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            if currentStep == 0 {
+            if viewModel.currentStep == 0 {
                 welcomeStep
             } else {
                 header
@@ -49,9 +35,7 @@ struct SetupWizardView: View {
             }
         }
         .frame(minHeight: 350)
-        .onChange(of: currentStep) { _, newValue in
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.setupWizardCurrentStep)
-        }
+        // Step persistence is handled by ViewModel's didSet
     }
 
     // MARK: - Header
@@ -64,14 +48,14 @@ struct SetupWizardView: View {
 
             Spacer()
 
-            Text(String(localized: "Step \(currentStep) of \(totalSteps - 1)"))
+            Text(String(localized: "Step \(viewModel.currentStep) of \(viewModel.totalSteps - 1)"))
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
             HStack(spacing: 6) {
-                ForEach(1..<totalSteps, id: \.self) { index in
+                ForEach(1..<viewModel.totalSteps, id: \.self) { index in
                     Circle()
-                        .fill(index <= currentStep ? Color.accentColor : Color.secondary.opacity(0.3))
+                        .fill(index <= viewModel.currentStep ? Color.accentColor : Color.secondary.opacity(0.3))
                         .frame(width: 8, height: 8)
                 }
             }
@@ -81,7 +65,7 @@ struct SetupWizardView: View {
     }
 
     private var stepTitle: String {
-        switch currentStep {
+        switch viewModel.currentStep {
         case 1: return String(localized: "Permissions")
         case 2: return String(localized: "Transcription Engine")
         case 3: return String(localized: "Hotkey")
@@ -96,7 +80,7 @@ struct SetupWizardView: View {
     @ViewBuilder
     private var stepContent: some View {
         ScrollView {
-            switch currentStep {
+            switch viewModel.currentStep {
             case 1: permissionsStep
             case 2: engineStep
             case 3: hotkeyStep
@@ -148,7 +132,7 @@ struct SetupWizardView: View {
 
             VStack(spacing: 12) {
                 Button(String(localized: "Get Started")) {
-                    withAnimation { currentStep = 1 }
+                    withAnimation { viewModel.currentStep = 1 }
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
@@ -321,7 +305,7 @@ struct SetupWizardView: View {
 
     private var engineStep: some View {
         VStack(alignment: .leading, spacing: 16) {
-            if hasAnyEngineReady {
+            if viewModel.hasAnyEngineReady {
                 HStack(spacing: 6) {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
@@ -538,7 +522,7 @@ struct SetupWizardView: View {
                 )
             }
 
-            if !hasAnyHotkeySet {
+            if !viewModel.hasAnyHotkeySet {
                 HStack(spacing: 4) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundStyle(.orange)
@@ -556,7 +540,7 @@ struct SetupWizardView: View {
         description: String,
         recommended: Bool = false
     ) -> some View {
-        let isSelected = selectedHotkeyMode == mode
+        let isSelected = viewModel.selectedHotkeyMode == mode
 
         return VStack(spacing: 0) {
             HStack {
@@ -586,7 +570,7 @@ struct SetupWizardView: View {
             }
             .padding(10)
             .contentShape(Rectangle())
-            .onTapGesture { selectedHotkeyMode = mode }
+            .onTapGesture { viewModel.selectedHotkeyMode = mode }
 
             if isSelected {
                 Divider()
@@ -599,15 +583,12 @@ struct SetupWizardView: View {
                         .foregroundStyle(.blue)
 
                     HotkeyRecorderView(
-                        label: hotkeyLabel(for: mode),
+                        label: viewModel.hotkeyLabel(for: mode),
                         title: String(localized: "Shortcut"),
                         onRecord: { hotkey in
-                            if let conflict = dictation.isHotkeyAssigned(hotkey, excluding: mode) {
-                                dictation.clearHotkey(for: conflict)
-                            }
-                            dictation.setHotkey(hotkey, for: mode)
+                            viewModel.recordHotkey(hotkey, for: mode)
                         },
-                        onClear: { dictation.clearHotkey(for: mode) }
+                        onClear: { viewModel.clearHotkey(for: mode) }
                     )
                     .fixedSize()
                 }
@@ -750,14 +731,11 @@ struct SetupWizardView: View {
     }
 
     private var hasAnyLLMProvider: Bool {
-        if #available(macOS 26, *) {
-            if promptProcessingService.isAppleIntelligenceAvailable { return true }
-        }
-        return !pluginManager.llmProviders.isEmpty
+        viewModel.hasAnyLLMProvider
     }
 
     private var kimiAlreadyInstalled: Bool {
-        pluginManager.loadedPlugins.contains { $0.manifest.id == "com.davywhisper.kimi" }
+        viewModel.kimiAlreadyInstalled
     }
 
     @ViewBuilder
@@ -875,7 +853,7 @@ struct SetupWizardView: View {
 
             Spacer()
 
-            if promptProcessingService.isAppleIntelligenceAvailable {
+            if viewModel.isAppleIntelligenceAvailable {
                 HStack(spacing: 4) {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
@@ -897,17 +875,17 @@ struct SetupWizardView: View {
 
     private var tryItOutStep: some View {
         VStack(spacing: 20) {
-            if !hasAnyEngineReady || !hasAnyHotkeySet {
+            if !viewModel.hasAnyEngineReady || !viewModel.hasAnyHotkeySet {
                 VStack(spacing: 12) {
                     Image(systemName: "exclamationmark.circle")
                         .font(.system(size: 36))
                         .foregroundStyle(.secondary)
 
-                    if !hasAnyEngineReady {
+                    if !viewModel.hasAnyEngineReady {
                         Text(String(localized: "No transcription engine is ready. Go back to set one up."))
                             .foregroundStyle(.secondary)
                     }
-                    if !hasAnyHotkeySet {
+                    if !viewModel.hasAnyHotkeySet {
                         Text(String(localized: "No hotkey is configured. Go back to set one up."))
                             .foregroundStyle(.secondary)
                     }
@@ -938,7 +916,7 @@ struct SetupWizardView: View {
                     HStack(spacing: 6) {
                         Image(systemName: "keyboard")
                             .foregroundStyle(.blue)
-                        Text(hotkeyLabel(for: selectedHotkeyMode))
+                        Text(viewModel.hotkeyLabel(for: viewModel.selectedHotkeyMode))
                             .font(.body.weight(.medium))
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
@@ -1000,10 +978,10 @@ struct SetupWizardView: View {
 
     private var navigation: some View {
         HStack {
-            if currentStep == 5 && trialSuccess {
+            if viewModel.currentStep == 5 && trialSuccess {
                 Spacer()
             } else {
-                Button(currentStep == 5
+                Button(viewModel.currentStep == 5
                     ? String(localized: "I'll try later")
                     : String(localized: "Skip Setup")
                 ) {
@@ -1016,7 +994,7 @@ struct SetupWizardView: View {
                 Spacer()
             }
 
-            if currentStep == 5 {
+            if viewModel.currentStep == 5 {
                 if trialSuccess {
                     Button(String(localized: "Try Again")) {
                         trialSuccess = false
@@ -1035,66 +1013,28 @@ struct SetupWizardView: View {
                     .accessibilityIdentifier("com.davywhisper.setup.finish.done")
                 } else {
                     Button(String(localized: "Back")) {
-                        withAnimation { currentStep -= 1 }
+                        withAnimation { viewModel.currentStep -= 1 }
                     }
                     .buttonStyle(.bordered)
                 }
             } else {
-                if currentStep > 1 {
+                if viewModel.currentStep > 1 {
                     Button(String(localized: "Back")) {
-                        withAnimation { currentStep -= 1 }
+                        withAnimation { viewModel.currentStep -= 1 }
                     }
                     .buttonStyle(.bordered)
                 }
 
                 Button(String(localized: "Next")) {
-                    withAnimation { currentStep += 1 }
+                    withAnimation { viewModel.currentStep += 1 }
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(!canProceed)
+                .disabled(!viewModel.canProceed)
             }
         }
         .padding()
     }
 
-    // MARK: - Helpers
-
-    private var canProceed: Bool {
-        switch currentStep {
-        case 1: return !dictation.needsMicPermission
-        case 2: return hasAnyEngineReady
-        case 3: return true
-        case 4: return true
-        default: return true
-        }
-    }
-
-    private var hasAnyEngineReady: Bool {
-        pluginManager.transcriptionEngines.contains { $0.isConfigured }
-    }
-
-    private var hasAnyHotkeySet: Bool {
-        [UserDefaultsKeys.hybridHotkey, UserDefaultsKeys.pttHotkey, UserDefaultsKeys.toggleHotkey]
-            .contains { UserDefaults.standard.data(forKey: $0) != nil }
-    }
-
-    private func hotkeyLabel(for mode: HotkeySlotType) -> String {
-        switch mode {
-        case .hybrid: return dictation.hybridHotkeyLabel
-        case .pushToTalk: return dictation.pttHotkeyLabel
-        case .toggle: return dictation.toggleHotkeyLabel
-        case .promptPalette: return dictation.promptPaletteHotkeyLabel
-        }
-    }
-
-    private func hotkeyModeTitle(for mode: HotkeySlotType) -> String {
-        switch mode {
-        case .hybrid: return String(localized: "Hybrid")
-        case .pushToTalk: return String(localized: "Push-to-Talk")
-        case .toggle: return String(localized: "Toggle")
-        case .promptPalette: return String(localized: "Prompt Palette")
-        }
-    }
 }
 
 // MARK: - Recommendation Settings Button
