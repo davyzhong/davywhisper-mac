@@ -96,6 +96,34 @@ final class ProfileService: ObservableObject {
         fetchProfiles()
     }
 
+    // MARK: - Migration
+
+    /// Migrate profiles with WhisperKit engine override to Paraformer.
+    /// Called once on first launch after upgrade. Guarded by UserDefaults flag.
+    func migrateDefaultEngine(userDefaults: any UserDefaultsProviding) {
+        let flagKey = "didMigrateDefaultEngine_v1"
+        guard !userDefaults.bool(forKey: flagKey) else { return }
+
+        let oldEngine = "whisper"
+        let newEngine = "paraformer"
+        var migrated = false
+
+        for profile in self.profiles {
+            if profile.engineOverride == oldEngine {
+                profile.engineOverride = newEngine
+                migrated = true
+            }
+        }
+
+        if migrated {
+            save()
+            fetchProfiles()
+            logger.info("Migrated profiles from whisper to paraformer")
+        }
+
+        userDefaults.set(true, forKey: flagKey)
+    }
+
     func matchProfile(bundleIdentifier: String?, url: String? = nil) -> Profile? {
         let bundleId = bundleIdentifier ?? ""
         let domain = extractDomain(from: url)
