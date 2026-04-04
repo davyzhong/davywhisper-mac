@@ -10,7 +10,7 @@ private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "davywhis
 /// Uses AVAudioEngine for mic and ScreenCaptureKit for system audio.
 final class AudioRecorderService: ObservableObject, @unchecked Sendable {
 
-    private struct TranscriptionBufferState {
+    struct TranscriptionBufferState {
         var micSamples: [Float] = []
         var systemSamples: [Float] = []
 
@@ -67,13 +67,13 @@ final class AudioRecorderService: ObservableObject, @unchecked Sendable {
         }
     }
 
-    private struct MicDuckingProfile {
+    struct MicDuckingProfile {
         let gains: [Float]
         let minimumGain: Float
         let averageGain: Float
     }
 
-    private struct MicDuckingParameters {
+    struct MicDuckingParameters {
         let minimumMicGain: Float
         let lowThreshold: Float
         let highThreshold: Float
@@ -167,7 +167,7 @@ final class AudioRecorderService: ObservableObject, @unchecked Sendable {
 
     // 16kHz mono buffer for streaming transcription
     private let transcriptionBufferLock = OSAllocatedUnfairLock<TranscriptionBufferState>(initialState: TranscriptionBufferState())
-    private static let transcriptionSampleRate: Double = 16000
+    static let transcriptionSampleRate: Double = 16000
 
     static let recordingsDirectoryName = "DavyWhisper Recordings"
 
@@ -780,7 +780,7 @@ final class AudioRecorderService: ObservableObject, @unchecked Sendable {
     }
 
     // Aggressively duck the mic while system audio is active to avoid replaying the same content twice.
-    private static func buildMicDuckingProfile(
+    static func buildMicDuckingProfile(
         frameCount: Int,
         sampleRate: Double,
         mode: MicDuckingMode,
@@ -846,7 +846,7 @@ final class AudioRecorderService: ObservableObject, @unchecked Sendable {
         )
     }
 
-    private static func micDuckingParameters(for mode: MicDuckingMode) -> MicDuckingParameters? {
+    static func micDuckingParameters(for mode: MicDuckingMode) -> MicDuckingParameters? {
         switch mode {
         case .aggressive:
             return MicDuckingParameters(
@@ -875,7 +875,7 @@ final class AudioRecorderService: ObservableObject, @unchecked Sendable {
         }
     }
 
-    private static func smoothingCoefficient(timeConstant: Double, sampleRate: Double) -> Float {
+    static func smoothingCoefficient(timeConstant: Double, sampleRate: Double) -> Float {
         guard timeConstant > 0, sampleRate > 0 else { return 0 }
         return Float(exp(-1.0 / (timeConstant * sampleRate)))
     }
