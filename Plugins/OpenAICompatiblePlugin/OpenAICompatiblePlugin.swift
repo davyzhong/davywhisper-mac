@@ -20,55 +20,8 @@ struct ProviderPreset: Identifiable, Hashable, CaseIterable {
     }
 
     static let allCases: [ProviderPreset] = [
-        .glm, .kimi, .minimax, .qwen, .deepSeek, .custom
+        .deepSeek, .custom
     ]
-
-    static let glm = ProviderPreset(
-        id: "glm",
-        displayName: "智谱 GLM",
-        baseURL: "https://open.bigmodel.cn/api/paas/v4",
-        models: [
-            PluginModelInfo(id: "glm-4-flash", displayName: "GLM-4 Flash", sizeDescription: "快速经济"),
-            PluginModelInfo(id: "glm-4", displayName: "GLM-4", sizeDescription: "均衡"),
-            PluginModelInfo(id: "glm-4-plus", displayName: "GLM-4 Plus", sizeDescription: "最高质量"),
-        ],
-        icon: "sparkles"
-    )
-
-    static let kimi = ProviderPreset(
-        id: "kimi",
-        displayName: "Moonshot Kimi",
-        baseURL: "https://api.moonshot.cn/v1",
-        models: [
-            PluginModelInfo(id: "moonshot-v1-8k", displayName: "Moonshot V1 8K", sizeDescription: "8K 上下文"),
-            PluginModelInfo(id: "moonshot-v1-32k", displayName: "Moonshot V1 32K", sizeDescription: "32K 上下文"),
-            PluginModelInfo(id: "moonshot-v1-128k", displayName: "Moonshot V1 128K", sizeDescription: "128K 上下文"),
-        ],
-        icon: "moon.stars.fill"
-    )
-
-    static let minimax = ProviderPreset(
-        id: "minimax",
-        displayName: "MiniMax",
-        baseURL: "https://api.minimax.chat/v1",
-        models: [
-            PluginModelInfo(id: "MiniMax-Text-01", displayName: "MiniMax Text 01", sizeDescription: "最新模型"),
-            PluginModelInfo(id: "abab6.5s-chat", displayName: "ABAB 6.5S Chat", sizeDescription: "对话模型"),
-        ],
-        icon: "bubble.left.and.bubble.right.fill"
-    )
-
-    static let qwen = ProviderPreset(
-        id: "qwen",
-        displayName: "通义千问",
-        baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        models: [
-            PluginModelInfo(id: "qwen-plus", displayName: "Qwen Plus", sizeDescription: "均衡"),
-            PluginModelInfo(id: "qwen-max", displayName: "Qwen Max", sizeDescription: "最高质量"),
-            PluginModelInfo(id: "qwen-flash", displayName: "Qwen Flash", sizeDescription: "快速经济"),
-        ],
-        icon: "cloud.fill"
-    )
 
     static let deepSeek = ProviderPreset(
         id: "deepseek",
@@ -155,7 +108,7 @@ final class OpenAICompatiblePlugin: NSObject, LLMProviderPlugin, @unchecked Send
 
     var activePreset: ProviderPreset {
         let presetId = host?.userDefault(forKey: "activeProvider") as? String ?? ""
-        return ProviderPreset.allCases.first { $0.id == presetId } ?? .glm
+        return ProviderPreset.allCases.first { $0.id == presetId } ?? .deepSeek
     }
 
     var currentAPIKey: String? {
@@ -229,7 +182,7 @@ private struct OpenAICompatibleSettingsView: View {
     @State private var isValidating = false
     @State private var validationResult: Bool?
     @State private var showApiKey = false
-    @State private var selectedPreset: ProviderPreset = .glm
+    @State private var selectedPreset: ProviderPreset = .deepSeek
     @State private var selectedModel = ""
     @State private var customURL = ""
 
@@ -240,7 +193,7 @@ private struct OpenAICompatibleSettingsView: View {
                 Text("LLM 提供商")
                     .font(.headline)
 
-                Picker("提供商", selection: $selectedPreset) {
+                Picker("提供商", selection: $selectedPreset as Binding<ProviderPreset>) {
                     ForEach(ProviderPreset.allCases) { preset in
                         Label(preset.displayName, systemImage: preset.icon)
                             .tag(preset)

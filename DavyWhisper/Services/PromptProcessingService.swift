@@ -31,7 +31,6 @@ class PromptProcessingService: ObservableObject {
         "GLM (Zhipu AI)",
         "Kimi",
         "MiniMax",
-        "Qwen",
         "Bailian (Aliyun DashScope)",
     ]
 
