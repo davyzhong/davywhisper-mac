@@ -59,10 +59,14 @@ final class SettingsViewModel: ObservableObject {
                 codes.insert(code)
             }
         }
-        return codes.map { code in
-            let name = Locale.current.localizedString(forLanguageCode: code) ?? code
-            return (code: code, name: name)
-        }.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        let allowed = ["zh-Hans", "en"]
+        return codes
+            .filter { allowed.contains($0) }
+            .map { code in
+                let name = Locale.current.localizedString(forLanguageCode: code) ?? code
+                return (code: code, name: name)
+            }
+            .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
 
     var supportsTranslation: Bool {
