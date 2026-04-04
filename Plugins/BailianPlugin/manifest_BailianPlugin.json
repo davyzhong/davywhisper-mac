@@ -1,0 +1,15 @@
+{
+  "id": "com.davywhisper.bailian",
+  "name": "Bailian",
+  "version": "1.0.0",
+  "minHostVersion": "0.11.0",
+  "minOSVersion": "14.0",
+  "author": "DavyWhisper",
+  "category": "llm",
+  "iconSystemName": "cloud.fill",
+  "requiresAPIKey": true,
+  "principalClass": "BailianPlugin",
+  "descriptions": {
+    "zh-Hans": "阿里云百炼 DashScope 大语言模型。支持 Qwen Plus/Turbo/Max/Long。"
+  }
+}

@@ -32,6 +32,7 @@ class PromptProcessingService: ObservableObject {
         "Kimi",
         "MiniMax",
         "Qwen",
+        "Bailian (Aliyun DashScope)",
     ]
 
     /// Returns (id, displayName) pairs for available Chinese LLM providers

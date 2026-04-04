@@ -91,14 +91,13 @@
       "minHostVersion": "0.11.0",
       "minOSVersion": "14.0",
       "author": "DavyWhisper",
-      "description": "LLM provider via Zhipu AI (GLM) API. Requires API key.",
+      "description": "Zhipu AI GLM-4 large language model. Supports Flash/Air/Plus/Long.",
       "category": "llm",
       "size": 102400,
-      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-glm-v1.0.0/GLMPlugin.zip",
-      "iconSystemName": "brain",
+      "iconSystemName": "brain.head.profile",
       "requiresAPIKey": true,
       "descriptions": {
-        "zh-Hans": "通过智谱 AI (GLM) API 提供 LLM 服务，需要 API 密钥。"
+        "zh-Hans": "智谱 AI GLM-4 大语言模型。支持 Flash/Air/Plus/Long。"
       }
     },
     {
@@ -108,14 +107,13 @@
       "minHostVersion": "0.11.0",
       "minOSVersion": "14.0",
       "author": "DavyWhisper",
-      "description": "LLM provider via Moonshot Kimi API. Requires API key.",
+      "description": "Moonshot AI Kimi large language model. Supports 8K/32K/128K context.",
       "category": "llm",
       "size": 102400,
-      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-kimi-v1.0.0/KimiPlugin.zip",
-      "iconSystemName": "brain",
+      "iconSystemName": "moon.stars.fill",
       "requiresAPIKey": true,
       "descriptions": {
-        "zh-Hans": "通过 Moonshot Kimi API 提供 LLM 服务，需要 API 密钥。"
+        "zh-Hans": "月之暗面 Kimi 大语言模型。支持 8K/32K/128K 长上下文。"
       }
     },
     {
@@ -125,14 +123,29 @@
       "minHostVersion": "0.11.0",
       "minOSVersion": "14.0",
       "author": "DavyWhisper",
-      "description": "LLM provider via MiniMax API. Requires API key.",
+      "description": "MiniMax large language model. Supports ABAB series.",
       "category": "llm",
       "size": 102400,
-      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-minimax-v1.0.0/MiniMaxPlugin.zip",
-      "iconSystemName": "brain",
+      "iconSystemName": "bubble.left.and.bubble.right.fill",
       "requiresAPIKey": true,
       "descriptions": {
-        "zh-Hans": "通过 MiniMax API 提供 LLM 服务，需要 API 密钥。"
+        "zh-Hans": "MiniMax 稀宇科技大语言模型。支持 ABAB 系列模型。"
+      }
+    },
+    {
+      "id": "com.davywhisper.bailian",
+      "name": "Bailian",
+      "version": "1.0.0",
+      "minHostVersion": "0.11.0",
+      "minOSVersion": "14.0",
+      "author": "DavyWhisper",
+      "description": "Aliyun DashScope Qwen large language model. Supports Plus/Turbo/Max/Long.",
+      "category": "llm",
+      "size": 102400,
+      "iconSystemName": "cloud.fill",
+      "requiresAPIKey": true,
+      "descriptions": {
+        "zh-Hans": "阿里云百炼 DashScope 通义千问大模型。支持 Qwen Plus/Turbo/Max/Long。"
       }
     }
   ]

@@ -81,6 +81,18 @@ targets:
         - path: Plugins/ParaformerPlugin
           excludes:
             - "**/*.xcstrings"
+        - path: Plugins/GLMPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/KimiPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/MiniMaxPlugin
+          excludes:
+            - "**/*.xcstrings"
+        - path: Plugins/BailianPlugin
+          excludes:
+            - "**/*.xcstrings"
       dependencies:
         - target: davywhisper-cli
           embed: true

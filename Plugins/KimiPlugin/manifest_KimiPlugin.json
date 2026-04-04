@@ -1,0 +1,15 @@
+{
+  "id": "com.davywhisper.kimi",
+  "name": "Kimi",
+  "version": "1.0.0",
+  "minHostVersion": "0.11.0",
+  "minOSVersion": "14.0",
+  "author": "DavyWhisper",
+  "category": "llm",
+  "iconSystemName": "moon.stars.fill",
+  "requiresAPIKey": true,
+  "principalClass": "KimiPlugin",
+  "descriptions": {
+    "zh-Hans": "月之暗面 Kimi 大语言模型。支持 8K/32K/128K 上下文。"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "com.davywhisper.glm",
+  "name": "GLM",
+  "version": "1.0.0",
+  "minHostVersion": "0.11.0",
+  "minOSVersion": "14.0",
+  "author": "DavyWhisper",
+  "category": "llm",
+  "iconSystemName": "brain.head.profile",
+  "requiresAPIKey": true,
+  "principalClass": "GLMPlugin",
+  "descriptions": {
+    "zh-Hans": "智谱 AI GLM 大语言模型。支持 GLM-4 Flash/Air/Plus/Long。"
+  }
+}
