@@ -29,9 +29,11 @@ enum TranscriptionEngineError: LocalizedError {
 final class ModelManagerService: ObservableObject {
     @Published private(set) var selectedProviderId: String?
 
+    static let defaultProviderId = "paraformer"
+
     @Published var autoUnloadSeconds: Int {
         didSet {
-            UserDefaults.standard.set(autoUnloadSeconds, forKey: UserDefaultsKeys.modelAutoUnloadSeconds)
+            userDefaults.set(autoUnloadSeconds, forKey: UserDefaultsKeys.modelAutoUnloadSeconds)
             scheduleAutoUnloadIfNeeded()
         }
     }
@@ -40,10 +42,18 @@ final class ModelManagerService: ObservableObject {
 
     private let providerKey = UserDefaultsKeys.selectedEngine
     private let modelKey = UserDefaultsKeys.selectedModelId
+    private let userDefaults: any UserDefaultsProviding
 
-    init() {
-        self.autoUnloadSeconds = UserDefaults.standard.integer(forKey: UserDefaultsKeys.modelAutoUnloadSeconds)
-        self.selectedProviderId = UserDefaults.standard.string(forKey: providerKey)
+    init(userDefaults: (any UserDefaultsProviding)? = nil) {
+        self.userDefaults = userDefaults ?? UserDefaults.standard
+        self.autoUnloadSeconds = self.userDefaults.integer(forKey: UserDefaultsKeys.modelAutoUnloadSeconds)
+        let stored = self.userDefaults.string(forKey: providerKey)
+        if let stored {
+            self.selectedProviderId = stored
+        } else {
+            self.selectedProviderId = Self.defaultProviderId
+            self.userDefaults.set(Self.defaultProviderId, forKey: providerKey)
+        }
     }
 
     // MARK: - Public API
@@ -83,7 +93,7 @@ final class ModelManagerService: ObservableObject {
 
     func selectProvider(_ providerId: String) {
         selectedProviderId = providerId
-        UserDefaults.standard.set(providerId, forKey: providerKey)
+        userDefaults.set(providerId, forKey: providerKey)
     }
 
     func selectModel(_ providerId: String, modelId: String) {
