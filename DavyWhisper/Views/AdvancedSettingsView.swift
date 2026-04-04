@@ -1,20 +1,22 @@
 import SwiftUI
 
 struct AdvancedSettingsView: View {
-    @ObservedObject private var viewModel = APIServerViewModel.shared
+    @ObservedObject private var apiServerViewModel = APIServerViewModel.shared
+    @ObservedObject private var advancedViewModel: AdvancedSettingsViewModel
     @ObservedObject private var memoryService = ServiceContainer.shared.memoryService
     @ObservedObject private var promptProcessingService = ServiceContainer.shared.promptProcessingService
     @ObservedObject private var modelManager = ServiceContainer.shared.modelManagerService
     @ObservedObject private var dictation = DictationViewModel.shared
     #if !APPSTORE
-    @State private var cliInstalled = false
-    @State private var cliSymlinkTarget = ""
     #endif
-    @State private var raycastInstalled = false
     @State private var showClearMemoryConfirmation = false
 
     @AppStorage(UserDefaultsKeys.historyRetentionDays) private var historyRetentionDays: Int = 0
     @AppStorage(UserDefaultsKeys.saveAudioWithHistory) private var saveAudioWithHistory: Bool = false
+
+    init(advancedViewModel: AdvancedSettingsViewModel = AdvancedSettingsViewModel()) {
+        _advancedViewModel = ObservedObject(wrappedValue: advancedViewModel)
+    }
 
     var body: some View {
         Form {
@@ -162,13 +164,13 @@ struct AdvancedSettingsView: View {
 
             // MARK: - API Server
             Section(String(localized: "API Server")) {
-                Toggle(String(localized: "Enable API Server"), isOn: $viewModel.isEnabled)
+                Toggle(String(localized: "Enable API Server"), isOn: $apiServerViewModel.isEnabled)
                     .accessibilityIdentifier("com.davywhisper.settings.advanced.apiServer")
-                    .onChange(of: viewModel.isEnabled) { _, enabled in
+                    .onChange(of: apiServerViewModel.isEnabled) { _, enabled in
                         if enabled {
-                            viewModel.startServer()
+                            apiServerViewModel.startServer()
                         } else {
-                            viewModel.stopServer()
+                            apiServerViewModel.stopServer()
                         }
                     }
 
@@ -176,20 +178,20 @@ struct AdvancedSettingsView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
-                if viewModel.isEnabled {
+                if apiServerViewModel.isEnabled {
                     HStack {
                         Image(systemName: "circle.fill")
-                            .foregroundStyle(viewModel.isRunning ? .green : .orange)
+                            .foregroundStyle(apiServerViewModel.isRunning ? .green : .orange)
                             .font(.caption2)
                             .accessibilityHidden(true)
-                        Text(viewModel.isRunning
-                             ? String(localized: "Running on port \(String(viewModel.port))")
+                        Text(apiServerViewModel.isRunning
+                             ? String(localized: "Running on port \(String(apiServerViewModel.port))")
                              : String(localized: "Not running"))
                             .font(.callout)
                             .foregroundStyle(.secondary)
                     }
 
-                    if let error = viewModel.errorMessage {
+                    if let error = apiServerViewModel.errorMessage {
                         Label(error, systemImage: "exclamationmark.triangle.fill")
                             .foregroundStyle(.red)
                             .font(.callout)
@@ -202,10 +204,10 @@ struct AdvancedSettingsView: View {
             Section(String(localized: "Command Line Tool")) {
                 HStack {
                     Image(systemName: "circle.fill")
-                        .foregroundStyle(cliInstalled ? .green : .orange)
+                        .foregroundStyle(advancedViewModel.cliInstalled ? .green : .orange)
                         .font(.caption2)
                         .accessibilityHidden(true)
-                    if cliInstalled {
+                    if advancedViewModel.cliInstalled {
                         Text(String(localized: "Installed at /usr/local/bin/davywhisper"))
                             .font(.callout)
                             .foregroundStyle(.secondary)
@@ -216,13 +218,13 @@ struct AdvancedSettingsView: View {
                     }
                 }
 
-                if cliInstalled {
+                if advancedViewModel.cliInstalled {
                     Button(String(localized: "Uninstall")) {
-                        uninstallCLI()
+                        advancedViewModel.uninstallCLI()
                     }
                 } else {
                     Button(String(localized: "Install Command Line Tool")) {
-                        installCLI()
+                        advancedViewModel.installCLI()
                     }
                 }
 
@@ -233,10 +235,10 @@ struct AdvancedSettingsView: View {
             #endif
 
             // MARK: - Usage Examples
-            if viewModel.isEnabled {
+            if apiServerViewModel.isEnabled {
                 Section(String(localized: "Usage Examples")) {
                     #if !APPSTORE
-                    if cliInstalled {
+                    if advancedViewModel.cliInstalled {
                         cliExamples
                     } else {
                         curlExamples
@@ -259,7 +261,7 @@ struct AdvancedSettingsView: View {
                         Text(String(localized: "Raycast Extension"))
                             .font(.headline)
 
-                        if raycastInstalled {
+                        if advancedViewModel.raycastInstalled {
                             Text(String(localized: "Start dictation, search history and switch profiles directly from Raycast."))
                                 .font(.callout)
                                 .foregroundStyle(.secondary)
@@ -269,7 +271,7 @@ struct AdvancedSettingsView: View {
                                 .foregroundStyle(.secondary)
                         }
 
-                        if raycastInstalled {
+                        if advancedViewModel.raycastInstalled {
                             Button(String(localized: "Open in Raycast")) {
                                 NSWorkspace.shared.open(URL(string: "raycast://extensions/SeoFood/davywhisper")!)
                             }
@@ -290,11 +292,9 @@ struct AdvancedSettingsView: View {
         .padding()
         .frame(minWidth: 500, minHeight: 300)
         .onAppear {
-            raycastInstalled = NSWorkspace.shared.urlForApplication(
-                withBundleIdentifier: "com.raycast.macos"
-            ) != nil
+            advancedViewModel.checkRaycastInstallation()
             #if !APPSTORE
-            checkCLIInstallation()
+            advancedViewModel.checkCLIInstallation()
             #endif
         }
     }
@@ -323,11 +323,11 @@ struct AdvancedSettingsView: View {
 
     private var curlExamples: some View {
         VStack(alignment: .leading, spacing: 8) {
-            exampleRow(String(localized: "Check status:"), "curl http://127.0.0.1:\(viewModel.port)/v1/status")
+            exampleRow(String(localized: "Check status:"), "curl http://127.0.0.1:\(apiServerViewModel.port)/v1/status")
             Divider()
-            exampleRow(String(localized: "Transcribe audio:"), "curl -X POST http://127.0.0.1:\(viewModel.port)/v1/transcribe \\\n  -F \"file=@audio.wav\"")
+            exampleRow(String(localized: "Transcribe audio:"), "curl -X POST http://127.0.0.1:\(apiServerViewModel.port)/v1/transcribe \\\n  -F \"file=@audio.wav\"")
             Divider()
-            exampleRow(String(localized: "List models:"), "curl http://127.0.0.1:\(viewModel.port)/v1/models")
+            exampleRow(String(localized: "List models:"), "curl http://127.0.0.1:\(apiServerViewModel.port)/v1/models")
         }
     }
 
@@ -353,55 +353,4 @@ struct AdvancedSettingsView: View {
             }
         }
     }
-
-    // MARK: - CLI Installation
-
-    #if !APPSTORE
-    private static let symlinkPath = "/usr/local/bin/davywhisper"
-
-    private var cliBinaryPath: String {
-        Bundle.main.bundleURL.appendingPathComponent("Contents/MacOS/davywhisper-cli").path
-    }
-
-    private func checkCLIInstallation() {
-        let fm = FileManager.default
-        guard let dest = try? fm.destinationOfSymbolicLink(atPath: Self.symlinkPath) else {
-            cliInstalled = false
-            return
-        }
-        cliSymlinkTarget = dest
-        cliInstalled = dest == cliBinaryPath
-    }
-
-    private func installCLI() {
-        let target = cliBinaryPath
-        let link = Self.symlinkPath
-        let script = """
-            do shell script "mkdir -p /usr/local/bin && ln -sf '\(target)' '\(link)'" with administrator privileges
-            """
-        runOsascript(script) {
-            checkCLIInstallation()
-        }
-    }
-
-    private func uninstallCLI() {
-        let link = Self.symlinkPath
-        let script = """
-            do shell script "rm -f '\(link)'" with administrator privileges
-            """
-        runOsascript(script) {
-            checkCLIInstallation()
-        }
-    }
-
-    private func runOsascript(_ source: String, completion: @escaping @MainActor @Sendable () -> Void) {
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
-        process.arguments = ["-e", source]
-        process.terminationHandler = { _ in
-            Task { @MainActor in completion() }
-        }
-        try? process.run()
-    }
-    #endif
 }
