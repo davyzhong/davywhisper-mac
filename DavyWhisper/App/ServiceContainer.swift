@@ -184,6 +184,9 @@ final class ServiceContainer: ObservableObject {
         // Start memory service
         memoryService.startListening()
 
+        // Migrate profiles: whisper → paraformer (one-time, guarded by UserDefaults flag)
+        profileService.migrateDefaultEngine(userDefaults: UserDefaults.standard)
+
         // Migrate stale cloudModelOverride in profiles
         for profile in profileService.profiles {
             guard let modelOverride = profile.cloudModelOverride,
