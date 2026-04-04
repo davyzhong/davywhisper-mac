@@ -1,26 +1,37 @@
 # DavyWhisper v1.x Refactoring Design
 
 **Date:** 2026-04-04
-**Status:** Draft
+**Status:** Draft (v2 — post spec-review fixes)
 **Author:** Claude Code (brainstorming session with user)
+**Reviewed-by:** spec-document-reviewer (14 issues found, all addressed)
 
 ---
 
 ## 1. Background
 
-DavyWhisper is a macOS menu bar speech-to-text app forked from TypeWhisper (German → Simplified Chinese). The fork phases 1-6 are complete (brand, feature trimming, LLM providers, localization, China mirror, finishing). The codebase sits at:
+DavyWhisper is a macOS menu bar speech-to-text app forked from TypeWhisper (German → Simplified Chinese). The fork phases 1-6 are complete. The codebase sits at:
 
-- **35,358 lines** Swift across **144 files**
+- **~35,000 lines** Swift across **144 files**
 - **97 main app** Swift files, **36 services**, **14 ViewModels**, **30 views**
-- **7 plugins**: WhisperKit, Deepgram, ElevenLabs, Paraformer, Qwen3, OpenAICompatible, LiveTranscript
-- **355 unit tests** passing, ~25% coverage
-- **14 Settings tabs**
+- **7 source plugins** in `Plugins/`: WhisperKit, Deepgram, ElevenLabs, Paraformer, Qwen3, OpenAICompatible, LiveTranscript
+- **4 downloadable-only LLM plugins** in `plugins.json`: GLM, Kimi, MiniMax (no source directories)
+- **~330 unit tests** passing, coverage estimated ~8-9% overall (per testing-framework-design.md baseline)
+- **9 Settings tabs** (already merged from 14 in earlier phases)
+
+**Verified plugin provider IDs** (from source code):
+| Plugin | `providerId` |
+|--------|-------------|
+| WhisperKit | `"whisper"` |
+| Paraformer | `"paraformer"` |
+| Qwen3 | `"qwen3"` |
+| Deepgram | `"deepgram"` |
+| ElevenLabs | `"elevenlabs"` |
 
 Three critical gaps exist:
 
 1. **Chinese ASR accuracy**: Paraformer plugin exists in code but is not the default engine. WhisperKit (~8-10% CER on Chinese) is still the default. Target: ~2-3% CER.
-2. **Code bloat**: WebhookPlugin, WatchFolder, and separate LLM plugins increase maintenance burden without proportional value for Chinese users.
-3. **Test coverage**: 25% is far below the 75% stability contract target.
+2. **Plugin registry bloat**: `plugins.json` still lists WebhookPlugin (downloadable-only) and 3 separate LLM plugins. These should be cleaned up and LLM plugins unified.
+3. **Test coverage**: ~8-9% overall is far below the 75% stability contract target.
 
 ---
 
@@ -30,28 +41,35 @@ Three critical gaps exist:
 |-----------|---------|--------|
 | Chinese ASR accuracy | ~8-10% CER (WhisperKit base) | ~2-3% CER (Paraformer) |
 | Out-of-box usability | Requires model download | Works immediately (151MB bundled) |
-| Default engine | WhisperKit | Paraformer |
-| Plugin count | 7 | 4 (remove Webhook, WatchFolder; merge LLMs) |
-| LLM plugins | 4 separate | 1 unified OpenAICompatiblePlugin |
-| Settings tabs | 14 | 9 |
-| Test coverage | ~25% | >=75% (CI gate) |
-| Swift LOC | ~35,358 | ~33,200 (-6%) |
+| Default engine | None (nil on fresh install) | Paraformer |
+| Downloadable plugins in plugins.json | 9 entries | 5 entries (remove Webhook + 3 LLM) |
+| LLM providers | 3 separate downloadable plugins | 1 unified OpenAICompatiblePlugin with presets |
+| Settings tabs | 9 (already merged) | 9 (no change needed) |
+| Test coverage | ~8-9% (measured baseline) | >=75% (CI gate) |
 
 ---
 
 ## 3. Execution Model
 
-**P9 Tech Lead orchestrator** manages three workstreams. Key path sequencing: C-line runs first as the critical path, then A-line and B-line run in parallel.
+**P9 Tech Lead orchestrator** manages three workstreams. Key path sequencing: C-line runs first as the critical path. A-line and B-line start after C-line completes.
 
 ```
-Baseline: Measure current test coverage
+Phase 0: Baseline — Measure current test coverage
     |
-C-line (Critical Path) ──┐
-    |                     ├── After C-line completes:
-A-line (Simplification) ──┤    Run full coverage gate
-    |                     │
-B-line (Testing) ─────────┘
+    v
+Phase 1: C-line (Critical Path — Chinese ASR Experience)
+    ├── C1: ModelManager default engine
+    ├── C2: Profile migration
+    ├── C3: Model bundling
+    └── C4: E2E verification
+    |
+    v
+Phase 2: A-line + B-line (Parallel)
+    ├── A-line: Simplification (plugin cleanup, LLM unification)
+    └── B-line: Test coverage >=75% CI gate
 ```
+
+**Why C-line must complete first**: A-line modifies `plugins.json` and plugin discovery logic. C-line modifies `ModelManagerService` default engine selection. Running them simultaneously risks merge conflicts in shared files (`SettingsView.swift`, `project.yml`, `PluginManager.swift`). Completing C-line first establishes a stable baseline for A-line changes.
 
 ### Module-Level TDD
 
@@ -70,38 +88,40 @@ This applies to: ModelManagerService, ProfileService, OpenAICompatiblePlugin, Se
 
 ### C1: ModelManager — Default Engine Switch
 
-**Module**: `ModelManagerService.swift`
+**Module**: `DavyWhisper/Services/ModelManagerService.swift`
 
-**TDD approach**: Write tests asserting default engine selection logic first, then change the default from WhisperKit to Paraformer.
+**Current behavior**: `selectedProviderId` is loaded from `UserDefaults.standard.string(forKey: providerKey)`. On fresh install, this returns `nil` — no engine is selected. The user must manually pick one.
+
+**TDD approach**: Write tests asserting default engine selection logic first, then add Paraformer as the hardcoded fallback.
 
 **Changes**:
-- Change the global default transcription engine from WhisperKit to Paraformer
-- Ensure engine selection persists across app restarts via UserDefaults
-- When no user preference exists, Paraformer is selected automatically
-- WhisperKit remains available as a manual option for English/translation use cases
+- Add a fallback in `ModelManagerService.init()`: when `selectedProviderId` is nil (fresh install), set it to `"paraformer"` and persist to UserDefaults
+- Add a constant `static let defaultProviderId = "paraformer"` to `ModelManagerService`
+- Ensure engine selection persists across app restarts via UserDefaults (already works)
+- WhisperKit (`"whisper"`) remains available as a manual option for English/translation
 
 ### C2: ProfileService — Forced Migration
 
-**Module**: `ProfileService.swift`
+**Module**: `DavyWhisper/Services/ProfileService.swift`
 
 **TDD approach**: Write tests for migration logic first (detect old WhisperKit override → migrate to Paraformer → notify user).
 
 **Changes**:
-- On first launch after upgrade, scan all profiles with `engineOverride == "WhisperKit"`
-- Migrate those overrides to `"Paraformer"`
+- On first launch after upgrade, scan all profiles with `engineOverride == "whisper"` (the actual `providerId` for WhisperKit, not "WhisperKit")
+- Migrate those overrides to `"paraformer"`
 - Show a one-time notification to the user explaining the engine change
-- Preserve any other profile settings (language, prompts, etc.)
+- Preserve all other profile settings (language, prompts, etc.)
+- Migration runs once, guarded by a `UserDefaults` flag (e.g., `didMigrateDefaultEngine_v1`)
 
 ### C3: Model Bundling — Bundle-First Strategy
 
-**Module**: `ParaformerPlugin.swift`, `SherpaOnnx.swift`
+**Module**: `Plugins/ParaformerPlugin/ParaformerPlugin.swift`, `Plugins/ParaformerPlugin/SherpaOnnx.swift`
 
 **Changes**:
-- Bundle Paraformer model (79MB) + Punctuation model (72MB) = 151MB into `Resources/ParaformerModel/`
-- Already partially done — model files exist at this path
-- Implement Bundle-first model resolution:
-  1. Check `Bundle.main.url(forResource:)` for bundled model
-  2. Check user Application Support directory for downloaded/updated model
+- Model files already exist at `DavyWhisper/Resources/ParaformerModel/` (79MB ASR + 72MB punctuation = 151MB)
+- Implement Bundle-first model resolution in `ParaformerPlugin`:
+  1. Check user Application Support directory (`~/Library/Application Support/DavyWhisper/PluginData/com.davywhisper.paraformer/`) for downloaded/updated model
+  2. If not found, fall back to `Bundle.main.url(forResource: "ParaformerModel", withExtension: nil)`
   3. User directory model overrides bundled model (allows updates without app reinstall)
 - Remove any mandatory download requirement for first launch
 
@@ -117,18 +137,16 @@ This applies to: ModelManagerService, ProfileService, OpenAICompatiblePlugin, Se
 
 ## 5. A-Line: Simplification
 
-### A1: Delete WebhookPlugin + WatchFolder (Low Risk, Run First)
+### A1: Remove WebhookPlugin from plugins.json
 
-**TDD approach**: Write deletion verification tests — assert that removed code has no remaining references, no dangling imports, no orphaned Settings entries.
+**Scope**: WebhookPlugin has no source directory in `Plugins/` — it exists only as a downloadable entry in `DavyWhisper/Resources/plugins.json` (lines 71-85, ID: `com.davywhisper.webhook`). There is no WatchFolder plugin entry in `plugins.json` — this was already removed.
 
-**What to delete (full cleanup)**:
-- Plugin source files and manifests
-- Any ViewModel/Service/View that exists solely for these plugins
-- Settings UI tabs/sections pointing to these plugins
-- UserDefaults keys specific to these plugins
-- Test files for these plugins
+**TDD approach**: Write test asserting plugins.json contains no webhook entry after cleanup. Write test asserting no source code references `com.davywhisper.webhook`.
 
-**Execution order**: WebhookPlugin first (zero user-facing impact), then WatchFolder.
+**Changes**:
+- Remove `com.davywhisper.webhook` entry from `plugins.json`
+- Grep for any remaining references to webhook plugin in source code and remove
+- No Settings UI cleanup needed (WebhookPlugin was never integrated into Settings tabs)
 
 ### A2: Delete AudioDucking (After Confirmation)
 
@@ -136,48 +154,35 @@ This applies to: ModelManagerService, ProfileService, OpenAICompatiblePlugin, Se
 
 **Confirmation required**: Verify no user-facing settings or internal services depend on AudioDucking before deletion.
 
-### A3: LLM Unification — 4-in-1 OpenAICompatiblePlugin
+### A3: LLM Unification — Merge Downloadable LLM Plugins into OpenAICompatiblePlugin
 
-**Module**: `OpenAICompatiblePlugin.swift`
+**Scope**: GLM, Kimi, and MiniMax LLM plugins exist only as downloadable entries in `plugins.json` — they have **no source directories** under `Plugins/`. The work is: (1) remove their `plugins.json` entries, (2) add built-in presets to the existing `Plugins/OpenAICompatiblePlugin/`, (3) migrate user API key configs.
 
-**TDD approach**: Write comprehensive tests for the unified plugin first — test each preset (GLM, Kimi, Moonshot, MiniMax) + custom URL, then implement.
+**Module**: `Plugins/OpenAICompatiblePlugin/OpenAICompatiblePlugin.swift`
+
+**TDD approach**: Write tests for preset selection, API URL construction, and API key retrieval per preset.
 
 **Changes**:
-- Merge GLM, Kimi, MiniMax, QwenLLM plugins into a single `OpenAICompatiblePlugin`
-- Built-in presets:
-  | Preset | Base URL | Auth |
-  |--------|----------|------|
-  | GLM (Zhipu AI) | `open.bigmodel.cn/api/paas/v4` | API key |
-  | Kimi (Moonshot) | `api.moonshot.cn/v1` | API key |
-  | MiniMax | `api.minimax.chat/v1` | API key |
-  | Moonshot | `api.moonshot.cn/v1` | API key |
-- Users can add custom providers via base URL + model name
-- Delete 4 separate plugin directories after merge
-- Update `project.yml` to remove old plugin targets
-- Update Settings UI to show unified provider selector
+- Add built-in LLM presets to `OpenAICompatiblePlugin`:
 
-### A4: Settings Tab Merge (14 → 9)
+  | Preset | Plugin ID (old) | Base URL | API Key Storage |
+  |--------|-----------------|----------|----------------|
+  | GLM (Zhipu AI) | `com.davywhisper.glm` | `open.bigmodel.cn/api/paas/v4` | Keychain |
+  | Kimi (Moonshot) | `com.davywhisper.kimi` | `api.moonshot.cn/v1` | Keychain |
+  | MiniMax | `com.davywhisper.minimax` | `api.minimax.chat/v1` | Keychain |
 
-**Merge plan**:
+- Remove entries for `com.davywhisper.glm`, `com.davywhisper.kimi`, `com.davywhisper.minimax` from `plugins.json`
+- Preserve existing keychain entries for each provider (users don't need to re-enter API keys)
+- Add "Custom OpenAI Compatible" option for any other provider (base URL + model name)
+- Update Settings UI to show unified provider selector with preset dropdown
 
-| Before (14) | After (9) | Merge Logic |
-|-------------|-----------|-------------|
-| General | General | Unchanged |
-| Recording | Input | Recording + Hotkeys merged |
-| Hotkeys | (merged into Input) | |
-| Profiles | Profiles | Unchanged |
-| Plugins | Plugins | Unchanged |
-| Dictionary | Words | Dictionary + Snippets merged |
-| Snippets | (merged into Words) | |
-| Prompts | Prompts | Unchanged |
-| Advanced | System | Advanced + API Server merged |
-| API Server | (merged into System) | |
-| History | History | Unchanged |
-| Translation | Translation | Unchanged |
-| About | About | Unchanged |
-| Error Log | (merged into System) | Merged into System tab |
+### A4: Settings Tab Merge — Already Complete
 
-**TDD approach**: Write UI tests for each merged tab to verify navigation and content rendering before merging.
+Settings tabs were already merged from 14 to 9 in an earlier phase. Current tabs (verified from `SettingsView.swift`):
+
+`general, recording, fileTranscription, history, dictionary, profiles, prompts, integrations, advanced`
+
+**No additional work needed.** This step is marked as complete.
 
 ---
 
@@ -192,6 +197,8 @@ Before any refactoring begins:
 
 ### Coverage Targets
 
+**Baseline**: Must be measured before refactoring starts using `xcodebuild test -enableCodeCoverage YES`. Estimated current coverage per testing-framework-design.md: ~8% overall, ~29% Services, ~22% ViewModels.
+
 | Module | Current (est.) | Target |
 |--------|----------------|--------|
 | ModelManagerService | ~10% | >=80% |
@@ -202,7 +209,7 @@ Before any refactoring begins:
 | DictationViewModel | ~10% | >=80% |
 | PromptProcessingService | ~20% | >=80% |
 | SettingsViewModel | ~10% | >=80% |
-| Overall | ~25% | >=75% |
+| Overall | ~8-9% | >=75% |
 
 ### CI Gate Rule
 
@@ -237,11 +244,19 @@ Decision deferred to post-C-line evaluation.
 
 | Data Type | Migration Strategy |
 |-----------|-------------------|
-| Profile engine overrides | Force-migrate WhisperKit → Paraformer, notify user |
-| Plugin-specific settings | Direct delete (WebhookPlugin, WatchFolder have no persistent user data) |
-| LLM provider selections | Map old plugin IDs to new unified plugin preset IDs |
+| Profile engine overrides | Force-migrate `engineOverride == "whisper"` → `"paraformer"`, notify user |
+| Plugin-specific settings | Direct delete (WebhookPlugin has no persistent user data) |
+| LLM provider selections | Map old plugin IDs to new unified preset IDs (see mapping below) |
 | History | Unchanged (engine name in history records is informational only) |
 | Dictionary/Snippets | Unchanged |
+
+**LLM Plugin ID Migration Map**:
+
+| Old Plugin ID | New Preset Key | API Key Location |
+|---------------|---------------|-----------------|
+| `com.davywhisper.glm` | `glm` (preset in OpenAICompatiblePlugin) | Keychain — preserve existing key |
+| `com.davywhisper.kimi` | `kimi` (preset in OpenAICompatiblePlugin) | Keychain — preserve existing key |
+| `com.davywhisper.minimax` | `minimax` (preset in OpenAICompatiblePlugin) | Keychain — preserve existing key |
 
 ---
 
@@ -249,24 +264,24 @@ Decision deferred to post-C-line evaluation.
 
 | Risk | Likelihood | Impact | Mitigation |
 |------|-----------|--------|------------|
-| Paraformer model too large (151MB) for App Store | Medium | High | Verify App Store size limits; consider on-demand download as fallback |
+| Paraformer 151MB bundle increases download size | High | Medium | GitHub Releases have no size limit; acceptable trade-off for Chinese users |
 | Profile migration breaks user workflows | Low | High | Write migration tests first; show notification with undo option |
-| LLM unification breaks existing API key configs | Medium | Medium | Map old plugin IDs to new preset IDs; preserve keychain entries |
+| LLM unification breaks existing API key configs | Medium | Medium | Preserve keychain entries; map old plugin IDs to new preset keys |
 | Test coverage gate blocks PR velocity | Medium | Medium | Start with baseline; incrementally raise threshold |
-| Settings tab merge confuses existing users | Low | Low | Keep tab names descriptive; no functionality removed |
+| Bundle-first model resolution picks wrong model | Low | High | Write tests for resolution order (user dir > bundle); add logging |
 
 ---
 
 ## 10. Success Criteria
 
 1. **Chinese ASR**: Fresh install transcribes Chinese audio with CER < 3%, no download required
-2. **Code reduction**: ~2,100 lines removed (6% reduction)
-3. **Plugin count**: 7 → 4
-4. **Settings tabs**: 14 → 9
+2. **Default engine**: Paraformer is auto-selected on fresh install (no nil state)
+3. **Plugin registry cleanup**: WebhookPlugin + 3 separate LLM plugins removed from plugins.json
+4. **LLM unification**: OpenAICompatiblePlugin handles GLM/Kimi/MiniMax via presets
 5. **Test coverage**: >=75% overall, CI-gated
-6. **All existing tests**: 355+ tests continue to pass
+6. **All existing tests**: ~330+ tests continue to pass
 7. **HTTP API**: All `/v1/*` endpoints unchanged and passing
-8. **No regressions**: Profiles, history, dictionary, snippets all functional
+8. **No regressions**: Profiles (migrated), history, dictionary, snippets all functional
 
 ---
 
@@ -276,29 +291,20 @@ Decision deferred to post-C-line evaluation.
 
 | File | Change Type |
 |------|------------|
-| `Services/ModelManagerService.swift` | Modify default engine |
-| `Services/ProfileService.swift` | Add migration logic |
-| `Plugins/ParaformerPlugin/ParaformerPlugin.swift` | Modify model path resolution |
-| `Plugins/ParaformerPlugin/SherpaOnnx.swift` | Possibly update |
-| `ViewModels/SettingsViewModel.swift` | Update engine selector UI |
-| `Resources/ParaformerModel/` | Already contains models |
-| `DavyWhisperTests/` | New tests for migration + default engine |
+| `DavyWhisper/Services/ModelManagerService.swift` | Add defaultProviderId fallback |
+| `DavyWhisper/Services/ProfileService.swift` | Add migration logic for engine overrides |
+| `Plugins/ParaformerPlugin/ParaformerPlugin.swift` | Add Bundle-first model resolution |
+| `DavyWhisper/Resources/ParaformerModel/` | Already contains bundled models |
+| `DavyWhisperTests/` | New tests for default engine + migration |
 
 ### A-Line Files
 
 | File | Change Type |
 |------|------------|
-| `Plugins/WebhookPlugin/` | Delete entirely |
-| `Plugins/WatchFolder/` | Delete entirely |
-| `Services/AudioDucking*` | Delete (after confirmation) |
-| `Plugins/GLMPlugin/` | Delete (merged into OpenAICompatible) |
-| `Plugins/KimiPlugin/` | Delete (merged into OpenAICompatible) |
-| `Plugins/MiniMaxPlugin/` | Delete (merged into OpenAICompatible) |
-| `Plugins/QwenLLMPlugin/` | Delete (merged into OpenAICompatible) |
-| `Plugins/OpenAICompatiblePlugin/` | Expand with presets |
-| `Views/SettingsView.swift` | Modify tab structure |
-| `Views/*SettingsView.swift` | Merge related views |
-| `project.yml` | Remove deleted plugin targets |
+| `DavyWhisper/Resources/plugins.json` | Remove webhook + LLM plugin entries |
+| `Plugins/OpenAICompatiblePlugin/OpenAICompatiblePlugin.swift` | Add GLM/Kimi/MiniMax presets |
+| `DavyWhisper/ViewModels/SettingsViewModel.swift` | Update provider selector |
+| `DavyWhisperTests/` | Tests for preset selection + migration |
 
 ### B-Line Files
 
