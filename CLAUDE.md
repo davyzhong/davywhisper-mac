@@ -158,6 +158,11 @@ See `docs/superpowers/specs/2026-04-03-testing-framework-design.md` for the full
 
 Do not proceed to the next phase without completing all three steps.
 
+## Execution Principles
+
+1. **文档/测试/代码同步**: 每次代码变更完成后，必须同步更新相关文档和单元测试，然后执行 commit + push。不允许出现"代码改了但测试没改"或"测试改了但文档没改"的状态。
+2. **连续执行不中断**: 每个阶段完成后直接执行下一个阶段，不要停下来询问用户确认。全程自动推进直到所有阶段完成。
+
 ## Key Patterns
 
 - **Menu bar app**: `LSUIElement = YES` in entitlements — no dock icon by default
