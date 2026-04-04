@@ -19,16 +19,16 @@ import re
 
 THRESHOLDS = {
     # Target-level
-    "DavyWhisper.app": 0.08,       # Phase 1 baseline: 9.7% current → tighten to 35% in Phase 2
+    "DavyWhisper.app": 0.12,       # Phase 2 baseline: 12.3% measured 2026-04-04
 }
 
 CATEGORY_THRESHOLDS = {
     # Exclude plugins + vendor from these
-    # Phase 1: baseline from test run 2026-04-03; tighten each sprint
-    "Services (core)":   0.29,       # Phase 1: 30.8% current → tighten to 60% in Phase 2
-    "ViewModels":        0.22,       # Phase 1: 22.6% current → tighten to 25% in Phase 2
-    "Models":           0.68,       # Phase 1: 69.2% current → tighten to 75% in Phase 2
-    "HTTP Server":       0.61,       # Phase 1: 62.1% current → tighten to 80% in Phase 2
+    # Phase 2: measured 2026-04-04 after C-line + LLM plugins + HistoryExporter tests
+    "Services (core)":   0.32,       # Phase 2: 32.9% measured → target 60% in Phase 3
+    "ViewModels":        0.35,       # Phase 2: 35.5% measured → target 50% in Phase 3
+    "Models":           0.70,       # Phase 2: 70.4% measured → target 80% in Phase 3
+    "HTTP Server":       0.61,       # Phase 2: 61% measured → target 75% in Phase 3
 }
 
 LOW_COVERAGE_WARN = 0.20           # warn if any file < 20%
