@@ -70,6 +70,7 @@ private final class PluginSettingsWindowDelegate: NSObject, NSWindowDelegate {
 }
 
 struct PluginSettingsView: View {
+    @ObservedObject private var viewModel: PluginSettingsViewModel
     @ObservedObject private var pluginManager = PluginManager.shared
     @ObservedObject private var registryService = PluginRegistryService.shared
     @State private var selectedTab = 0
@@ -78,6 +79,10 @@ struct PluginSettingsView: View {
     @State private var installFromFileError: String?
     @State private var hostingFilter: Int = 0 // 0=All, 1=Local, 2=Cloud
     @State private var expandedCategories: Set<String> = Set(PluginCategory.allCases.map(\.rawValue))
+
+    init(viewModel: PluginSettingsViewModel = PluginSettingsViewModel()) {
+        _viewModel = ObservedObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -100,7 +105,7 @@ struct PluginSettingsView: View {
         .frame(minWidth: 500, minHeight: 400)
         .alert(String(localized: "Uninstall Plugin"), isPresented: $showUninstallAlert, presenting: pluginToUninstall) { plugin in
             Button(String(localized: "Uninstall"), role: .destructive) {
-                registryService.uninstallPlugin(plugin.id, deleteData: true)
+                viewModel.uninstallPlugin(plugin.id)
                 pluginToUninstall = nil
             }
             Button(String(localized: "Cancel"), role: .cancel) {
@@ -123,22 +128,6 @@ struct PluginSettingsView: View {
 
     // MARK: - Installed Tab
 
-    private func categoryForPlugin(_ plugin: LoadedPlugin) -> PluginCategory {
-        if let regPlugin = registryService.registry.first(where: { $0.id == plugin.id }) {
-            return PluginCategory(rawValue: regPlugin.category) ?? .utility
-        }
-        if plugin.instance is TranscriptionEnginePlugin { return .transcription }
-        if plugin.instance is LLMProviderPlugin { return .llm }
-        return .utility
-    }
-
-    private var groupedInstalledPlugins: [(category: PluginCategory, plugins: [LoadedPlugin])] {
-        let grouped = Dictionary(grouping: pluginManager.loadedPlugins) { categoryForPlugin($0) }
-        return grouped
-            .sorted { $0.key.sortOrder < $1.key.sortOrder }
-            .map { (category: $0.key, plugins: $0.value.sorted { $0.manifest.name.localizedCompare($1.manifest.name) == .orderedAscending }) }
-    }
-
     private var installedTab: some View {
         Form {
             if pluginManager.loadedPlugins.isEmpty {
@@ -154,7 +143,7 @@ struct PluginSettingsView: View {
                     .padding(.vertical, 8)
                 }
             } else {
-                ForEach(groupedInstalledPlugins, id: \.category) { group in
+                ForEach(viewModel.groupedInstalledPlugins, id: \.category) { group in
                     Section {
                         CategoryHeaderButton(
                             category: group.category,
@@ -174,13 +163,11 @@ struct PluginSettingsView: View {
                             ForEach(group.plugins) { plugin in
                                 InstalledPluginRow(
                                     plugin: plugin,
-                                    installInfo: registryService.installInfo(for: plugin.id),
-                                    installState: registryService.installStates[plugin.id],
-                                    registryPlugin: registryService.registry.first(where: { $0.id == plugin.id }),
+                                    installInfo: viewModel.installInfo(for: plugin.id),
+                                    installState: viewModel.installState(for: plugin.id),
+                                    registryPlugin: viewModel.registryPlugin(for: plugin.id),
                                     onUpdate: {
-                                        if let registryPlugin = registryService.registry.first(where: { $0.id == plugin.id }) {
-                                            Task { await registryService.downloadAndInstall(registryPlugin) }
-                                        }
+                                        Task { await viewModel.updatePlugin(plugin.id) }
                                     },
                                     onUninstall: {
                                         pluginToUninstall = plugin
@@ -197,7 +184,7 @@ struct PluginSettingsView: View {
             Section {
                 HStack {
                     Button(String(localized: "Open Plugins Folder")) {
-                        pluginManager.openPluginsFolder()
+                        viewModel.openPluginsFolder()
                     }
                     Spacer()
                     Button(String(localized: "Install from File...")) {
@@ -210,33 +197,11 @@ struct PluginSettingsView: View {
         .formStyle(.grouped)
         .padding(.horizontal)
         .task {
-            await registryService.fetchRegistry()
+            await viewModel.fetchRegistry()
         }
     }
 
     // MARK: - Available Tab
-
-    private var filteredAvailablePlugins: [RegistryPlugin] {
-        let available = registryService.registry.filter { registryPlugin in
-            let info = registryService.installInfo(for: registryPlugin.id)
-            if case .notInstalled = info { return true }
-            return false
-        }
-        switch hostingFilter {
-        case 1: return available.filter { $0.requiresAPIKey != true }
-        case 2: return available.filter { $0.requiresAPIKey == true }
-        default: return available
-        }
-    }
-
-    private var groupedAvailablePlugins: [(category: PluginCategory, plugins: [RegistryPlugin])] {
-        let grouped = Dictionary(grouping: filteredAvailablePlugins) { plugin in
-            PluginCategory(rawValue: plugin.category) ?? .utility
-        }
-        return grouped
-            .sorted { $0.key.sortOrder < $1.key.sortOrder }
-            .map { (category: $0.key, plugins: $0.value.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }) }
-    }
 
     private var availableTab: some View {
         Form {
@@ -259,7 +224,7 @@ struct PluginSettingsView: View {
                             .font(.caption)
                             .foregroundStyle(.tertiary)
                         Button(String(localized: "Retry")) {
-                            Task { await registryService.fetchRegistry() }
+                            Task { await viewModel.fetchRegistry() }
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -276,7 +241,7 @@ struct PluginSettingsView: View {
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
 
-                if filteredAvailablePlugins.isEmpty {
+                if viewModel.filteredAvailablePlugins(hostingFilter: hostingFilter).isEmpty {
                     Section {
                         VStack(spacing: 8) {
                             Text(String(localized: "All available plugins are already installed."))
@@ -286,7 +251,7 @@ struct PluginSettingsView: View {
                         .padding(.vertical, 8)
                     }
                 } else {
-                    ForEach(groupedAvailablePlugins, id: \.category) { group in
+                    ForEach(viewModel.groupedAvailablePlugins(hostingFilter: hostingFilter), id: \.category) { group in
                         Section {
                             CategoryHeaderButton(
                                 category: group.category,
@@ -306,11 +271,10 @@ struct PluginSettingsView: View {
                                 ForEach(group.plugins) { plugin in
                                     AvailablePluginRow(
                                         plugin: plugin,
-                                        installState: registryService.installStates[plugin.id],
+                                        installState: viewModel.installState(for: plugin.id),
                                         onInstall: {
                                             Task {
-                                                await registryService.downloadAndInstall(plugin)
-                                                PluginManager.shared.setPluginEnabled(plugin.id, enabled: true)
+                                                await viewModel.installPlugin(plugin)
                                             }
                                         }
                                     )
@@ -325,7 +289,7 @@ struct PluginSettingsView: View {
         .formStyle(.grouped)
         .padding(.horizontal)
         .task {
-            await registryService.fetchRegistry()
+            await viewModel.fetchRegistry()
         }
     }
 
@@ -342,7 +306,7 @@ struct PluginSettingsView: View {
 
         Task {
             do {
-                try await registryService.installFromFile(url)
+                try await viewModel.installFromFile(url)
             } catch {
                 installFromFileError = error.localizedDescription
             }
