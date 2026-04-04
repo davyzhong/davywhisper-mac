@@ -68,22 +68,6 @@
       }
     },
     {
-      "id": "com.davywhisper.webhook",
-      "name": "Webhook Notifications",
-      "version": "1.0.9",
-      "minHostVersion": "0.9.0",
-      "author": "DavyWhisper",
-      "description": "Send transcribed or processed text to any webhook URL via HTTP POST.",
-      "category": "post-processor",
-      "size": 206232,
-      "downloadURL": "https://github.com/DavyWhisper/davywhisper-mac/releases/download/plugin-webhook-v1.0.9/WebhookPlugin.zip",
-      "iconSystemName": "arrow.up.forward.app",
-      "requiresAPIKey": false,
-      "descriptions": {
-        "zh-Hans": "通过 HTTP POST 将转录或处理后的文本发送到任意 Webhook URL。"
-      }
-    },
-    {
       "id": "com.davywhisper.elevenlabs",
       "name": "ElevenLabs",
       "version": "1.0.1",

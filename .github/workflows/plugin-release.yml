@@ -31,7 +31,6 @@ jobs:
           case "$PLUGIN_NAME" in
             qwen3) TARGET="Qwen3Plugin" ;;
             linear) TARGET="LinearPlugin" ;;
-            webhook) TARGET="WebhookPlugin" ;;
             groq) TARGET="GroqPlugin" ;;
             openai) TARGET="OpenAIPlugin" ;;
             gemini) TARGET="GeminiPlugin" ;;
