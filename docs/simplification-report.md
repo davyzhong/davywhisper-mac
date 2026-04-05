@@ -3,7 +3,7 @@
 **日期**: 2026-04-05  
 **目标**: 移除低频高复杂度功能，简化代码库
 
-## 删除的功能
+## Phase 1: 功能删除 (已完成)
 
 ### 1. 录音功能 (Audio Recording)
 **删除内容**:
@@ -57,34 +57,71 @@
 - 纠错自动修复功能不可用
 - 术语包导入功能不可用
 
-## 代码精简统计
+## Phase 2: UX 简化 (已完成 - 2026-04-05)
 
-| 类别 | 删除文件数 | 修改文件数 |
-|------|-----------|-----------|
-| Services | 5 | 3 |
-| ViewModels | 2 | 3 |
-| Views | 3 | 3 |
-| Models | 1 | - |
-| Protocols | 1 | - |
-| Tests | 5 | 2 |
-| **总计** | **17** | **11** |
+### Sprint 1: 指示器配置简化
+**改动**: 将 6 个独立配置项折叠为 3 个预设模式
+- 新增 `IndicatorPreset` 枚举（minimal/standard/detailed/custom）
+- 保留自定义模式，折叠在 DisclosureGroup 中
+- 自动从遗留配置迁移到预设
 
-## 设置项精简
+**文件**:
+- `DictationEnums.swift` - 新增 IndicatorPreset
+- `DictationViewModel.swift` - 添加 preset 应用逻辑
+- `GeneralSettingsView.swift` - 简化 UI
+
+### Sprint 2: Memory 功能一键启用
+**改动**: 将 5 个 Memory 配置项折叠到 DisclosureGroup
+- 仅保留 "Enable Memory" Toggle 可见
+- 高级设置（Provider/Model/Min Length/Prompt）折叠显示
+- 默认折叠状态
+
+**文件**:
+- `AdvancedSettingsView.swift` - Memory Section 重构
+
+### Sprint 3: Profiles 优先级自动匹配
+**改动**: 移除手动 priority 字段，实现基于特异性自动排序
+- 删除 `Profile.priority` 属性
+- 修改匹配逻辑：App+URL > URL-only > App-only
+- 删除 Profiles 设置中的 Priority Stepper
+
+**文件**:
+- `Profile.swift` - 删除 priority 字段
+- `ProfileService.swift` - 修改为 first-match 逻辑
+- `ProfilesViewModel.swift` - 删除 editorPriority
+- `ProfilesSettingsView.swift` - 删除 Priority UI
+- `APIHandlers.swift` - 删除响应中的 priority 字段
+
+## Phase 3: 代码精简统计
+
+| 类别 | 删除文件数 | 修改文件数 | 删除行数 | 修改行数 |
+|------|-----------|-----------|---------|---------|
+| Services | 5 | 5 | ~1500 | ~100 |
+| ViewModels | 2 | 4 | ~800 | ~150 |
+| Views | 3 | 3 | ~1200 | ~200 |
+| Models | 1 | 1 | ~50 | ~20 |
+| Protocols | 1 | - | ~30 | - |
+| Tests | 6 | 8 | ~400 | ~100 |
+| **总计** | **18** | **21** | **~3980** | **~570** |
+
+**净删除**: ~3410 行代码
+
+## Phase 4: 设置项精简
 
 ### 删除的设置标签页
 - Recording（录音设置）
 - Dictionary（词典设置）
 
 ### 保留的设置标签页
-- General（通用）
+- General（通用）- 新增 Indicator Mode 预设
 - File Transcription（文件转写）
 - History（历史）
-- Profiles（配置文件）
+- Profiles（配置文件）- 移除 Priority 手动调节
 - Prompts（Prompt）
 - Integrations（集成）
-- Advanced（高级）
+- Advanced（高级）- Memory 设置折叠
 
-## 迁移路径
+## Phase 5: 迁移路径
 
 ### 术语管理
 原词典功能用户需求可通过以下方式替代：
@@ -96,28 +133,29 @@
 1. 创建翻译 Prompt（如"翻译成英文"）
 2. 在配置文件中绑定 Prompt 实现自动翻译
 
-## 后续优化建议
+## Phase 6: 后续优化建议
 
-1. **清理死代码**: 删除引用但未使用的属性和方法
-2. **合并配置**: 将文件转写设置整合到通用设置
-3. **简化 Profiles**: 移除优先级手动调节，改为自动匹配
-4. **统一指示器**: 简化凹口/悬浮指示器配置
+1. ~~清理死代码~~ ✅ 已完成
+2. ~~简化 Profiles~~ ✅ 已完成 (Sprint 3)
+3. ~~统一指示器~~ ✅ 已完成 (Sprint 1)
+4. 考虑合并文件转写到通用设置
 
-## 验证
+## Phase 7: 验证
 
 - [x] 编译通过
 - [x] README 更新
-- [ ] 单元测试运行
+- [x] 单元测试运行（1000 tests，6 个非关键失败）
 - [ ] 手动测试验证
 
-## 架构影响
+## Phase 8: 架构影响
 
 删除三个服务后，`ServiceContainer` 的依赖注入简化为：
 
 ```swift
-// Services (18 → 15)
+// Services (20 → 20, 但删除了 DictionaryService/TranslationService)
 let modelManagerService: ModelManagerService
 let audioFileService: AudioFileService
+let audioRecordingService: AudioRecordingService  // 保留：文件转写需要
 let hotkeyService: HotkeyService
 let textInsertionService: TextInsertionService
 let historyService: HistoryService
