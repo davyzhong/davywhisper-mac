@@ -59,7 +59,6 @@ final class TestServiceContainer {
     let profilesViewModel: ProfilesViewModel
     let snippetsViewModel: SnippetsViewModel
     let promptActionsViewModel: PromptActionsViewModel
-    let audioRecorderViewModel: AudioRecorderViewModel
     let apiServerViewModel: APIServerViewModel
 
     // MARK: - Initialization
@@ -154,10 +153,6 @@ final class TestServiceContainer {
             promptActionService: promptActionService,
             promptProcessingService: promptProcessingService
         )
-        audioRecorderViewModel = AudioRecorderViewModel(
-            recorderService: audioRecorderService,
-            modelManager: modelManagerService
-        )
         apiServerViewModel = APIServerViewModel(httpServer: mockHTTPServer)
 
         // Set static shared references
@@ -168,7 +163,6 @@ final class TestServiceContainer {
         ProfilesViewModel._shared = profilesViewModel
         SnippetsViewModel._shared = snippetsViewModel
         PromptActionsViewModel._shared = promptActionsViewModel
-        AudioRecorderViewModel._shared = audioRecorderViewModel
     }
 
     // MARK: - TearDown
@@ -183,7 +177,6 @@ final class TestServiceContainer {
         ProfilesViewModel._shared = nil
         SnippetsViewModel._shared = nil
         PromptActionsViewModel._shared = nil
-        AudioRecorderViewModel._shared = nil
         EventBus.shared = nil
         PluginManager.shared = nil
         PluginRegistryService.shared = nil
