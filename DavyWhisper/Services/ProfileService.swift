@@ -54,11 +54,9 @@ final class ProfileService: ObservableObject {
         outputFormat: String? = nil,
         hotkeyData: Data? = nil,
         inlineCommandsEnabled: Bool = false,
-        priority: Int = 0
     ) {
         let profile = Profile(
             name: name,
-            priority: priority,
             bundleIdentifiers: bundleIdentifiers,
             urlPatterns: urlPatterns,
             inputLanguage: inputLanguage,
@@ -135,7 +133,7 @@ final class ProfileService: ObservableObject {
                 profile.bundleIdentifiers.contains(bundleId) &&
                 profile.urlPatterns.contains { domainMatches(domain, pattern: $0) }
             }
-            if let best = matches.sorted(by: { $0.priority > $1.priority }).first {
+            if let best = matches.first {
                 return best
             }
         }
@@ -146,7 +144,7 @@ final class ProfileService: ObservableObject {
                 !profile.urlPatterns.isEmpty &&
                 profile.urlPatterns.contains { domainMatches(domain, pattern: $0) }
             }
-            if let best = matches.sorted(by: { $0.priority > $1.priority }).first {
+            if let best = matches.first {
                 return best
             }
         }
@@ -154,7 +152,7 @@ final class ProfileService: ObservableObject {
         // Tier 3: bundleId-only match
         if !bundleId.isEmpty {
             let matches = enabled.filter { $0.bundleIdentifiers.contains(bundleId) }
-            if let best = matches.sorted(by: { $0.priority > $1.priority }).first {
+            if let best = matches.first {
                 return best
             }
         }
@@ -182,7 +180,7 @@ final class ProfileService: ObservableObject {
 
     private func fetchProfiles() {
         let descriptor = FetchDescriptor<Profile>(
-            sortBy: [SortDescriptor(\.priority, order: .reverse), SortDescriptor(\.name)]
+            sortBy: [SortDescriptor(\.name)]
         )
         do {
             profiles = try modelContext.fetch(descriptor)

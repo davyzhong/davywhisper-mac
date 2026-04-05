@@ -6,7 +6,6 @@ final class Profile {
     var id: UUID
     var name: String
     var isEnabled: Bool
-    var priority: Int
     var bundleIdentifiers: [String]
     var urlPatterns: [String]
     var inputLanguage: String?
@@ -36,7 +35,6 @@ final class Profile {
         id: UUID = UUID(),
         name: String,
         isEnabled: Bool = true,
-        priority: Int = 0,
         bundleIdentifiers: [String] = [],
         urlPatterns: [String] = [],
         inputLanguage: String? = nil,
@@ -55,7 +53,6 @@ final class Profile {
         self.id = id
         self.name = name
         self.isEnabled = isEnabled
-        self.priority = priority
         self.bundleIdentifiers = bundleIdentifiers
         self.urlPatterns = urlPatterns
         self.inputLanguage = inputLanguage

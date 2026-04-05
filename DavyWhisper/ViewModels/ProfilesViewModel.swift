@@ -45,7 +45,6 @@ final class ProfilesViewModel: ObservableObject {
     @Published var editorInlineCommandsEnabled = false
     @Published var editorHotkey: UnifiedHotkey?
     @Published var editorHotkeyLabel: String = ""
-    @Published var editorPriority: Int = 0
 
     // App picker
     @Published var showingAppPicker = false
@@ -95,8 +94,7 @@ final class ProfilesViewModel: ObservableObject {
             memoryEnabled: editorMemoryEnabled,
             outputFormat: editorOutputFormat,
             hotkeyData: editorHotkey.flatMap { try? JSONEncoder().encode($0) },
-            inlineCommandsEnabled: editorInlineCommandsEnabled,
-            priority: editorPriority
+            inlineCommandsEnabled: editorInlineCommandsEnabled
         )
     }
 
@@ -115,7 +113,6 @@ final class ProfilesViewModel: ObservableObject {
             profile.outputFormat = editorOutputFormat
             profile.inlineCommandsEnabled = editorInlineCommandsEnabled
             profile.hotkey = editorHotkey
-            profile.priority = editorPriority
             profileService.updateProfile(profile)
         } else {
             addProfile()
@@ -149,7 +146,6 @@ final class ProfilesViewModel: ObservableObject {
         editorInlineCommandsEnabled = false
         editorHotkey = nil
         editorHotkeyLabel = ""
-        editorPriority = 0
         urlPatternInput = ""
         domainSuggestions = []
         loadAvailableDomains()
@@ -180,7 +176,6 @@ final class ProfilesViewModel: ObservableObject {
         editorInlineCommandsEnabled = profile.inlineCommandsEnabled
         editorHotkey = profile.hotkey
         editorHotkeyLabel = profile.hotkey.map { HotkeyService.displayName(for: $0) } ?? ""
-        editorPriority = profile.priority
         urlPatternInput = ""
         domainSuggestions = []
         loadAvailableDomains()

@@ -372,20 +372,6 @@ private struct ProfileEditorSheet: View {
                         .foregroundStyle(.secondary)
                 }
 
-                Section(String(localized: "Priority")) {
-                    Stepper(value: $viewModel.editorPriority, in: 0...100) {
-                        HStack {
-                            Text(String(localized: "Priority"))
-                            Spacer()
-                            Text("\(viewModel.editorPriority)")
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-
-                    Text(String(localized: "Higher priority profiles take precedence when multiple profiles match."))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
             }
             .formStyle(.grouped)
 

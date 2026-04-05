@@ -328,7 +328,6 @@ final class APIHandlers: @unchecked Sendable {
                 let id: String
                 let name: String
                 let is_enabled: Bool
-                let priority: Int
                 let bundle_identifiers: [String]
                 let url_patterns: [String]
                 let input_language: String?
@@ -344,7 +343,6 @@ final class APIHandlers: @unchecked Sendable {
                     id: profile.id.uuidString,
                     name: profile.name,
                     is_enabled: profile.isEnabled,
-                    priority: profile.priority,
                     bundle_identifiers: profile.bundleIdentifiers,
                     url_patterns: profile.urlPatterns,
                     input_language: profile.inputLanguage,
