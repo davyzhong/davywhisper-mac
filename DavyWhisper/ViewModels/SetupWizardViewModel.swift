@@ -46,14 +46,9 @@ final class SetupWizardViewModel: ObservableObject {
 
         if UserDefaults.standard.data(forKey: UserDefaultsKeys.hybridHotkey) != nil {
             _selectedHotkeyMode = Published(initialValue: .hybrid)
-        } else if UserDefaults.standard.data(forKey: UserDefaultsKeys.pttHotkey) != nil {
-            _selectedHotkeyMode = Published(initialValue: .pushToTalk)
-        } else if UserDefaults.standard.data(forKey: UserDefaultsKeys.toggleHotkey) != nil {
-            _selectedHotkeyMode = Published(initialValue: .toggle)
         } else {
             _selectedHotkeyMode = Published(initialValue: .hybrid)
-        }
-    }
+        }    }
 
     // MARK: - Step Titles
 
@@ -99,8 +94,7 @@ final class SetupWizardViewModel: ObservableObject {
     }
 
     var hasAnyHotkeySet: Bool {
-        [UserDefaultsKeys.hybridHotkey, UserDefaultsKeys.pttHotkey, UserDefaultsKeys.toggleHotkey]
-            .contains { UserDefaults.standard.data(forKey: $0) != nil }
+        UserDefaults.standard.data(forKey: UserDefaultsKeys.hybridHotkey) != nil
     }
 
     var hasAnyLLMProvider: Bool {
@@ -131,8 +125,6 @@ final class SetupWizardViewModel: ObservableObject {
     func hotkeyLabel(for mode: HotkeySlotType) -> String {
         switch mode {
         case .hybrid: return dictationViewModel.hybridHotkeyLabel
-        case .pushToTalk: return dictationViewModel.pttHotkeyLabel
-        case .toggle: return dictationViewModel.toggleHotkeyLabel
         case .promptPalette: return dictationViewModel.promptPaletteHotkeyLabel
         }
     }
@@ -140,8 +132,6 @@ final class SetupWizardViewModel: ObservableObject {
     func hotkeyModeTitle(for mode: HotkeySlotType) -> String {
         switch mode {
         case .hybrid: return String(localized: "Hybrid")
-        case .pushToTalk: return String(localized: "Push-to-Talk")
-        case .toggle: return String(localized: "Toggle")
         case .promptPalette: return String(localized: "Prompt Palette")
         }
     }

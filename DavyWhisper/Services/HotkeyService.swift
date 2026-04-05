@@ -49,22 +49,18 @@ struct UnifiedHotkey: Equatable, Sendable, Codable {
 
 enum HotkeySlotType: String, CaseIterable, Sendable {
     case hybrid
-    case pushToTalk
-    case toggle
     case promptPalette
 
     var defaultsKey: String {
         switch self {
         case .hybrid: return UserDefaultsKeys.hybridHotkey
-        case .pushToTalk: return UserDefaultsKeys.pttHotkey
-        case .toggle: return UserDefaultsKeys.toggleHotkey
         case .promptPalette: return UserDefaultsKeys.promptPaletteHotkey
         }
     }
 }
 
-/// Manages global hotkeys for dictation with three independent slots:
-/// hybrid (short=toggle, long=push-to-talk), push-to-talk, and toggle.
+/// Manages global hotkeys for dictation with two slots:
+/// hybrid (short=toggle, long=push-to-talk) and promptPalette.
 @MainActor
 final class HotkeyService: ObservableObject {
 
@@ -104,8 +100,6 @@ final class HotkeyService: ObservableObject {
 
     private var slots: [HotkeySlotType: SlotState] = [
         .hybrid: SlotState(),
-        .pushToTalk: SlotState(),
-        .toggle: SlotState(),
         .promptPalette: SlotState(),
     ]
 
@@ -648,7 +642,7 @@ final class HotkeyService: ObservableObject {
             activeProfileId = nil
             keyDownTime = Date()
             isActive = true
-            currentMode = slotType == .toggle ? .toggle : .pushToTalk
+            currentMode = .pushToTalk // hybrid: starts as PTT, switches to toggle on short release
             onDictationStart?()
         }
     }
@@ -668,14 +662,6 @@ final class HotkeyService: ObservableObject {
                 keyDownTime = nil
                 onDictationStop?()
             }
-        case .pushToTalk:
-            isActive = false
-            activeSlotType = nil
-            currentMode = nil
-            keyDownTime = nil
-            onDictationStop?()
-        case .toggle:
-            break
         case .promptPalette:
             break // handled on keyDown only
         }

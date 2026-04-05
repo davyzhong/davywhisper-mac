@@ -44,8 +44,6 @@ final class DictationViewModel: ObservableObject {
     @Published private(set) var lastTranscriptionLanguage: String?
     @Published var hotkeyLabelsVersion = 0
     var hybridHotkeyLabel: String { Self.loadHotkeyLabel(for: .hybrid) }
-    var pttHotkeyLabel: String { Self.loadHotkeyLabel(for: .pushToTalk) }
-    var toggleHotkeyLabel: String { Self.loadHotkeyLabel(for: .toggle) }
     var promptPaletteHotkeyLabel: String { Self.loadHotkeyLabel(for: .promptPalette) }
     @Published var activeProfileName: String?
     @Published var processingPhase: String?

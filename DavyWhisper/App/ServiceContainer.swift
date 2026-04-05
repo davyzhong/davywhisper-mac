@@ -170,5 +170,19 @@ final class ServiceContainer: ObservableObject {
                 profile.cloudModelOverride = nil
             }
         }
+
+        // Migrate legacy PTT/Toggle hotkeys → Hybrid hotkey
+        let defaults = UserDefaults.standard
+        if defaults.data(forKey: UserDefaultsKeys.hybridHotkey) == nil {
+            // No hybrid set — check for legacy PTT or Toggle
+            if let pttData = defaults.data(forKey: "pttHotkey") {
+                defaults.set(pttData, forKey: UserDefaultsKeys.hybridHotkey)
+            } else if let toggleData = defaults.data(forKey: "toggleHotkey") {
+                defaults.set(toggleData, forKey: UserDefaultsKeys.hybridHotkey)
+            }
+        }
+        // Clean up legacy keys
+        defaults.removeObject(forKey: "pttHotkey")
+        defaults.removeObject(forKey: "toggleHotkey")
     }
 }

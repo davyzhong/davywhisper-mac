@@ -115,8 +115,6 @@ final class HotkeySlotTypeTests: XCTestCase {
 
     func testRawValues_knownCases() {
         XCTAssertEqual(HotkeySlotType.hybrid.rawValue, "hybrid")
-        XCTAssertEqual(HotkeySlotType.pushToTalk.rawValue, "pushToTalk")
-        XCTAssertEqual(HotkeySlotType.toggle.rawValue, "toggle")
         XCTAssertEqual(HotkeySlotType.promptPalette.rawValue, "promptPalette")
     }
 }

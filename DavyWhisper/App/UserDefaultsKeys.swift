@@ -15,8 +15,6 @@ enum UserDefaultsKeys {
 
     // MARK: - Hotkey (JSON-encoded UnifiedHotkey per slot)
     static let hybridHotkey = "hybridHotkey"
-    static let pttHotkey = "pttHotkey"
-    static let toggleHotkey = "toggleHotkey"
     static let promptPaletteHotkey = "promptPaletteHotkey"
 
     // MARK: - Model / Engine

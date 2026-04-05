@@ -497,30 +497,27 @@ struct SetupWizardView: View {
 
     private var hotkeyStep: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(String(localized: "Choose how you want to trigger dictation, then record a shortcut."))
+            Text(String(localized: "Record a shortcut for dictation. Short press to toggle, hold to push-to-talk."))
                 .font(.callout)
                 .foregroundStyle(.secondary)
 
-            VStack(spacing: 8) {
-                hotkeyModeOption(
-                    mode: .hybrid,
-                    title: String(localized: "Hybrid"),
-                    description: String(localized: "Short press to toggle, hold to push-to-talk."),
-                    recommended: true
+            HStack(spacing: 8) {
+                Spacer()
+                Image(systemName: "keyboard")
+                    .foregroundStyle(.blue)
+                HotkeyRecorderView(
+                    label: viewModel.hotkeyLabel(for: .hybrid),
+                    title: String(localized: "Shortcut"),
+                    onRecord: { hotkey in
+                        viewModel.recordHotkey(hotkey, for: .hybrid)
+                    },
+                    onClear: { viewModel.clearHotkey(for: .hybrid) }
                 )
-
-                hotkeyModeOption(
-                    mode: .pushToTalk,
-                    title: String(localized: "Push-to-Talk"),
-                    description: String(localized: "Hold to record, release to stop.")
-                )
-
-                hotkeyModeOption(
-                    mode: .toggle,
-                    title: String(localized: "Toggle"),
-                    description: String(localized: "Press to start, press again to stop.")
-                )
+                .fixedSize()
             }
+            .padding(10)
+            .background(RoundedRectangle(cornerRadius: 6).fill(.blue.opacity(0.06)))
+            .padding(.horizontal, 6)
 
             if !viewModel.hasAnyHotkeySet {
                 HStack(spacing: 4) {
@@ -532,74 +529,6 @@ struct SetupWizardView: View {
                 .font(.caption)
             }
         }
-    }
-
-    private func hotkeyModeOption(
-        mode: HotkeySlotType,
-        title: String,
-        description: String,
-        recommended: Bool = false
-    ) -> some View {
-        let isSelected = viewModel.selectedHotkeyMode == mode
-
-        return VStack(spacing: 0) {
-            HStack {
-                Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
-                    .foregroundStyle(isSelected ? Color.accentColor : Color.secondary)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    HStack(spacing: 6) {
-                        Text(title)
-                            .font(.body.weight(.medium))
-                        if recommended {
-                            Text(String(localized: "Recommended"))
-                                .font(.caption2.weight(.semibold))
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(.blue.opacity(0.1))
-                                .foregroundStyle(.blue)
-                                .clipShape(Capsule())
-                        }
-                    }
-                    Text(description)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                Spacer()
-            }
-            .padding(10)
-            .contentShape(Rectangle())
-            .onTapGesture { viewModel.selectedHotkeyMode = mode }
-
-            if isSelected {
-                Divider()
-                    .padding(.horizontal, 10)
-
-                HStack(spacing: 8) {
-                    Spacer()
-
-                    Image(systemName: "keyboard")
-                        .foregroundStyle(.blue)
-
-                    HotkeyRecorderView(
-                        label: viewModel.hotkeyLabel(for: mode),
-                        title: String(localized: "Shortcut"),
-                        onRecord: { hotkey in
-                            viewModel.recordHotkey(hotkey, for: mode)
-                        },
-                        onClear: { viewModel.clearHotkey(for: mode) }
-                    )
-                    .fixedSize()
-                }
-                .padding(10)
-                .background(RoundedRectangle(cornerRadius: 6).fill(.blue.opacity(0.06)))
-                .padding(.horizontal, 6)
-                .padding(.bottom, 6)
-            }
-        }
-        .background(RoundedRectangle(cornerRadius: 8).fill(isSelected ? AnyShapeStyle(Color.accentColor.opacity(0.08)) : AnyShapeStyle(.quaternary)))
-        .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(isSelected ? Color.accentColor.opacity(0.3) : Color.clear, lineWidth: 1))
     }
 
     // MARK: - Step 4: Prompts & AI

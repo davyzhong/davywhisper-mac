@@ -5,10 +5,10 @@ struct HotkeySettingsView: View {
 
     var body: some View {
         Form {
-            Section(String(localized: "Hotkeys")) {
+            Section(String(localized: "Dictation")) {
                 HotkeyRecorderView(
                     label: dictation.hybridHotkeyLabel,
-                    title: String(localized: "Hybrid"),
+                    title: String(localized: "Dictation"),
                     subtitle: String(localized: "Short press to toggle, hold to push-to-talk."),
                     onRecord: { hotkey in
                         if let conflict = dictation.isHotkeyAssigned(hotkey, excluding: .hybrid) {
@@ -19,34 +19,6 @@ struct HotkeySettingsView: View {
                     onClear: { dictation.clearHotkey(for: .hybrid) }
                 )
                 .accessibilityIdentifier("com.davywhisper.settings.recording.hotkey.hybrid")
-
-                HotkeyRecorderView(
-                    label: dictation.pttHotkeyLabel,
-                    title: String(localized: "Push-to-Talk"),
-                    subtitle: String(localized: "Hold to record, release to stop."),
-                    onRecord: { hotkey in
-                        if let conflict = dictation.isHotkeyAssigned(hotkey, excluding: .pushToTalk) {
-                            dictation.clearHotkey(for: conflict)
-                        }
-                        dictation.setHotkey(hotkey, for: .pushToTalk)
-                    },
-                    onClear: { dictation.clearHotkey(for: .pushToTalk) }
-                )
-                .accessibilityIdentifier("com.davywhisper.settings.recording.hotkey.ptt")
-
-                HotkeyRecorderView(
-                    label: dictation.toggleHotkeyLabel,
-                    title: String(localized: "Toggle"),
-                    subtitle: String(localized: "Press to start, press again to stop."),
-                    onRecord: { hotkey in
-                        if let conflict = dictation.isHotkeyAssigned(hotkey, excluding: .toggle) {
-                            dictation.clearHotkey(for: conflict)
-                        }
-                        dictation.setHotkey(hotkey, for: .toggle)
-                    },
-                    onClear: { dictation.clearHotkey(for: .toggle) }
-                )
-                .accessibilityIdentifier("com.davywhisper.settings.recording.hotkey.toggle")
             }
 
             Section(String(localized: "Prompt Palette")) {

@@ -152,10 +152,7 @@ final class DictationViewModelTests: XCTestCase {
     // MARK: - Hotkey Methods
 
     func testClearHotkey_doesNotCrash() {
-        // Just verify it doesn't throw — actual hotkey clearing is tested in HotkeyService
         container.dictationViewModel.clearHotkey(for: .hybrid)
-        container.dictationViewModel.clearHotkey(for: .pushToTalk)
-        container.dictationViewModel.clearHotkey(for: .toggle)
         container.dictationViewModel.clearHotkey(for: .promptPalette)
     }
 
@@ -167,13 +164,8 @@ final class DictationViewModelTests: XCTestCase {
     // MARK: - Hotkey Labels
 
     func testHotkeyLabels_loadWithoutCrash() {
-        // Verify hotkey label accessors don't crash
         let hybrid = container.dictationViewModel.hybridHotkeyLabel
         XCTAssertNotNil(hybrid)
-        let ptt = container.dictationViewModel.pttHotkeyLabel
-        XCTAssertNotNil(ptt)
-        let toggle = container.dictationViewModel.toggleHotkeyLabel
-        XCTAssertNotNil(toggle)
         let palette = container.dictationViewModel.promptPaletteHotkeyLabel
         XCTAssertNotNil(palette)
     }

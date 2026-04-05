@@ -189,24 +189,18 @@ final class HotkeyServiceExtendedTests: XCTestCase {
     // MARK: - HotkeySlotType
 
     func testHotkeySlotType_allCases() {
-        XCTAssertEqual(HotkeySlotType.allCases.count, 4)
+        XCTAssertEqual(HotkeySlotType.allCases.count, 2)
         XCTAssertTrue(HotkeySlotType.allCases.contains(.hybrid))
-        XCTAssertTrue(HotkeySlotType.allCases.contains(.pushToTalk))
-        XCTAssertTrue(HotkeySlotType.allCases.contains(.toggle))
         XCTAssertTrue(HotkeySlotType.allCases.contains(.promptPalette))
     }
 
     func testHotkeySlotType_defaultsKeys() {
         XCTAssertEqual(HotkeySlotType.hybrid.defaultsKey, UserDefaultsKeys.hybridHotkey)
-        XCTAssertEqual(HotkeySlotType.pushToTalk.defaultsKey, UserDefaultsKeys.pttHotkey)
-        XCTAssertEqual(HotkeySlotType.toggle.defaultsKey, UserDefaultsKeys.toggleHotkey)
         XCTAssertEqual(HotkeySlotType.promptPalette.defaultsKey, UserDefaultsKeys.promptPaletteHotkey)
     }
 
     func testHotkeySlotType_rawValue() {
         XCTAssertEqual(HotkeySlotType.hybrid.rawValue, "hybrid")
-        XCTAssertEqual(HotkeySlotType.pushToTalk.rawValue, "pushToTalk")
-        XCTAssertEqual(HotkeySlotType.toggle.rawValue, "toggle")
         XCTAssertEqual(HotkeySlotType.promptPalette.rawValue, "promptPalette")
     }
 
@@ -334,9 +328,9 @@ final class HotkeyServiceExtendedTests: XCTestCase {
 
     func testClearHotkey_removesFromDefaults() {
         let hotkey = UnifiedHotkey(keyCode: 0x00, modifierFlags: 0, isFn: false)
-        service.updateHotkey(hotkey, for: .toggle)
-        service.clearHotkey(for: .toggle)
-        XCTAssertNil(UserDefaults.standard.data(forKey: HotkeySlotType.toggle.defaultsKey))
+        service.updateHotkey(hotkey, for: .hybrid)
+        service.clearHotkey(for: .hybrid)
+        XCTAssertNil(UserDefaults.standard.data(forKey: HotkeySlotType.hybrid.defaultsKey))
     }
 
     // MARK: - isHotkeyAssigned
@@ -348,9 +342,9 @@ final class HotkeyServiceExtendedTests: XCTestCase {
 
     func testIsHotkeyAssigned_sameHotkeyInOtherSlot_returnsSlot() {
         let hotkey = UnifiedHotkey(keyCode: 0x00, modifierFlags: 0, isFn: false)
-        service.updateHotkey(hotkey, for: .pushToTalk)
+        service.updateHotkey(hotkey, for: .promptPalette)
         let result = service.isHotkeyAssigned(hotkey, excluding: .hybrid)
-        XCTAssertEqual(result, .pushToTalk)
+        XCTAssertEqual(result, .promptPalette)
     }
 
     func testIsHotkeyAssigned_sameHotkeyExcludingSelf_returnsNil() {
@@ -364,16 +358,15 @@ final class HotkeyServiceExtendedTests: XCTestCase {
     func testIsHotkeyAssigned_doubleTapConflict() {
         let singleTap = UnifiedHotkey(keyCode: 0x00, modifierFlags: 0, isFn: false, isDoubleTap: false)
         let doubleTap = UnifiedHotkey(keyCode: 0x00, modifierFlags: 0, isFn: false, isDoubleTap: true)
-        service.updateHotkey(singleTap, for: .pushToTalk)
-        // Double-tap variant should conflict with single-tap
+        service.updateHotkey(singleTap, for: .promptPalette)
         let result = service.isHotkeyAssigned(doubleTap, excluding: .hybrid)
-        XCTAssertEqual(result, .pushToTalk)
+        XCTAssertEqual(result, .promptPalette)
     }
 
     func testIsHotkeyAssigned_differentKey_noConflict() {
         let hotkey1 = UnifiedHotkey(keyCode: 0x00, modifierFlags: 0, isFn: false)
         let hotkey2 = UnifiedHotkey(keyCode: 0x01, modifierFlags: 0, isFn: false)
-        service.updateHotkey(hotkey1, for: .pushToTalk)
+        service.updateHotkey(hotkey1, for: .promptPalette)
         XCTAssertNil(service.isHotkeyAssigned(hotkey2, excluding: .hybrid))
     }
 
@@ -482,9 +475,9 @@ final class HotkeyServiceExtendedTests: XCTestCase {
 
     func testIsHotkeyAssignedToGlobalSlot_matchingHotkey_returnsSlot() {
         let hotkey = UnifiedHotkey(keyCode: 0x00, modifierFlags: 0, isFn: false)
-        service.updateHotkey(hotkey, for: .toggle)
+        service.updateHotkey(hotkey, for: .promptPalette)
         let result = service.isHotkeyAssignedToGlobalSlot(hotkey)
-        XCTAssertEqual(result, .toggle)
+        XCTAssertEqual(result, .promptPalette)
     }
 
     func testIsHotkeyAssignedToGlobalSlot_differentHotkey_returnsNil() {
@@ -506,27 +499,23 @@ final class HotkeyServiceExtendedTests: XCTestCase {
     func testMultipleSlots_differentHotkeys_noConflict() {
         let h1 = UnifiedHotkey(keyCode: 0x00, modifierFlags: 0, isFn: false)
         let h2 = UnifiedHotkey(keyCode: 0x01, modifierFlags: 0, isFn: false)
-        let h3 = UnifiedHotkey(keyCode: 0x02, modifierFlags: 0, isFn: false)
 
         service.updateHotkey(h1, for: .hybrid)
-        service.updateHotkey(h2, for: .pushToTalk)
-        service.updateHotkey(h3, for: .toggle)
+        service.updateHotkey(h2, for: .promptPalette)
 
         XCTAssertNil(service.isHotkeyAssigned(h1, excluding: .hybrid))
-        XCTAssertNil(service.isHotkeyAssigned(h2, excluding: .pushToTalk))
-        XCTAssertNil(service.isHotkeyAssigned(h3, excluding: .toggle))
+        XCTAssertNil(service.isHotkeyAssigned(h2, excluding: .promptPalette))
     }
 
     func testMultipleSlots_sameHotkey_conflicts() {
         let hotkey = UnifiedHotkey(keyCode: 0x00, modifierFlags: 0, isFn: false)
         service.updateHotkey(hotkey, for: .hybrid)
-        service.updateHotkey(hotkey, for: .pushToTalk)
+        service.updateHotkey(hotkey, for: .promptPalette)
 
-        // Both hybrid and pushToTalk have the same hotkey
         let conflict1 = service.isHotkeyAssigned(hotkey, excluding: .hybrid)
         XCTAssertNotNil(conflict1)
 
-        let conflict2 = service.isHotkeyAssigned(hotkey, excluding: .pushToTalk)
+        let conflict2 = service.isHotkeyAssigned(hotkey, excluding: .promptPalette)
         XCTAssertNotNil(conflict2)
     }
 }

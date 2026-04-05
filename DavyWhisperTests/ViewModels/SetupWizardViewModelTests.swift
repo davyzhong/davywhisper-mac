@@ -83,8 +83,6 @@ final class SetupWizardViewModelTests: XCTestCase {
             UserDefaultsKeys.setupWizardCurrentStep,
             UserDefaultsKeys.setupWizardCompleted,
             UserDefaultsKeys.hybridHotkey,
-            UserDefaultsKeys.pttHotkey,
-            UserDefaultsKeys.toggleHotkey,
             UserDefaultsKeys.promptPaletteHotkey
         ]
         for key in keys {
@@ -286,22 +284,6 @@ final class SetupWizardViewModelTests: XCTestCase {
         XCTAssertTrue(vm.hasAnyHotkeySet)
     }
 
-    func testHasAnyHotkeySet_trueWhenPttHotkeySet() {
-        let hotkey = UnifiedHotkey(keyCode: 0x0C, modifierFlags: 0, isFn: false, isDoubleTap: false)
-        let data = try! JSONEncoder().encode(hotkey)
-        UserDefaults.standard.set(data, forKey: UserDefaultsKeys.pttHotkey)
-        let vm = makeViewModel()
-        XCTAssertTrue(vm.hasAnyHotkeySet)
-    }
-
-    func testHasAnyHotkeySet_trueWhenToggleHotkeySet() {
-        let hotkey = UnifiedHotkey(keyCode: 0x0C, modifierFlags: 0, isFn: false, isDoubleTap: false)
-        let data = try! JSONEncoder().encode(hotkey)
-        UserDefaults.standard.set(data, forKey: UserDefaultsKeys.toggleHotkey)
-        let vm = makeViewModel()
-        XCTAssertTrue(vm.hasAnyHotkeySet)
-    }
-
     // MARK: - hasAnyLLMProvider
 
     func testHasAnyLLMProvider_falseWhenNoProviders() {
@@ -368,45 +350,15 @@ final class SetupWizardViewModelTests: XCTestCase {
         XCTAssertEqual(vm.selectedHotkeyMode, .hybrid)
     }
 
-    func testSelectedHotkeyMode_pushToTalkWhenOnlyPttSet() {
-        let hotkey = UnifiedHotkey(keyCode: 0x0C, modifierFlags: 0, isFn: false, isDoubleTap: false)
-        let data = try! JSONEncoder().encode(hotkey)
-        UserDefaults.standard.set(data, forKey: UserDefaultsKeys.pttHotkey)
-        let vm = makeViewModel()
-        XCTAssertEqual(vm.selectedHotkeyMode, .pushToTalk)
-    }
-
-    func testSelectedHotkeyMode_toggleWhenOnlyToggleSet() {
-        let hotkey = UnifiedHotkey(keyCode: 0x0C, modifierFlags: 0, isFn: false, isDoubleTap: false)
-        let data = try! JSONEncoder().encode(hotkey)
-        UserDefaults.standard.set(data, forKey: UserDefaultsKeys.toggleHotkey)
-        let vm = makeViewModel()
-        XCTAssertEqual(vm.selectedHotkeyMode, .toggle)
-    }
-
-    func testSelectedHotkeyMode_hybridTakesPrecedenceOverPtt() {
-        let hotkey = UnifiedHotkey(keyCode: 0x0C, modifierFlags: 0, isFn: false, isDoubleTap: false)
-        let data = try! JSONEncoder().encode(hotkey)
-        UserDefaults.standard.set(data, forKey: UserDefaultsKeys.hybridHotkey)
-        UserDefaults.standard.set(data, forKey: UserDefaultsKeys.pttHotkey)
-        let vm = makeViewModel()
-        // Hybrid is checked first
-        XCTAssertEqual(vm.selectedHotkeyMode, .hybrid)
-    }
-
     // MARK: - hotkeyLabel
 
     func testHotkeyLabel_returnsLabelsFromDictationViewModel() {
         let vm = makeViewModel()
-        // Just verify it returns non-empty strings from the real DictationViewModel
         let labels = [
             vm.hotkeyLabel(for: .hybrid),
-            vm.hotkeyLabel(for: .pushToTalk),
-            vm.hotkeyLabel(for: .toggle),
             vm.hotkeyLabel(for: .promptPalette)
         ]
         for label in labels {
-            // Labels may be "Not Set" or a key description — should never crash
             XCTAssertNotNil(label)
         }
     }
@@ -415,10 +367,7 @@ final class SetupWizardViewModelTests: XCTestCase {
 
     func testHotkeyModeTitle_returnsCorrectTitles() {
         let vm = makeViewModel()
-        // These are localized strings, verify they are non-empty
         XCTAssertFalse(vm.hotkeyModeTitle(for: .hybrid).isEmpty)
-        XCTAssertFalse(vm.hotkeyModeTitle(for: .pushToTalk).isEmpty)
-        XCTAssertFalse(vm.hotkeyModeTitle(for: .toggle).isEmpty)
         XCTAssertFalse(vm.hotkeyModeTitle(for: .promptPalette).isEmpty)
     }
 
@@ -426,12 +375,9 @@ final class SetupWizardViewModelTests: XCTestCase {
         let vm = makeViewModel()
         let titles = Set([
             vm.hotkeyModeTitle(for: .hybrid),
-            vm.hotkeyModeTitle(for: .pushToTalk),
-            vm.hotkeyModeTitle(for: .toggle),
             vm.hotkeyModeTitle(for: .promptPalette)
         ])
-        // All four titles should be distinct
-        XCTAssertEqual(titles.count, 4)
+        XCTAssertEqual(titles.count, 2)
     }
 
     // MARK: - recordHotkey
@@ -439,26 +385,9 @@ final class SetupWizardViewModelTests: XCTestCase {
     func testRecordHotkey_setsHotkeyWithoutConflict() {
         let vm = makeViewModel()
         let hotkey = UnifiedHotkey(keyCode: 0x0C, modifierFlags: UInt(CGEventFlags.maskCommand.rawValue), isFn: false, isDoubleTap: false)
-        // No conflict — isHotkeyAssigned returns nil
         vm.recordHotkey(hotkey, for: .hybrid)
-        // Verify the hotkey was set via UserDefaults (dictationViewModel delegates to settingsHandler)
         let savedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.hybridHotkey)
         XCTAssertNotNil(savedData)
-    }
-
-    func testRecordHotkey_clearsConflictBeforeSetting() {
-        let vm = makeViewModel()
-        // Set a hotkey on pushToTalk first
-        let existingHotkey = UnifiedHotkey(keyCode: 0x0C, modifierFlags: UInt(CGEventFlags.maskCommand.rawValue), isFn: false, isDoubleTap: false)
-        vm.recordHotkey(existingHotkey, for: .pushToTalk)
-
-        // Now record the SAME hotkey for hybrid — should detect conflict on pushToTalk
-        // and clear it before setting on hybrid
-        vm.recordHotkey(existingHotkey, for: .hybrid)
-
-        // Hybrid should now be set
-        let hybridData = UserDefaults.standard.data(forKey: UserDefaultsKeys.hybridHotkey)
-        XCTAssertNotNil(hybridData)
     }
 
     // MARK: - clearHotkey
@@ -466,12 +395,11 @@ final class SetupWizardViewModelTests: XCTestCase {
     func testClearHotkey_removesHotkeyFromSlot() {
         let vm = makeViewModel()
         let hotkey = UnifiedHotkey(keyCode: 0x0C, modifierFlags: UInt(CGEventFlags.maskCommand.rawValue), isFn: false, isDoubleTap: false)
-        vm.recordHotkey(hotkey, for: .toggle)
-        XCTAssertNotNil(UserDefaults.standard.data(forKey: UserDefaultsKeys.toggleHotkey))
+        vm.recordHotkey(hotkey, for: .hybrid)
+        XCTAssertNotNil(UserDefaults.standard.data(forKey: UserDefaultsKeys.hybridHotkey))
 
-        vm.clearHotkey(for: .toggle)
-        // After clearing, the hotkey data should be gone
-        XCTAssertNil(UserDefaults.standard.data(forKey: UserDefaultsKeys.toggleHotkey))
+        vm.clearHotkey(for: .hybrid)
+        XCTAssertNil(UserDefaults.standard.data(forKey: UserDefaultsKeys.hybridHotkey))
     }
 
     // MARK: - completeSetup
