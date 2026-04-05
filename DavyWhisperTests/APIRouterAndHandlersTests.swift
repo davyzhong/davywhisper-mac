@@ -53,8 +53,7 @@ final class APIRouterAndHandlersTests: XCTestCase {
             )
             context.profileService.addProfile(
                 name: "Docs",
-                urlPatterns: ["docs.github.com"],
-                priority: 1
+                urlPatterns: ["docs.github.com"]
             )
             return context
         }
@@ -124,7 +123,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
         let textInsertionService = TextInsertionService()
         let historyService = HistoryService(appSupportDirectory: appSupportDirectory)
         let profileService = ProfileService(appSupportDirectory: appSupportDirectory)
-        let dictionaryService = DictionaryService(appSupportDirectory: appSupportDirectory)
         let snippetService = SnippetService(appSupportDirectory: appSupportDirectory)
         let soundService = SoundService()
         let audioDeviceService = AudioDeviceService()
@@ -143,8 +141,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
             settingsViewModel: settingsViewModel,
             historyService: historyService,
             profileService: profileService,
-            translationService: nil,
-            dictionaryService: dictionaryService,
             snippetService: snippetService,
             soundService: soundService,
             audioDeviceService: audioDeviceService,
@@ -159,7 +155,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
         let handlers = APIHandlers(
             modelManager: modelManager,
             audioFileService: audioFileService,
-            translationService: nil,
             historyService: historyService,
             profileService: profileService,
             dictationViewModel: dictationViewModel
@@ -179,7 +174,6 @@ final class APIRouterAndHandlersTests: XCTestCase {
                 textInsertionService,
                 historyService,
                 profileService,
-                dictionaryService,
                 snippetService,
                 soundService,
                 audioDeviceService,

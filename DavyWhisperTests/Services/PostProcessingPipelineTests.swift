@@ -7,7 +7,6 @@ final class PostProcessingPipelineTests: XCTestCase {
 
     var tempDir: URL!
     var snippetService: SnippetService!
-    var dictionaryService: DictionaryService!
     var appFormatterService: AppFormatterService!
     var pipeline: PostProcessingPipeline!
 
@@ -21,11 +20,9 @@ final class PostProcessingPipelineTests: XCTestCase {
         AppConstants.testAppSupportDirectoryOverride = appDir
 
         snippetService = SnippetService(appSupportDirectory: appDir)
-        dictionaryService = DictionaryService(appSupportDirectory: appDir)
         appFormatterService = AppFormatterService()
         pipeline = PostProcessingPipeline(
             snippetService: snippetService,
-            dictionaryService: dictionaryService,
             appFormatterService: appFormatterService
         )
 
@@ -37,12 +34,10 @@ final class PostProcessingPipelineTests: XCTestCase {
         // (modelContext is private so we delete the store files directly)
         let fileManager = FileManager.default
         let appDir = tempDir.appendingPathComponent("AppSupport", isDirectory: true)
-        for store in ["snippets.store", "snippets.store-wal", "snippets.store-shm",
-                      "dictionary.store", "dictionary.store-wal", "dictionary.store-shm"] {
+        for store in ["snippets.store", "snippets.store-wal", "snippets.store-shm"] {
             try? fileManager.removeItem(at: appDir.appendingPathComponent(store))
         }
         snippetService = nil
-        dictionaryService = nil
         appFormatterService = nil
         pipeline = nil
         TestSupport.remove(tempDir)
@@ -91,50 +86,6 @@ final class PostProcessingPipelineTests: XCTestCase {
             context: PostProcessingContext()
         )
         XCTAssertFalse(result.appliedSteps.contains("Snippets"))
-    }
-
-    // Note: Disabled entries cannot be tested via the public API (addSnippet/addEntry
-    // have no isEnabled parameter — all entries default to isEnabled=true).
-    // The filtering of disabled entries is verified through the service implementation
-    // (applySnippets filters by snippet.isEnabled; corrections filters by isEnabled).
-
-    // MARK: - Dictionary Step
-
-    func testDictionary_stepAppliesCorrections() async throws {
-        try dictionaryService.addEntry(type: .correction, original: "teh", replacement: "the")
-        let result = try await pipeline.process(
-            text: "teh quick brown fox",
-            context: PostProcessingContext()
-        )
-        XCTAssertEqual(result.text, "the quick brown fox")
-        XCTAssertTrue(result.appliedSteps.contains("Corrections"))
-    }
-
-    func testDictionary_stepAppliesMultipleCorrections() async throws {
-        try dictionaryService.addEntry(type: .correction, original: "teh", replacement: "the")
-        try dictionaryService.addEntry(type: .correction, original: "qt", replacement: "quick")
-        let result = try await pipeline.process(
-            text: "teh qt fox",
-            context: PostProcessingContext()
-        )
-        XCTAssertEqual(result.text, "the quick fox")
-        XCTAssertTrue(result.appliedSteps.contains("Corrections"))
-    }
-
-    // MARK: - Chained Pipeline
-
-    func testChain_snippetsThenDictionary() async throws {
-        try snippetService.addSnippet(trigger: "code", replacement: "CONFIDENTIAL")
-        try dictionaryService.addEntry(type: .correction, original: "conf", replacement: "CONF")
-
-        // Snippets run first (500) then dictionary (600)
-        // "CONFIDENTIAL" has "conf" inside it, dictionary runs on output of snippets
-        let result = try await pipeline.process(
-            text: "sensitive code information",
-            context: PostProcessingContext()
-        )
-        // Snippets: "code" → "CONFIDENTIAL"
-        XCTAssertTrue(result.text.contains("CONFIDENTIAL"))
     }
 
     // MARK: - LLM Handler

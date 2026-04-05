@@ -19,7 +19,6 @@ final class HTTPAPIRoundTripTests: XCTestCase {
         let handlers = APIHandlers(
             modelManager: container.modelManagerService,
             audioFileService: container.audioFileService,
-            translationService: nil,
             historyService: container.historyService,
             profileService: container.profileService,
             dictationViewModel: container.dictationViewModel

@@ -11,19 +11,16 @@ final class ProfileServiceTests: XCTestCase {
 
         service.addProfile(
             name: "Bundle Only",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 5
+            bundleIdentifiers: ["com.apple.Safari"]
         )
         service.addProfile(
             name: "URL Only",
-            urlPatterns: ["docs.github.com"],
-            priority: 10
+            urlPatterns: ["docs.github.com"]
         )
         service.addProfile(
             name: "Bundle + URL",
             bundleIdentifiers: ["com.apple.Safari"],
-            urlPatterns: ["github.com"],
-            priority: 1
+            urlPatterns: ["github.com"]
         )
 
         let firstMatch = service.matchProfile(

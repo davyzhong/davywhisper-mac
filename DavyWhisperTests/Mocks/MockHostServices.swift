@@ -10,6 +10,7 @@ final class MockHostServices: HostServices, @unchecked Sendable {
     var availableProfileNames: [String] = []
 
     private var secrets: [String: String] = [:]
+    private var baseUrls: [String: String] = [:]
     private var defaults: [String: Any] = [:]
 
     let eventBus: EventBusProtocol = MockEventBus()
@@ -22,6 +23,8 @@ final class MockHostServices: HostServices, @unchecked Sendable {
 
     func storeSecret(key: String, value: String) throws { secrets[key] = value }
     func loadSecret(key: String) -> String? { secrets[key] }
+    func storeBaseURL(_ url: String) throws { baseUrls[url] = url }
+    func loadBaseURL() -> String? { baseUrls.values.first }
     func userDefault(forKey: String) -> Any? { defaults[forKey] }
     func setUserDefault(_ value: Any?, forKey: String) { defaults[forKey] = value }
     func notifyCapabilitiesChanged() { capabilitiesChangedCount += 1 }

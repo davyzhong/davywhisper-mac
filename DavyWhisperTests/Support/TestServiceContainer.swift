@@ -19,7 +19,6 @@ final class TestServiceContainer {
     let tempDirectory: URL
     let historyService: HistoryService
     let profileService: ProfileService
-    let dictionaryService: DictionaryService
     let snippetService: SnippetService
     let promptActionService: PromptActionService
 
@@ -59,7 +58,6 @@ final class TestServiceContainer {
     let settingsViewModel: SettingsViewModel
     let historyViewModel: HistoryViewModel
     let profilesViewModel: ProfilesViewModel
-    let dictionaryViewModel: DictionaryViewModel
     let snippetsViewModel: SnippetsViewModel
     let promptActionsViewModel: PromptActionsViewModel
     let audioRecorderViewModel: AudioRecorderViewModel
@@ -74,7 +72,6 @@ final class TestServiceContainer {
         // Tier C: Directory-isolated services
         historyService = HistoryService(appSupportDirectory: tmp)
         profileService = ProfileService(appSupportDirectory: tmp)
-        dictionaryService = DictionaryService(appSupportDirectory: tmp)
         snippetService = SnippetService(appSupportDirectory: tmp)
         promptActionService = PromptActionService(appSupportDirectory: tmp)
 
@@ -126,8 +123,6 @@ final class TestServiceContainer {
             settingsViewModel: settingsViewModel,
             historyService: historyService,
             profileService: profileService,
-            translationService: nil,
-            dictionaryService: dictionaryService,
             snippetService: snippetService,
             soundService: soundService,
             audioDeviceService: audioDeviceService,
@@ -142,7 +137,6 @@ final class TestServiceContainer {
         let handlers = APIHandlers(
             modelManager: modelManagerService,
             audioFileService: audioFileService,
-            translationService: nil,
             historyService: historyService,
             profileService: profileService,
             dictationViewModel: dictationViewModel
@@ -153,15 +147,13 @@ final class TestServiceContainer {
 
         historyViewModel = HistoryViewModel(
             historyService: historyService,
-            textDiffService: textDiffService,
-            dictionaryService: dictionaryService
+            textDiffService: textDiffService
         )
         profilesViewModel = ProfilesViewModel(
             profileService: profileService,
             historyService: historyService,
             settingsViewModel: settingsViewModel
         )
-        dictionaryViewModel = DictionaryViewModel(dictionaryService: dictionaryService)
         snippetsViewModel = SnippetsViewModel(snippetService: snippetService)
         promptActionsViewModel = PromptActionsViewModel(
             promptActionService: promptActionService,
@@ -169,8 +161,7 @@ final class TestServiceContainer {
         )
         audioRecorderViewModel = AudioRecorderViewModel(
             recorderService: audioRecorderService,
-            modelManager: modelManagerService,
-            dictionaryService: dictionaryService
+            modelManager: modelManagerService
         )
         apiServerViewModel = APIServerViewModel(httpServer: mockHTTPServer)
 
@@ -181,7 +172,6 @@ final class TestServiceContainer {
         APIServerViewModel._shared = apiServerViewModel
         HistoryViewModel._shared = historyViewModel
         ProfilesViewModel._shared = profilesViewModel
-        DictionaryViewModel._shared = dictionaryViewModel
         SnippetsViewModel._shared = snippetsViewModel
         PromptActionsViewModel._shared = promptActionsViewModel
         AudioRecorderViewModel._shared = audioRecorderViewModel
@@ -198,7 +188,6 @@ final class TestServiceContainer {
         APIServerViewModel._shared = nil
         HistoryViewModel._shared = nil
         ProfilesViewModel._shared = nil
-        DictionaryViewModel._shared = nil
         SnippetsViewModel._shared = nil
         PromptActionsViewModel._shared = nil
         AudioRecorderViewModel._shared = nil

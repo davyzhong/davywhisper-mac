@@ -48,7 +48,6 @@
 		2C4D9DF2434EBE7C394E14DB /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A88B57C6FD696EB154B1F95 /* Profile.swift */; };
 		2F57F90E75E1D3F8774610CD /* PluginSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FB4A3EF19298F5951727E /* PluginSettingsView.swift */; };
 		30C83C0099ADBAFB490C6253 /* MockAudioDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC711FCB498397470D078DE0 /* MockAudioDeviceService.swift */; };
-		3134B3C09D0DAF3EBE68BED6 /* DictionaryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935B128D6DAD86D242E8F08 /* DictionaryViewModelTests.swift */; };
 		340F906B756CE74A586283F4 /* ErrorLogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9AF6953C31635054076738 /* ErrorLogService.swift */; };
 		34E437049DB0CE0DC20AFCFE /* TextInsertionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3820BC78F51DA70DD6DA4E44 /* TextInsertionService.swift */; };
 		350D5F4A0FC24BFAFFC0EE26 /* PluginSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035AB5A75F7995C1962EB6B6 /* PluginSettingsViewModel.swift */; };
@@ -280,7 +279,6 @@
 		1449AF39B6A1936E63FA5843 /* HotkeyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyProtocol.swift; sourceTree = "<group>"; };
 		160FB4A3EF19298F5951727E /* PluginSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginSettingsView.swift; sourceTree = "<group>"; };
 		18C42CA3205007B116605B5E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		1935B128D6DAD86D242E8F08 /* DictionaryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryViewModelTests.swift; sourceTree = "<group>"; };
 		1AB4D1AB44922CE607BD727E /* MockHotkeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHotkeyService.swift; sourceTree = "<group>"; };
 		1B5A6D808FF0415A09BFEB0D /* MemoryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryServiceTests.swift; sourceTree = "<group>"; };
 		1DD74551DECFD2B09F5B9CFD /* PromptActionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptActionsViewModel.swift; sourceTree = "<group>"; };
@@ -624,7 +622,6 @@
 			children = (
 				2412004B7C111E7A38218968 /* APIServerViewModelTests.swift */,
 				23A5607A794E4E219FE4BCA6 /* DictationViewModelTests.swift */,
-				1935B128D6DAD86D242E8F08 /* DictionaryViewModelTests.swift */,
 				BC1FF49BF76018AF56376190 /* FileTranscriptionViewModelTests.swift */,
 				AF773D7053AF545E99D53BD2 /* HistoryViewModelTests.swift */,
 				9897619F0BC2E3FEB29D1C2E /* PluginSettingsViewModelTests.swift */,
@@ -1330,7 +1327,6 @@
 				05E5E9E9E8608DFE14550B64 /* BrandAndConfigTests.swift in Sources */,
 				2A90CA5612245614B9091ACC /* DictationShortSpeechTests.swift in Sources */,
 				7782EC70D1883DAFC6D4D4AF /* DictationViewModelTests.swift in Sources */,
-				3134B3C09D0DAF3EBE68BED6 /* DictionaryViewModelTests.swift in Sources */,
 				67CA6B5BEAC4359111C66D9A /* ErrorLogServiceTests.swift in Sources */,
 				FF859052838D956ADB43D4F8 /* EventBusIntegrationTests.swift in Sources */,
 				0536DF32A914398DB0684D4B /* EventBusTests.swift in Sources */,

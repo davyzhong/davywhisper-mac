@@ -91,25 +91,6 @@ final class SwiftDataPersistenceTests: XCTestCase {
         AppConstants.testAppSupportDirectoryOverride = original
     }
 
-    // MARK: - DictionaryService Persistence
-
-    func testDictionaryEntry_persistsAcrossServiceRestart() throws {
-        let original = AppConstants.testAppSupportDirectoryOverride
-        AppConstants.testAppSupportDirectoryOverride = appDir
-
-        let service1 = DictionaryService(appSupportDirectory: appDir)
-        try service1.addEntry(type: .correction, original: "teh", replacement: "the")
-
-        let service2 = DictionaryService(appSupportDirectory: appDir)
-        service2.loadEntries()
-
-        XCTAssertEqual(service2.entries.count, 1)
-        XCTAssertEqual(service2.entries.first?.original, "teh")
-        XCTAssertEqual(service2.entries.first?.replacement, "the")
-
-        AppConstants.testAppSupportDirectoryOverride = original
-    }
-
     // MARK: - SnippetService Persistence
 
     func testSnippet_persistsAcrossServiceRestart() throws {

@@ -25,13 +25,11 @@ final class ProfileServiceExtendedTests: XCTestCase {
         service.addProfile(
             name: "Safari GitHub",
             bundleIdentifiers: ["com.apple.Safari"],
-            urlPatterns: ["github.com"],
-            priority: 10
+            urlPatterns: ["github.com"]
         )
         service.addProfile(
             name: "Safari General",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 5
+            bundleIdentifiers: ["com.apple.Safari"]
         )
 
         let match = service.matchProfile(
@@ -45,18 +43,15 @@ final class ProfileServiceExtendedTests: XCTestCase {
         service.addProfile(
             name: "Tier1 Bundle+URL",
             bundleIdentifiers: ["com.apple.Safari"],
-            urlPatterns: ["docs.python.org"],
-            priority: 1
+            urlPatterns: ["docs.python.org"]
         )
         service.addProfile(
             name: "Tier2 URL Only",
-            urlPatterns: ["docs.python.org"],
-            priority: 100
+            urlPatterns: ["docs.python.org"]
         )
         service.addProfile(
             name: "Tier3 Bundle Only",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 100
+            bundleIdentifiers: ["com.apple.Safari"]
         )
 
         let match = service.matchProfile(
@@ -71,8 +66,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testURLOnlyMatchWhenNoBundleIdMatchExists() {
         service.addProfile(
             name: "GitHub Any Browser",
-            urlPatterns: ["github.com"],
-            priority: 10
+            urlPatterns: ["github.com"]
         )
 
         let match = service.matchProfile(
@@ -85,13 +79,11 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testTier2BeatsTier3() {
         service.addProfile(
             name: "URL Match",
-            urlPatterns: ["stackoverflow.com"],
-            priority: 1
+            urlPatterns: ["stackoverflow.com"]
         )
         service.addProfile(
             name: "Bundle Match",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 100
+            bundleIdentifiers: ["com.apple.Safari"]
         )
 
         let match = service.matchProfile(
@@ -105,8 +97,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testURLOnlyMatchCrossBrowserScenario() {
         service.addProfile(
             name: "Docs Site",
-            urlPatterns: ["developer.apple.com"],
-            priority: 5
+            urlPatterns: ["developer.apple.com"]
         )
 
         // Match from Chrome
@@ -129,8 +120,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testBundleIdOnlyMatchWhenNoURLMatchExists() {
         service.addProfile(
             name: "Safari Defaults",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 10
+            bundleIdentifiers: ["com.apple.Safari"]
         )
 
         let match = service.matchProfile(
@@ -143,8 +133,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testBundleIdOnlyMatchWithNoURL() {
         service.addProfile(
             name: "Terminal Config",
-            bundleIdentifiers: ["com.apple.Terminal"],
-            priority: 5
+            bundleIdentifiers: ["com.apple.Terminal"]
         )
 
         let match = service.matchProfile(
@@ -160,14 +149,12 @@ final class ProfileServiceExtendedTests: XCTestCase {
         service.addProfile(
             name: "Low Priority Safari GitHub",
             bundleIdentifiers: ["com.apple.Safari"],
-            urlPatterns: ["github.com"],
-            priority: 1
+            urlPatterns: ["github.com"]
         )
         service.addProfile(
             name: "High Priority Safari GitHub",
             bundleIdentifiers: ["com.apple.Safari"],
-            urlPatterns: ["github.com"],
-            priority: 50
+            urlPatterns: ["github.com"]
         )
 
         let match = service.matchProfile(
@@ -180,13 +167,11 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testHigherPriorityWinsWithinTier2() {
         service.addProfile(
             name: "Low Priority GitHub",
-            urlPatterns: ["github.com"],
-            priority: 2
+            urlPatterns: ["github.com"]
         )
         service.addProfile(
             name: "High Priority GitHub",
-            urlPatterns: ["github.com"],
-            priority: 20
+            urlPatterns: ["github.com"]
         )
 
         let match = service.matchProfile(
@@ -199,13 +184,11 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testHigherPriorityWinsWithinTier3() {
         service.addProfile(
             name: "Low Priority Safari",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 3
+            bundleIdentifiers: ["com.apple.Safari"]
         )
         service.addProfile(
             name: "High Priority Safari",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 30
+            bundleIdentifiers: ["com.apple.Safari"]
         )
 
         let match = service.matchProfile(
@@ -220,8 +203,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testSubdomainMatchesParentDomainProfile() {
         service.addProfile(
             name: "Google All",
-            urlPatterns: ["google.com"],
-            priority: 10
+            urlPatterns: ["google.com"]
         )
 
         let match = service.matchProfile(
@@ -234,8 +216,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testExactDomainMatch() {
         service.addProfile(
             name: "GitHub Exact",
-            urlPatterns: ["github.com"],
-            priority: 10
+            urlPatterns: ["github.com"]
         )
 
         let match = service.matchProfile(
@@ -248,8 +229,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testWWWPrefixIsStrippedFromURL() {
         service.addProfile(
             name: "Example",
-            urlPatterns: ["example.com"],
-            priority: 10
+            urlPatterns: ["example.com"]
         )
 
         let match = service.matchProfile(
@@ -262,8 +242,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testDomainMatchingIsCaseInsensitive() {
         service.addProfile(
             name: "GitHub Config",
-            urlPatterns: ["GitHub.COM"],
-            priority: 10
+            urlPatterns: ["GitHub.COM"]
         )
 
         let match = service.matchProfile(
@@ -276,8 +255,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testSubdomainDoesNotMatchDifferentDomain() {
         service.addProfile(
             name: "Google Config",
-            urlPatterns: ["google.com"],
-            priority: 10
+            urlPatterns: ["google.com"]
         )
 
         let match = service.matchProfile(
@@ -290,8 +268,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testPartialDomainDoesNotMatch() {
         service.addProfile(
             name: "Example",
-            urlPatterns: ["example.com"],
-            priority: 10
+            urlPatterns: ["example.com"]
         )
 
         // "myexample.com" should NOT match "example.com"
@@ -308,19 +285,16 @@ final class ProfileServiceExtendedTests: XCTestCase {
         // All three tiers present; Tier 1 should win regardless of priority
         service.addProfile(
             name: "Bundle Only (high priority)",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 999
+            bundleIdentifiers: ["com.apple.Safari"]
         )
         service.addProfile(
             name: "URL Only",
-            urlPatterns: ["github.com"],
-            priority: 50
+            urlPatterns: ["github.com"]
         )
         service.addProfile(
             name: "Bundle + URL (low priority)",
             bundleIdentifiers: ["com.apple.Safari"],
-            urlPatterns: ["github.com"],
-            priority: 1
+            urlPatterns: ["github.com"]
         )
 
         let match = service.matchProfile(
@@ -333,8 +307,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testDisabledProfileIsIgnored() {
         service.addProfile(
             name: "Disabled GitHub",
-            urlPatterns: ["github.com"],
-            priority: 100
+            urlPatterns: ["github.com"]
         )
 
         // Disable the profile
@@ -357,13 +330,11 @@ final class ProfileServiceExtendedTests: XCTestCase {
         service.addProfile(
             name: "Bundle+URL",
             bundleIdentifiers: ["com.apple.Safari"],
-            urlPatterns: ["github.com"],
-            priority: 100
+            urlPatterns: ["github.com"]
         )
         service.addProfile(
             name: "Bundle Only",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 10
+            bundleIdentifiers: ["com.apple.Safari"]
         )
 
         // Disable the Tier 1 profile
@@ -387,8 +358,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testNoMatchReturnsNil() {
         service.addProfile(
             name: "Safari Config",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 10
+            bundleIdentifiers: ["com.apple.Safari"]
         )
 
         let match = service.matchProfile(
@@ -402,8 +372,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
         service.addProfile(
             name: "Some Profile",
             bundleIdentifiers: ["com.apple.Safari"],
-            urlPatterns: ["github.com"],
-            priority: 10
+            urlPatterns: ["github.com"]
         )
 
         let match = service.matchProfile(
@@ -416,8 +385,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testEmptyBundleIdAndURLWithEmptyStringsReturnsNil() {
         service.addProfile(
             name: "Some Profile",
-            bundleIdentifiers: ["com.apple.Safari"],
-            priority: 10
+            bundleIdentifiers: ["com.apple.Safari"]
         )
 
         let match = service.matchProfile(
@@ -431,8 +399,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
         service.addProfile(
             name: "URL Only Profile",
             bundleIdentifiers: [],
-            urlPatterns: ["github.com"],
-            priority: 10
+            urlPatterns: ["github.com"]
         )
 
         let match = service.matchProfile(
@@ -448,8 +415,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
         service.addProfile(
             name: "Bundle Only Profile",
             bundleIdentifiers: ["com.apple.Safari"],
-            urlPatterns: [],
-            priority: 10
+            urlPatterns: []
         )
 
         let match = service.matchProfile(
@@ -465,8 +431,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testEmptyURLStringYieldsNoDomain() {
         service.addProfile(
             name: "URL Profile",
-            urlPatterns: ["example.com"],
-            priority: 10
+            urlPatterns: ["example.com"]
         )
 
         let match = service.matchProfile(
@@ -480,8 +445,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testMalformedURLYieldsNoDomain() {
         service.addProfile(
             name: "URL Profile",
-            urlPatterns: ["example.com"],
-            priority: 10
+            urlPatterns: ["example.com"]
         )
 
         let match = service.matchProfile(
@@ -505,8 +469,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testSubdomainProfileMatchesSubdomainURL() {
         service.addProfile(
             name: "Docs Google",
-            urlPatterns: ["docs.google.com"],
-            priority: 10
+            urlPatterns: ["docs.google.com"]
         )
 
         let match = service.matchProfile(
@@ -519,8 +482,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testSubdomainProfileDoesNotMatchRootDomain() {
         service.addProfile(
             name: "Docs Google",
-            urlPatterns: ["docs.google.com"],
-            priority: 10
+            urlPatterns: ["docs.google.com"]
         )
 
         // google.com is NOT a subdomain of docs.google.com
@@ -534,8 +496,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testSubdomainProfileMatchesNestedSubdomain() {
         service.addProfile(
             name: "Google Config",
-            urlPatterns: ["google.com"],
-            priority: 10
+            urlPatterns: ["google.com"]
         )
 
         // mail.google.com is a subdomain of google.com
@@ -549,13 +510,11 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testDeeperSubdomainProfileBeatsParentDomainProfile() {
         service.addProfile(
             name: "Google General",
-            urlPatterns: ["google.com"],
-            priority: 5
+            urlPatterns: ["google.com"]
         )
         service.addProfile(
             name: "Docs Google Specific",
-            urlPatterns: ["docs.google.com"],
-            priority: 5
+            urlPatterns: ["docs.google.com"]
         )
 
         // Both match at same priority; fetchProfiles sorts by priority desc then name
@@ -574,8 +533,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testProfileWithMultipleURLPatterns() {
         service.addProfile(
             name: "Dev Sites",
-            urlPatterns: ["github.com", "gitlab.com", "bitbucket.org"],
-            priority: 10
+            urlPatterns: ["github.com", "gitlab.com", "bitbucket.org"]
         )
 
         let ghMatch = service.matchProfile(
@@ -600,8 +558,7 @@ final class ProfileServiceExtendedTests: XCTestCase {
     func testProfileWithMultipleBundleIdentifiers() {
         service.addProfile(
             name: "All Browsers",
-            bundleIdentifiers: ["com.apple.Safari", "com.google.Chrome", "org.mozilla.firefox"],
-            priority: 10
+            bundleIdentifiers: ["com.apple.Safari", "com.google.Chrome", "org.mozilla.firefox"]
         )
 
         let safari = service.matchProfile(

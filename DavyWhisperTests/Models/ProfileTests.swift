@@ -9,7 +9,6 @@ final class ProfileTests: XCTestCase {
         let profile = Profile(name: "Test Profile")
         XCTAssertEqual(profile.name, "Test Profile")
         XCTAssertTrue(profile.isEnabled)
-        XCTAssertEqual(profile.priority, 0)
         XCTAssertTrue(profile.bundleIdentifiers.isEmpty)
         XCTAssertTrue(profile.urlPatterns.isEmpty)
         XCTAssertFalse(profile.memoryEnabled)
@@ -28,7 +27,6 @@ final class ProfileTests: XCTestCase {
         let profile = Profile(
             name: "Work",
             isEnabled: false,
-            priority: 99,
             bundleIdentifiers: bundleIds,
             urlPatterns: urls,
             inputLanguage: "en",
@@ -43,7 +41,6 @@ final class ProfileTests: XCTestCase {
         )
         XCTAssertEqual(profile.name, "Work")
         XCTAssertFalse(profile.isEnabled)
-        XCTAssertEqual(profile.priority, 99)
         XCTAssertEqual(profile.bundleIdentifiers, bundleIds)
         XCTAssertEqual(profile.urlPatterns, urls)
         XCTAssertEqual(profile.inputLanguage, "en")
