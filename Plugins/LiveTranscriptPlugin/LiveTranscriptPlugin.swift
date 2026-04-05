@@ -216,7 +216,6 @@ final class LiveTranscriptPlugin: NSObject, DavyWhisperPlugin, @unchecked Sendab
 
 // MARK: - ViewModel
 
-@MainActor
 final class LiveTranscriptViewModel: ObservableObject {
     @Published var paragraphs: [TranscriptParagraph] = []
     @Published var isAutoScrollEnabled: Bool = true

@@ -11,13 +11,12 @@ struct PostProcessingResult {
 
 @MainActor
 final class PostProcessingPipeline {
+    private let dictionaryService = DictionaryService()
     private let snippetService: SnippetService
-    private let dictionaryService: DictionaryService
     private let appFormatterService: AppFormatterService?
 
-    init(snippetService: SnippetService, dictionaryService: DictionaryService, appFormatterService: AppFormatterService? = nil) {
+    init(snippetService: SnippetService, appFormatterService: AppFormatterService? = nil) {
         self.snippetService = snippetService
-        self.dictionaryService = dictionaryService
         self.appFormatterService = appFormatterService
     }
 

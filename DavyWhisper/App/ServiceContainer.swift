@@ -14,8 +14,6 @@ final class ServiceContainer: ObservableObject {
     let historyService: HistoryService
     let textDiffService: TextDiffService
     let profileService: ProfileService
-    let translationService: AnyObject? // TranslationService (macOS 15+)
-    let dictionaryService: DictionaryService
     let snippetService: SnippetService
     let soundService: SoundService
     let audioDeviceService: AudioDeviceService
@@ -26,9 +24,9 @@ final class ServiceContainer: ObservableObject {
     let termPackRegistryService: TermPackRegistryService
     let memoryService: MemoryService
     let appFormatterService: AppFormatterService
-    let audioRecorderService: AudioRecorderService
     let accessibilityAnnouncementService: AccessibilityAnnouncementService
     let errorLogService: ErrorLogService
+    let pluginCredentialService: PluginCredentialService
 
     // HTTP API
     let httpServer: HTTPServer
@@ -40,10 +38,8 @@ final class ServiceContainer: ObservableObject {
     let dictationViewModel: DictationViewModel
     let historyViewModel: HistoryViewModel
     let profilesViewModel: ProfilesViewModel
-    let dictionaryViewModel: DictionaryViewModel
     let snippetsViewModel: SnippetsViewModel
     let promptActionsViewModel: PromptActionsViewModel
-    let audioRecorderViewModel: AudioRecorderViewModel
 
     private init() {
         // Services
@@ -55,16 +51,6 @@ final class ServiceContainer: ObservableObject {
         historyService = HistoryService()
         textDiffService = TextDiffService()
         profileService = ProfileService()
-        #if canImport(Translation)
-        if #available(macOS 15, *) {
-            translationService = TranslationService()
-        } else {
-            translationService = nil
-        }
-        #else
-        translationService = nil
-        #endif
-        dictionaryService = DictionaryService()
         snippetService = SnippetService()
         soundService = SoundService()
         audioDeviceService = AudioDeviceService()
@@ -75,10 +61,10 @@ final class ServiceContainer: ObservableObject {
         termPackRegistryService = TermPackRegistryService()
         memoryService = MemoryService(promptProcessingService: promptProcessingService)
         appFormatterService = AppFormatterService()
-        audioRecorderService = AudioRecorderService()
         promptProcessingService.memoryService = memoryService
         accessibilityAnnouncementService = AccessibilityAnnouncementService()
         errorLogService = ErrorLogService()
+        pluginCredentialService = PluginCredentialService()
 
         // ViewModels (created before HTTP API so DictationViewModel is available)
         fileTranscriptionViewModel = FileTranscriptionViewModel(
@@ -94,8 +80,6 @@ final class ServiceContainer: ObservableObject {
             settingsViewModel: settingsViewModel,
             historyService: historyService,
             profileService: profileService,
-            translationService: translationService,
-            dictionaryService: dictionaryService,
             snippetService: snippetService,
             soundService: soundService,
             audioDeviceService: audioDeviceService,
@@ -109,27 +93,24 @@ final class ServiceContainer: ObservableObject {
 
         // HTTP API
         let router = APIRouter()
-        let handlers = APIHandlers(modelManager: modelManagerService, audioFileService: audioFileService, translationService: translationService, historyService: historyService, profileService: profileService, dictationViewModel: dictationViewModel)
+        let handlers = APIHandlers(modelManager: modelManagerService, audioFileService: audioFileService, historyService: historyService, profileService: profileService, dictationViewModel: dictationViewModel)
         handlers.register(on: router)
         httpServer = HTTPServer(router: router)
         apiServerViewModel = APIServerViewModel(httpServer: httpServer)
         historyViewModel = HistoryViewModel(
             historyService: historyService,
-            textDiffService: textDiffService,
-            dictionaryService: dictionaryService
+            textDiffService: textDiffService
         )
         profilesViewModel = ProfilesViewModel(
             profileService: profileService,
             historyService: historyService,
             settingsViewModel: settingsViewModel
         )
-        dictionaryViewModel = DictionaryViewModel(dictionaryService: dictionaryService)
         snippetsViewModel = SnippetsViewModel(snippetService: snippetService)
         promptActionsViewModel = PromptActionsViewModel(
             promptActionService: promptActionService,
             promptProcessingService: promptProcessingService
         )
-        audioRecorderViewModel = AudioRecorderViewModel(recorderService: audioRecorderService, modelManager: modelManagerService, dictionaryService: dictionaryService)
 
         // Set shared references
         FileTranscriptionViewModel._shared = fileTranscriptionViewModel
@@ -138,10 +119,8 @@ final class ServiceContainer: ObservableObject {
         APIServerViewModel._shared = apiServerViewModel
         HistoryViewModel._shared = historyViewModel
         ProfilesViewModel._shared = profilesViewModel
-        DictionaryViewModel._shared = dictionaryViewModel
         SnippetsViewModel._shared = snippetsViewModel
         PromptActionsViewModel._shared = promptActionsViewModel
-        AudioRecorderViewModel._shared = audioRecorderViewModel
 
         // Plugin system
         EventBus.shared = EventBus()

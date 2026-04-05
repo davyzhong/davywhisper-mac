@@ -70,8 +70,6 @@ private struct DiagnosticsReport: Encodable {
         let historyRecords: Int
         let profiles: Int
         let enabledProfiles: Int
-        let dictionaryTerms: Int
-        let dictionaryCorrections: Int
         let snippets: Int
         let enabledSnippets: Int
         let errorEntries: Int
@@ -202,8 +200,6 @@ final class ErrorLogService: ObservableObject {
                 historyRecords: container.historyService.records.count,
                 profiles: container.profileService.profiles.count,
                 enabledProfiles: container.profileService.profiles.filter(\.isEnabled).count,
-                dictionaryTerms: container.dictionaryService.termsCount,
-                dictionaryCorrections: container.dictionaryService.correctionsCount,
                 snippets: container.snippetService.snippets.count,
                 enabledSnippets: container.snippetService.enabledSnippetsCount,
                 errorEntries: entries.count

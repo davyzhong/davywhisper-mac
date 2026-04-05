@@ -91,13 +91,11 @@ final class HistoryViewModel: ObservableObject {
 
     private let historyService: HistoryService
     private let textDiffService: TextDiffService
-    private let dictionaryService: DictionaryService
     private var cancellables = Set<AnyCancellable>()
 
-    init(historyService: HistoryService, textDiffService: TextDiffService, dictionaryService: DictionaryService) {
+    init(historyService: HistoryService, textDiffService: TextDiffService) {
         self.historyService = historyService
         self.textDiffService = textDiffService
-        self.dictionaryService = dictionaryService
         self.records = historyService.records
         // Compute initial values before Combine pipeline kicks in
         self.filteredRecords = historyService.records
@@ -194,11 +192,6 @@ final class HistoryViewModel: ObservableObject {
 
         let suggestions = textDiffService.extractCorrections(original: originalText, edited: newText)
         if !suggestions.isEmpty {
-            for suggestion in suggestions {
-                dictionaryService.learnCorrection(original: suggestion.original, replacement: suggestion.replacement)
-            }
-            correctionSuggestions = suggestions
-            showCorrectionBanner = true
 
             // Store corrections as memories
             ServiceContainer.shared.memoryService.storeCorrections(

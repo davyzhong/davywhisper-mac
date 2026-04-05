@@ -287,20 +287,6 @@ private struct ProfileEditorSheet: View {
                     }
                     .accessibilityIdentifier("com.davywhisper.settings.profiles.inputLanguage")
 
-                    // Translation target language override
-                    #if canImport(Translation)
-                    if #available(macOS 15, *) {
-                        Picker(String(localized: "Target language"), selection: $viewModel.editorTranslationTargetLanguage) {
-                            Text(String(localized: "Global Setting")).tag(nil as String?)
-                            Divider()
-                            ForEach(TranslationService.availableTargetLanguages, id: \.code) { lang in
-                                Text(lang.name).tag(lang.code as String?)
-                            }
-                        }
-                        .accessibilityIdentifier("com.davywhisper.settings.profiles.translationLanguage")
-                    }
-                    #endif
-
                     // Engine override
                     Picker(String(localized: "Transcription Engine"), selection: $viewModel.editorEngineOverride) {
                         Text(String(localized: "Global Setting")).tag(nil as String?)
@@ -352,7 +338,7 @@ private struct ProfileEditorSheet: View {
                         .font(.caption)
                     }
 
-                    Text(String(localized: "When a prompt is assigned, dictated text will be processed by the LLM before insertion. This replaces translation."))
+                    Text(String(localized: "When a prompt is assigned, dictated text will be processed by the LLM before insertion."))
                         .font(.caption)
                         .foregroundStyle(.secondary)
 

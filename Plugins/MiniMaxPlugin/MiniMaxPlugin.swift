@@ -10,22 +10,26 @@ final class MiniMaxPlugin: NSObject, LLMProviderPlugin, @unchecked Sendable {
     private var host: HostServices?
     private var _selectedModelId: String?
 
-    // MARK: - Provider Config
-    private let baseURL = "https://api.minimax.chat/v1"
+    // MARK: - Provider Config (now user-configurable)
+    private let baseURLKey = "minimax-base-url"
+    private let defaultBaseURL = "https://api.minimaxi.com/v1"
     private let apiKeyKeychainKey = "minimax-api-key"
     private let modelKey = "minimax-selected-model"
 
-    private let models: [PluginModelInfo] = [
+    // Common models for suggestion (not exhaustive)
+    private let suggestedModels: [PluginModelInfo] = [
         PluginModelInfo(id: "MiniMax-Text-01", displayName: "MiniMax Text 01", sizeDescription: "Advanced", languageCount: 1),
         PluginModelInfo(id: "abab6.5s-chat", displayName: "ABAB 6.5S Chat", sizeDescription: "Fast", languageCount: 1),
-        PluginModelInfo(id: "abab7-chat-preview", displayName: "ABAB 7 Chat Preview", sizeDescription: "Preview", languageCount: 1)
+        PluginModelInfo(id: "abab7-chat-preview", displayName: "ABAB 7 Chat Preview", sizeDescription: "Preview", languageCount: 1),
+        // Coding Plan models
+        PluginModelInfo(id: "MiniMax-V1", displayName: "MiniMax V1 (Coding Plan)", sizeDescription: "Latest", languageCount: 1),
     ]
 
     required override init() { super.init() }
 
     func activate(host: HostServices) {
         self.host = host
-        _selectedModelId = host.userDefault(forKey: modelKey) as? String ?? models.first?.id
+        _selectedModelId = host.userDefault(forKey: modelKey) as? String
     }
 
     func deactivate() { host = nil }
@@ -34,9 +38,9 @@ final class MiniMaxPlugin: NSObject, LLMProviderPlugin, @unchecked Sendable {
 
     var providerName: String { "MiniMax" }
 
-    var isAvailable: Bool { currentAPIKey != nil }
+    var isAvailable: Bool { currentAPIKey != nil && !currentBaseURL.isEmpty }
 
-    var supportedModels: [PluginModelInfo] { models }
+    var supportedModels: [PluginModelInfo] { suggestedModels }
 
     var selectedModelId: String? { _selectedModelId }
 
@@ -51,17 +55,38 @@ final class MiniMaxPlugin: NSObject, LLMProviderPlugin, @unchecked Sendable {
         guard let apiKey = currentAPIKey else {
             throw PluginChatError.notConfigured
         }
-        let helper = PluginOpenAIChatHelper(baseURL: baseURL)
-        let modelId = model ?? _selectedModelId ?? models.first?.id ?? "MiniMax-Text-01"
+        let helper = PluginOpenAIChatHelper(baseURL: currentBaseURL)
+        let modelId = model ?? _selectedModelId ?? "MiniMax-Text-01"
         return try await helper.process(apiKey: apiKey, model: modelId, systemPrompt: systemPrompt, userText: userText)
     }
 
-    // MARK: - Keychain
+    // MARK: - Configuration Access
+
+    var currentBaseURL: String {
+        host?.loadBaseURL() as? String ?? defaultBaseURL
+    }
+
+    func saveBaseURL(_ url: String) {
+        try? host?.storeBaseURL(url)
+    }
+
+    // MARK: - Keychain (deprecated - using database storage)
 
     var currentAPIKey: String? { host?.loadSecret(key: apiKeyKeychainKey) }
 
     func saveAPIKey(_ key: String) throws {
         try host?.storeSecret(key: apiKeyKeychainKey, value: key)
+    }
+
+    // MARK: - Connection Test (baseURL + API key only, no model required)
+
+    func testConnection() async throws {
+        guard let apiKey = currentAPIKey else {
+            throw PluginChatError.notConfigured
+        }
+        let helper = PluginOpenAIChatHelper(baseURL: currentBaseURL)
+        // Use a minimal test request with a common model
+        _ = try await helper.process(apiKey: apiKey, model: "MiniMax-Text-01", systemPrompt: "test", userText: "hi")
     }
 }
 
@@ -70,8 +95,12 @@ final class MiniMaxPlugin: NSObject, LLMProviderPlugin, @unchecked Sendable {
 private struct MiniMaxSettingsView: View {
     let plugin: MiniMaxPlugin
     @State private var apiKey: String = ""
+    @State private var baseURL: String = ""
     @State private var selectedModelId: String?
+    @State private var customModelId: String = ""
+    @State private var useCustomModel: Bool = false
     @State private var isValidating = false
+    @State private var isTestingConnection = false
     @State private var validationResult: ValidationResult?
 
     private enum ValidationResult {
@@ -83,41 +112,114 @@ private struct MiniMaxSettingsView: View {
             Text("MiniMax (稀宇科技)")
                 .font(.headline)
 
-            Text("MiniMax 大语言模型。支持中文对话和文本生成。")
+            Text("MiniMax 大语言模型。支持 MiniMax 官方 API 和 Coding Plan。")
                 .font(.callout)
                 .foregroundStyle(.secondary)
 
             Divider()
 
+            // Base URL Configuration
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Base URL")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                TextField("https://api.minimaxi.com/v1", text: $baseURL)
+                    .textFieldStyle(.roundedBorder)
+                    .onAppear { baseURL = plugin.currentBaseURL }
+                    .onChange(of: baseURL) { _, newValue in
+                        plugin.saveBaseURL(newValue)
+                    }
+                Text("常用地址:")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
+                + Text(" https://api.minimaxi.com/v1 (国内)")
+                    .font(.caption2)
+                    .foregroundStyle(.blue)
+                + Text(" | ")
+                    .font(.caption2)
+                + Text("https://api.minimax.io/v1 (国际)")
+                    .font(.caption2)
+                    .foregroundStyle(.blue)
+            }
+
+            // API Key
             SecureField("API Key", text: $apiKey)
                 .textFieldStyle(.roundedBorder)
                 .onAppear { apiKey = plugin.currentAPIKey ?? "" }
 
+            // Test Connection Button (baseURL + API key only)
             HStack {
-                Button("验证") { validateKey() }
+                Button("测试连接") {
+                    testConnectionOnly()
+                }
+                .disabled(baseURL.isEmpty || apiKey.isEmpty || isTestingConnection)
+                if isTestingConnection { ProgressView().controlSize(.small) }
+                if let result = validationResult, case .valid = result {
+                    Label("连接成功", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
+                }
+            }
+
+            // Validate & Save Button
+            HStack {
+                Button("验证并保存") { validateKey() }
                     .disabled(apiKey.isEmpty || isValidating)
                 if isValidating { ProgressView().controlSize(.small) }
                 if let result = validationResult {
                     switch result {
                     case .valid:
-                        Label("有效", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
+                        Label("API Key 有效", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
                     case .invalid(let msg):
                         Label(msg, systemImage: "xmark.circle.fill").foregroundStyle(.red).font(.caption)
                     }
                 }
             }
 
-            Picker("模型", selection: $selectedModelId) {
-                ForEach(plugin.supportedModels, id: \.id) { model in
-                    Text(model.displayName).tag(model.id as String?)
+            Divider()
+
+            // Model Selection
+            Toggle("自定义模型", isOn: $useCustomModel)
+                .toggleStyle(.switch)
+
+            if useCustomModel {
+                TextField("输入模型 ID (如：MiniMax-V1)", text: $customModelId)
+                    .textFieldStyle(.roundedBorder)
+                    .onChange(of: customModelId) { _, newValue in
+                        if !newValue.isEmpty { plugin.selectModel(newValue) }
+                    }
+            } else {
+                Picker("推荐模型", selection: $selectedModelId) {
+                    ForEach(plugin.supportedModels, id: \.id) { model in
+                        Text(model.displayName).tag(model.id as String?)
+                    }
                 }
-            }
-            .onAppear { selectedModelId = plugin.selectedModelId }
-            .onChange(of: selectedModelId) { _, newValue in
-                if let modelId = newValue { plugin.selectModel(modelId) }
+                .onChange(of: selectedModelId) { _, newValue in
+                    if let modelId = newValue { plugin.selectModel(modelId) }
+                }
+                .onAppear {
+                    selectedModelId = plugin.selectedModelId
+                    customModelId = plugin.selectedModelId ?? ""
+                    useCustomModel = plugin.selectedModelId != nil && !plugin.supportedModels.contains { $0.id == plugin.selectedModelId }
+                }
             }
         }
         .padding()
+    }
+
+    private func testConnectionOnly() {
+        guard !baseURL.isEmpty, !apiKey.isEmpty else { return }
+        isTestingConnection = true
+        validationResult = nil
+        Task {
+            do {
+                try plugin.saveAPIKey(apiKey)
+                plugin.saveBaseURL(baseURL)
+                try await plugin.testConnection()
+                validationResult = .valid
+            } catch {
+                validationResult = .invalid(error.localizedDescription)
+            }
+            isTestingConnection = false
+        }
     }
 
     private func validateKey() {
@@ -127,7 +229,9 @@ private struct MiniMaxSettingsView: View {
         Task {
             do {
                 try plugin.saveAPIKey(apiKey)
-                let _ = try await plugin.process(systemPrompt: "Hi", userText: "test", model: plugin.supportedModels.first?.id)
+                plugin.saveBaseURL(baseURL)
+                let modelId = useCustomModel ? customModelId : selectedModelId
+                let _ = try await plugin.process(systemPrompt: "你是 DavyWhisper 助手，请简短回复。", userText: "你好，请用一句话介绍你自己。", model: modelId)
                 validationResult = .valid
             } catch {
                 validationResult = .invalid(error.localizedDescription)

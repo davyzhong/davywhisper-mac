@@ -12,10 +12,13 @@ enum AppConstants {
     }()
 
     static let keychainServicePrefix: String = {
+        guard let bundleId = Bundle.main.bundleIdentifier else {
+            return "com.davywhisper.mac.apikey."
+        }
         #if DEBUG
-        return "com.davywhisper.mac.dev.apikey."
+        return bundleId.hasSuffix(".dev") ? "\(bundleId).apikey." : "\(bundleId).apikey."
         #else
-        return "com.davywhisper.mac.apikey."
+        return "\(bundleId).apikey."
         #endif
     }()
 

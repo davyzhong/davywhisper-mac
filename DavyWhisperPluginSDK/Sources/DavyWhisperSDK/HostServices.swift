@@ -4,9 +4,14 @@ import os
 // MARK: - Host Services
 
 public protocol HostServices: Sendable {
-    // Keychain
+    // Credentials (database-backed - API keys, base URLs, etc.)
+    // Note: All credentials are stored in SwiftData database, NOT in Keychain
     func storeSecret(key: String, value: String) throws
     func loadSecret(key: String) -> String?
+
+    // Base URL storage (for LLM providers)
+    func storeBaseURL(_ url: String) throws
+    func loadBaseURL() -> String?
 
     // UserDefaults (plugin-scoped)
     func userDefault(forKey: String) -> Any?

@@ -143,7 +143,7 @@ targets:
             CODE_SIGNING_REQUIRED: NO
           Release:
             CODE_SIGN_ENTITLEMENTS: DavyWhisper/Resources/DavyWhisper.entitlements
-            PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.mac"
+            PRODUCT_BUNDLE_IDENTIFIER: "com.davywhisper.mac.local"
             SWIFT_OPTIMIZATION_LEVEL: "-Owholemodule"
             SWIFT_COMPILATION_MODE: wholemodule
 

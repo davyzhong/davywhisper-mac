@@ -86,8 +86,6 @@ final class DictationViewModel: ObservableObject {
     private let settingsViewModel: SettingsViewModel
     private let historyService: HistoryService
     private let profileService: ProfileService
-    private let translationService: AnyObject? // TranslationService (macOS 15+)
-    private let dictionaryService: DictionaryService
     private let snippetService: SnippetService
     private let soundService: SoundService
     private let audioDeviceService: AudioDeviceService
@@ -121,8 +119,6 @@ final class DictationViewModel: ObservableObject {
         settingsViewModel: SettingsViewModel,
         historyService: HistoryService,
         profileService: ProfileService,
-        translationService: AnyObject?,
-        dictionaryService: DictionaryService,
         snippetService: SnippetService,
         soundService: SoundService,
         audioDeviceService: AudioDeviceService,
@@ -132,6 +128,8 @@ final class DictationViewModel: ObservableObject {
         accessibilityAnnouncementService: AccessibilityAnnouncementService,
         errorLogService: ErrorLogService
     ) {
+        // Create local DictionaryService instance for child components
+        let dictionaryService = DictionaryService()
         self.audioRecordingService = audioRecordingService
         self.textInsertionService = textInsertionService
         self.hotkeyService = hotkeyService
@@ -139,8 +137,6 @@ final class DictationViewModel: ObservableObject {
         self.settingsViewModel = settingsViewModel
         self.historyService = historyService
         self.profileService = profileService
-        self.translationService = translationService
-        self.dictionaryService = dictionaryService
         self.snippetService = snippetService
         self.soundService = soundService
         self.audioDeviceService = audioDeviceService
@@ -150,13 +146,11 @@ final class DictationViewModel: ObservableObject {
         self.errorLogService = errorLogService
         self.postProcessingPipeline = PostProcessingPipeline(
             snippetService: snippetService,
-            dictionaryService: dictionaryService,
             appFormatterService: appFormatterService
         )
         self.streamingHandler = StreamingHandler(
             modelManager: modelManager,
-            audioRecordingService: audioRecordingService,
-            dictionaryService: dictionaryService
+            audioRecordingService: audioRecordingService
         )
         self.promptPaletteHandler = PromptPaletteHandler(
             textInsertionService: textInsertionService,
@@ -570,7 +564,7 @@ final class DictationViewModel: ObservableObject {
                 let engineOverride = effectiveEngineOverrideId
                 let cloudModelOverride = effectiveCloudModelOverride
                 let translationTarget = effectiveTranslationTarget
-                let termsPrompt = dictionaryService.getTermsForPrompt()
+                let termsPrompt: String? = nil  // Disabled: dictionary service removed
 
                 let result = try await modelManager.transcribe(
                     audioSamples: samples,
@@ -766,35 +760,6 @@ final class DictationViewModel: ObservableObject {
             }
         }
 
-        #if canImport(Translation)
-        if let targetCode = translationTarget {
-            if #available(macOS 15, *), let ts = translationService as? TranslationService {
-                let sourceRaw = detectedLanguage ?? configuredLanguage
-                let sourceNormalized = TranslationService.normalizedLanguageIdentifier(from: sourceRaw)
-                if let sourceRaw {
-                    if let sourceNormalized {
-                        if sourceRaw.caseInsensitiveCompare(sourceNormalized) != .orderedSame {
-                            logger.info("Translation source normalized \(sourceRaw, privacy: .public) -> \(sourceNormalized, privacy: .public)")
-                        }
-                    } else {
-                        logger.warning("Translation source language \(sourceRaw, privacy: .public) invalid, using auto source")
-                    }
-                }
-                let sourceLanguage = sourceNormalized.map { Locale.Language(identifier: $0) }
-                return { text in
-                    guard let targetNormalized = TranslationService.normalizedLanguageIdentifier(from: targetCode) else {
-                        logger.error("Translation target language invalid: \(targetCode, privacy: .public)")
-                        return text
-                    }
-                    if targetCode.caseInsensitiveCompare(targetNormalized) != .orderedSame {
-                        logger.info("Translation target normalized \(targetCode, privacy: .public) -> \(targetNormalized, privacy: .public)")
-                    }
-                    let target = Locale.Language(identifier: targetNormalized)
-                    return try await ts.translate(text: text, to: target, source: sourceLanguage)
-                }
-            }
-        }
-        #endif
 
         return nil
     }

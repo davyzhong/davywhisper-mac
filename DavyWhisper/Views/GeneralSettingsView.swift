@@ -34,28 +34,6 @@ struct GeneralSettingsView: View {
                     .foregroundStyle(.secondary)
             }
 
-            #if canImport(Translation)
-            if #available(macOS 15, *) {
-                Section(String(localized: "Translation")) {
-                    Toggle(String(localized: "Enable translation"), isOn: $settings.translationEnabled)
-                        .accessibilityIdentifier("com.davywhisper.settings.general.translationToggle")
-
-                    if settings.translationEnabled {
-                        Picker(String(localized: "Target language"), selection: $settings.translationTargetLanguage) {
-                            ForEach(TranslationService.availableTargetLanguages, id: \.code) { lang in
-                                Text(lang.name).tag(lang.code)
-                            }
-                        }
-                        .accessibilityIdentifier("com.davywhisper.settings.general.translationTargetLanguage")
-                    }
-
-                    Text(String(localized: "Uses Apple Translate (on-device)"))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-            #endif
-
             Section(String(localized: "Language")) {
                 Picker(String(localized: "App Language"), selection: $appLanguage) {
                     Text("English").tag("en")

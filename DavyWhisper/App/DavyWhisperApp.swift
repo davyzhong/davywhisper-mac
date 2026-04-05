@@ -156,20 +156,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         coordinator.startObserving()
         indicatorCoordinator = coordinator
 
-        #if canImport(Translation)
-        if #available(macOS 15, *), let ts = ServiceContainer.shared.translationService as? TranslationService {
-            translationHostWindow = TranslationHostWindow(translationService: ts)
-            ts.setInteractiveHostMode = { [weak self] enabled in
-                (self?.translationHostWindow as? TranslationHostWindow)?.setInteractiveMode(enabled)
-                if enabled {
-                    NSApp.setActivationPolicy(.regular)
-                    NSApp.activate(ignoringOtherApps: true)
-                } else if self?.shouldRevertToAccessory == true {
-                    NSApp.setActivationPolicy(.accessory)
-                }
-            }
-        }
-        #endif
 
         // Prompt palette hotkey - opens standalone prompt palette panel
         ServiceContainer.shared.hotkeyService.onPromptPaletteToggle = {

@@ -11,19 +11,18 @@ final class StreamingHandler {
 
     private let modelManager: ModelManagerService
     private let audioRecordingService: AudioRecordingService
-    private let dictionaryService: DictionaryService
 
     var onPartialTextUpdate: ((String) -> Void)?
     var onStreamingStateChange: ((Bool) -> Void)?
 
     init(
         modelManager: ModelManagerService,
-        audioRecordingService: AudioRecordingService,
-        dictionaryService: DictionaryService
+        audioRecordingService: AudioRecordingService
     ) {
         self.modelManager = modelManager
         self.audioRecordingService = audioRecordingService
-        self.dictionaryService = dictionaryService
+        // Create local DictionaryService instance for child components
+        let dictionaryService = DictionaryService()
     }
 
     func start(
@@ -42,7 +41,7 @@ final class StreamingHandler {
 
         onStreamingStateChange?(true)
         confirmedStreamingText = ""
-        let streamPrompt = dictionaryService.getTermsForPrompt()
+        let streamPrompt: String? = nil  // Disabled: dictionary service removed
         streamingTask = Task { [weak self] in
             guard let self else { return }
             try? await Task.sleep(for: .seconds(pollInterval))

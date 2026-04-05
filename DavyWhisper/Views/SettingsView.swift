@@ -1,8 +1,7 @@
 import SwiftUI
 
 enum SettingsTab: Hashable {
-    case general, recording, fileTranscription, history
-    case dictionary, profiles, prompts, integrations, advanced
+    case general, fileTranscription, history, profiles, prompts, integrations, advanced
 }
 
 struct SettingsView: View {
@@ -26,10 +25,6 @@ struct SettingsView: View {
                             .tabItem { Label(String(localized: "General"), systemImage: "gear") }
                             .tag(SettingsTab.general)
                             .accessibilityIdentifier("com.davywhisper.settings.tab.general")
-                        RecordingSettingsView()
-                            .tabItem { Label(String(localized: "Recording"), systemImage: "mic.fill") }
-                            .tag(SettingsTab.recording)
-                            .accessibilityIdentifier("com.davywhisper.settings.tab.recording")
                         FileTranscriptionView()
                             .tabItem { Label(String(localized: "File Transcription"), systemImage: "doc.text") }
                             .tag(SettingsTab.fileTranscription)
@@ -40,10 +35,6 @@ struct SettingsView: View {
                             .accessibilityIdentifier("com.davywhisper.settings.tab.history")
                     }
                     Group {
-                        DictionarySnippetsSettingsView()
-                            .tabItem { Label(String(localized: "Dictionary"), systemImage: "book.closed") }
-                            .tag(SettingsTab.dictionary)
-                            .accessibilityIdentifier("com.davywhisper.settings.tab.dictionary")
                         ProfilesSettingsView()
                             .tabItem { Label(String(localized: "Profiles"), systemImage: "person.crop.rectangle.stack") }
                             .tag(SettingsTab.profiles)
@@ -93,10 +84,6 @@ private struct SettingsMainTabs: TabContent {
             GeneralSettingsView()
         }
         .accessibilityIdentifier("com.davywhisper.settings.tab.general")
-        Tab(String(localized: "Recording"), systemImage: "mic.fill", value: SettingsTab.recording) {
-            RecordingSettingsView()
-        }
-        .accessibilityIdentifier("com.davywhisper.settings.tab.recording")
         Tab(String(localized: "File Transcription"), systemImage: "doc.text", value: SettingsTab.fileTranscription) {
             FileTranscriptionView()
         }
@@ -105,10 +92,6 @@ private struct SettingsMainTabs: TabContent {
             HistoryView()
         }
         .accessibilityIdentifier("com.davywhisper.settings.tab.history")
-        Tab(String(localized: "Dictionary"), systemImage: "book.closed", value: SettingsTab.dictionary) {
-            DictionarySnippetsSettingsView()
-        }
-        .accessibilityIdentifier("com.davywhisper.settings.tab.dictionary")
         Tab(String(localized: "Profiles"), systemImage: "person.crop.rectangle.stack", value: SettingsTab.profiles) {
             ProfilesSettingsView()
         }

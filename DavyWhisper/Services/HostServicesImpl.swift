@@ -7,11 +7,17 @@ final class HostServicesImpl: HostServices, @unchecked Sendable {
     let pluginDataDirectory: URL
     let eventBus: EventBusProtocol
     private let profileNamesProvider: () -> [String]
+    private let credentialService: PluginCredentialService
 
-    init(pluginId: String, eventBus: EventBusProtocol, profileNamesProvider: @escaping () -> [String]) {
+    // Thread-safe cached values (avoid main actor hops for common accesses)
+    private var _cachedApiKey: String?
+    private var _cachedBaseURL: String?
+
+    init(pluginId: String, eventBus: EventBusProtocol, profileNamesProvider: @escaping () -> [String], credentialService: PluginCredentialService) {
         self.pluginId = pluginId
         self.eventBus = eventBus
         self.profileNamesProvider = profileNamesProvider
+        self.credentialService = credentialService
 
         self.pluginDataDirectory = AppConstants.appSupportDirectory
             .appendingPathComponent("PluginData", isDirectory: true)
@@ -19,22 +25,57 @@ final class HostServicesImpl: HostServices, @unchecked Sendable {
 
         // Create directory if needed
         try? FileManager.default.createDirectory(at: pluginDataDirectory, withIntermediateDirectories: true)
+
+        // Load initial cache on main actor (after all members are initialized)
+        Task { @MainActor in
+            self._cachedApiKey = credentialService.getAPIKey(for: pluginId)
+            self._cachedBaseURL = credentialService.getBaseURL(for: pluginId)
+        }
     }
 
-    // MARK: - Keychain
+    // MARK: - Database-backed Credential Storage (replaces Keychain)
 
     func storeSecret(key: String, value: String) throws {
-        let scopedService = "\(pluginId).\(key)"
-        if value.isEmpty {
-            try KeychainService.delete(service: scopedService)
-        } else {
-            try KeychainService.save(key: value, service: scopedService)
+        // Store API key in database
+        if key.hasSuffix("api-key") {
+            Task { @MainActor in
+                let baseURL = credentialService.getBaseURL(for: pluginId)
+                credentialService.saveCredential(pluginId: pluginId, apiKey: value, baseURL: baseURL)
+                self._cachedApiKey = value
+                self._cachedBaseURL = baseURL
+            }
+            return
+        }
+        // For other keys, store in database with key suffix
+        Task { @MainActor in
+            let existingBaseURL = credentialService.getBaseURL(for: pluginId)
+            credentialService.saveCredential(pluginId: pluginId, apiKey: "\(key)=\(value)", baseURL: existingBaseURL)
         }
     }
 
     func loadSecret(key: String) -> String? {
-        let scopedService = "\(pluginId).\(key)"
-        return KeychainService.load(service: scopedService)
+        // Load API key from database (using cached value)
+        if key.hasSuffix("api-key") {
+            return _cachedApiKey
+        }
+        // For other keys, parse from stored value
+        guard let stored = _cachedApiKey,
+              stored.hasPrefix("\(key)=") else { return nil }
+        return String(stored.dropFirst(key.count + 1))
+    }
+
+    // MARK: - Database-backed BaseURL Storage
+
+    func storeBaseURL(_ url: String) throws {
+        Task { @MainActor in
+            let existingKey = credentialService.getAPIKey(for: pluginId) ?? ""
+            credentialService.saveCredential(pluginId: pluginId, apiKey: existingKey, baseURL: url)
+            self._cachedBaseURL = url
+        }
+    }
+
+    func loadBaseURL() -> String? {
+        return _cachedBaseURL
     }
 
     // MARK: - UserDefaults (plugin-scoped)

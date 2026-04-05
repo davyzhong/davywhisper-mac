@@ -219,7 +219,12 @@ final class PluginManager: ObservableObject {
     }
 
     private func activatePlugin(_ plugin: LoadedPlugin) {
-        let host = HostServicesImpl(pluginId: plugin.manifest.id, eventBus: EventBus.shared, profileNamesProvider: profileNamesProvider)
+        let host = HostServicesImpl(
+            pluginId: plugin.manifest.id,
+            eventBus: EventBus.shared,
+            profileNamesProvider: profileNamesProvider,
+            credentialService: ServiceContainer.shared.pluginCredentialService
+        )
         plugin.instance.activate(host: host)
         logger.info("Activated plugin: \(plugin.manifest.id)")
     }
