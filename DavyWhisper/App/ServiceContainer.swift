@@ -33,7 +33,6 @@ final class ServiceContainer: ObservableObject {
     let apiServerViewModel: APIServerViewModel
 
     // ViewModels
-    let fileTranscriptionViewModel: FileTranscriptionViewModel
     let settingsViewModel: SettingsViewModel
     let dictationViewModel: DictationViewModel
     let historyViewModel: HistoryViewModel
@@ -67,10 +66,6 @@ final class ServiceContainer: ObservableObject {
         pluginCredentialService = PluginCredentialService()
 
         // ViewModels (created before HTTP API so DictationViewModel is available)
-        fileTranscriptionViewModel = FileTranscriptionViewModel(
-            modelManager: modelManagerService,
-            audioFileService: audioFileService
-        )
         settingsViewModel = SettingsViewModel(modelManager: modelManagerService)
         dictationViewModel = DictationViewModel(
             audioRecordingService: audioRecordingService,
@@ -113,7 +108,6 @@ final class ServiceContainer: ObservableObject {
         )
 
         // Set shared references
-        FileTranscriptionViewModel._shared = fileTranscriptionViewModel
         SettingsViewModel._shared = settingsViewModel
         DictationViewModel._shared = dictationViewModel
         APIServerViewModel._shared = apiServerViewModel

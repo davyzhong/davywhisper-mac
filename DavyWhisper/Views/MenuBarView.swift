@@ -105,17 +105,6 @@ struct MenuBarView: View {
         }
 
         Button {
-            openWindow(id: "settings")
-            activateAppWindow("settings")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                FileTranscriptionViewModel.shared.showFilePickerFromMenu = true
-            }
-        } label: {
-            Label(String(localized: "Transcribe File..."), systemImage: "doc.text")
-        }
-        .disabled(!status.isModelReady)
-
-        Button {
             DictationViewModel.shared.readBackLastTranscription()
         } label: {
             Label(String(localized: "Read Back Last Transcription"), systemImage: "speaker.wave.2")

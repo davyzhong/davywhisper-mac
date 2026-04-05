@@ -1,12 +1,11 @@
 import SwiftUI
 
 enum SettingsTab: Hashable {
-    case general, fileTranscription, history, profiles, prompts, integrations, advanced
+    case general, history, profiles, prompts, integrations, advanced
 }
 
 struct SettingsView: View {
     @State private var selectedTab: SettingsTab = .general
-    @ObservedObject private var fileTranscription = FileTranscriptionViewModel.shared
     @ObservedObject private var registryService = PluginRegistryService.shared
     @ObservedObject private var promptActionsViewModel = PromptActionsViewModel.shared
 
@@ -25,10 +24,6 @@ struct SettingsView: View {
                             .tabItem { Label(String(localized: "General"), systemImage: "gear") }
                             .tag(SettingsTab.general)
                             .accessibilityIdentifier("com.davywhisper.settings.tab.general")
-                        FileTranscriptionView()
-                            .tabItem { Label(String(localized: "File Transcription"), systemImage: "doc.text") }
-                            .tag(SettingsTab.fileTranscription)
-                            .accessibilityIdentifier("com.davywhisper.settings.tab.fileTranscription")
                         HistoryView()
                             .tabItem { Label(String(localized: "History"), systemImage: "clock.arrow.circlepath") }
                             .tag(SettingsTab.history)
@@ -57,22 +52,6 @@ struct SettingsView: View {
             }
         }
         .frame(minWidth: 950, idealWidth: 1050, minHeight: 550, idealHeight: 600)
-        .onAppear { navigateToFileTranscriptionIfNeeded() }
-        .onChange(of: fileTranscription.showFilePickerFromMenu) { _, _ in
-            navigateToFileTranscriptionIfNeeded()
-        }
-        .onChange(of: promptActionsViewModel.navigateToIntegrations) { _, navigate in
-            if navigate {
-                selectedTab = .integrations
-                promptActionsViewModel.navigateToIntegrations = false
-            }
-        }
-    }
-
-    private func navigateToFileTranscriptionIfNeeded() {
-        if fileTranscription.showFilePickerFromMenu {
-            selectedTab = .fileTranscription
-        }
     }
 }
 
@@ -84,10 +63,6 @@ private struct SettingsMainTabs: TabContent {
             GeneralSettingsView()
         }
         .accessibilityIdentifier("com.davywhisper.settings.tab.general")
-        Tab(String(localized: "File Transcription"), systemImage: "doc.text", value: SettingsTab.fileTranscription) {
-            FileTranscriptionView()
-        }
-        .accessibilityIdentifier("com.davywhisper.settings.tab.fileTranscription")
         Tab(String(localized: "History"), systemImage: "clock.arrow.circlepath", value: SettingsTab.history) {
             HistoryView()
         }

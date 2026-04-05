@@ -21,6 +21,21 @@
 - 移除了实时录音配置入口
 - 保留了文件转写能力
 
+### 2. 文件转录功能 (File Transcription) - UI 层
+**删除内容**:
+- `FileTranscriptionView.swift` - 文件转录主界面 (~200 行)
+- `FileTranscriptionViewModel.swift` - 已从 ServiceContainer 移除
+
+**修改文件**:
+- `SettingsView.swift` - 删除 File Transcription 标签页
+- `MenuBarView.swift` - 删除 "Transcribe File..." 菜单项
+- `AudioRecorderViewModel.swift` - 删除 `transcribeRecording()` 方法
+- `ServiceContainer.swift` - 删除 FileTranscriptionViewModel 依赖注入
+
+**影响**:
+- 用户无法通过 UI 选择文件进行转写
+- 保留 `AudioFileService` 供语音输入流程使用
+
 ### 2. 翻译功能 (Translation)
 **删除内容**:
 - `TranslationService.swift` - Apple Translate 封装
@@ -111,10 +126,10 @@
 ### 删除的设置标签页
 - Recording（录音设置）
 - Dictionary（词典设置）
+- File Transcription（文件转录）
 
 ### 保留的设置标签页
 - General（通用）- 新增 Indicator Mode 预设
-- File Transcription（文件转写）
 - History（历史）
 - Profiles（配置文件）- 移除 Priority 手动调节
 - Prompts（Prompt）
@@ -138,7 +153,7 @@
 1. ~~清理死代码~~ ✅ 已完成
 2. ~~简化 Profiles~~ ✅ 已完成 (Sprint 3)
 3. ~~统一指示器~~ ✅ 已完成 (Sprint 1)
-4. 考虑合并文件转写到通用设置
+4. ~~考虑合并文件转写到通用设置~~ ✅ 已完成 (文件转录 UI 已删除)
 
 ## Phase 7: 验证
 

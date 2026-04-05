@@ -239,10 +239,6 @@ final class AudioRecorderViewModel: ObservableObject {
         NSWorkspace.shared.activateFileViewerSelecting([item.url])
     }
 
-    func transcribeRecording(_ item: RecordingItem) {
-        FileTranscriptionViewModel.shared.addFiles([item.url])
-    }
-
     func openRecordingsFolder() {
         let dir = recorderService.recordingsDirectory
         if FileManager.default.fileExists(atPath: dir.path) {

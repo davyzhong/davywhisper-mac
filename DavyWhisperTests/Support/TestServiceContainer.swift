@@ -54,7 +54,6 @@ final class TestServiceContainer {
     // MARK: - ViewModels
 
     let dictationViewModel: DictationViewModel
-    let fileTranscriptionViewModel: FileTranscriptionViewModel
     let settingsViewModel: SettingsViewModel
     let historyViewModel: HistoryViewModel
     let profilesViewModel: ProfilesViewModel
@@ -110,10 +109,6 @@ final class TestServiceContainer {
 
         // ViewModels
         settingsViewModel = SettingsViewModel(modelManager: modelManagerService)
-        fileTranscriptionViewModel = FileTranscriptionViewModel(
-            modelManager: modelManagerService,
-            audioFileService: audioFileService
-        )
 
         dictationViewModel = DictationViewModel(
             audioRecordingService: audioRecordingService,
@@ -167,7 +162,6 @@ final class TestServiceContainer {
 
         // Set static shared references
         DictationViewModel._shared = dictationViewModel
-        FileTranscriptionViewModel._shared = fileTranscriptionViewModel
         SettingsViewModel._shared = settingsViewModel
         APIServerViewModel._shared = apiServerViewModel
         HistoryViewModel._shared = historyViewModel
@@ -183,7 +177,6 @@ final class TestServiceContainer {
     /// Call this in XCTestCase.tearDown().
     func tearDown() {
         DictationViewModel._shared = nil
-        FileTranscriptionViewModel._shared = nil
         SettingsViewModel._shared = nil
         APIServerViewModel._shared = nil
         HistoryViewModel._shared = nil
