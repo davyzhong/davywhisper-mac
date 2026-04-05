@@ -21,6 +21,22 @@
 - 移除了实时录音配置入口
 - 保留了文件转写能力
 
+### 1.5 死代码清理 (补充)
+**删除内容**:
+- `FileTranscriptionViewModel.swift` - 文件转录 ViewModel（Phase 1 遗留）
+- `TranslationService.swift` - 翻译服务（Phase 1 遗留）
+- `DictionaryEntry.swift` - 词典数据模型（Phase 1 遗留）
+- `AudioRecorderViewModel.swift` - 录音 ViewModel（Phase 1 遗留）
+
+**修改文件**:
+- `UserDefaultsKeys.swift` - 删除 recorder/* 和 showRecorderTab 配置键
+- `GeneralSettingsView.swift` - 删除 showRecorderTab Toggle
+- `TestServiceContainer.swift` - 清理测试容器中的 ViewModel 引用
+
+**影响**:
+- 彻底清除已删除功能的残留代码
+- 删除配置开关 showRecorderTab
+
 ### 2. 文件转录功能 (File Transcription) - UI 层
 **删除内容**:
 - `FileTranscriptionView.swift` - 文件转录主界面 (~200 行)
