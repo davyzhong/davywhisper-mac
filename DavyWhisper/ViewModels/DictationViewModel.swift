@@ -79,6 +79,26 @@ final class DictationViewModel: ObservableObject {
         didSet { UserDefaults.standard.set(overlayPosition.rawValue, forKey: UserDefaultsKeys.overlayPosition) }
     }
 
+    // MARK: - Indicator Preset (Sprint 1 Simplification)
+    @Published var indicatorPreset: IndicatorPreset {
+        didSet { UserDefaults.standard.set(indicatorPreset.rawValue, forKey: UserDefaultsKeys.indicatorPreset) }
+    }
+
+    @Published var indicatorCustomMode: Bool {
+        didSet { UserDefaults.standard.set(indicatorCustomMode, forKey: UserDefaultsKeys.indicatorCustomMode) }
+    }
+
+    /// 应用预设模式
+    func applyIndicatorPreset(_ preset: IndicatorPreset) {
+        indicatorPreset = preset
+        preset.apply(to: self)
+    }
+
+    /// 从当前配置推断预设模式
+    func syncIndicatorPresetFromSettings() {
+        indicatorPreset = IndicatorPreset.infer(from: self)
+    }
+
     private let audioRecordingService: AudioRecordingService
     private let textInsertionService: TextInsertionService
     private let hotkeyService: HotkeyService
@@ -128,8 +148,6 @@ final class DictationViewModel: ObservableObject {
         accessibilityAnnouncementService: AccessibilityAnnouncementService,
         errorLogService: ErrorLogService
     ) {
-        // Create local DictionaryService instance for child components
-        let dictionaryService = DictionaryService()
         self.audioRecordingService = audioRecordingService
         self.textInsertionService = textInsertionService
         self.hotkeyService = hotkeyService
@@ -180,6 +198,14 @@ final class DictationViewModel: ObservableObject {
         self.overlayPosition = UserDefaults.standard.string(forKey: UserDefaultsKeys.overlayPosition)
             .flatMap { OverlayPosition(rawValue: $0) } ?? .bottom
 
+        // Indicator Preset 初始化 (Sprint 1)
+        self.indicatorCustomMode = UserDefaults.standard.bool(forKey: UserDefaultsKeys.indicatorCustomMode)
+        let storedPreset = UserDefaults.standard.string(forKey: UserDefaultsKeys.indicatorPreset)
+            .flatMap { IndicatorPreset(rawValue: $0) }
+        // 注意：infer 方法不能在 init 中调用，因为 self 尚未完全初始化
+        // 所以如果有 storedPreset 就用它，否则默认为 standard
+        self.indicatorPreset = storedPreset ?? .standard
+
         setupBindings()
 
         streamingHandler.onPartialTextUpdate = { [weak self] text in
@@ -215,6 +241,11 @@ final class DictationViewModel: ObservableObject {
         }
         settingsHandler.onHotkeyLabelsChanged = { [weak self] in
             self?.hotkeyLabelsVersion += 1
+        }
+
+        // 初次加载时从旧配置迁移到新预设
+        if storedPreset == nil {
+            syncIndicatorPresetFromSettings()
         }
     }
 
@@ -869,4 +900,59 @@ func paddedSamplesForFinalTranscription(_ samples: [Float], rawDuration: TimeInt
     }
 
     return paddedSamples
+}
+
+// MARK: - IndicatorPreset Helpers
+
+extension IndicatorPreset {
+    /// 应用预设到 DictationViewModel
+    @MainActor
+    func apply(to dictation: DictationViewModel) {
+        switch self {
+        case .minimal:
+            dictation.notchIndicatorLeftContent = .waveform
+            dictation.notchIndicatorRightContent = .none
+            dictation.notchIndicatorVisibility = .duringActivity
+            dictation.notchIndicatorDisplay = .activeScreen
+        case .standard:
+            dictation.notchIndicatorLeftContent = .timer
+            dictation.notchIndicatorRightContent = .waveform
+            dictation.notchIndicatorVisibility = .duringActivity
+            dictation.notchIndicatorDisplay = .activeScreen
+        case .detailed:
+            dictation.notchIndicatorLeftContent = .profile
+            dictation.notchIndicatorRightContent = .waveform
+            dictation.notchIndicatorVisibility = .always
+            dictation.notchIndicatorDisplay = .activeScreen
+        case .custom:
+            // 自定义模式保持当前设置不变
+            break
+        }
+    }
+
+    /// 从当前配置推断预设模式
+    @MainActor
+    static func infer(from dictation: DictationViewModel) -> IndicatorPreset {
+        let left = dictation.notchIndicatorLeftContent
+        let right = dictation.notchIndicatorRightContent
+        let visibility = dictation.notchIndicatorVisibility
+
+        // 匹配 minimal: 左波形，右无
+        if left == .waveform && right == .none && visibility == .duringActivity {
+            return .minimal
+        }
+
+        // 匹配 standard: 左计时器，右波形
+        if left == .timer && right == .waveform && visibility == .duringActivity {
+            return .standard
+        }
+
+        // 匹配 detailed: 左 Profile，右波形，Always 可见
+        if left == .profile && right == .waveform && visibility == .always {
+            return .detailed
+        }
+
+        // 其他情况均为自定义
+        return .custom
+    }
 }

@@ -11,7 +11,6 @@ struct PostProcessingResult {
 
 @MainActor
 final class PostProcessingPipeline {
-    private let dictionaryService = DictionaryService()
     private let snippetService: SnippetService
     private let appFormatterService: AppFormatterService?
 
@@ -28,7 +27,7 @@ final class PostProcessingPipeline {
         llmStepName: String? = nil
     ) async throws -> PostProcessingResult {
         // Build priority-ordered step list: (priority, id)
-        // IDs: -1 = LLM, -2 = snippets, -3 = dictionary, -4 = app formatter
+        // IDs: -1 = LLM, -2 = snippets, -4 = app formatter
         var steps: [(priority: Int, id: Int)] = []
 
         // App formatter at priority 150 (before LLM at 300)
@@ -41,7 +40,6 @@ final class PostProcessingPipeline {
             steps.append((300, -1))
         }
         steps.append((500, -2))
-        steps.append((600, -3))
         steps.sort { $0.priority < $1.priority }
 
         var result = text
@@ -60,8 +58,6 @@ final class PostProcessingPipeline {
                     result = try await llmHandler!(result)
                 case -2:
                     result = snippetService.applySnippets(to: result)
-                case -3:
-                    result = dictionaryService.applyCorrections(to: result)
                 default:
                     break
                 }
@@ -71,7 +67,6 @@ final class PostProcessingPipeline {
                     case -4: name = "Formatting"
                     case -1: name = llmStepName ?? "Prompt"
                     case -2: name = "Snippets"
-                    case -3: name = "Corrections"
                     default: name = "Unknown"
                     }
                     appliedSteps.append(name)
@@ -82,7 +77,6 @@ final class PostProcessingPipeline {
                 case -4: name = "AppFormatter"
                 case -1: name = "LLM/Translation"
                 case -2: name = "Snippets"
-                case -3: name = "Dictionary"
                 default: name = "Unknown"
                 }
                 logger.error("Post-processor '\(name)' failed: \(error.localizedDescription)")

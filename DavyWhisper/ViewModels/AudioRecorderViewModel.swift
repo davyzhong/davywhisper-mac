@@ -83,17 +83,14 @@ final class AudioRecorderViewModel: ObservableObject {
 
     private let recorderService: AudioRecorderService
     private let modelManager: ModelManagerService
-    private let dictionaryService: DictionaryService
     private var cancellables = Set<AnyCancellable>()
     private var currentOutputURL: URL?
     private var streamingTask: Task<Void, Never>?
     private var confirmedStreamingText = ""
 
-    init(recorderService: AudioRecorderService, modelManager: ModelManagerService, dictionaryService: DictionaryService) {
+    init(recorderService: AudioRecorderService, modelManager: ModelManagerService) {
         self.recorderService = recorderService
         self.modelManager = modelManager
-        self.dictionaryService = dictionaryService
-
         // Load saved preferences with defaults
         let defaults = UserDefaults.standard
         if defaults.object(forKey: UserDefaultsKeys.recorderMicEnabled) == nil {
@@ -197,7 +194,7 @@ final class AudioRecorderViewModel: ObservableObject {
                     task: selectedTask,
                     providerId: modelManager.selectedProviderId,
                     modelId: modelManager.selectedModelId,
-                    prompt: dictionaryService.getTermsForPrompt()
+                    prompt: nil
                 )
                 state = .finalizing
             } else {
@@ -324,7 +321,7 @@ final class AudioRecorderViewModel: ObservableObject {
 
         isTranscribing = true
         let pollInterval: Double = plugin.supportsStreaming ? 1.5 : 3.0
-        let streamPrompt = dictionaryService.getTermsForPrompt()
+        let streamPrompt: String? = nil
         let language = selectedLanguage
         // Fall back to transcribe if engine doesn't support translation
         let task = (selectedTask == .translate && !plugin.supportsTranslation) ? .transcribe : selectedTask

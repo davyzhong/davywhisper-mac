@@ -94,36 +94,57 @@ struct GeneralSettingsView: View {
                     .listRowBackground(Color.clear)
                     .accessibilityIdentifier("com.davywhisper.settings.general.indicatorStyle")
 
-                Picker(String(localized: "Visibility"), selection: $dictation.notchIndicatorVisibility) {
-                    Text(String(localized: "Always visible")).tag(NotchIndicatorVisibility.always)
-                    Text(String(localized: "Only during activity")).tag(NotchIndicatorVisibility.duringActivity)
-                    Text(String(localized: "Never")).tag(NotchIndicatorVisibility.never)
+                // MARK: - Indicator Preset Picker (Sprint 1 Simplification)
+                Picker(String(localized: "Indicator Mode"), selection: $dictation.indicatorPreset) {
+                    ForEach(IndicatorPreset.allCases, id: \.rawValue) { preset in
+                        Text(preset.displayName).tag(preset)
+                    }
                 }
-                .accessibilityIdentifier("com.davywhisper.settings.general.indicatorVisibility")
-
-                Picker(String(localized: "Display"), selection: $dictation.notchIndicatorDisplay) {
-                    Text(String(localized: "Active Screen")).tag(NotchIndicatorDisplay.activeScreen)
-                    Text(String(localized: "Primary Screen")).tag(NotchIndicatorDisplay.primaryScreen)
-                    Text(String(localized: "Built-in Display")).tag(NotchIndicatorDisplay.builtInScreen)
-                }
-                .accessibilityIdentifier("com.davywhisper.settings.general.indicatorDisplay")
-
-                if dictation.indicatorStyle == .overlay {
-                    Picker(String(localized: "Position"), selection: $dictation.overlayPosition) {
-                        Text(String(localized: "Top")).tag(OverlayPosition.top)
-                        Text(String(localized: "Bottom")).tag(OverlayPosition.bottom)
+                .accessibilityIdentifier("com.davywhisper.settings.general.indicatorPreset")
+                .onChange(of: dictation.indicatorPreset) { _, newValue in
+                    if newValue != .custom {
+                        dictation.indicatorCustomMode = false
+                        newValue.apply(to: dictation)
+                    } else {
+                        dictation.indicatorCustomMode = true
                     }
                 }
 
-                Picker(String(localized: "Left Side"), selection: $dictation.notchIndicatorLeftContent) {
-                    notchContentPickerOptions
-                }
-                .accessibilityIdentifier("com.davywhisper.settings.general.indicatorLeftContent")
+                // MARK: - Custom Mode Expanded Settings
+                if dictation.indicatorPreset == .custom {
+                    DisclosureGroup(String(localized: "Custom Indicator Settings")) {
+                        Picker(String(localized: "Visibility"), selection: $dictation.notchIndicatorVisibility) {
+                            Text(String(localized: "Always visible")).tag(NotchIndicatorVisibility.always)
+                            Text(String(localized: "Only during activity")).tag(NotchIndicatorVisibility.duringActivity)
+                            Text(String(localized: "Never")).tag(NotchIndicatorVisibility.never)
+                        }
+                        .accessibilityIdentifier("com.davywhisper.settings.general.indicatorVisibility")
 
-                Picker(String(localized: "Right Side"), selection: $dictation.notchIndicatorRightContent) {
-                    notchContentPickerOptions
+                        Picker(String(localized: "Display"), selection: $dictation.notchIndicatorDisplay) {
+                            Text(String(localized: "Active Screen")).tag(NotchIndicatorDisplay.activeScreen)
+                            Text(String(localized: "Primary Screen")).tag(NotchIndicatorDisplay.primaryScreen)
+                            Text(String(localized: "Built-in Display")).tag(NotchIndicatorDisplay.builtInScreen)
+                        }
+                        .accessibilityIdentifier("com.davywhisper.settings.general.indicatorDisplay")
+
+                        if dictation.indicatorStyle == .overlay {
+                            Picker(String(localized: "Position"), selection: $dictation.overlayPosition) {
+                                Text(String(localized: "Top")).tag(OverlayPosition.top)
+                                Text(String(localized: "Bottom")).tag(OverlayPosition.bottom)
+                            }
+                        }
+
+                        Picker(String(localized: "Left Side"), selection: $dictation.notchIndicatorLeftContent) {
+                            notchContentPickerOptions
+                        }
+                        .accessibilityIdentifier("com.davywhisper.settings.general.indicatorLeftContent")
+
+                        Picker(String(localized: "Right Side"), selection: $dictation.notchIndicatorRightContent) {
+                            notchContentPickerOptions
+                        }
+                        .accessibilityIdentifier("com.davywhisper.settings.general.indicatorRightContent")
+                    }
                 }
-                .accessibilityIdentifier("com.davywhisper.settings.general.indicatorRightContent")
 
                 if dictation.indicatorStyle == .notch {
                     Text(String(localized: "The notch indicator extends the MacBook notch area to show recording status."))

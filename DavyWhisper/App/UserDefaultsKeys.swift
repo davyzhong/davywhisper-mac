@@ -60,6 +60,10 @@ enum UserDefaultsKeys {
     static let notchIndicatorRightContent = "notchIndicatorRightContent"
     static let notchIndicatorDisplay = "notchIndicatorDisplay"
 
+    // MARK: - Indicator Preset (Sprint 1 Simplification)
+    static let indicatorPreset = "indicatorPreset"
+    static let indicatorCustomMode = "indicatorCustomMode"
+
     // MARK: - Appearance
     static let showMenuBarIcon = "showMenuBarIcon"
     static let menuBarIconHiddenAlertShown = "menuBarIconHiddenAlertShown"

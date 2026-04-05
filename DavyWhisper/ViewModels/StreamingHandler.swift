@@ -21,8 +21,6 @@ final class StreamingHandler {
     ) {
         self.modelManager = modelManager
         self.audioRecordingService = audioRecordingService
-        // Create local DictionaryService instance for child components
-        let dictionaryService = DictionaryService()
     }
 
     func start(
