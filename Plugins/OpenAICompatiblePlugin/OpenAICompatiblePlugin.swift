@@ -108,7 +108,20 @@ final class OpenAICompatiblePlugin: NSObject, LLMProviderPlugin, @unchecked Send
 
     var activePreset: ProviderPreset {
         let presetId = host?.userDefault(forKey: "activeProvider") as? String ?? ""
-        return ProviderPreset.allCases.first { $0.id == presetId } ?? .deepSeek
+        let base = ProviderPreset.allCases.first { $0.id == presetId } ?? .deepSeek
+        if base.id == "custom" {
+            let customURL = host?.userDefault(forKey: "customBaseURL") as? String ?? ""
+            if !customURL.isEmpty {
+                return ProviderPreset(
+                    id: "custom",
+                    displayName: "自定义 OpenAI 兼容",
+                    baseURL: customURL,
+                    models: [],
+                    icon: "gearshape.fill"
+                )
+            }
+        }
+        return base
     }
 
     var currentAPIKey: String? {
