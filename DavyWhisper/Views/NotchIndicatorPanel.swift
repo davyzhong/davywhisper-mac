@@ -30,18 +30,17 @@ private class FirstMouseHostingView<Content: View>: NSHostingView<Content> {
 /// Panel that visually extends the MacBook notch, centered over the hardware notch.
 /// Only shown on displays with a hardware notch - hidden on non-notch displays regardless of settings.
 class NotchIndicatorPanel: NSPanel {
-    /// Large enough to accommodate the expanded (open) state. SwiftUI clips the visible area.
     private static let panelWidth: CGFloat = 500
-    private static let panelHeight: CGFloat = 500
 
     private let notchGeometry = NotchGeometry()
     private var cancellables = Set<AnyCancellable>()
     private var cachedScreen: NSScreen?
+    private var currentHeight: CGFloat = 100
 
     init() {
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: Self.panelWidth, height: Self.panelHeight),
-            styleMask: [.borderless, .nonactivatingPanel, .utilityWindow, .hudWindow],
+            contentRect: NSRect(x: 0, y: 0, width: Self.panelWidth, height: 100),
+            styleMask: [.borderless, .nonactivatingPanel, .utilityWindow],
             backing: .buffered,
             defer: false
         )
@@ -89,6 +88,7 @@ class NotchIndicatorPanel: NSPanel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.updateVisibility(state: state, vm: vm)
+                self?.updatePanelHeight()
             }
             .store(in: &cancellables)
 
@@ -104,6 +104,13 @@ class NotchIndicatorPanel: NSPanel {
             .sink { [weak self] _ in
                 self?.cachedScreen = nil
                 self?.updateVisibility(state: vm.state, vm: vm)
+            }
+            .store(in: &cancellables)
+
+        vm.$partialText
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updatePanelHeight()
             }
             .store(in: &cancellables)
     }
@@ -141,12 +148,39 @@ class NotchIndicatorPanel: NSPanel {
         }
         notchGeometry.update(for: screen)
 
+        updatePanelHeight()
+
         let screenFrame = screen.frame
         let x = screenFrame.midX - Self.panelWidth / 2
-        let y = screenFrame.origin.y + screenFrame.height - Self.panelHeight
+        let y = screenFrame.origin.y + screenFrame.height - currentHeight
 
-        setFrame(NSRect(x: x, y: y, width: Self.panelWidth, height: Self.panelHeight), display: true)
+        setFrame(NSRect(x: x, y: y, width: Self.panelWidth, height: currentHeight), display: true)
         orderFrontRegardless()
+    }
+
+    private func updatePanelHeight() {
+        let vm = DictationViewModel.shared
+        notchGeometry.update(for: cachedScreen ?? NSScreen.main ?? NSScreen.screens[0])
+        var height = notchGeometry.notchHeight
+
+        if vm.state == .recording && !vm.partialText.isEmpty {
+            height += 80  // expanded text area
+        }
+        if vm.state == .processing && vm.processingPhase != nil {
+            height += 30  // processing phase label
+        }
+        if vm.state == .inserting && vm.actionFeedbackMessage != nil {
+            height += 40  // action feedback
+        }
+
+        if height != currentHeight {
+            currentHeight = height
+            guard isVisible else { return }
+            guard let screen = cachedScreen ?? NSScreen.main else { return }
+            let x = screen.frame.midX - Self.panelWidth / 2
+            let y = screen.frame.origin.y + screen.frame.height - currentHeight
+            setFrame(NSRect(x: x, y: y, width: Self.panelWidth, height: currentHeight), display: true)
+        }
     }
 
     private func resolveScreen() -> NSScreen {
