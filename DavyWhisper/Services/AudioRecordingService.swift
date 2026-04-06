@@ -111,19 +111,24 @@ final class AudioRecordingService: ObservableObject, @unchecked Sendable {
         // Fast path: return cached value if already granted
         if hasMicrophonePermission { return true }
 
-        // Prevent concurrent requests using a lock
         return await withCheckedContinuation { continuation in
+            // Check & set permissionRequestInFlight atomically.
+            // IMPORTANT: `return` inside permissionQueue.sync only exits the
+            // sync block, NOT the outer closure. Use a flag to actually gate
+            // the code below.
+            var shouldRequest = false
             permissionQueue.sync {
                 if self.permissionRequestInFlight {
-                    // A request is already in flight — wait for it and report current state
-                    Task { @MainActor [weak self] in
-                        let result = self?.hasMicrophonePermission ?? false
-                        continuation.resume(returning: result)
-                    }
+                    // A request is already in flight — return current state
+                    continuation.resume(returning: self.hasMicrophonePermission)
                     return
                 }
                 self.permissionRequestInFlight = true
+                shouldRequest = true
             }
+
+            // If another request is already in flight, we already resumed — bail out.
+            guard shouldRequest else { return }
 
             let currentPermission = AVAudioApplication.shared.recordPermission
             if currentPermission == .granted {
