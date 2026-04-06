@@ -13,7 +13,7 @@ class OverlayIndicatorPanel: NSPanel {
     init() {
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: Self.panelWidth, height: Self.panelHeight),
-            styleMask: [.borderless, .nonactivatingPanel, .utilityWindow, .hudWindow],
+            styleMask: [.borderless, .nonactivatingPanel, .utilityWindow],
             backing: .buffered,
             defer: false
         )
@@ -24,14 +24,34 @@ class OverlayIndicatorPanel: NSPanel {
         hasShadow = false
         isMovable = false
         level = NSWindow.Level(rawValue: Int(CGShieldingWindowLevel()))
-        appearance = NSAppearance(named: .darkAqua)
         collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary, .ignoresCycle]
         hidesOnDeactivate = false
         ignoresMouseEvents = true
 
+        // Use NSVisualEffectView for reliable translucent dark background on all displays
+        let visualEffectView = NSVisualEffectView()
+        visualEffectView.material = .hudWindow
+        visualEffectView.state = .active
+        visualEffectView.blendingMode = .behindWindow
+        visualEffectView.wantsLayer = true
+        visualEffectView.layer?.cornerRadius = 24
+        visualEffectView.layer?.masksToBounds = true
+
         let hostingView = NSHostingView(rootView: OverlayIndicatorView())
         hostingView.sizingOptions = []
-        contentView = hostingView
+        hostingView.wantsLayer = true
+        hostingView.layer?.backgroundColor = NSColor.clear.cgColor
+        visualEffectView.addSubview(hostingView)
+
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingView.leadingAnchor.constraint(equalTo: visualEffectView.leadingAnchor),
+            hostingView.trailingAnchor.constraint(equalTo: visualEffectView.trailingAnchor),
+            hostingView.topAnchor.constraint(equalTo: visualEffectView.topAnchor),
+            hostingView.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor),
+        ])
+
+        contentView = visualEffectView
     }
 
     override var canBecomeKey: Bool { false }

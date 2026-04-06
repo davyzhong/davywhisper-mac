@@ -9,6 +9,10 @@ private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "davywhis
 
 /// Captures microphone audio via AVAudioEngine and converts to 16kHz mono Float32 samples.
 final class AudioRecordingService: ObservableObject, @unchecked Sendable {
+    /// Cached microphone permission state — invalidated whenever permission is known to change.
+    private var _cachedMicPermission: Bool?
+    private let permissionQueue = DispatchQueue(label: "davywhisper.mic-permission")
+
     enum StopPolicy {
         case immediate
         case finalizeShortSpeech(
@@ -94,39 +98,61 @@ final class AudioRecordingService: ObservableObject, @unchecked Sendable {
     }
 
     var hasMicrophonePermission: Bool {
-        AVAudioApplication.shared.recordPermission == .granted
+        if let cached = _cachedMicPermission { return cached }
+        let granted = AVAudioApplication.shared.recordPermission == .granted
+        _cachedMicPermission = granted
+        return granted
     }
 
     /// Set to true while a permission request is in flight to prevent concurrent calls.
     private var permissionRequestInFlight = false
 
     func requestMicrophonePermission() async -> Bool {
-        // Prevent concurrent requests
-        guard !permissionRequestInFlight else { return hasMicrophonePermission }
-        permissionRequestInFlight = true
-        defer { permissionRequestInFlight = false }
+        // Fast path: return cached value if already granted
+        if hasMicrophonePermission { return true }
 
-        let currentPermission = AVAudioApplication.shared.recordPermission
-        if currentPermission == .granted { return true }
-
-        if currentPermission == .undetermined {
-            // Request via the official system dialog — this is what triggers the TCC prompt
-            return await withCheckedContinuation { continuation in
-                AVAudioApplication.requestRecordPermission { granted in
-                    continuation.resume(returning: granted)
+        // Prevent concurrent requests using a lock
+        return await withCheckedContinuation { continuation in
+            permissionQueue.sync {
+                if self.permissionRequestInFlight {
+                    // A request is already in flight — wait for it and report current state
+                    Task { @MainActor [weak self] in
+                        let result = self?.hasMicrophonePermission ?? false
+                        continuation.resume(returning: result)
+                    }
+                    return
                 }
+                self.permissionRequestInFlight = true
+            }
+
+            let currentPermission = AVAudioApplication.shared.recordPermission
+            if currentPermission == .granted {
+                self._cachedMicPermission = true
+                self.permissionRequestInFlight = false
+                continuation.resume(returning: true)
+                return
+            }
+
+            if currentPermission == .undetermined {
+                AVAudioApplication.requestRecordPermission { [weak self] granted in
+                    DispatchQueue.main.async {
+                        self?._cachedMicPermission = granted
+                        self?.permissionRequestInFlight = false
+                        continuation.resume(returning: granted)
+                    }
+                }
+                return
+            }
+
+            // .denied — open System Settings so user can grant manually
+            self.permissionRequestInFlight = false
+            DispatchQueue.main.async {
+                NSWorkspace.shared.open(
+                    URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")!
+                )
+                continuation.resume(returning: false)
             }
         }
-
-        // .denied — open System Settings so user can grant manually
-        // Do NOT call requestRecordPermission again here — that would re-trigger the system prompt
-        // which causes the "click Allow but it keeps popping up" loop
-        DispatchQueue.main.async {
-            NSWorkspace.shared.open(
-                URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")!
-            )
-        }
-        return false
     }
 
     /// Thread-safe snapshot of the current recording buffer for streaming transcription.

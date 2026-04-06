@@ -5,6 +5,42 @@ struct HotkeySettingsView: View {
 
     var body: some View {
         Form {
+            if dictation.needsMicPermission {
+                Section {
+                    HStack(spacing: 12) {
+                        Image(systemName: "mic.slash.fill")
+                            .font(.title2)
+                            .foregroundStyle(.red)
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(String(localized: "Microphone access required"))
+                                .font(.headline)
+
+                            Text(String(localized: "DavyWhisper needs microphone access to transcribe your speech. Grant access in System Settings."))
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                        }
+
+                        Spacer()
+                    }
+
+                    HStack {
+                        Button(String(localized: "Open System Settings")) {
+                            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone") {
+                                NSWorkspace.shared.open(url)
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+
+                        Button(String(localized: "Grant Access")) {
+                            dictation.requestMicPermission()
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+                .accessibilityIdentifier("com.davywhisper.settings.hotkeys.permissionBanner")
+            }
+
             Section(String(localized: "Dictation")) {
                 HotkeyRecorderView(
                     label: dictation.hybridHotkeyLabel,

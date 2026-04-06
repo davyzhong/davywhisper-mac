@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum SettingsTab: Hashable {
-    case general, history, profiles, prompts, integrations, advanced
+    case general, history, profiles, prompts, hotkeys, integrations, advanced
 }
 
 struct SettingsView: View {
@@ -34,6 +34,10 @@ struct SettingsView: View {
                             .tabItem { Label(String(localized: "Profiles"), systemImage: "person.crop.rectangle.stack") }
                             .tag(SettingsTab.profiles)
                             .accessibilityIdentifier("com.davywhisper.settings.tab.profiles")
+                        HotkeySettingsView()
+                            .tabItem { Label(String(localized: "Hotkeys"), systemImage: "keyboard") }
+                            .tag(SettingsTab.hotkeys)
+                            .accessibilityIdentifier("com.davywhisper.settings.tab.hotkeys")
                         PromptActionsSettingsView()
                             .tabItem { Label(String(localized: "Prompts"), systemImage: "sparkles") }
                             .tag(SettingsTab.prompts)
@@ -71,6 +75,10 @@ private struct SettingsMainTabs: TabContent {
             ProfilesSettingsView()
         }
         .accessibilityIdentifier("com.davywhisper.settings.tab.profiles")
+        Tab(String(localized: "Hotkeys"), systemImage: "keyboard", value: SettingsTab.hotkeys) {
+            HotkeySettingsView()
+        }
+        .accessibilityIdentifier("com.davywhisper.settings.tab.hotkeys")
         Tab(String(localized: "Prompts"), systemImage: "sparkles", value: SettingsTab.prompts) {
             PromptActionsSettingsView()
         }

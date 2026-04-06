@@ -300,3 +300,50 @@ DictationViewModelTests: passed ✅
 UnifiedHotkeyTests: passed ✅
 总测试数: ~1100+
 ```
+
+## Phase 11: CLI/Raycast 移除 + UX 修复 (2026-04-06)
+
+### 移除内容
+
+#### CLI 工具
+- 删除 Advanced Settings 中的 CLI 安装/卸载 UI
+- 删除 `AdvancedSettingsViewModel` 中的 `installCLI`/`uninstallCLI` 方法及相关状态
+- 删除 `AdvancedSettingsView` 中约 180 行 CLI 配置 UI
+- CLI 二进制文件仍保留在 app bundle 中（可手动使用）
+
+#### Raycast 扩展
+- 删除 Advanced Settings 中的 Raycast 扩展入口
+- 删除 `AdvancedSettingsViewModel` 中 `checkRaycastInstalled`/`installRaycastExtension` 方法
+
+### UX 修复
+
+#### Hotkeys 标签页恢复
+- `SettingsView` 遗漏添加 Hotkeys Tab，导致打包后用户无法找到快捷键配置入口
+- 在 macOS 14+ 和 macOS 15+ 两个 TabView 分支中均添加了 `HotkeySettingsView`
+
+#### 麦克风权限引导 Banner
+- 在 `HotkeySettingsView` 顶部添加麦克风权限 Banner
+- 当 `dictation.needsMicPermission` 为 true 时显示
+- 提供"打开系统设置"和"授权麦克风"两个操作按钮
+
+#### 权限对话框重复问题（9 次）
+- **根因**: `hasMicrophonePermission` 每次调用都访问系统 API，无缓存；`permissionRequestInFlight` 状态不跨 async 调用持久化
+- **修复**: `AudioRecordingService` 中添加 `_cachedMicPermission` 缓存 + `permissionQueue` 串行队列
+- `requestMicrophonePermission()` 使用 `withCheckedContinuation` 确保并发安全
+
+#### 录制指示器黑屏问题
+- **根因**: `OverlayIndicatorPanel` 和 `NotchIndicatorPanel` 使用 `.hudWindow` 样式，在部分显示器配置下渲染为纯黑
+- **修复**: 移除 `.hudWindow` 样式，改为 `NSVisualEffectView` + `.hudWindow` 材质，自研更可靠的透明背景渲染
+- 适用于所有显示器类型（内置/外接/HiDPI/非Retina）
+
+### 涉及文件
+
+| 文件 | 变更 |
+|------|------|
+| `Views/AdvancedSettingsView.swift` | 删除 CLI Section（~180行）|
+| `ViewModels/AdvancedSettingsViewModel.swift` | 清理 CLI/Raycast 代码（58行→15行）|
+| `Views/SettingsView.swift` | 恢复 Hotkeys Tab |
+| `Views/HotkeySettingsView.swift` | 添加麦克风权限引导 Banner |
+| `Services/AudioRecordingService.swift` | 权限缓存修复（72行）|
+| `Views/OverlayIndicatorPanel.swift` | NSVisualEffectView 替代 hudWindow |
+| `Views/NotchIndicatorPanel.swift` | NSVisualEffectView 替代 hudWindow |
