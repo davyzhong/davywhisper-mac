@@ -251,50 +251,11 @@ struct AdvancedSettingsView: View {
                 }
             }
 
-            // MARK: - Integrations
-            Section(String(localized: "Integrations")) {
-                HStack(alignment: .top, spacing: 12) {
-                    Image(systemName: "command.square")
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-                        .frame(width: 24)
-
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(String(localized: "Raycast Extension"))
-                            .font(.headline)
-
-                        if advancedViewModel.raycastInstalled {
-                            Text(String(localized: "Start dictation, search history and switch profiles directly from Raycast."))
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
-                        } else {
-                            Text(String(localized: "DavyWhisper works with Raycast. Start dictation and more directly from your launcher."))
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
-                        }
-
-                        if advancedViewModel.raycastInstalled {
-                            Button(String(localized: "Open in Raycast")) {
-                                NSWorkspace.shared.open(URL(string: "raycast://extensions/SeoFood/davywhisper")!)
-                            }
-                        } else {
-                            Button(String(localized: "Learn More")) {
-                                NSWorkspace.shared.open(URL(string: "https://www.raycast.com/SeoFood/davywhisper")!)
-                            }
-                        }
-
-                        Text(String(localized: "Requires the API server to be running."))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            }
         }
         .formStyle(.grouped)
         .padding()
         .frame(minWidth: 500, minHeight: 300)
         .onAppear {
-            advancedViewModel.checkRaycastInstallation()
             #if !APPSTORE
             advancedViewModel.checkCLIInstallation()
             #endif

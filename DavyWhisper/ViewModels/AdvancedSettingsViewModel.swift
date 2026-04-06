@@ -60,16 +60,6 @@ final class AdvancedSettingsViewModel: ObservableObject {
     }
     #endif
 
-    // MARK: - Raycast Detection
-
-    @Published var raycastInstalled = false
-
-    func checkRaycastInstallation() {
-        raycastInstalled = NSWorkspace.shared.urlForApplication(
-            withBundleIdentifier: "com.raycast.macos"
-        ) != nil
-    }
-
     // MARK: - HuggingFace Mirror
 
     var hfMirrorEnabled: Bool {
