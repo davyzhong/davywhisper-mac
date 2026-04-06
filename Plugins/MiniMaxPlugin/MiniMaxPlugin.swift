@@ -16,13 +16,11 @@ final class MiniMaxPlugin: NSObject, LLMProviderPlugin, @unchecked Sendable {
     private let apiKeyKeychainKey = "minimax-api-key"
     private let modelKey = "minimax-selected-model"
 
-    // Common models for suggestion (not exhaustive)
+    // Token Plan models (MiniMax-M2.7, supports OpenAI + Anthropic API compatible)
     private let suggestedModels: [PluginModelInfo] = [
-        PluginModelInfo(id: "MiniMax-Text-01", displayName: "MiniMax Text 01", sizeDescription: "Advanced", languageCount: 1),
-        PluginModelInfo(id: "abab6.5s-chat", displayName: "ABAB 6.5S Chat", sizeDescription: "Fast", languageCount: 1),
-        PluginModelInfo(id: "abab7-chat-preview", displayName: "ABAB 7 Chat Preview", sizeDescription: "Preview", languageCount: 1),
-        // Coding Plan models
-        PluginModelInfo(id: "MiniMax-V1", displayName: "MiniMax V1 (Coding Plan)", sizeDescription: "Latest", languageCount: 1),
+        PluginModelInfo(id: "MiniMax-M2.7", displayName: "MiniMax-M2.7 (推荐)", sizeDescription: "Agentic · 支持工具调用", languageCount: 1),
+        PluginModelInfo(id: "MiniMax-M2.7-highspeed", displayName: "MiniMax-M2.7-highspeed", sizeDescription: "高速版 · 限 Token Plan", languageCount: 1),
+        PluginModelInfo(id: "M2-her", displayName: "M2-her", sizeDescription: "角色扮演 · 多轮对话", languageCount: 1),
     ]
 
     required override init() { super.init() }
@@ -56,7 +54,7 @@ final class MiniMaxPlugin: NSObject, LLMProviderPlugin, @unchecked Sendable {
             throw PluginChatError.notConfigured
         }
         let helper = PluginOpenAIChatHelper(baseURL: currentBaseURL)
-        let modelId = model ?? _selectedModelId ?? "MiniMax-Text-01"
+        let modelId = model ?? _selectedModelId ?? "MiniMax-M2.7"
         return try await helper.process(apiKey: apiKey, model: modelId, systemPrompt: systemPrompt, userText: userText)
     }
 
@@ -86,7 +84,7 @@ final class MiniMaxPlugin: NSObject, LLMProviderPlugin, @unchecked Sendable {
         }
         let helper = PluginOpenAIChatHelper(baseURL: currentBaseURL)
         // Use a minimal test request with a common model
-        _ = try await helper.process(apiKey: apiKey, model: "MiniMax-Text-01", systemPrompt: "test", userText: "hi")
+        _ = try await helper.process(apiKey: apiKey, model: "MiniMax-M2.7", systemPrompt: "test", userText: "hi")
     }
 }
 
@@ -109,10 +107,10 @@ private struct MiniMaxSettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("MiniMax (稀宇科技)")
+            Text("稀宇科技 (MiniMax)")
                 .font(.headline)
 
-            Text("MiniMax 大语言模型。支持 MiniMax 官方 API 和 Coding Plan。")
+            Text("稀宇科技大模型。MiniMax-M2.7 支持 OpenAI 和 Anthropic 双协议，兼容工具调用 / Function Calling。配合 Token Plan 使用。")
                 .font(.callout)
                 .foregroundStyle(.secondary)
 
@@ -181,7 +179,7 @@ private struct MiniMaxSettingsView: View {
                 .toggleStyle(.switch)
 
             if useCustomModel {
-                TextField("输入模型 ID (如：MiniMax-V1)", text: $customModelId)
+                TextField("输入模型 ID (如：MiniMax-M2.7)", text: $customModelId)
                     .textFieldStyle(.roundedBorder)
                     .onChange(of: customModelId) { _, newValue in
                         if !newValue.isEmpty { plugin.selectModel(newValue) }

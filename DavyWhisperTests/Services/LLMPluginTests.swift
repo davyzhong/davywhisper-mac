@@ -44,15 +44,15 @@ final class GLMPluginTests: XCTestCase {
 
     func testSupportedModels() {
         let models = plugin.supportedModels
-        XCTAssertEqual(models.count, 4)
+        XCTAssertEqual(models.count, 7)
         XCTAssertTrue(models.contains(where: { $0.id == "glm-4-flash" }))
         XCTAssertTrue(models.contains(where: { $0.id == "glm-4-air" }))
         XCTAssertTrue(models.contains(where: { $0.id == "glm-4-plus" }))
-        XCTAssertTrue(models.contains(where: { $0.id == "glm-4-long" }))
+        XCTAssertTrue(models.contains(where: { $0.id == "glm-5-flash" }))
     }
 
     func testDefaultModelSelected() {
-        XCTAssertEqual(plugin.selectedModelId, "glm-4-flash")
+        XCTAssertNil(plugin.selectedModelId)
     }
 
     func testModelSelection() {
@@ -81,7 +81,7 @@ final class GLMPluginTests: XCTestCase {
     func testActivateDeactivate() {
         let fresh = GLMPlugin()
         fresh.activate(host: mockHost)
-        XCTAssertNotNil(fresh.selectedModelId)
+        XCTAssertNil(fresh.selectedModelId)
         fresh.deactivate()
         XCTAssertFalse(fresh.isAvailable)
     }
@@ -170,7 +170,7 @@ final class KimiPluginTests: XCTestCase {
     func testActivateDeactivate() {
         let fresh = KimiPlugin()
         fresh.activate(host: mockHost)
-        XCTAssertNotNil(fresh.selectedModelId)
+        XCTAssertEqual(fresh.selectedModelId, "moonshot-v1-8k") // defaults to first model
         fresh.deactivate()
         XCTAssertFalse(fresh.isAvailable)
     }
@@ -225,22 +225,23 @@ final class MiniMaxPluginTests: XCTestCase {
     func testSupportedModels() {
         let models = plugin.supportedModels
         XCTAssertEqual(models.count, 3)
-        XCTAssertTrue(models.contains(where: { $0.id == "MiniMax-Text-01" }))
-        XCTAssertTrue(models.contains(where: { $0.id == "abab6.5s-chat" }))
+        XCTAssertTrue(models.contains(where: { $0.id == "MiniMax-M2.7" }))
+        XCTAssertTrue(models.contains(where: { $0.id == "MiniMax-M2.7-highspeed" }))
     }
 
     func testDefaultModelSelected() {
-        XCTAssertEqual(plugin.selectedModelId, "MiniMax-Text-01")
+        // No model selected yet — returns nil (process() will fall back to MiniMax-M2.7)
+        XCTAssertNil(plugin.selectedModelId)
     }
 
     func testModelSelection() {
-        plugin.selectModel("abab6.5s-chat")
-        XCTAssertEqual(plugin.selectedModelId, "abab6.5s-chat")
+        plugin.selectModel("MiniMax-M2.7-highspeed")
+        XCTAssertEqual(plugin.selectedModelId, "MiniMax-M2.7-highspeed")
     }
 
     func testModelPersistsInUserDefaults() {
-        plugin.selectModel("abab6.5s-chat")
-        XCTAssertEqual(mockHost.userDefault(forKey: "minimax-selected-model") as? String, "abab6.5s-chat")
+        plugin.selectModel("MiniMax-M2.7-highspeed")
+        XCTAssertEqual(mockHost.userDefault(forKey: "minimax-selected-model") as? String, "MiniMax-M2.7-highspeed")
     }
 
     func testSettingsView() {
@@ -259,7 +260,8 @@ final class MiniMaxPluginTests: XCTestCase {
     func testActivateDeactivate() {
         let fresh = MiniMaxPlugin()
         fresh.activate(host: mockHost)
-        XCTAssertNotNil(fresh.selectedModelId)
+        XCTAssertNil(fresh.selectedModelId) // no saved model yet
+        XCTAssertFalse(fresh.isAvailable) // no API key
         fresh.deactivate()
         XCTAssertFalse(fresh.isAvailable)
     }
@@ -350,7 +352,7 @@ final class BailianPluginTests: XCTestCase {
     func testActivateDeactivate() {
         let fresh = BailianPlugin()
         fresh.activate(host: mockHost)
-        XCTAssertNotNil(fresh.selectedModelId)
+        XCTAssertEqual(fresh.selectedModelId, "qwen-plus") // defaults to first model
         fresh.deactivate()
         XCTAssertFalse(fresh.isAvailable)
     }
