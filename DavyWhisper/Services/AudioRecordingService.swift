@@ -106,34 +106,35 @@ final class AudioRecordingService: ObservableObject, @unchecked Sendable {
 
     /// Set to true while a permission request is in flight to prevent concurrent calls.
     private var permissionRequestInFlight = false
+    /// File-level flag: requestRecordPermission can only be called ONCE per app lifecycle.
+    /// Protected by permissionQueue for thread safety.
+    private nonisolated(unsafe) static var _systemPermissionRequestedOnce = false
 
     func requestMicrophonePermission() async -> Bool {
-        // Fast path: return cached value if already granted
+        // Fast path: already granted
         if hasMicrophonePermission { return true }
 
+        // Nuclear guard: ensure requestRecordPermission is called at most once per app lifecycle.
+        // This prevents ANY number of concurrent callers from triggering multiple system dialogs.
+        let alreadyRequested = permissionQueue.sync {
+            if Self._systemPermissionRequestedOnce { return true }
+            Self._systemPermissionRequestedOnce = true
+            return false
+        }
+
+        if alreadyRequested {
+            // A previous call already triggered the system dialog.
+            // Just return the current permission state.
+            let granted = AVAudioApplication.shared.recordPermission == .granted
+            _cachedMicPermission = granted
+            return granted
+        }
+
+        // This is the one and only call that will ever reach requestRecordPermission.
         return await withCheckedContinuation { continuation in
-            // Check & set permissionRequestInFlight atomically.
-            // IMPORTANT: `return` inside permissionQueue.sync only exits the
-            // sync block, NOT the outer closure. Use a flag to actually gate
-            // the code below.
-            var shouldRequest = false
-            permissionQueue.sync {
-                if self.permissionRequestInFlight {
-                    // A request is already in flight — return current state
-                    continuation.resume(returning: self.hasMicrophonePermission)
-                    return
-                }
-                self.permissionRequestInFlight = true
-                shouldRequest = true
-            }
-
-            // If another request is already in flight, we already resumed — bail out.
-            guard shouldRequest else { return }
-
             let currentPermission = AVAudioApplication.shared.recordPermission
             if currentPermission == .granted {
                 self._cachedMicPermission = true
-                self.permissionRequestInFlight = false
                 continuation.resume(returning: true)
                 return
             }
@@ -142,7 +143,6 @@ final class AudioRecordingService: ObservableObject, @unchecked Sendable {
                 AVAudioApplication.requestRecordPermission { [weak self] granted in
                     DispatchQueue.main.async {
                         self?._cachedMicPermission = granted
-                        self?.permissionRequestInFlight = false
                         continuation.resume(returning: granted)
                     }
                 }
@@ -150,7 +150,6 @@ final class AudioRecordingService: ObservableObject, @unchecked Sendable {
             }
 
             // .denied — open System Settings so user can grant manually
-            self.permissionRequestInFlight = false
             DispatchQueue.main.async {
                 NSWorkspace.shared.open(
                     URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")!
