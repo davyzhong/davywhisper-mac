@@ -162,6 +162,9 @@ Do not proceed to the next phase without completing all three steps.
 
 1. **文档/测试/代码同步**: 每次代码变更完成后，必须同步更新相关文档和单元测试，然后执行 commit + push。不允许出现"代码改了但测试没改"或"测试改了但文档没改"的状态。
 2. **连续执行不中断**: 每个阶段完成后直接执行下一个阶段，不要停下来询问用户确认。全程自动推进直到所有阶段完成。
+3. **Agent 使用纪律**: 修改代码后必须立即调用 `code-reviewer` agent 审查；新增功能或修复 bug 必须用 `tdd-guide` agent 确保测试先行。
+4. **并发规范**: UI 更新用 `Task { @MainActor }`，IO/网络用 `Task.detached`；禁止在无 actor 隔离的共享可变状态上直接异步访问。
+5. **错误处理规范**: Service 层抛 typed errors（自定义 Error 枚举），ViewModel 层捕获并转换为 UI 状态，禁止 `try!` 和吞错误。
 
 ## Key Patterns
 
@@ -171,3 +174,8 @@ Do not proceed to the next phase without completing all three steps.
 - **Localization**: `String(localized:)` with `Localizable.xcstrings`. Add new strings there, not hardcoded
 - **Error handling**: Custom `Error` types in `Models/`; services expose typed errors
 - **Background work**: `Task { }` with `@MainActor` for UI updates; services use detached tasks for async work
+
+## Gotchas / 权限请求红线
+
+- **麦克风权限请求有 once-per-lifecycle guard**：`AudioRecordingService.requestMicrophonePermission()` 使用静态 `_systemPermissionRequestedOnce` 去重，**绝对不能**在多个地方重复调用，否则系统会弹窗多次。统一从 `DictationViewModel.requestMicPermission()` 单一入口调用。
+- **权限状态缓存可能 stale**：`hasMicrophonePermission` 用 `_cachedMicPermission`，只有 `requestMicrophonePermission()` 成功后会更新。不要轮询，依赖回调。
