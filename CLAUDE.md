@@ -2,6 +2,18 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Quick Start
+
+```bash
+# 1. 生成 Xcode 项目
+xcodegen generate
+
+# 2. 打开项目
+open DavyWhisper.xcodeproj
+
+# 3. 选择 DavyWhisper 方案，Cmd+R 运行（菜单栏出现图标）
+```
+
 ## Project Overview
 
 DavyWhisper is a native macOS menu bar app for speech-to-text dictation and AI text processing. It supports 8 transcription engines (WhisperKit, Parakeet, SpeechAnalyzer, Qwen3, Voxtral, Groq, OpenAI, OpenAI Compatible), runs locally on Apple Silicon/Intel, and exposes a local HTTP API and CLI for automation.
@@ -11,6 +23,25 @@ DavyWhisper is a native macOS menu bar app for speech-to-text dictation and AI t
 - **MVVM** with `ServiceContainer` singleton for dependency injection
 - **Plugin architecture** via `DavyWhisperPluginSDK` (Swift package) — all engines are bundled plugins
 - Localization via `String(localized:)` with `Localizable.xcstrings`
+
+## Directory Structure
+
+```
+DavyWhisper/
+├── App/                    # 应用入口和 DI 容器
+│   ├── main.swift          # NSApplication 手动启动
+│   ├── DavyWhisperApp.swift
+│   ├── ServiceContainer.swift
+│   └── AppConstants.swift
+├── Services/               # 业务服务层
+├── ViewModels/             # 单例 ViewModel
+├── Views/                  # SwiftUI 视图
+├── Models/                 # SwiftData 模型 + Error 类型
+├── Plugins/                # 转录引擎插件
+├── DavyWhisperPluginSDK/   # 插件 SDK
+├── HTTPServer/             # REST API
+└── docs/                   # 设计文档/规范
+```
 
 ## Build Commands
 
@@ -66,6 +97,19 @@ swift test --package-path DavyWhisperPluginSDK
 ### Check warnings
 ```bash
 bash scripts/check_first_party_warnings.sh build-release/build.log
+```
+
+## Debugging Guide
+
+```bash
+# 查看应用日志（控制台.app）
+# 或在 Xcode 中运行，日志输出到 Xcode 控制台
+
+# 插件加载调试
+# PluginManager 会在启动时扫描 Contents/PlugIns/ 和 Contents/Resources/
+
+# 权限问题排查
+tccutil reset Microphone com.davywhisper.mac.local  # 重置权限后重试
 ```
 
 ## Architecture
@@ -179,3 +223,12 @@ Do not proceed to the next phase without completing all three steps.
 
 - **麦克风权限请求有 once-per-lifecycle guard**：`AudioRecordingService.requestMicrophonePermission()` 使用静态 `_systemPermissionRequestedOnce` 去重，**绝对不能**在多个地方重复调用，否则系统会弹窗多次。统一从 `DictationViewModel.requestMicPermission()` 单一入口调用。
 - **权限状态缓存可能 stale**：`hasMicrophonePermission` 用 `_cachedMicPermission`，只有 `requestMicrophonePermission()` 成功后会更新。不要轮询，依赖回调。
+
+## Common Issues / 常见问题
+
+| Issue | Solution |
+|-------|----------|
+| 麦克风弹窗出现多次 | 检查是否调用了多次 `requestMicrophonePermission()`，必须统一从 `DictationViewModel.requestMicPermission()` 调用 |
+| 插件未加载 | 检查 `PluginManager` 日志，确认 bundle 在 `Contents/Resources/` 或 `Contents/PlugIns/` 目录 |
+| 模型下载失败 | 中国用户自动使用 `hf-mirror.com`，如仍有问题检查网络连接 |
+| 构建时证书错误 | 使用 `CODE_SIGN_IDENTITY='-' CODE_SIGNING_REQUIRED=NO` 跳过签名 |
