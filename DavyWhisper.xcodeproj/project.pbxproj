@@ -86,7 +86,6 @@
 		5E13A42A0CA01108D8F47E72 /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F824CB570D9763A8D05A53 /* AdvancedSettingsViewModel.swift */; };
 		5E20338342F1EA2DB81BF20A /* manifest_OpenAICompatiblePlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 762132A21710C1F1411DA519 /* manifest_OpenAICompatiblePlugin.json */; };
 		5E7C83646862C06801D0F60A /* TermPackRegistryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3715B5462DB7AF6C6D94F56E /* TermPackRegistryServiceTests.swift */; };
-		5F63D78F9146F9EB1D0FD43B /* manifest_ElevenLabsPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 270B10183381BABB0D994C03 /* manifest_ElevenLabsPlugin.json */; };
 		60528923B20C753832FA4375 /* manifest_LiveTranscriptPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 93B946F714DA21454CFB8C7E /* manifest_LiveTranscriptPlugin.json */; };
 		60CF91267A71B1660B3D5A10 /* SetupWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE158A57F3F5BFDF93FE69 /* SetupWizardViewModel.swift */; };
 		617D3B872F109FCDD2C74F20 /* TermPackRegistryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A3831EC2AF376506633F85 /* TermPackRegistryService.swift */; };
@@ -147,7 +146,6 @@
 		A62F1A8A76C3714CF00FC263 /* DeepgramPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B94C9EA3F45E121865310 /* DeepgramPlugin.swift */; };
 		A78498D49BFE846498ED675F /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776EF76E89E1B65976F243C5 /* HistoryViewModel.swift */; };
 		ABA573A394C7A07B0B694D12 /* manifest_ParaformerPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = B40D5775C3382B85EB53743B /* manifest_ParaformerPlugin.json */; };
-		AD3E09223C934FE2C23FCC12 /* ElevenLabsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AFD714E682201276024E77 /* ElevenLabsPlugin.swift */; };
 		ADAD2D62388B95FC0FFE90FD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA347E47FCF0DAAF1D12A267 /* main.swift */; };
 		AE8DF0B18089DBF7BC8E4449 /* DavyWhisperPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9A1A06F392BCE736EA7ABAA3 /* DavyWhisperPluginSDK */; };
 		B0A09575569C4C1BC18BB742 /* manifest_DeepgramPlugin.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E318AA116DF13B2B643F1F7 /* manifest_DeepgramPlugin.json */; };
@@ -282,7 +280,6 @@
 		23A5607A794E4E219FE4BCA6 /* DictationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictationViewModelTests.swift; sourceTree = "<group>"; };
 		2412004B7C111E7A38218968 /* APIServerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServerViewModelTests.swift; sourceTree = "<group>"; };
 		25890AB358D1F65FEB2372AE /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		270B10183381BABB0D994C03 /* manifest_ElevenLabsPlugin.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest_ElevenLabsPlugin.json; sourceTree = "<group>"; };
 		284999F95D8C6596BC708AA8 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
 		2A33D9B31CF8205AD8B17080 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		2A92987AEC24712A40218B97 /* AppLifecycleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLifecycleUITests.swift; sourceTree = "<group>"; };
@@ -416,7 +413,6 @@
 		BE0F5C8F3714E6FDE21F346D /* BrandAndConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandAndConfigTests.swift; sourceTree = "<group>"; };
 		C0DEE79DB29A9F9192ECFE25 /* AudioFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileService.swift; sourceTree = "<group>"; };
 		C3EF29707937703115A3718A /* AppFormatterServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFormatterServiceTests.swift; sourceTree = "<group>"; };
-		C5AFD714E682201276024E77 /* ElevenLabsPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevenLabsPlugin.swift; sourceTree = "<group>"; };
 		C99A6A9C1EC9BD242796CDB9 /* SetupWizardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWizardViewModelTests.swift; sourceTree = "<group>"; };
 		C9A3831EC2AF376506633F85 /* TermPackRegistryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermPackRegistryService.swift; sourceTree = "<group>"; };
 		CC5E6DF36F9008D9EC5690CB /* ProfileEngineMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEngineMigrationTests.swift; sourceTree = "<group>"; };
@@ -880,7 +876,6 @@
 				8FFE3F8AC966E425C4A7AC25 /* DavyWhisperTests */,
 				0844593981823B2E06F5C8AC /* DavyWhisperUITests */,
 				3682102F412A867B8662CD2E /* DeepgramPlugin */,
-				D77A85C375D3E5607016F372 /* ElevenLabsPlugin */,
 				B6CF43FCFB92CC977EC701D1 /* GLMPlugin */,
 				38DD8F6A07D01932F2564ADE /* KimiPlugin */,
 				59D69B0DFB4411D383148CE6 /* LiveTranscriptPlugin */,
@@ -921,16 +916,6 @@
 			);
 			name = BailianPlugin;
 			path = Plugins/BailianPlugin;
-			sourceTree = "<group>";
-		};
-		D77A85C375D3E5607016F372 /* ElevenLabsPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				C5AFD714E682201276024E77 /* ElevenLabsPlugin.swift */,
-				270B10183381BABB0D994C03 /* manifest_ElevenLabsPlugin.json */,
-			);
-			name = ElevenLabsPlugin;
-			path = Plugins/ElevenLabsPlugin;
 			sourceTree = "<group>";
 		};
 		D88B5A4F52ECA28159B42478 /* App */ = {
@@ -1144,7 +1129,6 @@
 				5B02A3AD19CDD0A75B3F1426 /* error.wav in Resources */,
 				67B4AC070980EA735988C776 /* manifest_BailianPlugin.json in Resources */,
 				B0A09575569C4C1BC18BB742 /* manifest_DeepgramPlugin.json in Resources */,
-				5F63D78F9146F9EB1D0FD43B /* manifest_ElevenLabsPlugin.json in Resources */,
 				BDA24005A7F026B500B0DFCE /* manifest_GLMPlugin.json in Resources */,
 				1D02A00BFE7568C5BA76E752 /* manifest_KimiPlugin.json in Resources */,
 				60528923B20C753832FA4375 /* manifest_LiveTranscriptPlugin.json in Resources */,
@@ -1199,7 +1183,6 @@
 				1CC02F75FCA1EFC29FE581F1 /* DictationEnums.swift in Sources */,
 				BAF7C7752DD1AF2588250730 /* DictationSettingsHandler.swift in Sources */,
 				98A6957D8765D1CFB0BB9AE8 /* DictationViewModel.swift in Sources */,
-				AD3E09223C934FE2C23FCC12 /* ElevenLabsPlugin.swift in Sources */,
 				06B28631EBD4393E2F0DEDAE /* ErrorLogEntry.swift in Sources */,
 				340F906B756CE74A586283F4 /* ErrorLogService.swift in Sources */,
 				11052CF9520555BCBC7E7CBF /* ErrorLogView.swift in Sources */,

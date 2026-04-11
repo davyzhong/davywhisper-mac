@@ -143,7 +143,6 @@ final class BrandAndConfigTests: XCTestCase {
         let expectedPluginSources = [
             "Plugins/WhisperKitPlugin",
             "Plugins/DeepgramPlugin",
-            "Plugins/ElevenLabsPlugin",
             "Plugins/OpenAICompatiblePlugin",
             "Plugins/ParaformerPlugin",
         ]
@@ -175,6 +174,7 @@ final class BrandAndConfigTests: XCTestCase {
             "Plugins/VoxtralPlugin",
             "Plugins/OpenAIPlugin",
             "Plugins/GeminiPlugin",
+            "Plugins/ElevenLabsPlugin",
         ]
         for ghost in ghosts {
             let path = projectRoot.appendingPathComponent(ghost)

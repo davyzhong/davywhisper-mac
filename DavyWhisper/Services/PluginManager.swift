@@ -99,7 +99,7 @@ final class PluginManager: ObservableObject {
         guard let resourceURL = Bundle.main.resourceURL else { return }
 
         let pluginNames = ["WhisperKitPlugin", "DeepgramPlugin",
-                          "ElevenLabsPlugin", "LiveTranscriptPlugin",
+                          "LiveTranscriptPlugin",
                           "OpenAICompatiblePlugin",
                           "ParaformerPlugin",
                           "GLMPlugin", "KimiPlugin", "MiniMaxPlugin", "BailianPlugin"]

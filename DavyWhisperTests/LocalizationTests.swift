@@ -48,7 +48,7 @@ final class LocalizationTests: XCTestCase {
         let projectRoot = TestSupport.repoRoot
         let plugins = [
             "WhisperKitPlugin", "DeepgramPlugin",
-            "ElevenLabsPlugin", "LiveTranscriptPlugin", "Qwen3Plugin",
+            "LiveTranscriptPlugin", "Qwen3Plugin",
         ]
         for plugin in plugins {
             let xcstrings = projectRoot.appendingPathComponent("Plugins/\(plugin)/Localizable.xcstrings")

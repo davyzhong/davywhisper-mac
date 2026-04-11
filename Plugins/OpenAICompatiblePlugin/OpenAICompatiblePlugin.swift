@@ -20,7 +20,7 @@ struct ProviderPreset: Identifiable, Hashable, CaseIterable {
     }
 
     static let allCases: [ProviderPreset] = [
-        .deepSeek, .custom
+        .deepSeek, .glm, .kimi, .minimax, .bailian, .custom
     ]
 
     static let deepSeek = ProviderPreset(
@@ -32,6 +32,56 @@ struct ProviderPreset: Identifiable, Hashable, CaseIterable {
             PluginModelInfo(id: "deepseek-reasoner", displayName: "DeepSeek Reasoner", sizeDescription: "深度推理"),
         ],
         icon: "bolt.fill"
+    )
+
+    static let glm = ProviderPreset(
+        id: "glm",
+        displayName: "智谱 GLM",
+        baseURL: "https://open.bigmodel.cn/api/paas/v4",
+        models: [
+            PluginModelInfo(id: "glm-4-flash", displayName: "GLM-4 Flash", sizeDescription: "快速"),
+            PluginModelInfo(id: "glm-4-air", displayName: "GLM-4 Air", sizeDescription: "均衡"),
+            PluginModelInfo(id: "glm-4-plus", displayName: "GLM-4 Plus", sizeDescription: "高级"),
+            PluginModelInfo(id: "glm-4-long", displayName: "GLM-4 Long", sizeDescription: "长上下文"),
+        ],
+        icon: "brain.head.profile"
+    )
+
+    static let kimi = ProviderPreset(
+        id: "kimi",
+        displayName: "Moonshot Kimi",
+        baseURL: "https://api.moonshot.cn/v1",
+        models: [
+            PluginModelInfo(id: "moonshot-v1-8k", displayName: "Moonshot V1 8K", sizeDescription: "快速"),
+            PluginModelInfo(id: "moonshot-v1-32k", displayName: "Moonshot V1 32K", sizeDescription: "均衡"),
+            PluginModelInfo(id: "moonshot-v1-128k", displayName: "Moonshot V1 128K", sizeDescription: "长上下文"),
+            PluginModelInfo(id: "moonshot-v1-auto", displayName: "Moonshot V1 Auto", sizeDescription: "自动选择"),
+        ],
+        icon: "moon.stars.fill"
+    )
+
+    static let minimax = ProviderPreset(
+        id: "minimax",
+        displayName: "MiniMax",
+        baseURL: "https://api.minimaxi.com/v1",
+        models: [
+            PluginModelInfo(id: "MiniMax-M2.7", displayName: "MiniMax-M2.7", sizeDescription: "推荐"),
+            PluginModelInfo(id: "MiniMax-M2.7-highspeed", displayName: "MiniMax-M2.7 高速", sizeDescription: "高速"),
+        ],
+        icon: "bubble.left.and.bubble.right.fill"
+    )
+
+    static let bailian = ProviderPreset(
+        id: "bailian",
+        displayName: "百炼 (通义千问)",
+        baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        models: [
+            PluginModelInfo(id: "qwen-turbo", displayName: "Qwen Turbo", sizeDescription: "快速"),
+            PluginModelInfo(id: "qwen-plus", displayName: "Qwen Plus", sizeDescription: "均衡"),
+            PluginModelInfo(id: "qwen-max", displayName: "Qwen Max", sizeDescription: "高级"),
+            PluginModelInfo(id: "qwen-long", displayName: "Qwen Long", sizeDescription: "长上下文"),
+        ],
+        icon: "cloud.fill"
     )
 
     static let custom = ProviderPreset(
